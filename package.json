@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write --plugin-search-dir=. .",
+    "format:check": "prettier --check --plugin-search-dir=. ."
   },
   "dependencies": {
     "@next/font": "13.1.6",
