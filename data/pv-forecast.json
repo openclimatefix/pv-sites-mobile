@@ -1,0 +1,72 @@
+{
+  "forecast_uuid": "95833950-de0f-4447-8c73-ffa5138b225d",
+  "site_uuid": "b97f68cd-50e0-49bb-a850-108d4a9f7b7e",
+  "forecast_creation_datetime": "2023-02-16T01:26:20.557211+00:00",
+  "forecast_version": "0.0.1",
+  "forecast_values": [
+    {
+      "target_datetime_utc": "2023-02-16T01:30:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T02:00:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T02:30:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T03:00:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T03:30:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T04:00:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T04:30:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T05:00:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T05:30:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T06:00:00+00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-02-16T06:30:00+00:00",
+      "expected_generation_kw": 0.017037086855465802
+    },
+    {
+      "target_datetime_utc": "2023-02-16T07:00:00+00:00",
+      "expected_generation_kw": 0.06698729810778072
+    },
+    {
+      "target_datetime_utc": "2023-02-16T07:30:00+00:00",
+      "expected_generation_kw": 0.1464466094067262
+    },
+    {
+      "target_datetime_utc": "2023-02-16T08:00:00+00:00",
+      "expected_generation_kw": 0.24999999999999978
+    },
+    {
+      "target_datetime_utc": "2023-02-16T08:30:00+00:00",
+      "expected_generation_kw": 0.37059047744873963
+    },
+    {
+      "target_datetime_utc": "2023-02-16T09:00:00+00:00",
+      "expected_generation_kw": 0.4999999999999999
+    }
+  ]
+}
