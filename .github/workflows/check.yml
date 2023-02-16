@@ -3,8 +3,8 @@ name: Check
 on:
   push:
     branches:
-      - "**"
-      - "!main"
+      - '**'
+      - '!main'
 
 jobs:
   format:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn
@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn
