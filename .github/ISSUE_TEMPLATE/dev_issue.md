@@ -18,6 +18,8 @@ These points are a rough guideline. **Please** feel free to discuss with others 
 
 - Useful link
 
+## Time estimate
+
 <!--
 Template sourced from https://github.com/hack4impact-uiuc/falling-fruit
 Shoutout to the wonderful FF team!
