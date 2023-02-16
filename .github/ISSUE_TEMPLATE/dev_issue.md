@@ -1,6 +1,6 @@
 ---
 name: Developer issue
-about: Issue with description, learning objectives, todo, and useful links
+about: Issue with description, todos, and useful links
 title: ''
 labels: ''
 assignees: ''
@@ -8,15 +8,11 @@ assignees: ''
 
 ## Description
 
-## Learning objectives
-
-- Objective
-
-## Todo
+## Todos
 
 These points are a rough guideline. **Please** feel free to discuss with others on the team about the best way to design this component!
 
-- Todo
+- [ ] Todo
 
 ## Useful links
 
