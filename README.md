@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Getting Started
@@ -51,6 +51,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/braddf"><img src="https://avatars.githubusercontent.com/u/41056982?v=4?s=100" width="100px;" alt="braddf"/><br /><sub><b>braddf</b></sub></a><br /><a href="#projectManagement-braddf" title="Project Management">📆</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://andrewlester.net"><img src="https://avatars.githubusercontent.com/u/23221268?v=4?s=100" width="100px;" alt="Andrew Lester"/><br /><sub><b>Andrew Lester</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=AndrewLester" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
