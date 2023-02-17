@@ -1,6 +1,9 @@
 import Head from 'next/head';
+import mapboxgl from 'mapbox-gl';
 
 export default function Home() {
+  mapboxgl.accessToken = process.env.MAPBOX_SECRET!;
+  
   return (
     <>
       <Head>
@@ -10,7 +13,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>pv-sites-mobile</h1>
+        <h1>location Input Test</h1>
       </main>
     </>
   );
