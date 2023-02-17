@@ -15,13 +15,20 @@ const Form = () => {
             e.preventDefault();
             try {
               const data = new FormData(e.currentTarget);
-              
-              const solarPanelDirection = data.get('solarPanelDirection') as string;
-              const solarPanelAngelTilt = data.get('solarPanelAngelTilt') as string;
-              const solarPanelCapacity = data.get('solarPanelCapacity') as string;
 
-              console.log(`Direction: ${solarPanelDirection}, Angel Tilt: ${solarPanelAngelTilt}, Capacity: ${solarPanelCapacity}`);
+              const solarPanelDirection = data.get(
+                'solarPanelDirection'
+              ) as string;
+              const solarPanelAngelTilt = data.get(
+                'solarPanelAngelTilt'
+              ) as string;
+              const solarPanelCapacity = data.get(
+                'solarPanelCapacity'
+              ) as string;
 
+              console.log(
+                `Direction: ${solarPanelDirection}, Angel Tilt: ${solarPanelAngelTilt}, Capacity: ${solarPanelCapacity}`
+              );
             } catch (e) {
               console.log(`onSubmit(): ${e}`);
             }
