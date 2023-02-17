@@ -14,6 +14,15 @@
       "contributions": [
         "projectManagement"
       ]
+    },
+    {
+      "login": "AndrewLester",
+      "name": "Andrew Lester",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23221268?v=4",
+      "profile": "http://andrewlester.net",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
