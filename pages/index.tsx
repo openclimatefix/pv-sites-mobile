@@ -15,17 +15,24 @@ export default function Home(this: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className="m-5">
         {user?.email ? (
-          <Link href="/api/auth/logout" key="logout_button">
+          <Link
+            className="bg-yellow-300 rounded-2xl p-2"
+            href="/api/auth/logout"
+            key="logout_button"
+          >
             Logout
           </Link>
         ) : (
-          <Link href="/api/auth/login" key="login_button">
+          <Link
+            className="bg-yellow-300 rounded-2xl p-2"
+            href="/api/auth/login"
+            key="login_button"
+          >
             Login
           </Link>
         )}
-        <h1>pv-sites-mobile</h1>
       </main>
     </>
   );
