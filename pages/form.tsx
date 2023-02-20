@@ -16,7 +16,7 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 const inputClassName =
-  'mt-3 text-lg text-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-20 h-14 p-2.5 hover:ring-ocf-yellow hover:border-ocf-yellow  dark:bg-ocf-gray-800 dark:border-ocf-gray-800 dark:placeholder-ocf-gray-900 dark:text-ocf-gray';
+  'mt-3 text-lg text-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block h-14 p-2.5 hover:ring-ocf-yellow hover:border-ocf-yellow  dark:bg-ocf-gray-800 dark:border-ocf-gray-800 dark:placeholder-ocf-gray-900 dark:text-ocf-gray';
 const h2ClassName = 'font-medium text-lg dark:text-ocf-gray';
 const pClassName = 'text-ocf-gray-900 text-xs mt-1 dark:text-ocf-gray-800';
 
@@ -62,7 +62,7 @@ const Form = () => {
           onKeyDown={preventMinus}
           min="0"
           max="359"
-          className={inputClassName}
+          className={`${inputClassName} w-20`}
         />
         <p className={`${pClassName} underline`}>I don&apos;t know</p>
       </div>
@@ -78,7 +78,7 @@ const Form = () => {
           min="0"
           max="359"
           onKeyDown={preventMinus}
-          className={inputClassName}
+          className={`${inputClassName} w-20`}
         />
       </div>
 
@@ -93,7 +93,7 @@ const Form = () => {
           placeholder="3000 W"
           min="0"
           onKeyDown={preventMinus}
-          className={inputClassName}
+          className={`${inputClassName} w-28`}
         />
       </div>
 
