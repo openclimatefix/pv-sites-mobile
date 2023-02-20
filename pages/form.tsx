@@ -61,7 +61,7 @@ const Form = () => {
           placeholder="170º"
           onKeyDown={preventMinus}
           min="0"
-          max="359"
+          max="360"
           className={`${inputClassName} w-20`}
         />
         <p className={`${pClassName} underline`}>I don&apos;t know</p>
@@ -76,7 +76,7 @@ const Form = () => {
           type="number"
           placeholder="30º"
           min="0"
-          max="359"
+          max="360"
           onKeyDown={preventMinus}
           className={`${inputClassName} w-20`}
         />
