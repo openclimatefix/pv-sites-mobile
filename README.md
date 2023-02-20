@@ -1,47 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# pv-sites-mobile
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+## About
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+With site-level forecasts—nowcasting for individual solar locations—OCF is in the process of bringing the nowcasting experience to the broader public, to give people more power over their own solar setup. Smart home operators, solar PV asset operators, offtakers, and individual home owners can all make use of better forecasting, and in turn, OCF’s impact reaches more people and helps further optimize the contribution of solar power to the electricity grid.
 
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+To allow easy, intuitive access to OCF’s site-level predictions, we (Hack4Impact) are working with OCF to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
 
-## Getting Started
+### Demo
 
-First, run the development server:
+Our in-development [Demo](https://pv-sites-mobile-hack4impact1.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Development
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Setup
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+This project is a Next.js 13 application built using the `pages` directory.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Install dependencies with yarn:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+`yarn`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Run the development server:
 
-## Learn More
+`yarn dev`
 
-To learn more about Next.js, take a look at the following resources:
+### Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Hack4Impact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Create a branch with the format `<initials>/<short-description>` in all lowercase with words separated by dashes.
 
 ## Contributors ✨
 
