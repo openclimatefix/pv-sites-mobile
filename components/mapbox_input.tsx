@@ -29,13 +29,9 @@ export default function MapBoxInput() {
         map.current.addControl(nav, "bottom-right");
         map.current.addControl(
           new mapboxgl.GeolocateControl({
-          positionOptions: {
-          enableHighAccuracy: true
-          },
-          // When active the map will receive updates to the device's location as it changes.
-          trackUserLocation: true,
-          // Draw an arrow next to the location dot to indicate which direction the device is heading.
-          showUserHeading: true
+            positionOptions: {
+            enableHighAccuracy: true
+            },
           })
         );
         map.current.on("load", () => setIsMapReady(true));
@@ -43,8 +39,6 @@ export default function MapBoxInput() {
             setLng(map.current!.getCenter().lng);
             setLat(map.current!.getCenter().lat);
             setZoom(map.current!.getZoom());
-            console.log(map.current!.getCenter().lng);
-            console.log(map.current!.getZoom())
         });
       }
     }, []);
