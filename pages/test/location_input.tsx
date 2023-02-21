@@ -30,7 +30,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative h-full bg-ocf-gray-900">
+    <div className="h-full bg-ocf-gray-900">
       <div ref={mapContainer} className="h-full" />
     </div>
   );
