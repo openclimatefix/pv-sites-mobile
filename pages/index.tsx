@@ -1,11 +1,7 @@
 import Head from 'next/head';
-import Link from 'next/link';
-import { useUser } from '@auth0/nextjs-auth0/client';
-import { useState } from 'react';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 export default function Home(this: any) {
-  const { user } = useUser();
-
   return (
     <>
       <Head>
@@ -14,25 +10,8 @@ export default function Home(this: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="m-5">
-        {user ? (
-          <Link
-            className="bg-yellow-300 rounded-2xl p-2"
-            href="/api/auth/logout"
-            key="logout_button"
-          >
-            Logout
-          </Link>
-        ) : (
-          <Link
-            className="bg-yellow-300 rounded-2xl p-2"
-            href="/api/auth/login"
-            key="login_button"
-          >
-            Login
-          </Link>
-        )}
-      </main>
     </>
   );
 }
+
+export const getServerSideProps = withPageAuthRequired();

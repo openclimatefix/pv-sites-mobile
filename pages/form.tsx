@@ -1,3 +1,5 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+
 interface PanelFormDataBody {
   solarPanelDirection: number;
   solarPanelAngleTilt: number;
@@ -107,3 +109,5 @@ const Form = () => {
 };
 
 export default Form;
+
+export const getServerSideProps = withPageAuthRequired();
