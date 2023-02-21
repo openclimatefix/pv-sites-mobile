@@ -7,7 +7,9 @@ With site-level forecasts—nowcasting for individual solar locations—we are i
 To allow easy, intuitive access to our site-level predictions, [Hack4Impact](https://uiuc.hack4impact.org/) is working with us to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ### Demo
@@ -51,7 +53,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/anyaparekh"><img src="https://avatars.githubusercontent.com/u/49364484?v=4?s=100" width="100px;" alt="Anya Parekh"/><br /><sub><b>Anya Parekh</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=anyaparekh" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rohanvan123"><img src="https://avatars.githubusercontent.com/u/67704979?v=4?s=100" width="100px;" alt="Rohan Vanjani"/><br /><sub><b>Rohan Vanjani</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=rohanvan123" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jackypark9852"><img src="https://avatars.githubusercontent.com/u/81858354?v=4?s=100" width="100px;" alt="Jacky Park"/><br /><sub><b>Jacky Park</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=jackypark9852" title="Code">💻</a></td>
+    </tr>
+    <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://ashayp.com"><img src="https://avatars.githubusercontent.com/u/21179174?v=4?s=100" width="100px;" alt="Ashay Parikh"/><br /><sub><b>Ashay Parikh</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=ashayp22" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.kalynwatt.com/"><img src="https://images.squarespace-cdn.com/content/v1/6330cf626aba27472c9abe80/12e48df1-eb9e-4710-93fb-62811d3cbb9d/tempImagedpidYQ.jpg?format=500w" width="100px;" style="aspect-ratio: 1; object-fit: cover;" alt="Kalyn Watt"/><br /><sub><b>Kalyn Watt</b></sub></a><br /><a href="#design-kalynwatt" title="Design">🎨</a></td>
     </tr>
   </tbody>
 </table>
