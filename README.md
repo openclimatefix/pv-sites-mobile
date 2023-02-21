@@ -2,9 +2,9 @@
 
 ## About
 
-With site-level forecasts—nowcasting for individual solar locations—OCF is in the process of bringing the nowcasting experience to the broader public, to give people more power over their own solar setup. Smart home operators, solar PV asset operators, offtakers, and individual home owners can all make use of better forecasting, and in turn, OCF’s impact reaches more people and helps further optimize the contribution of solar power to the electricity grid.
+With site-level forecasts—nowcasting for individual solar locations—we are in the process of bringing the nowcasting experience to the broader public, to give people more power over their own solar setup. Individual home owners, solar PV asset operators, offtakers, and smart home operators can all make use of better forecasting, and in turn, our impact reaches more people and helps further optimize the contribution of solar power to the electricity grid.
 
-To allow easy, intuitive access to OCF’s site-level predictions, we (Hack4Impact) are working with OCF to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
+To allow easy, intuitive access to our site-level predictions, [Hack4Impact](https://uiuc.hack4impact.org/) is working with us to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
