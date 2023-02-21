@@ -7,9 +7,7 @@ With site-level forecasts—nowcasting for individual solar locations—we are i
 To allow easy, intuitive access to our site-level predictions, [Hack4Impact](https://uiuc.hack4impact.org/) is working with us to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ### Demo
@@ -49,6 +47,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/braddf"><img src="https://avatars.githubusercontent.com/u/41056982?v=4?s=100" width="100px;" alt="braddf"/><br /><sub><b>braddf</b></sub></a><br /><a href="#projectManagement-braddf" title="Project Management">📆</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://andrewlester.net"><img src="https://avatars.githubusercontent.com/u/23221268?v=4?s=100" width="100px;" alt="Andrew Lester"/><br /><sub><b>Andrew Lester</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=AndrewLester" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ericcccsliu"><img src="https://avatars.githubusercontent.com/u/62641231?v=4?s=100" width="100px;" alt="Eric Liu"/><br /><sub><b>Eric Liu</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=ericcccsliu" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/anyaparekh"><img src="https://avatars.githubusercontent.com/u/49364484?v=4?s=100" width="100px;" alt="Anya Parekh"/><br /><sub><b>Anya Parekh</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=anyaparekh" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
