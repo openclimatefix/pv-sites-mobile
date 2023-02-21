@@ -6,6 +6,12 @@ With site-level forecasts—nowcasting for individual solar locations—OCF is i
 
 To allow easy, intuitive access to OCF’s site-level predictions, we (Hack4Impact) are working with OCF to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 ### Demo
 
 Our in-development [Demo](https://pv-sites-mobile-hack4impact1.vercel.app/)
