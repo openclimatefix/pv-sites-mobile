@@ -34,11 +34,21 @@ export default function MapBoxInput() {
             },
           })
         );
+
+        const marker = new mapboxgl.Marker({
+          draggable: true
+          })
+          .setLngLat([lng, lat])
+          .addTo(map.current);
+
         map.current.on("load", () => setIsMapReady(true));
         map.current.on('move', () => {
-            setLng(map.current!.getCenter().lng);
-            setLat(map.current!.getCenter().lat);
+            const newLng = map.current!.getCenter().lng;
+            const newLat = map.current!.getCenter().lat;
+            setLng(newLng);
+            setLat(newLat);
             setZoom(map.current!.getZoom());
+            marker.setLngLat([newLng, newLat]);
         });
       }
     }, []);
