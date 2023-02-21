@@ -3,6 +3,7 @@ import Head from 'next/head';
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, {useRef, useState, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl';
+
 export default function MapBoxInput() {
     mapboxgl.accessToken = "pk.eyJ1IjoiYWxlc3RlcjMiLCJhIjoiY2xlM3JwdDkwMDR6cjNvdGRpanZqZHd0ciJ9.ibQNGDwEE_Wc59LB2dhs9Q";
     const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -32,6 +33,12 @@ export default function MapBoxInput() {
             positionOptions: {
             enableHighAccuracy: true
             },
+          })
+        );
+        map.current.addControl(
+          new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl
           })
         );
 
