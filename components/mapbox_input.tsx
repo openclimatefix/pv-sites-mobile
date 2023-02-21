@@ -30,7 +30,7 @@ export default function MapBoxInput() {
     }, []);
   
     return (
-      <div className="h-full bg-ocf-gray-900">
+      <div className="h-full w-full overflow-hidden bg-ocf-gray-900">
         <div ref={mapContainer} className="h-full" />
       </div>
     );
