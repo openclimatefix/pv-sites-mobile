@@ -1,5 +1,6 @@
 
 import Head from 'next/head';
+import "mapbox-gl/dist/mapbox-gl.css";
 import React, {useRef, useState, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl';
 export default function MapBoxInput() {
@@ -26,6 +27,17 @@ export default function MapBoxInput() {
   
         const nav = new mapboxgl.NavigationControl({ showCompass: false });
         map.current.addControl(nav, "bottom-right");
+        map.current.addControl(
+          new mapboxgl.GeolocateControl({
+          positionOptions: {
+          enableHighAccuracy: true
+          },
+          // When active the map will receive updates to the device's location as it changes.
+          trackUserLocation: true,
+          // Draw an arrow next to the location dot to indicate which direction the device is heading.
+          showUserHeading: true
+          })
+        );
         map.current.on("load", () => setIsMapReady(true));
         map.current.on('move', () => {
             setLng(map.current!.getCenter().lng);
@@ -38,7 +50,7 @@ export default function MapBoxInput() {
     }, []);
   
     return (
-      <div className="flex-col h-full w-full overflow-hidden bg-ocf-gray-900">
+      <div className="flex-col h-full w-full bg-ocf-gray-900">
         <h1> Longitude: {lng} </h1>
         <h1> Latitude: {lat} </h1>
         <h1> Zoom: {zoom} </h1>
