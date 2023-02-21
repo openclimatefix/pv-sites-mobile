@@ -54,7 +54,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="http://ashayp.com"><img src="https://avatars.githubusercontent.com/u/21179174?v=4?s=100" width="100px;" alt="Ashay Parikh"/><br /><sub><b>Ashay Parikh</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=ashayp22" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.kalynwatt.com/"><img src="https://images.squarespace-cdn.com/content/v1/6330cf626aba27472c9abe80/12e48df1-eb9e-4710-93fb-62811d3cbb9d/tempImagedpidYQ.jpg?format=500w" width="100px;" alt="Kalyn Watt"/><br /><sub><b>Kalyn Watt</b></sub></a><br /><a href="#design-kalynwatt" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.kalynwatt.com/"><img src="https://images.squarespace-cdn.com/content/v1/6330cf626aba27472c9abe80/12e48df1-eb9e-4710-93fb-62811d3cbb9d/tempImagedpidYQ.jpg?format=500w" width="100px;" style="aspect-ratio: 1; object-fit: cover;" alt="Kalyn Watt"/><br /><sub><b>Kalyn Watt</b></sub></a><br /><a href="#design-kalynwatt" title="Design">🎨</a></td>
     </tr>
   </tbody>
 </table>
