@@ -1,7 +1,8 @@
 
+import Head from 'next/head';
 import React, {useRef, useState, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl';
-export default function MapBoxInput(){
+export default function MapBoxInput() {
     mapboxgl.accessToken = "pk.eyJ1IjoiYWxlc3RlcjMiLCJhIjoiY2xlM3JwdDkwMDR6cjNvdGRpanZqZHd0ciJ9.ibQNGDwEE_Wc59LB2dhs9Q";
     const mapContainer = useRef<HTMLDivElement | null>(null);
     const map = useRef<mapboxgl.Map>();
