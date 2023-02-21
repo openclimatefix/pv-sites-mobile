@@ -77,6 +77,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "",
+      "name": "Kalyn Watt",
+      "avatar_url": "https://images.squarespace-cdn.com/content/v1/6330cf626aba27472c9abe80/12e48df1-eb9e-4710-93fb-62811d3cbb9d/tempImagedpidYQ.jpg?format=500w",
+      "profile": "https://www.kalynwatt.com/",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
