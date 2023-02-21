@@ -48,6 +48,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="http://andrewlester.net"><img src="https://avatars.githubusercontent.com/u/23221268?v=4?s=100" width="100px;" alt="Andrew Lester"/><br /><sub><b>Andrew Lester</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=AndrewLester" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ericcccsliu"><img src="https://avatars.githubusercontent.com/u/62641231?v=4?s=100" width="100px;" alt="Eric Liu"/><br /><sub><b>Eric Liu</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=ericcccsliu" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jackypark9852"><img src="https://avatars.githubusercontent.com/u/81858354?v=4?s=100" width="100px;" alt="Jacky Park"/><br /><sub><b>Jacky Park</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=jackypark9852" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://ashayp.com"><img src="https://avatars.githubusercontent.com/u/21179174?v=4?s=100" width="100px;" alt="Ashay Parikh"/><br /><sub><b>Ashay Parikh</b></sub></a><br /><a href="https://github.com/openclimatefix/pv-sites-mobile/commits?author=ashayp22" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
