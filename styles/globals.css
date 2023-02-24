@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Define the .geocoder class */
+.geocoderContainer{
+    @apply h-2 w-80 border-2 border-rose-500 z-10;
+  }
+  
+  /* Apply additional styles to .mapboxgl-ctrl-geocoder */
+  .mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+  }
+  
+  /* Apply styles to #map */
+  #map {
+    @apply mt-8;
+  }
