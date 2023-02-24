@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main
-        className={`${inter.className} bg-white dark:bg-black flex flex-col items-center justify-start px-4 min-h-screen"`}
+        className={`${inter.className} bg-white dark:bg-black flex flex-col items-center justify-start min-h-screen"`}
       >
         <Component {...pageProps} />
       </main>
