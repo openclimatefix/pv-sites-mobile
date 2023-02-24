@@ -1,4 +1,5 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import NavBar from '~/components/NavBar';
 
 interface PanelFormDataBody {
   solarPanelDirection: number;
@@ -24,87 +25,91 @@ const pClassName = 'text-ocf-gray-900 text-xs mt-1 dark:text-ocf-gray-800';
 
 const Form = () => {
   return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        try {
-          const formData = new FormData(e.currentTarget);
+    <>
+      <NavBar />
 
-          const solarPanelData: PanelFormDataBody = {
-            solarPanelDirection: parseFloat(
-              formData.get('solarPanelDirection') as string
-            ),
-            solarPanelAngleTilt: parseFloat(
-              formData.get('solarPanelAngleTilt') as string
-            ),
-            solarPanelCapacity: parseFloat(
-              formData.get('solarPanelCapacity') as string
-            ),
-          };
-        } catch (e) {
-          console.error(`onSubmit(): ${e}`);
-        }
-      }}
-    >
-      <div>
-        <h1 className="font-bold text-4xl mt-20 dark:text-ocf-gray">
-          Panel Details
-        </h1>
-      </div>
-      <div className="my-8">
-        <h2 className={h2ClassName}>Solar panel direction</h2>
-        <p className={pClassName}>
-          (0º = North, 90º = East, 180º = South, 270º = West)
-        </p>
-        <input
-          required
-          name="solarPanelDirection"
-          type="number"
-          placeholder="170º"
-          onKeyDown={preventMinus}
-          min="0"
-          max="360"
-          className={`${inputClassName} w-20`}
-        />
-        <p className={`${pClassName} underline`}>I don&apos;t know</p>
-      </div>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          try {
+            const formData = new FormData(e.currentTarget);
 
-      <div className="my-8">
-        <h2 className={h2ClassName}>Solar panel angle tilt</h2>
-        <p className={pClassName}>(Degrees above the horizontal)</p>
-        <input
-          required
-          name="solarPanelAngleTilt"
-          type="number"
-          placeholder="30º"
-          min="0"
-          max="360"
-          onKeyDown={preventMinus}
-          className={`${inputClassName} w-20`}
-        />
-      </div>
-
-      <div className="my-8">
-        <div className="flex flex-row justify-start items-center w-full">
-          <h2 className={h2ClassName}>Solar panel capacity</h2>
-          <p className={pClassName}>(optional)</p>
+            const solarPanelData: PanelFormDataBody = {
+              solarPanelDirection: parseFloat(
+                formData.get('solarPanelDirection') as string
+              ),
+              solarPanelAngleTilt: parseFloat(
+                formData.get('solarPanelAngleTilt') as string
+              ),
+              solarPanelCapacity: parseFloat(
+                formData.get('solarPanelCapacity') as string
+              ),
+            };
+          } catch (e) {
+            console.error(`onSubmit(): ${e}`);
+          }
+        }}
+      >
+        <div>
+          <h1 className="font-bold text-4xl mt-20 dark:text-ocf-gray">
+            Panel Details
+          </h1>
         </div>
-        <input
-          name="solarPanelCapacity"
-          type="number"
-          placeholder="3000 W"
-          min="0"
-          onKeyDown={preventMinus}
-          className={`${inputClassName} w-28`}
-        />
-      </div>
+        <div className="my-8">
+          <h2 className={h2ClassName}>Solar panel direction</h2>
+          <p className={pClassName}>
+            (0º = North, 90º = East, 180º = South, 270º = West)
+          </p>
+          <input
+            required
+            name="solarPanelDirection"
+            type="number"
+            placeholder="170º"
+            onKeyDown={preventMinus}
+            min="0"
+            max="360"
+            className={`${inputClassName} w-20`}
+          />
+          <p className={`${pClassName} underline`}>I don&apos;t know</p>
+        </div>
 
-      <div className="flex justify-center items-center w-full mt-24">
-        <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-40 text-center rounded-md font-bold text-xl uppercase">
-          Next
-        </button>
-      </div>
-    </form>
+        <div className="my-8">
+          <h2 className={h2ClassName}>Solar panel angle tilt</h2>
+          <p className={pClassName}>(Degrees above the horizontal)</p>
+          <input
+            required
+            name="solarPanelAngleTilt"
+            type="number"
+            placeholder="30º"
+            min="0"
+            max="360"
+            onKeyDown={preventMinus}
+            className={`${inputClassName} w-20`}
+          />
+        </div>
+
+        <div className="my-8">
+          <div className="flex flex-row justify-start items-center w-full">
+            <h2 className={h2ClassName}>Solar panel capacity</h2>
+            <p className={pClassName}>(optional)</p>
+          </div>
+          <input
+            name="solarPanelCapacity"
+            type="number"
+            placeholder="3000 W"
+            min="0"
+            onKeyDown={preventMinus}
+            className={`${inputClassName} w-28`}
+          />
+        </div>
+
+        <div className="flex justify-center items-center w-full mt-24">
+          <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-40 text-center rounded-md font-bold text-xl uppercase">
+            Next
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 
