@@ -113,7 +113,7 @@ const Form = () => {
       <Input
         label={
           <>
-            {'Solar panel capacity'}{' '}
+            Solar panel capacity
             <span className="text-xs font-normal">(optional)</span>
           </>
         }
