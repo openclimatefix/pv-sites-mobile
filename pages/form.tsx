@@ -1,5 +1,5 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import OCFButton from '~/components/ocf_button';
+import Button from '~/components/Button';
 
 interface PanelFormDataBody {
   solarPanelDirection: number;
@@ -101,9 +101,9 @@ const Form = () => {
       </div>
 
       <div className="flex justify-center items-center w-full mt-24">
-        <OCFButton>
+        <Button>
           Next
-        </OCFButton>
+        </Button>
       </div>
     </form>
   );
