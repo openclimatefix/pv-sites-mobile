@@ -1,4 +1,6 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { FC } from 'react';
+import { camelCaseID } from '~/lib/utils';
 
 interface PanelFormDataBody {
   solarPanelDirection: number;
@@ -17,93 +19,117 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
   }
 };
 
-const inputClassName =
-  'mt-3 text-lg text-center bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block h-14 p-2.5 hover:ring-ocf-yellow hover:border-ocf-yellow  dark:bg-ocf-gray-800 dark:border-ocf-gray-800 dark:placeholder-ocf-gray-900 dark:text-ocf-gray';
-const h2ClassName = 'font-medium text-lg dark:text-ocf-gray';
-const pClassName = 'text-ocf-gray-900 text-xs mt-1 dark:text-ocf-gray-800';
+interface InputProps {
+  id: string;
+  label: React.ReactNode;
+  description?: string;
+  help?: string;
+  inputProps?: React.HTMLProps<HTMLInputElement>;
+}
+const Input: FC<InputProps> = ({
+  id,
+  label,
+  description,
+  help,
+  inputProps,
+}) => {
+  return (
+    <>
+      <label
+        className="font-[600] text-lg dark:text-ocf-gray pb-3 block mt-8"
+        htmlFor={id}
+      >
+        {label}
+        {description && (
+          <span className="text-ocf-gray-900 text-xs pt-1 dark:text-ocf-gray-800 font-normal block">
+            {description}
+          </span>
+        )}
+      </label>
+      <input
+        name={camelCaseID(id)}
+        id={id}
+        {...inputProps}
+        className="text-lg text-center border bg-ocf-gray-50 text-ocf-gray-700 rounded-lg block h-14 p-2.5 outline-none focus:ring-1 ring-ocf-yellow dark:bg-ocf-gray-1000 dark:border-ocf-gray-1000  dark:placeholder-ocf-gray-800 dark:text-ocf-gray-600 w-full peer placeholder-shown:invalid:ring-ocf-yellow invalid:ring-ocf-orange-800"
+      />
+      {help && (
+        <button
+          type="button"
+          className="text-ocf-gray-800 underline underline-offset-2 ml-auto text-xs mt-1 bg-transparent block"
+        >
+          {help}
+        </button>
+      )}
+    </>
+  );
+};
 
 const Form = () => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    // TODO: Add schema validation with zod
+    const siteDetailsData = Object.entries(
+      formData
+    ) as unknown as PanelFormDataBody;
+  };
+
   return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        try {
-          const formData = new FormData(e.currentTarget);
+    <form onSubmit={onSubmit}>
+      <h1 className="font-bold text-4xl mt-20 dark:text-ocf-gray mb-5">
+        Site Details
+      </h1>
 
-          const solarPanelData: PanelFormDataBody = {
-            solarPanelDirection: parseFloat(
-              formData.get('solarPanelDirection') as string
-            ),
-            solarPanelAngleTilt: parseFloat(
-              formData.get('solarPanelAngleTilt') as string
-            ),
-            solarPanelCapacity: parseFloat(
-              formData.get('solarPanelCapacity') as string
-            ),
-          };
-        } catch (e) {
-          console.error(`onSubmit(): ${e}`);
+      <Input
+        id="solar-panel-direction"
+        label="Solar panel direction"
+        description="(0º = North, 90º = East, 180º = South, 270º = West)"
+        help="I don't know"
+        inputProps={{
+          type: 'number',
+          placeholder: '170º',
+          min: '0',
+          max: '360',
+          required: true,
+          onKeyDown: preventMinus,
+        }}
+      />
+
+      <Input
+        id="solar-panel-tilt"
+        label="Solar panel tilt"
+        description="(Degrees above the horizontal)"
+        inputProps={{
+          type: 'number',
+          placeholder: '30º',
+          min: '0',
+          max: '360',
+          required: true,
+          onKeyDown: preventMinus,
+        }}
+      />
+
+      <Input
+        label={
+          <>
+            {'Solar panel capacity'}{' '}
+            <span className="text-xs font-normal">(optional)</span>
+          </>
         }
-      }}
-    >
-      <div>
-        <h1 className="font-bold text-4xl mt-20 dark:text-ocf-gray">
-          Panel Details
-        </h1>
-      </div>
-      <div className="my-8">
-        <h2 className={h2ClassName}>Solar panel direction</h2>
-        <p className={pClassName}>
-          (0º = North, 90º = East, 180º = South, 270º = West)
-        </p>
-        <input
-          required
-          name="solarPanelDirection"
-          type="number"
-          placeholder="170º"
-          onKeyDown={preventMinus}
-          min="0"
-          max="360"
-          className={`${inputClassName} w-20`}
-        />
-        <p className={`${pClassName} underline`}>I don&apos;t know</p>
-      </div>
+        id="solar-panel-capacity"
+        inputProps={{
+          type: 'number',
+          placeholder: '30º',
+          min: '0',
+          max: '360',
+          onKeyDown: preventMinus,
+        }}
+      />
 
-      <div className="my-8">
-        <h2 className={h2ClassName}>Solar panel angle tilt</h2>
-        <p className={pClassName}>(Degrees above the horizontal)</p>
-        <input
-          required
-          name="solarPanelAngleTilt"
-          type="number"
-          placeholder="30º"
-          min="0"
-          max="360"
-          onKeyDown={preventMinus}
-          className={`${inputClassName} w-20`}
-        />
-      </div>
-
-      <div className="my-8">
-        <div className="flex flex-row justify-start items-center w-full">
-          <h2 className={h2ClassName}>Solar panel capacity</h2>
-          <p className={pClassName}>(optional)</p>
-        </div>
-        <input
-          name="solarPanelCapacity"
-          type="number"
-          placeholder="3000 W"
-          min="0"
-          onKeyDown={preventMinus}
-          className={`${inputClassName} w-28`}
-        />
-      </div>
-
-      <div className="flex justify-center items-center w-full mt-24">
-        <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-40 text-center rounded-md font-bold text-xl uppercase">
-          Next
-        </button>
-      </div>
+      <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-full text-center rounded-md font-bold text-xl uppercase block mt-8 peer-invalid:bg-ocf-gray-300 transition duration-150">
+        Next
+      </button>
     </form>
   );
 };
