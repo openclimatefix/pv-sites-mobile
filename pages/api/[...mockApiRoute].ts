@@ -20,14 +20,14 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
         'created_utc',
         'updated_utc',
       ];
-      const doesPropertyExist = (propname: string) => !!req.body[propname]
-      
+      const doesPropertyExist = (propname: string) => !!req.body[propname];
+
       if (PVSiteMetadataProps.every(doesPropertyExist)) {
         console.log('POST request received! Contents:');
         console.log(req.body);
-        res.status(200)
+        res.status(200);
       }
-      res.status(400).send('PV site metadata missing required props')
+      res.status(400).send('PV site metadata missing required props');
     }
   } else if (req.method == 'GET') {
     if (
