@@ -4,30 +4,30 @@ import pvActualJson from '../../data/pv-actual.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
 
-interface PVSiteMetadataProps {
-  site_uuid: string;
-  client_name: string;
-  client_site_id: string;
-  client_site_name: string;
-  region?: string;
-  dno?: string;
-  gsp?: string;
-  orientation?: number;
-  tilt?: number;
-  latitude: number;
-  longitude: number;
-  installed_capacity_kw: number;
-  created_utc: string;
-  updated_utc: string;
-}
-
 function handler(req: NextApiRequest, res: NextApiResponse) {
   const { mockApiRoute } = req.query;
 
   if (req.method == 'POST') {
     if ((mockApiRoute as string[]).join('/') === 'sites') {
-      console.log('POST request received! Contents:');
-      console.log(req.body);
+      const PVSiteMetadataProps = [
+        'site_uuid',
+        'client_name',
+        'client_site_id',
+        'client_site_name',
+        'latitude',
+        'longitude',
+        'installed_capacity_kw',
+        'created_utc',
+        'updated_utc',
+      ];
+      const doesPropertyExist = (propname: string) => !!req.body[propname]
+      
+      if (PVSiteMetadataProps.every(doesPropertyExist)) {
+        console.log('POST request received! Contents:');
+        console.log(req.body);
+        res.status(200)
+      }
+      res.status(400).send('PV site metadata missing required props')
     }
   } else if (req.method == 'GET') {
     if (
