@@ -1,5 +1,5 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { FC } from 'react';
+import { withPageAuthRequired } from '~/lib/auth';
 import { camelCaseID } from '~/lib/utils';
 
 interface PanelFormDataBody {
