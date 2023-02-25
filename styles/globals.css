@@ -1,10 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /* Define the .geocoder class */
-.geocoderContainer{
-    @apply h-2 w-80 border-2 border-rose-500 z-10;
+.mapboxgl-ctrl-geocoder {
+    @apply bg-mapbox-black rounded-none text-white !important;
   }
   
   /* Apply additional styles to .mapboxgl-ctrl-geocoder */
@@ -16,3 +15,16 @@
   #map {
     @apply mt-8;
   }
+
+/* Apply styles to the input text  */
+.mapboxgl-ctrl-geocoder--input{
+    @apply text-white !important;
+}
+
+.suggestions {
+    @apply bg-mapbox-black-500 !important;
+}
+
+.suggestions.active {
+    @apply bg-mapbox-black-500 !important;
+}

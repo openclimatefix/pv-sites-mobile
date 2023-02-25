@@ -67,7 +67,7 @@ export default function MapBoxInput() {
     return (
       <div className = "flex flex-col h-full">
           <div ref={geocoderContainer} id="geocoderContainer"/> 
-            <div ref={mapContainer} className="h-screen" />
+          <div ref={mapContainer} className="h-screen" />
       </div>
     );
 }
