@@ -47,7 +47,7 @@ export default function MapBoxInput() {
         }
 
         const marker = new mapboxgl.Marker({
-          draggable: true 
+          draggable: false
           })
           .setLngLat([lng, lat])
           .addTo(map.current);
