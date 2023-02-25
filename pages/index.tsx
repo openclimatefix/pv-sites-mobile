@@ -1,6 +1,7 @@
 import Head from 'next/head';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
-export default function Home() {
+export default function Home(this: any) {
   return (
     <>
       <Head>
@@ -9,9 +10,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h1>pv-sites-mobile</h1>
-      </main>
     </>
   );
 }
+
+export const getServerSideProps = withPageAuthRequired();

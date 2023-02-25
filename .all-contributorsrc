@@ -1,0 +1,97 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "braddf",
+      "name": "braddf",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41056982?v=4",
+      "profile": "https://github.com/braddf",
+      "contributions": [
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "AndrewLester",
+      "name": "Andrew Lester",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23221268?v=4",
+      "profile": "http://andrewlester.net",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ericcccsliu",
+      "name": "Eric Liu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62641231?v=4",
+      "profile": "https://github.com/ericcccsliu",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "neha-vard",
+      "name": "neha-vard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/80798381?v=4",
+      "profile": "https://github.com/neha-vard",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "anyaparekh",
+      "name": "Anya Parekh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49364484?v=4",
+      "profile": "https://github.com/anyaparekh",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rohanvan123",
+      "name": "Rohan Vanjani",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67704979?v=4",
+      "profile": "https://github.com/rohanvan123",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jackypark9852",
+      "name": "Jacky Park",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81858354?v=4",
+      "profile": "https://github.com/jackypark9852",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ashayp22",
+      "name": "Ashay Parikh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21179174?v=4",
+      "profile": "http://ashayp.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "",
+      "name": "Kalyn Watt",
+      "avatar_url": "https://images.squarespace-cdn.com/content/v1/6330cf626aba27472c9abe80/12e48df1-eb9e-4710-93fb-62811d3cbb9d/tempImagedpidYQ.jpg?format=500w",
+      "profile": "https://www.kalynwatt.com/",
+      "contributions": [
+        "design"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "pv-sites-mobile",
+  "projectOwner": "openclimatefix"
+}
