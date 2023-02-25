@@ -116,6 +116,7 @@ module.exports = {
           700: '#ACACAC',
           800: '#909090',
           900: '#747474',
+          1000: '#444444',
         },
         'mapbox-black': {
           DEFAULT: '#191a1a',

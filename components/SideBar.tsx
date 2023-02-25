@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { useGlobalContext } from './context';
+import Link from 'next/link';
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useGlobalContext();
@@ -11,10 +11,10 @@ const Sidebar = () => {
         isSidebarOpen ? 'left-0' : '-left-64'
       }`}
     >
-      <div className="flex h-screen overflow-y-auto flex-col bg-white  w-64 px-4 py-8 border-r min-h-screen relative">
+      <div className="flex h-screen overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 min-h-screen relative">
         <button
           onClick={closeSidebar}
-          className="absolute top-1 right-1  text-gray-600 w-8 h-8 rounded-full flex items-center justify-center active:bg-gray-300 focus:outline-none ml-6 hover:bg-gray-200 hover:text-gray-800"
+          className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center focus:outline-none ml-6"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -31,65 +31,97 @@ const Sidebar = () => {
             />
           </svg>
         </button>
-        <h2 className="text-3xl font-semibold text-gray-800">
-          ZRF <span className="text-indigo-500 ml-1">Tech</span>
-        </h2>
-        <div className="relative mt-6">
-          <label
-            className="absolute inset-y-0 left-0 pl-3 flex items-center "
-            htmlFor="searchP"
-          ></label>
-          <input
-            id="searchP"
-            type="text"
-            placeholder="Search"
-            className="w-full border border-gray-300 hover:border-gray-400 pl-10 py-3 pr-4 text-gray-700 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
-        </div>
-        <div className="flex flex-col mt-6  justify-between flex-1">
-          <nav className="text">
-            {/* {links.map((link, index) => {
-              const { id, url, text, icon } = link;
-              return (
-                <a
-                  key={id}
-                  href={url}
-                  className={`capitalize flex items-center px-4 py-2 ${
-                    index === 0 ? 'bg-gray-200 text-gray-700' : null
-                  } ${
-                    index > 0
-                      ? 'mt-5 text-gray-600 hover:bg-gray-200 hover:text-gray-700 transition-colors duration-200 transform'
-                      : null
-                  } rounded-md`}
-                >
-                  {icon}
-                  <span className="mx-4 font-medium">{text}</span>
-                </a>
-              );
-            })} */}
-            <hr className="my-6" />
-            <a
-              href="/color-shade-generator"
-              className="flex items-center px-4 py-2 mt-5 rounded-md text-gray-600 hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
+        <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
+          <Link
+            href="/dashboard"
+            className="flex items-center px-4 py-2 rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="#FFD053"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="#FFD053"
+              className="w-6 h-6"
             >
-              <span className="mx-4 font-medium">Ticket</span>
-            </a>
-            <a
-              href="/color-shade-generator"
-              className="flex items-center px-4 py-2 mt-5 rounded-md text-gray-600 hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
+              />
+            </svg>
+            <span className="mx-4 font-medium flex-1 align-center text-amber">
+              Dashboard
+            </span>
+          </Link>
+          <div className="text-xs">
+            <Link
+              href="/form"
+              className="mb-5 flex items-center px-4 py-2 rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform"
             >
-              <span className="mx-4 font-medium">Settings</span>
-            </a>
-          </nav>
-          <div className="flex items-center px-4 -mx-2 mt-5">
-            {/* <Image
-              src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-              alt="avatar"
-              className="h-9 w-9 mx-2 object-center object-cover rounded-full"
-            /> */}
-            <h4 className="mx-2 font-medium text-gray-800 hover:underline cursor-pointer">
-              John Doe
-            </h4>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="white"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span className="mx-4 font-medium flex-1 align-center text-white">
+                Add a Location
+              </span>
+            </Link>
+            <Link
+              href="/form"
+              className="mb-5 flex items-center px-4 py-2 rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="white"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                />
+              </svg>
+              <span className="mx-4 font-medium flex-1 align-center text-white">
+                Edit Site Details
+              </span>
+            </Link>
+            <Link
+              href="/api/auth/logout"
+              className="mb-5 flex items-center px-4 py-2 rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="white"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                />
+              </svg>
+
+              <span className="mx-4 font-medium flex-1 align-center text-white">
+                Logout
+              </span>
+            </Link>
           </div>
         </div>
       </div>

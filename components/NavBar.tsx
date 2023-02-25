@@ -12,12 +12,12 @@ const NavBar: FC = () => {
   const { isSidebarOpen, openSidebar } = useGlobalContext();
 
   return (
-    <div className="ocf-black w-full pt-8 pb-2 h-24 flex justify-between">
+    <div className="ocf-black w-full pt-8 pb-2 h-24 flex justify-between mt-5">
       <button
         onClick={openSidebar}
         className={`${
           isSidebarOpen ? '-translate-x-[10rem]' : 'translate-x-0'
-        } fixed top-2 transition transform ease-linear duration-500 text-gray-600 w-8 h-8 rounded-full flex items-center justify-center active:bg-gray-300 focus:outline-none ml-6 hover:bg-gray-200 hover:text-gray-800`}
+        } transition transform ease-linear duration-500 text-gray-600 flex justify-center self-center`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,8 +25,8 @@ const NavBar: FC = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          color="white"
-          className="w-6 h-6"
+          color="#FFD053"
+          className="w-10 h-10"
         >
           <path
             strokeLinecap="round"
@@ -35,8 +35,8 @@ const NavBar: FC = () => {
           />
         </svg>
       </button>
-      <Image src={logo} alt="logo" className="m-auto mb-0" />
-      <div className="w-10 h-10 bg-fuchsia-400 rounded-full self-center"></div>
+      <Image src={logo} alt="logo" className="self-center justify-center" />
+      <div className="w-10 h-10"></div>
     </div>
   );
 };
