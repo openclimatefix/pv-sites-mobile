@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   CartesianGrid,
   Legend,
@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { json } from 'stream/consumers';
+import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import useSWR, { Fetcher } from 'swr';
 
 interface forecastDataPointProps {
@@ -57,13 +57,28 @@ const Graph = () => {
     fetcher
   );
 
-  console.log(data?.forecast_values);
-  //   console.log(data1)
+  const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+
+  const truncateDecimals = (number: number, digits: number) => {
+    var multiplier = Math.pow(10, digits),
+      adjustedNum = number * multiplier,
+      truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+
+    return truncatedNum / multiplier;
+  };
 
   return (
     <>
-      <div className="w-full h-[700px]">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="w-full h-[400px] bg-[#444444] rounded-lg">
+        <div className="flex ml-[100px] mt-[20px]">
+          <LegendLineGraphIcon className="text-[#FFD053] mb-[20px]"></LegendLineGraphIcon>
+          <p className="text-white ml-[15px]">OCF Final Forecast</p>
+        </div>
+
+        <ResponsiveContainer width="100%" height="85%">
           <LineChart
             width={500}
             height={300}
@@ -76,17 +91,28 @@ const Graph = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="target_datetime_utc" />
+            <XAxis
+              dataKey="target_datetime_utc"
+              tickFormatter={(point: string) =>
+                formatter.format(Date.parse(point))
+              }
+            />
             <YAxis />
-            <Tooltip />
-            <Legend />
+            <Tooltip
+              formatter={(value: number, name, props) => [
+                truncateDecimals(value, 5),
+                'KW',
+              ]}
+              labelFormatter={(point: string) =>
+                formatter.format(Date.parse(point))
+              }
+            />
             <Line
               type="monotone"
               dataKey="expected_generation_kw"
-              stroke="#8884d8"
+              stroke="#FFD053"
               activeDot={{ r: 8 }}
             />
-            {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
           </LineChart>
         </ResponsiveContainer>
       </div>
