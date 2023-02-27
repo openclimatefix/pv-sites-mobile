@@ -1,11 +1,8 @@
 import '~/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { UserProvider } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
-
-import { Inter } from '@next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
+import Layout from '~/components/Layout';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -19,8 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <main
         className={`${inter.className} bg-white dark:bg-black flex flex-col items-center justify-start min-h-screen"`}
       >
+      <Layout>
         <Component {...pageProps} />
-      </main>
+      </Layout>
     </UserProvider>
   );
 }
