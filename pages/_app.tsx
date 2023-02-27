@@ -1,12 +1,13 @@
 import '~/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { UserProvider } from '@auth0/nextjs-auth0';
+//import { UserProvider } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
 import Layout from '~/components/Layout';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <UserProvider>
+    //<UserProvider>
+    <div>
       <Head>
         <title>Open Climate Fix</title>
         <meta name="description" content="pv-sites-mobile" />
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </UserProvider>
+    </div>
+    //</UserProvider>
   );
 }
