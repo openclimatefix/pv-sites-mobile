@@ -13,9 +13,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main
-        className={`${inter.className} bg-white dark:bg-black flex flex-col items-center justify-start min-h-screen"`}
-      >
       <Layout>
         <Component {...pageProps} />
       </Layout>
