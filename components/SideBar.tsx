@@ -24,16 +24,14 @@ const MenuLink: React.FC<MenuLinkProps> = ({
   textColor,
 }) => {
   return (
-    <>
-      <Link {...linkProps}>
-        <div className="mb-5 px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
-          <>{svg}</>
-          <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
-            {label}
-          </span>
-        </div>
-      </Link>
-    </>
+    <Link {...linkProps}>
+      <div className="mb-5 px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
+        <>{svg}</>
+        <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
+          {label}
+        </span>
+      </div>
+    </Link>
   );
 };
 

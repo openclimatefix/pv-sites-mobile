@@ -1,5 +1,5 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Input from '~/components/Input';
+import { withPageAuthRequired } from '~/lib/auth';
 
 interface PanelFormDataBody {
   solarPanelDirection: number;

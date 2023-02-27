@@ -13,7 +13,7 @@ interface AppProviderProps {
 const AppContext = React.createContext<Sidebar | null>(null);
 
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const openSidebar = () => {
     setIsSidebarOpen(true);
