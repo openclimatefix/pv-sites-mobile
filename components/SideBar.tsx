@@ -14,21 +14,23 @@ type MenuLinkProps = {
   linkProps: LinkProps;
   label: string;
   svg: SVGProps<SVGElement>;
-  className: string;
+  textColor: string;
 };
 
 const MenuLink: React.FC<MenuLinkProps> = ({
   linkProps,
   label,
   svg,
-  className,
+  textColor,
 }) => {
   return (
     <>
       <Link {...linkProps}>
         <div className="mb-5 px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
           <>{svg}</>
-          <span className={className}>{label}</span>
+          <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
+            {label}
+          </span>
         </div>
       </Link>
     </>
@@ -56,26 +58,26 @@ const Sidebar = () => {
             linkProps={{ href: '/dashboard' }}
             label="Dashboard"
             svg={<DashboardIcon />}
-            className="mx-4 font-medium flex-1 align-center text-amber"
+            textColor="text-amber"
           />
           <div className="text-xs">
             <MenuLink
               linkProps={{ href: '/form' }}
               label="Add a Location"
               svg={<LocationIcon />}
-              className="mx-4 font-medium flex-1 align-center text-white"
+              textColor="text-white"
             />
             <MenuLink
               linkProps={{ href: '/form' }}
               label="Edit Site Details"
               svg={<EditIcon />}
-              className="mx-4 font-medium flex-1 align-center text-white"
+              textColor="text-white"
             />
             <MenuLink
               linkProps={{ href: '/api/auth/logout' }}
               label="Logout"
               svg={<LogoutIcon />}
-              className="mx-4 font-medium flex-1 align-center text-white"
+              textColor="text-white"
             />
           </div>
         </div>
