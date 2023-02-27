@@ -26,31 +26,31 @@ const Sidebar = () => {
           <ExitIcon />
         </button>
         <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
-          {Button(
-            '/dashboard',
-            'Dashboard',
-            <DashboardIcon />,
-            'mx-4 font-medium flex-1 align-center text-amber'
-          )}
+          <Button
+            href="/dashboard"
+            name="Dashboard"
+            svg={<DashboardIcon />}
+            className="mx-4 font-medium flex-1 align-center text-amber"
+          />
           <div className="text-xs">
-            {Button(
-              '/form',
-              'Add a Location',
-              <LocationIcon />,
-              'mx-4 font-medium flex-1 align-center text-white'
-            )}
-            {Button(
-              '/form',
-              'Edit Site Details',
-              <EditIcon />,
-              'mx-4 font-medium flex-1 align-center text-white'
-            )}
-            {Button(
-              '/api/auth/logout',
-              'Logout',
-              <LogoutIcon />,
-              'mx-4 font-medium flex-1 align-center text-white'
-            )}
+            <Button
+              href="/form"
+              name="Add a Location"
+              svg={<LocationIcon />}
+              className="mx-4 font-medium flex-1 align-center text-white"
+            ></Button>
+            <Button
+              href="/form"
+              name="Edit Site Details"
+              svg={<EditIcon />}
+              className="mx-4 font-medium flex-1 align-center text-white"
+            ></Button>
+            <Button
+              href="/api/auth/logout"
+              name="Logout"
+              svg={<LogoutIcon />}
+              className="mx-4 font-medium flex-1 align-center text-white"
+            ></Button>
           </div>
         </div>
       </div>
@@ -58,20 +58,28 @@ const Sidebar = () => {
   );
 };
 
-const Button = (
-  href: string,
-  label: string,
-  svg: SVGProps<SVGElement>,
-  className: string
-) => {
+type SideBarButtonProps = {
+  href: string;
+  name: string;
+  svg: SVGProps<SVGElement>;
+  className: string;
+};
+
+const Button: React.FC<SideBarButtonProps> = ({
+  href,
+  name,
+  svg,
+  className,
+}) => {
   return (
-    <Link
-      href={href}
-      className="mb-5 flex items-center px-4 py-2 rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform"
-    >
-      <>{svg}</>
-      <span className={className}>{label}</span>
-    </Link>
+    <>
+      <Link href={href}>
+        <div className="mb-5 px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
+          <>{svg}</>
+          <span className={className}>{name}</span>
+        </div>
+      </Link>
+    </>
   );
 };
 

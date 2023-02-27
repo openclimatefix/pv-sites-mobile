@@ -109,7 +109,7 @@ module.exports = {
           50: '#FFFFFF',
           100: '#FFFFFF',
           200: '#FFFFFF',
-          300: '#FFFFFF',
+          300: '#DDDDDD',
           400: '#F8F8F8',
           500: '#E4E4E4',
           600: '#C8C8C8',
@@ -180,5 +180,6 @@ module.exports = {
       },
     },
   },
+  darkMode: 'class',
   // plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")]
 };
