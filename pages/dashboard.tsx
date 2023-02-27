@@ -6,7 +6,7 @@ import React from 'react';
 const Dashboard = () => {
   return (
     <div className="bg-black w-screen h-screen px-4">
-      <div className="mt-24 text-ocf-gray text-3xl font-bold">Dashboard</div>
+      <h1 className="mt-24 text-ocf-gray text-3xl font-bold">Dashboard</h1>
       <div className="flex flex-row w-full justify-start">
         <Warnings />
       </div>
