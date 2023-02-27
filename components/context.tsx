@@ -29,7 +29,7 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
   );
 };
 
-export const useGlobalContext = () => {
+export const useSidebarContext = () => {
   const context = useContext(AppContext);
 
   if (context === null) {

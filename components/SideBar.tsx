@@ -1,5 +1,5 @@
 import React, { SVGProps } from 'react';
-import { useGlobalContext } from './context';
+import { useSidebarContext } from './context';
 import Link from 'next/link';
 import {
   LogoutIcon,
@@ -8,9 +8,35 @@ import {
   DashboardIcon,
   ExitIcon,
 } from './icons/sidebar_icons';
+import { LinkProps } from 'next/link';
+
+type MenuLinkProps = {
+  linkProps: LinkProps;
+  label: string;
+  svg: SVGProps<SVGElement>;
+  className: string;
+};
+
+const MenuLink: React.FC<MenuLinkProps> = ({
+  linkProps,
+  label,
+  svg,
+  className,
+}) => {
+  return (
+    <>
+      <Link {...linkProps}>
+        <div className="mb-5 px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
+          <>{svg}</>
+          <span className={className}>{label}</span>
+        </div>
+      </Link>
+    </>
+  );
+};
 
 const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useGlobalContext();
+  const { isSidebarOpen, closeSidebar } = useSidebarContext();
 
   return (
     <div
@@ -26,60 +52,35 @@ const Sidebar = () => {
           <ExitIcon />
         </button>
         <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
-          <Button
-            href="/dashboard"
-            name="Dashboard"
+          <MenuLink
+            linkProps={{ href: '/dashboard' }}
+            label="Dashboard"
             svg={<DashboardIcon />}
             className="mx-4 font-medium flex-1 align-center text-amber"
           />
           <div className="text-xs">
-            <Button
-              href="/form"
-              name="Add a Location"
+            <MenuLink
+              linkProps={{ href: '/form' }}
+              label="Add a Location"
               svg={<LocationIcon />}
               className="mx-4 font-medium flex-1 align-center text-white"
-            ></Button>
-            <Button
-              href="/form"
-              name="Edit Site Details"
+            />
+            <MenuLink
+              linkProps={{ href: '/form' }}
+              label="Edit Site Details"
               svg={<EditIcon />}
               className="mx-4 font-medium flex-1 align-center text-white"
-            ></Button>
-            <Button
-              href="/api/auth/logout"
-              name="Logout"
+            />
+            <MenuLink
+              linkProps={{ href: '/api/auth/logout' }}
+              label="Logout"
               svg={<LogoutIcon />}
               className="mx-4 font-medium flex-1 align-center text-white"
-            ></Button>
+            />
           </div>
         </div>
       </div>
     </div>
-  );
-};
-
-type SideBarButtonProps = {
-  href: string;
-  name: string;
-  svg: SVGProps<SVGElement>;
-  className: string;
-};
-
-const Button: React.FC<SideBarButtonProps> = ({
-  href,
-  name,
-  svg,
-  className,
-}) => {
-  return (
-    <>
-      <Link href={href}>
-        <div className="mb-5 px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
-          <>{svg}</>
-          <span className={className}>{name}</span>
-        </div>
-      </Link>
-    </>
   );
 };
 

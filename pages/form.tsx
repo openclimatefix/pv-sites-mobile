@@ -1,5 +1,4 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import NavBar from '~/components/NavBar';
 import Input from '~/components/Input';
 
 interface PanelFormDataBody {

@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { useGlobalContext } from './context';
+import { useSidebarContext } from './context';
 import { NowcastingLogo, MenuLogo } from './icons/navbar_icons';
 
 const NavBar: FC = () => {
-  const { isSidebarOpen, openSidebar } = useGlobalContext();
+  const { isSidebarOpen, openSidebar } = useSidebarContext();
 
   return (
     <div className="ocf-black w-full pt-8 pb-2 h-24 flex justify-between mt-5">
