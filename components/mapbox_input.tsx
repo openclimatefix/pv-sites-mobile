@@ -41,6 +41,8 @@ export default function MapBoxInput() {
         const geocoder =  new MapboxGeocoder({
           accessToken: mapboxgl.accessToken,
           mapboxgl: mapboxgl, 
+          placeholder: "Where is your solar panel located?",
+          marker: false,
         })
         if (geocoderContainer.current) {
           geocoderContainer.current.appendChild(geocoder.onAdd(map.current));
