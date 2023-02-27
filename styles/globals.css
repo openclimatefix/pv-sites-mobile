@@ -3,28 +3,31 @@
 @tailwind utilities;
 /* Define the .geocoder class */
 .mapboxgl-ctrl-geocoder {
-    @apply bg-mapbox-black rounded-none text-white !important;
-  }
-  
-  /* Apply additional styles to .mapboxgl-ctrl-geocoder */
-  .mapboxgl-ctrl-geocoder {
-    min-width: 100%;
-  }
-  
-  /* Apply styles to #map */
-  #map {
-    @apply mt-8;
-  }
+  @apply bg-mapbox-black rounded-none text-white !important;
+}
+
+/* Apply additional styles to .mapboxgl-ctrl-geocoder */
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
+
+/* Apply styles to #map */
+#map {
+  @apply mt-8;
+}
 
 /* Apply styles to the input text  */
-.mapboxgl-ctrl-geocoder--input{
-    @apply text-white !important;
+.mapboxgl-ctrl-geocoder--input {
+  @apply text-white !important;
+}
+.mapboxgl-ctrl-geocoder--button {
+  @apply bg-mapbox-black !important;
 }
 
 .suggestions {
-    @apply bg-mapbox-black-500 !important;
+  @apply bg-mapbox-black-500 !important;
 }
 
 .suggestions.active {
-    @apply bg-mapbox-black-500 !important;
+  @apply bg-mapbox-black-500 !important;
 }

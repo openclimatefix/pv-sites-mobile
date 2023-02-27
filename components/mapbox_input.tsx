@@ -2,14 +2,20 @@
 import Head from 'next/head';
 import "mapbox-gl/dist/mapbox-gl.css"; 
 import React, {useRef, useState, useEffect} from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { AttributionControl } from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-export default function MapBoxInput() {
+interface MapBoxInputProps {
+  setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
+  zoomLevelThreshold: number;  
+}
+
+export default function MapBoxInput({setIsSubmissionEnabled, zoomLevelThreshold} : MapBoxInputProps) {
     mapboxgl.accessToken = "pk.eyJ1IjoiYWxlc3RlcjMiLCJhIjoiY2xlM3JwdDkwMDR6cjNvdGRpanZqZHd0ciJ9.ibQNGDwEE_Wc59LB2dhs9Q";
     const mapContainer = useRef<HTMLDivElement | null>(null);
     const map = useRef<mapboxgl.Map>();
     const geocoderContainer = useRef<HTMLDivElement | null>(null);
+    const markerShowThreshold = 10;
     const [isMapReady, setIsMapReady] = useState(false);
     const [lng, setLng] = useState<number>(-2.3175601);
     const [lat, setLat] = useState<number>(54.70534432);
@@ -25,7 +31,8 @@ export default function MapBoxInput() {
           style: "mapbox://styles/mapbox/dark-v10",
           center: [lng, lat],
           zoom,
-          keyboard: false
+          keyboard: false,
+          attributionControl: false
         });
   
         const nav = new mapboxgl.NavigationControl({ showCompass: false });
@@ -52,16 +59,18 @@ export default function MapBoxInput() {
           draggable: false
           })
           .setLngLat([lng, lat])
-          .addTo(map.current);
 
         map.current.on("load", () => setIsMapReady(true));
+
         map.current.on('move', () => {
             const newLng = map.current!.getCenter().lng;
             const newLat = map.current!.getCenter().lat;
+          
             setLng(newLng);
             setLat(newLat);
             setZoom(map.current!.getZoom());
-            marker.setLngLat([newLng, newLat]);
+            setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold);
+            UpdateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
         });
       }
     }, []);
@@ -72,4 +81,13 @@ export default function MapBoxInput() {
           <div ref={mapContainer} className="h-screen" />
       </div>
     );
+}
+
+function UpdateMarker(marker : mapboxgl.Marker, map: mapboxgl.Map, zoomLevelThreshold : number, lng : number, lat : number){
+  if(map.getZoom() > zoomLevelThreshold) {
+    marker.addTo(map);
+    marker.setLngLat([lng, lat]);
+  } else {
+    marker.remove();
+  }
 }
