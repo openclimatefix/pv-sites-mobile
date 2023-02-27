@@ -1,7 +1,6 @@
 import NumberDisplay from '../components/NumberDisplay';
 import Warnings from '../components/Warnings';
 import Graph from '../components/Graph';
-import React from 'react';
 
 const Dashboard = () => {
   return (
