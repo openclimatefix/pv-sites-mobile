@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { withPageAuthRequired } from '~/lib/auth';
 
 export default function Home(this: any) {
   return (
