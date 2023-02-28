@@ -1,6 +1,7 @@
 import Input from '~/components/Input';
 import { withPageAuthRequired } from '~/lib/auth';
 import Button from '~/components/Button';
+
 interface PanelFormDataBody {
   solarPanelDirection: number;
   solarPanelAngleTilt: number;

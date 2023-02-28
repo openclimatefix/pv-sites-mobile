@@ -88,7 +88,7 @@ export default function MapBoxInput({
   );
 }
 
-function UpdateMarker(
+function updateMarker(
   marker: mapboxgl.Marker,
   map: mapboxgl.Map,
   zoomLevelThreshold: number,

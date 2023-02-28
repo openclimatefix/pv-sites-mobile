@@ -1,25 +1,16 @@
-import React, { ReactNode } from 'react';
+import { FC, PropsWithChildren } from 'react';
 
 interface Props {
-  children: ReactNode;
   enabled: boolean;
 }
 
-export default function Button({ children, enabled }: Props) {
-  if (enabled) {
-    return (
-      <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-full w-full text-center rounded-md font-bold text-xl uppercase p-4">
-        {children}
-      </button>
-    );
-  } else {
+const Button: FC<PropsWithChildren<Props>> = ({ children, enabled }) => {
     return (
       <button
-        disabled
+        disabled={!enabled}
         className="bg-ocf-gray dark:bg-ocf-gray shadow h-full w-full text-center rounded-md font-bold text-xl uppercase"
       >
         {children}
       </button>
     );
-  }
 }
