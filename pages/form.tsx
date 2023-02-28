@@ -101,7 +101,7 @@ const Form = () => {
       </div>
 
       <div className="flex justify-center items-center w-full mt-24">
-        <Button>Next</Button>
+        <Button enabled>Next</Button>
       </div>
     </form>
   );
