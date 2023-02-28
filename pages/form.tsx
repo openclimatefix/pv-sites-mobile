@@ -22,7 +22,7 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 const Form = () => {
-  const [show, setShow] = useState<boolean>(true);
+  const [show, setShow] = useState<boolean>(false);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
