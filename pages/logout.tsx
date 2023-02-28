@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import { NowcastingLogo } from '~/components/icons/nowcasting-logo';
+import Link from 'next/link';
 
 const Logout = () => {
   const { user } = useUser();
@@ -26,12 +27,13 @@ const Logout = () => {
         </h1>
       </div>
       <div className="flex flex-col items-center justify-end h-1/2 w-full pb-28">
-        <button
-          className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-72 text-center rounded-md font-bold text-xl"
-          onClick={() => router.push('/')}
-        >
-          Back to login
-        </button>
+        <Link href="/">
+          <button
+            className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-72 text-center rounded-md font-bold text-xl"
+          >
+            Back to login
+          </button>
+        </Link>
       </div>
     </div>
   );
