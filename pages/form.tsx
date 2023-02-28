@@ -1,5 +1,6 @@
 import Input from '~/components/Input';
 import { withPageAuthRequired } from '~/lib/auth';
+import Modal from 'components/Modal';
 
 interface PanelFormDataBody {
   solarPanelDirection: number;
@@ -31,6 +32,7 @@ const Form = () => {
 
   return (
     <form onSubmit={onSubmit}>
+      <Modal />
       <h1 className="font-bold text-4xl mt-20 dark:text-ocf-gray mb-5">
         Site Details
       </h1>
