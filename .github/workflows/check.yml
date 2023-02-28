@@ -44,3 +44,22 @@ jobs:
 
       - name: Run linter
         run: yarn lint
+  
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run build
+        run: yarn build
