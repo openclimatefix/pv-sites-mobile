@@ -18,8 +18,7 @@ const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
   setIsSubmissionEnabled,
   zoomLevelThreshold,
 }) => {
-  mapboxgl.accessToken =
-    'pk.eyJ1IjoiYWxlc3RlcjMiLCJhIjoiY2xlM3JwdDkwMDR6cjNvdGRpanZqZHd0ciJ9.ibQNGDwEE_Wc59LB2dhs9Q';
+  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
