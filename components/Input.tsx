@@ -6,6 +6,7 @@ interface InputProps {
   label: React.ReactNode;
   description?: string;
   help?: string;
+  onHelpClick?: () => void;
   inputProps?: React.HTMLProps<HTMLInputElement>;
 }
 const Input: FC<InputProps> = ({
@@ -13,6 +14,7 @@ const Input: FC<InputProps> = ({
   label,
   description,
   help,
+  onHelpClick,
   inputProps,
 }) => {
   return (
@@ -38,6 +40,7 @@ const Input: FC<InputProps> = ({
         <button
           type="button"
           className="text-ocf-gray-800 underline underline-offset-2 ml-auto text-xs mt-1 bg-transparent block"
+          onClick={onHelpClick}
         >
           {help}
         </button>

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Input from '~/components/Input';
 import { withPageAuthRequired } from '~/lib/auth';
 import Modal from 'components/Modal';
@@ -20,6 +22,8 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 const Form = () => {
+  const [show, setShow] = useState<boolean>(true);
+
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -32,7 +36,6 @@ const Form = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Modal />
       <h1 className="font-bold text-4xl mt-20 dark:text-ocf-gray mb-5">
         Site Details
       </h1>
@@ -42,6 +45,7 @@ const Form = () => {
         label="Solar panel direction"
         description="(0º = North, 90º = East, 180º = South, 270º = West)"
         help="I don't know"
+        onHelpClick={() => setShow(true)}
         inputProps={{
           type: 'number',
           placeholder: '135º',
@@ -88,6 +92,7 @@ const Form = () => {
       <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-full text-center rounded-md font-bold text-xl uppercase block mt-8 peer-invalid:bg-ocf-gray-300 transition duration-150">
         Next
       </button>
+      <Modal show={show} setShow={setShow} />
     </form>
   );
 };

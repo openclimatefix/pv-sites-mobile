@@ -2,9 +2,14 @@ import { FC, useState, useEffect } from 'react';
 import Sidebar from './SideBar';
 import NavBar from './NavBar';
 
-const Modal: FC = () => {
-  const [show, setShow] = useState<boolean>(true);
+type ModalProps = {
+  show: boolean;
+  setShow: SetShowFunction;
+};
 
+type SetShowFunction = (show: boolean) => void;
+
+const Modal: FC<ModalProps> = ({ show, setShow }) => {
   if (!show) {
     return null;
   }
