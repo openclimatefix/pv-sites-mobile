@@ -1,7 +1,13 @@
 import Head from 'next/head';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import React, { useRef, useState, useEffect } from 'react';
-import mapboxgl, { AttributionControl } from 'mapbox-gl';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  PropsWithChildren,
+  FC,
+} from 'react';
+import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 interface MapBoxInputProps {
@@ -9,10 +15,10 @@ interface MapBoxInputProps {
   zoomLevelThreshold: number;
 }
 
-export default function MapBoxInput({
+const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
   setIsSubmissionEnabled,
   zoomLevelThreshold,
-}: MapBoxInputProps) {
+}) => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoiYWxlc3RlcjMiLCJhIjoiY2xlM3JwdDkwMDR6cjNvdGRpanZqZHd0ciJ9.ibQNGDwEE_Wc59LB2dhs9Q';
   const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -86,7 +92,7 @@ export default function MapBoxInput({
       </div>
     </div>
   );
-}
+};
 
 function updateMarker(
   marker: mapboxgl.Marker,
@@ -102,3 +108,5 @@ function updateMarker(
     marker.remove();
   }
 }
+
+export default MapBoxInput;
