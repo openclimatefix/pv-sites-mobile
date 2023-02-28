@@ -9,12 +9,6 @@ const Modal: FC = () => {
     return null;
   }
 
-  const closeOnEscape = (e: MouseEventHandler<HTMLDivElement>') => {
-    if ((e.charCode || e.keyCode) === 27) {
-      setShow(false);
-    }
-  };
-
   return (
     <div
       className="flex items-center justify-center fixed inset-0 h-full w-full bg-ocf-black bg-opacity-50"
@@ -22,7 +16,7 @@ const Modal: FC = () => {
     >
       <div
         className="w-80 h-auto bg-ocf-gray-1000 text-white opacity-100 px-8 py-6 rounded-lg"
-        onClick={(e: React.KeyboardEvent<HTMLInputElement>) =>
+        onClick={(e: React.MouseEvent<HTMLInputElement>) =>
           e.stopPropagation()
         }
       >
