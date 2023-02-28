@@ -20,8 +20,15 @@
 .mapboxgl-ctrl-geocoder--input {
   @apply text-white !important;
 }
+
+/* Apply styles to the geocoder button */
 .mapboxgl-ctrl-geocoder--button {
   @apply bg-mapbox-black !important;
+}
+
+/* Hide geolocate button behind the geocoder suggestion box*/
+.mapboxgl-ctrl-top-right {
+  @apply z-0 !important;
 }
 
 .suggestions {
