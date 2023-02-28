@@ -1,4 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
+import Sidebar from './SideBar';
+import NavBar from './NavBar';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
