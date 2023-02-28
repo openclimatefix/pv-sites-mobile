@@ -77,8 +77,12 @@ export default function MapBoxInput({
 
   return (
     <div className="flex flex-col h-full">
-      <div ref={geocoderContainer} id="geocoderContainer" />
-      <div ref={mapContainer} className="h-screen" />
+      <div ref={geocoderContainer} className="z-20" id="geocoderContainer" />
+      <div className="relative top-0 flex flex-col flex-1">
+        <div className="absolute top-0 w-full h-1/6 bg-gradient-to-b from-mapbox-black-900 to-transparent z-10 pointer-events-none" />
+        <div ref={mapContainer} className="h-full" />
+        <div className="absolute bottom-0 w-full h-1/6 bg-gradient-to-t from-mapbox-black-900 to-transparent z-10 pointer-events-none" />
+      </div>
     </div>
   );
 }

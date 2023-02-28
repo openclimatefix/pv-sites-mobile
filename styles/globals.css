@@ -23,12 +23,18 @@
 
 /* Apply styles to the geocoder button */
 .mapboxgl-ctrl-geocoder--button {
-  @apply bg-mapbox-black !important;
+  @apply bg-mapbox-black z-10 !important;
+}
+
+.mapboxgl-ctrl {
+  @apply z-20 !important;
 }
 
 /* Hide geolocate button behind the geocoder suggestion box*/
-.mapboxgl-ctrl-top-right {
-  @apply z-0 !important;
+.mapboxgl-ctrl-top-right,
+.mapboxgl-ctrl-bottom-right,
+.mapboxgl-ctrl-bottom-left {
+  @apply z-[11] !important;
 }
 
 .suggestions {
