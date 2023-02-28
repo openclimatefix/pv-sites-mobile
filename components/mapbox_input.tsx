@@ -70,7 +70,7 @@ export default function MapBoxInput({
         setLat(newLat);
         setZoom(map.current!.getZoom());
         setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold);
-        UpdateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
+        updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
       });
     }
   }, []);
