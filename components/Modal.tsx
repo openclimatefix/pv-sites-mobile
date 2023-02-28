@@ -9,7 +9,7 @@ const Modal: FC = () => {
     return null;
   }
 
-  const closeOnEscape = (e) => {
+  const closeOnEscape = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if ((e.charCode || e.keyCode) === 27) {
       setShow(false);
     }
@@ -22,7 +22,9 @@ const Modal: FC = () => {
     >
       <div
         className="w-80 h-auto bg-ocf-gray-1000 text-white opacity-100 px-8 py-6 rounded-lg"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: React.KeyboardEvent<HTMLInputElement>) =>
+          e.stopPropagation()
+        }
       >
         <h1 className="font-semibold text-2xl">How to measure: </h1>
 
