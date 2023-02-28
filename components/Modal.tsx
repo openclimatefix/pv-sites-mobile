@@ -9,7 +9,7 @@ const Modal: FC = () => {
     return null;
   }
 
-  const closeOnEscape = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const closeOnEscape = (e: MouseEventHandler<HTMLDivElement>') => {
     if ((e.charCode || e.keyCode) === 27) {
       setShow(false);
     }
