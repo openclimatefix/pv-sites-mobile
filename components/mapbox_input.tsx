@@ -18,7 +18,6 @@ export default function MapBoxInput({
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
-  const markerShowThreshold = 10;
   const [isMapReady, setIsMapReady] = useState(false);
   const [lng, setLng] = useState<number>(-2.3175601);
   const [lat, setLat] = useState<number>(54.70534432);
