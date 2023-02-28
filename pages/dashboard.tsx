@@ -1,6 +1,7 @@
 import NumberDisplay from '../components/NumberDisplay';
 import Warnings from '../components/Warnings';
 import Graph from '../components/Graph';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 const Dashboard = () => {
   return (
