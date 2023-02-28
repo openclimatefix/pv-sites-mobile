@@ -6,13 +6,13 @@ interface Sidebar {
   closeSidebar: () => void;
 }
 
-interface AppProviderProps {
+interface SidebarProviderProps {
   children: ReactNode | ReactNode[];
 }
 
-const AppContext = React.createContext<Sidebar | null>(null);
+const SidebarContext = React.createContext<Sidebar | null>(null);
 
-const AppProvider: FC<AppProviderProps> = ({ children }) => {
+const SidebarProvider: FC<SidebarProviderProps> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const openSidebar = () => {
@@ -23,14 +23,16 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
     setIsSidebarOpen(false);
   };
   return (
-    <AppContext.Provider value={{ isSidebarOpen, openSidebar, closeSidebar }}>
+    <SidebarContext.Provider
+      value={{ isSidebarOpen, openSidebar, closeSidebar }}
+    >
       {children}
-    </AppContext.Provider>
+    </SidebarContext.Provider>
   );
 };
 
 export const useSidebarContext = () => {
-  const context = useContext(AppContext);
+  const context = useContext(SidebarContext);
 
   if (context === null) {
     throw new Error('Component is not in provider.');
@@ -39,4 +41,4 @@ export const useSidebarContext = () => {
   return context;
 };
 
-export { AppContext, AppProvider };
+export { SidebarContext, SidebarProvider };

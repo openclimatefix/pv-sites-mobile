@@ -1,5 +1,5 @@
 import React, { SVGProps } from 'react';
-import { useSidebarContext } from './context';
+import { useSidebarContext } from '../lib/context/sidebar_context';
 import Link from 'next/link';
 import {
   LogoutIcon,
