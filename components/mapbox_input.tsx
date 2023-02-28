@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import React, {
   useRef,
