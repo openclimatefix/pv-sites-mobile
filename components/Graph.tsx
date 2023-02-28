@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
+  CartesianAxis,
   CartesianGrid,
   Legend,
   Line,
@@ -70,35 +71,61 @@ const Graph = () => {
     return truncatedNum / multiplier;
   };
 
+  const MAX = data
+    ? Math.max.apply(
+        Math,
+        data.forecast_values.map(
+          (obj: forecastDataPointProps) => obj.expected_generation_kw
+        )
+      )
+    : 0;
+
+  const tickArray = [0, MAX / 4, MAX / 2, (3 * MAX) / 4, MAX];
+
   return (
     <>
-      <div className="w-full h-[400px] bg-[#444444] rounded-lg">
-        <div className="flex ml-[100px] mt-[20px]">
-          <LegendLineGraphIcon className="text-[#FFD053] mb-[20px]"></LegendLineGraphIcon>
-          <p className="text-white ml-[15px]">OCF Final Forecast</p>
+      <div className=" w-screen h-[300px] bg-[#444444] rounded-lg">
+        <div className="flex ml-[5%] mt-[20px] mb-[20px] text-sm">
+          <LegendLineGraphIcon className="text-[#FFD053]"></LegendLineGraphIcon>
+          <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
         </div>
 
-        <ResponsiveContainer width="100%" height="85%">
+        <ResponsiveContainer className="mt-[50px]" width="100%" height={200}>
           <LineChart
-            width={500}
-            height={300}
             data={data?.forecast_values}
             margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
+              top: 0,
+              right: 10,
+              left: -25,
+              bottom: 50,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" color="white" />
             <XAxis
+              scale="band"
+              fontSize="10px"
               dataKey="target_datetime_utc"
+              stroke="white"
+              axisLine={false}
               tickFormatter={(point: string) =>
                 formatter.format(Date.parse(point))
               }
             />
-            <YAxis />
+            <YAxis
+              tickCount={5}
+              ticks={tickArray}
+              domain={[0, MAX * 1.25]}
+              interval={0}
+              fontSize="10px"
+              axisLine={false}
+              stroke="white"
+              tickFormatter={(val: number) =>
+                truncateDecimals(val, 2).toString()
+              }
+            />
             <Tooltip
+              contentStyle={{ backgroundColor: '#444444', opacity: '.7' }}
+              labelStyle={{ color: 'white' }}
               formatter={(value: number, name, props) => [
                 truncateDecimals(value, 5),
                 'KW',
