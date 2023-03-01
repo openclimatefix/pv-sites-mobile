@@ -12,7 +12,7 @@
     "style": "yarn format && yarn lint"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^2.2.1",
+    "@auth0/nextjs-auth0": "^1.8.0",
     "@openclimatefix/nowcasting-ui.icons.icons": "^0.0.3",
     "next": "^12.0.0",
     "react": "^17.0.0",
