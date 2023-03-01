@@ -5,8 +5,8 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 const Dashboard = () => {
   return (
-    <div className="bg-black w-screen h-screen px-4">
-      <h1 className="mt-24 text-ocf-gray text-3xl font-bold">Dashboard</h1>
+    <div className="bg-ocf-black w-screen h-screen px-4">
+      <h1 className="mt-4 text-ocf-gray text-3xl font-bold">Dashboard</h1>
       <div className="flex flex-row w-full justify-start">
         <Warnings />
       </div>
