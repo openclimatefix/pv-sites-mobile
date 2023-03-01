@@ -36,7 +36,7 @@ const Form = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1 className="font-bold text-4xl mt-20 dark:text-ocf-gray mb-5">
+      <h1 className="font-bold text-4xl mt-8 dark:text-ocf-gray mb-5">
         Site Details
       </h1>
 
