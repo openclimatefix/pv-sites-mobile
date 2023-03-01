@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" className="dark">
       <Head>
         {/*// @ts-ignore*/}
         <link
@@ -15,7 +15,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body className="dark">
+      <body className="bg-white dark:bg-ocf-black">
         <Main />
         <NextScript />
       </body>

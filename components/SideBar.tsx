@@ -25,12 +25,14 @@ const MenuLink: React.FC<MenuLinkProps> = ({
 }) => {
   return (
     <Link {...linkProps}>
-      <div className="mb-5 px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
-        <>{svg}</>
-        <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
-          {label}
-        </span>
-      </div>
+      <a>
+        <div className="px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
+          <>{svg}</>
+          <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
+            {label}
+          </span>
+        </div>
+      </a>
     </Link>
   );
 };
@@ -58,7 +60,7 @@ const Sidebar = () => {
             svg={<DashboardIcon />}
             textColor="text-amber"
           />
-          <div className="text-xs">
+          <div className="text-xs flex flex-col gap-3">
             <MenuLink
               linkProps={{ href: '/form' }}
               label="Add a Location"
