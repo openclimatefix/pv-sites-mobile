@@ -31,7 +31,7 @@ const fetcher: Fetcher<SiteListProps> = async (url: string) => {
 const NavBar: FC = () => {
   const { isSidebarOpen, openSidebar } = useSidebarContext();
   const { data, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_forecast/sites/site_list`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/site_list`,
     fetcher
   );
 
@@ -41,9 +41,9 @@ const NavBar: FC = () => {
         onClick={openSidebar}
         className={`${
           isSidebarOpen || isLoading || data?.site_list.length === 0
-            ? '-translate-x-[10rem]'
-            : 'translate-x-0'
-        } transition transform ease-linear duration-500 text-gray-600 flex justify-center self-center`}
+            ? 'opacity-0 pointer-events-none'
+            : 'opacity-100'
+        } transition-opacity ease-linear duration-100 text-gray-600 flex justify-center self-center`}
       >
         <MenuLogo />
       </button>
