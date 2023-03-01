@@ -9,6 +9,7 @@ import {
   ExitIcon,
 } from './icons/sidebar_icons';
 import { LinkProps } from 'next/link';
+import { useRouter } from 'next/router';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
@@ -39,10 +40,13 @@ const MenuLink: React.FC<MenuLinkProps> = ({
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useSidebarContext();
+  const router = useRouter()
+
+  router.events.on("routeChangeComplete", closeSidebar)
 
   return (
     <div
-      className={`transition-all  duration-500  fixed top-0 ${
+      className={`transition-all  duration-250  fixed top-0 ${
         isSidebarOpen ? 'left-0' : '-left-64'
       }`}
     >
@@ -74,7 +78,9 @@ const Sidebar = () => {
               textColor="text-white"
             />
             <MenuLink
-              linkProps={{ href: '/api/auth/logout' }}
+              linkProps={{
+                href: `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`,
+              }}
               label="Logout"
               svg={<LogoutIcon />}
               textColor="text-white"
