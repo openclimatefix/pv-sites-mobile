@@ -45,7 +45,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`transition-all  duration-250  fixed top-0 ${
+      className={`z-20 transition-all  duration-500  fixed top-0 ${
         isSidebarOpen ? 'left-0' : '-left-64'
       }`}
     >
