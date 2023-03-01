@@ -83,20 +83,20 @@ const Graph = () => {
   const tickArray = [0, MAX / 4, MAX / 2, (3 * MAX) / 4, MAX];
 
   return (
-    <div className=" w-full h-[300px] bg-[#444444] rounded-lg">
-      <div className="flex ml-[5%] mt-[20px] mb-[20px] text-sm">
-        <LegendLineGraphIcon className="text-[#FFD053]" />
+    <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
+      <div className="flex ml-[9%] mt-[20px]  text-sm">
+        <LegendLineGraphIcon className="text-ocf-yellow-500" />
         <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
       </div>
 
-      <ResponsiveContainer className="mt-[50px]" width="100%" height={200}>
+      <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
         <LineChart
           data={data?.forecast_values}
           margin={{
             top: 0,
             right: 10,
             left: -25,
-            bottom: 50,
+            bottom: 20,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" color="white" />
@@ -121,10 +121,10 @@ const Graph = () => {
             tickFormatter={(val: number) => val.toFixed(2)}
           />
           <Tooltip
-            contentStyle={{ backgroundColor: '#444444', opacity: '.7' }}
+            contentStyle={{ backgroundColor: 'ocf-gray-1000', opacity: '.7' }}
             labelStyle={{ color: 'white' }}
             formatter={(value: number, name, props) => [
-              parseInt(value.toFixed(4)),
+              parseFloat(value.toFixed(5)),
               'KW',
             ]}
             labelFormatter={(point: string) =>
