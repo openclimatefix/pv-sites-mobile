@@ -1,4 +1,4 @@
-import React, { SVGProps } from 'react';
+import React, { SVGProps, useEffect } from 'react';
 import { useSidebarContext } from './context';
 import Link from 'next/link';
 import {
@@ -40,9 +40,8 @@ const MenuLink: React.FC<MenuLinkProps> = ({
 
 const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useSidebarContext();
-  const router = useRouter()
-
-  router.events.on("routeChangeComplete", closeSidebar)
+  const router = useRouter();
+  useEffect(() => router.events.on('routeChangeComplete', closeSidebar));
 
   return (
     <div
