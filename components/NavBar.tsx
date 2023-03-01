@@ -6,7 +6,7 @@ const NavBar: FC = () => {
   const { isSidebarOpen, openSidebar } = useSidebarContext();
 
   return (
-    <div className="ocf-black w-full pt-8 pb-2 h-24 flex justify-between mt-5">
+    <div className="bg-ocf-black w-full pt-8 pb-2 h-24 flex justify-between mt-5">
       <button
         onClick={openSidebar}
         className={`${
