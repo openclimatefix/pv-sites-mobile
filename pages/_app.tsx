@@ -21,7 +21,6 @@ export default function App({ Component, pageProps }: AppProps) {
         className={`${inter.className} bg-white dark:bg-black flex flex-col items-center justify-start px-10 min-h-screen"`}
       >
         <Component {...pageProps} />
-        <Graph></Graph>
       </main>
     </UserProvider>
   );

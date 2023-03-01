@@ -13,12 +13,10 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.2.1",
-    "@next/font": "13.1.6",
-    "@openclimatefix/nowcasting-ui.icons.icons": "^0.0.3",
-    "next": "^13.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "recharts": "^2.4.3",
+    "@next/font": "^13.2.3",
+    "next": "^12.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "swr": "^2.0.3"
   },
   "devDependencies": {
