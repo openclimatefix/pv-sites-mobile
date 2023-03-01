@@ -40,7 +40,9 @@ const NavBar: FC = () => {
       <button
         onClick={openSidebar}
         className={`${
-          isSidebarOpen || (isLoading || data?.site_list.length === 0) ? '-translate-x-[10rem]' : 'translate-x-0'
+          isSidebarOpen || isLoading || data?.site_list.length === 0
+            ? '-translate-x-[10rem]'
+            : 'translate-x-0'
         } transition transform ease-linear duration-500 text-gray-600 flex justify-center self-center`}
       >
         <MenuLogo />
