@@ -91,8 +91,8 @@
     },
     {
       "datetime_utc": "2023-02-15T23:30:00+00:00",
-      "actual_generation_kw": 0.0
+      "actual_generation_kw": 5.0
     },
-    { "datetime_utc": "2023-02-16T00:30:00+00:00", "actual_generation_kw": 0.0 }
+    { "datetime_utc": "2023-02-16T00:30:00+00:00", "actual_generation_kw": 10.0 }
   ]
 }
