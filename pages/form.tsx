@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import Input from '~/components/Input';
 import { withPageAuthRequired } from '~/lib/auth';
-import Button from '~/components/Button';
 import Modal from 'components/Modal';
 
 interface PanelFormDataBody {
@@ -90,7 +89,6 @@ const Form = () => {
         }}
       />
 
-      <Button enabled>Next</Button>
       <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-full text-center rounded-md font-bold text-xl uppercase block mt-8 peer-invalid:bg-ocf-gray-300 transition duration-150">
         Next
       </button>
