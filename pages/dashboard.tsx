@@ -25,18 +25,13 @@ const Dashboard = () => {
     '/api/sites/pv_actual/b97f68cd-50e0-49bb-a850-108d4a9f7b7e',
     fetcher
   );
-  // let cur_time = '2023-02-15T23:30:00+00:00';
-  // let cur_output = pv_actual?.pv_actual_values.filter(
-  //   (item: { datetime_utc: string; actual_generation_kw: number }) => {
-  //     return item.datetime_utc == cur_time;
-  //   }
-  // )[0].actual_generation_kw;
+
+  let cur_output = pv_actual
+    ? GetCurrentOutput(pv_actual?.pv_actual_values)
+    : null;
 
   const { data: site_list } = useSWR('/api/sites/site_list', fetcher);
-  //console.log(site_list.site_list[0].installed_capacity_kw);
   let installed_capacity_kw = site_list?.site_list[0].installed_capacity_kw;
-
-  let cur_output = GetCurrentOutput(pv_actual?.pv_actual_values);
 
   return (
     <div className="bg-black w-screen h-screen px-4">
@@ -48,10 +43,13 @@ const Dashboard = () => {
         <NumberDisplay title="Today's Expected Output" value="2700kW" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
-        <NumberDisplay title="Current Output" value={`${cur_output} kW`} />
+        <NumberDisplay
+          title="Current Output"
+          value={`${cur_output?.toFixed(3)} kW`}
+        />
         <NumberDisplay
           title="Current Capacity"
-          value={`${cur_output / installed_capacity_kw}%`}
+          value={`${(cur_output / installed_capacity_kw)?.toFixed(3)}%`}
         />
       </div>
       <div className="flex flex-row w-full justify-start">
