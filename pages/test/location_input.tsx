@@ -4,7 +4,7 @@ import MapBoxInput from '~/components/mapbox_input';
 
 export default function Home() {
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
-  const [zoomLevelThreshold, setZoomLevelThreshold] = useState(10);
+  const zoomLevelThreshold = 10;
 
   return (
     <div
@@ -20,7 +20,7 @@ export default function Home() {
           zoomLevelThreshold={zoomLevelThreshold}
         />
       </div>
-      <div className="self-center w-4/5 h-14">
+      <div className="self-center w-4/5  max-w-sm h-14">
         <Button enabled={isSubmissionEnabled}>Next</Button>
       </div>
     </div>
