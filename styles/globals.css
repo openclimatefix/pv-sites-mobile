@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Define the .geocoder class */
+.mapboxgl-ctrl-geocoder {
+  @apply bg-mapbox-black rounded-none text-white !important;
+}
+
+/* Apply additional styles to .mapboxgl-ctrl-geocoder */
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
+
+/* Apply styles to #map */
+#map {
+  @apply mt-8;
+}
+
+/* Apply styles to the input text  */
+.mapboxgl-ctrl-geocoder--input {
+  @apply text-white !important;
+}
+
+/* Apply styles to the geocoder button */
+.mapboxgl-ctrl-geocoder--button {
+  @apply bg-mapbox-black z-10 !important;
+}
+
+.mapboxgl-ctrl {
+  @apply z-20 !important;
+}
+
+/* Hide geolocate button behind the geocoder suggestion box*/
+.mapboxgl-ctrl-top-right,
+.mapboxgl-ctrl-bottom-right,
+.mapboxgl-ctrl-bottom-left {
+  @apply z-[11] !important;
+}
+
+.suggestions {
+  @apply bg-mapbox-black-500 !important;
+}
+
+.suggestions.active {
+  @apply bg-mapbox-black-500 !important;
+}
