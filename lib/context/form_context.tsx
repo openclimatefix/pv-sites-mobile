@@ -28,7 +28,7 @@ type FormPostData = {
   tilt: number;
 };
 
-async function sendRequest(url: string, arg: { arg: FormPostData }) {
+async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg),
@@ -41,10 +41,7 @@ async function sendRequest(url: string, arg: { arg: FormPostData }) {
 const FormContext = React.createContext<Form | null>(null);
 
 const FormProvider: FC<FormProviderProps> = ({ children }) => {
-  const { trigger } = useSWRMutation<FormPostData>(
-    '/api/[...mockApiRoute]',
-    sendRequest
-  );
+  const { trigger } = useSWRMutation('/api/[...mockApiRoute]', sendRequest);
 
   const [latLong, setLatLong] = useState<[number, number]>([0, 0]);
   const [direction, setDirection] = useState(0);
@@ -63,9 +60,9 @@ const FormProvider: FC<FormProviderProps> = ({ children }) => {
       created_utc: 'utc_create',
       updated_utc: 'utc_update',
       orientation: direction,
-      tilt: direction,
+      tilt: tilt,
     };
-    trigger(data: data);
+    trigger(data);
   };
   const setFormData = (direction: number, tilt: number, capacity: number) => {
     setDirection(direction);
