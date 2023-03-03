@@ -69,13 +69,13 @@ const Sidebar = () => {
           />
           <div className="text-xs flex flex-col gap-3">
             <MenuLink
-              linkProps={{ href: '/location' }}
+              linkProps={{ href: '/form/location' }}
               label="Add a Location"
               svg={<LocationIcon />}
               textColor="text-white"
             />
             <MenuLink
-              linkProps={{ href: '/form' }}
+              linkProps={{ href: '/form/details' }}
               label="Edit Site Details"
               svg={<EditIcon />}
               textColor="text-white"
