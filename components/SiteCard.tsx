@@ -5,7 +5,7 @@ import Link from 'next/link';
 const SiteCard: FC<PropsWithChildren<{}>> = () => {
   return (
     <Link href="/dashboard">
-      <span className="h-fit w-full flex bg-ocf-gray-1000 p-3 rounded-md font-bold">
+      <span className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-md font-bold">
         <div className="flex flex-col flex-1">
           <h1 className="text-amber text-xl font-bold">My Home</h1>
           <h3 className="text-ocf-gray-500 text-sm mt-1.5">
