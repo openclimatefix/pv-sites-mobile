@@ -26,17 +26,19 @@ function GetCurrentOutput(actual_outputs: ActualOutputEntry[]) {
 
 const Dashboard = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: pv_actual } = useSWR<ActualOutputEntry[]>(
+  const { data: pv_actual } = useSWR(
     '/api/sites/pv_actual/b97f68cd-50e0-49bb-a850-108d4a9f7b7e',
     fetcher
   );
 
   let cur_output = pv_actual
-    ? GetCurrentOutput(pv_actual?.pv_actual_values)
+    ? GetCurrentOutput(pv_actual.pv_actual_values)
     : null;
 
   const { data: site_list } = useSWR('/api/sites/site_list', fetcher);
-  let installed_capacity_kw = site_list?.site_list[0].installed_capacity_kw;
+  let installed_capacity_kw = site_list
+    ? site_list.site_list[0].installed_capacity_kw
+    : null;
 
   return (
     <div className="bg-ocf-black w-screen h-screen px-4">
@@ -54,7 +56,11 @@ const Dashboard = () => {
         />
         <NumberDisplay
           title="Current Capacity"
-          value={`${(cur_output / installed_capacity_kw)?.toFixed(0)}%`}
+          value={`${
+            cur_output != null && installed_capacity_kw != null
+              ? (cur_output / installed_capacity_kw).toFixed(0)
+              : 'Loading'
+          }%`}
         />
       </div>
       <div className="flex flex-row w-full justify-start">
