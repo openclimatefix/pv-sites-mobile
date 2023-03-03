@@ -4,19 +4,24 @@ import Graph from '../components/Graph';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import useSWR from 'swr';
 
-function GetCurrentOutput(pv_actual) {
+interface ActualOutputEntry {
+  datetime_utc: string;
+  actual_generation_kw: number;
+}
+
+function GetCurrentOutput(actual_outputs: ActualOutputEntry[]) {
   var cur_time = Date.now();
-  var time = new Date(pv_actual[0].datetime_utc).getTime();
+  var time = new Date(actual_outputs[0].datetime_utc).getTime();
   var min = Math.abs(cur_time - time);
   var index = 0;
-  for (var i = 1; i < pv_actual.length; i++) {
-    time = new Date(pv_actual[i].datetime_utc).getTime();
+  for (var i = 1; i < actual_outputs.length; i++) {
+    time = new Date(actual_outputs[i].datetime_utc).getTime();
     if (Math.abs(cur_time - time) < min) {
       min = cur_time - time;
       index = i;
     }
   }
-  return pv_actual[index].actual_generation_kw;
+  return actual_outputs[index].actual_generation_kw;
 }
 
 const Dashboard = () => {
