@@ -6,9 +6,13 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  AreaChart,
+  Area,
+  ReferenceLine,
 } from 'recharts';
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import useSWR, { Fetcher } from 'swr';
+import { FutureThresholdLegendIcon, ArrowIcon} from './icons/future_threshold';
 
 interface ForecastDataPointProps {
   target_datetime_utc: number;
@@ -61,11 +65,6 @@ const fetcher: Fetcher<ForecastDataProps> = async (url: string) => {
 
 const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
-const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-  hour: 'numeric',
-  minute: 'numeric',
-});
-
 const FutureGraph = () => {
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_forecast/${siteUUID}`,
@@ -80,65 +79,66 @@ const FutureGraph = () => {
       )
     : 0;
 
-  const tickArray = [0, MAX / 4, MAX / 2, (3 * MAX) / 4, MAX];
+    const CustomYAxisTick = (x, y, name) => {
+          return (<g transform={`translate(${0},${y})`}>
+              <text x={0} y={0}
+                  textAnchor="start"
+                  fill="#666">{payload.value}</text>
+          </g>);
+    };
 
   return (
-    <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
-      <div className="flex ml-[9%] mt-[20px]  text-sm">
-        <LegendLineGraphIcon className="text-ocf-yellow-500" />
-        <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
+    <div className="relative my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl content-center">
+      <div className="flex flex-col w-11/12 justify-start">
+        <div className="flex justify-end mt-[20px] text-sm">
+          <FutureThresholdLegendIcon />
+        </div>
+        <ResponsiveContainer className="mt-[15px] " width="100%" height={100}>
+          <AreaChart
+            data={data?.forecast_values}
+            margin={{
+              top: 0,
+              right: 0,
+              left: 40,
+              bottom: 0,
+            }}
+          >
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="3%" stopColor="#444444" stopOpacity={0} />
+                <stop offset="60%" stopColor="#FFD053" stopOpacity={0.4} />
+                <stop offset="0%" stopColor="#FFD053" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <Area
+              type="monotone"
+              dataKey="expected_generation_kw"
+              strokeWidth={2}
+              stroke="white"
+              strokeDasharray="2"
+              fill="url(#colorUv)"
+            />
+            <ReferenceLine
+              y={0.2}
+              strokeWidth={2}
+              stroke="#FFD053"
+              strokeDasharray="2"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
+      <div className="w-11/2  flex flex-col justify-center content-center absolute bottom-10 inset-x-0 text-center">
+        <div className="flex flex-row justify-between">
+          <p className="text-white text-xs font-medium">19:00</p>
+          <p className="text-white text-xs font-medium">1:00</p>
+        </div>
 
-      <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
-        <LineChart
-          data={data?.forecast_values}
-          margin={{
-            top: 0,
-            right: 10,
-            left: -25,
-            bottom: 20,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" color="white" />
-          <XAxis
-            scale="band"
-            fontSize="10px"
-            dataKey="target_datetime_utc"
-            stroke="white"
-            axisLine={false}
-            tickFormatter={(point: string) =>
-              formatter.format(Date.parse(point))
-            }
-          />
-          <YAxis
-            tickCount={5}
-            ticks={tickArray}
-            domain={[0, MAX * 1.25]}
-            interval={0}
-            fontSize="10px"
-            axisLine={false}
-            stroke="white"
-            tickFormatter={(val: number) => val.toFixed(2)}
-          />
-          <Tooltip
-            contentStyle={{ backgroundColor: 'ocf-gray-1000', opacity: '.7' }}
-            labelStyle={{ color: 'white' }}
-            formatter={(value: number, name, props) => [
-              parseFloat(value.toFixed(5)),
-              'KW',
-            ]}
-            labelFormatter={(point: string) =>
-              formatter.format(Date.parse(point))
-            }
-          />
-          <Line
-            type="monotone"
-            dataKey="expected_generation_kw"
-            stroke="#FFD053"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+        <p className="text-white text-base font-semibold">19:06</p>
+        <div className="flex flex-row justify-center mt-2">
+          <ArrowIcon/>
+          <p className="text-white text-sm font-normal ml-2">Solar activity is increasing until 20:20 </p>
+        </div>
+      </div>
     </div>
   );
 };
