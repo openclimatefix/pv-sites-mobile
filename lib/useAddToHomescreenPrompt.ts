@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 interface IBeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
-    outcome: "accepted" | "dismissed";
+    outcome: 'accepted' | 'dismissed';
     platform: string;
   }>;
   prompt(): Promise<void>;
@@ -13,9 +13,7 @@ export function useAddToHomescreenPrompt(): [
   IBeforeInstallPromptEvent | null,
   () => void
 ] {
-  const [prompt, setState] = useState<IBeforeInstallPromptEvent | null>(
-    null
-  );
+  const [prompt, setState] = useState<IBeforeInstallPromptEvent | null>(null);
 
   const promptToInstall = () => {
     if (prompt) {
@@ -34,10 +32,10 @@ export function useAddToHomescreenPrompt(): [
       setState(e);
     };
 
-    window.addEventListener("beforeinstallprompt", ready as any);
+    window.addEventListener('beforeinstallprompt', ready as any);
 
     return () => {
-      window.removeEventListener("beforeinstallprompt", ready as any);
+      window.removeEventListener('beforeinstallprompt', ready as any);
     };
   }, []);
 
