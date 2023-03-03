@@ -26,7 +26,7 @@ function GetCurrentOutput(actual_outputs: ActualOutputEntry[]) {
 
 const Dashboard = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: pv_actual } = useSWR(
+  const { data: pv_actual } = useSWR<ActualOutputEntry[]>(
     '/api/sites/pv_actual/b97f68cd-50e0-49bb-a850-108d4a9f7b7e',
     fetcher
   );
@@ -45,7 +45,7 @@ const Dashboard = () => {
         <Warnings />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <NumberDisplay title="Today's Expected Output" value="2700kW" />
+        <NumberDisplay title="Today's Expected Output" value="2700 kW" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <NumberDisplay
