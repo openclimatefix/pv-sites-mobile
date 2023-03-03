@@ -45,14 +45,18 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`z-50 transition-all  duration-500  fixed top-0 ${
-        isSidebarOpen ? 'left-0' : '-left-64'
+      className={`z-50 transition-all duration-500 h-full fixed top-0 ${
+        isSidebarOpen
+          ? 'translate-x-0 shadow-lg shadow-ocf-black'
+          : '-translate-x-64'
       }`}
+      // @ts-ignore
+      inert={!isSidebarOpen ? '' : null}
     >
-      <div className="flex h-screen overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 min-h-screen relative">
+      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 relative">
         <button
           onClick={closeSidebar}
-          className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center focus:outline-none ml-6"
+          className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center ml-6"
         >
           <ExitIcon />
         </button>

@@ -1,10 +1,6 @@
 import { getAccessToken, withApiAuthRequired } from '@auth0/nextjs-auth0';
-import { NextApiRequest, NextApiResponse } from 'next';
 
-export default withApiAuthRequired(async function token(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default withApiAuthRequired(async function token(req, res) {
   try {
     const accessToken = await getAccessToken(req, res);
     res.status(200).json(accessToken);
