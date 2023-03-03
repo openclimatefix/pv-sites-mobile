@@ -1,4 +1,3 @@
-import { redirect } from 'next/dist/server/api-utils';
 import React, { useState, useContext, FC, ReactNode } from 'react';
 import useSWRMutation from 'swr/mutation';
 
@@ -56,8 +55,8 @@ const FormProvider: FC<FormProviderProps> = ({ children }) => {
       client_name: 'name',
       client_site_id: 1,
       client_site_name: 'site_name',
-      latitude: 1, // hardcoded since map page doesn't exist
-      longitude: 2, // hardcoded since map page doesn't exist
+      latitude: latLong[0],
+      longitude: latLong[1],
       installed_capacity_kw: capacity,
       created_utc: 'utc_create',
       updated_utc: 'utc_update',

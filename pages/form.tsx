@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Router, { useRouter } from 'next/router';
 
 import Input from '~/components/Input';
 import { withPageAuthRequired } from '~/lib/auth';
@@ -23,6 +24,7 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 const Form = () => {
+  const router = useRouter();
   const { setFormData } = useFormContext();
   const [show, setShow] = useState<boolean>(false);
 
@@ -34,12 +36,13 @@ const Form = () => {
     const tilt = formData.get('solar-panel-tilt') as string;
     const capacity = formData.get('solar-panel-capacity') as string;
 
-    setFormData(parseInt(direction), parseInt(tilt), parseInt(capacity));
-
     // TODO: Add schema validation with zod
     const siteDetailsData = Object.entries(
       formData
     ) as unknown as PanelFormDataBody;
+
+    setFormData(parseInt(direction), parseInt(tilt), parseInt(capacity));
+    router.push('/dashboard');
   };
 
   return (
