@@ -45,11 +45,11 @@ const Dashboard = () => {
       <div className="flex flex-row w-full justify-center space-x-4">
         <NumberDisplay
           title="Current Output"
-          value={`${cur_output?.toFixed(3)} kW`}
+          value={`${cur_output?.toFixed(0)} kW`}
         />
         <NumberDisplay
           title="Current Capacity"
-          value={`${(cur_output / installed_capacity_kw)?.toFixed(3)}%`}
+          value={`${(cur_output / installed_capacity_kw)?.toFixed(0)}%`}
         />
       </div>
       <div className="flex flex-row w-full justify-start">
