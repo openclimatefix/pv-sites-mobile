@@ -8,6 +8,8 @@ interface InputProps {
   help?: string;
   onHelpClick?: () => void;
   inputProps?: React.HTMLProps<HTMLInputElement>;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const Input: FC<InputProps> = ({
   id,
@@ -16,6 +18,8 @@ const Input: FC<InputProps> = ({
   help,
   onHelpClick,
   inputProps,
+  value,
+  onChange,
 }) => {
   return (
     <>
@@ -33,6 +37,8 @@ const Input: FC<InputProps> = ({
       <input
         name={camelCaseID(id)}
         id={id}
+        value={value}
+        onChange={onChange}
         {...inputProps}
         className="text-lg text-center border bg-ocf-gray-50 text-ocf-gray-700 rounded-lg block h-14 p-2.5 outline-none focus:ring-1 ring-ocf-yellow dark:bg-ocf-gray-1000 dark:border-ocf-gray-1000  dark:placeholder-ocf-gray-800 dark:text-ocf-gray-600 w-full peer placeholder-shown:invalid:ring-ocf-yellow invalid:ring-ocf-orange-800"
       />

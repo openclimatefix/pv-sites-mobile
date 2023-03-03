@@ -3,9 +3,6 @@ import useSWRMutation from 'swr/mutation';
 
 interface Form {
   latLong: [number, number];
-  direction: number;
-  tilt: number;
-  capacity: number;
   setFormData: (direction: number, tilt: number, capacity: number) => void;
   setMapData: (lat: number, long: number) => void;
 }
@@ -26,7 +23,6 @@ type FormPostData = {
   updated_utc: string;
   orientation: number;
   tilt: number;
-  capacity: number;
 };
 
 async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
@@ -45,11 +41,8 @@ const FormProvider: FC<FormProviderProps> = ({ children }) => {
   const { trigger } = useSWRMutation('/api/[...mockApiRoute]', sendRequest);
 
   const [latLong, setLatLong] = useState<[number, number]>([0, 0]);
-  const [direction, setDirection] = useState(0);
-  const [tilt, setTilt] = useState(0);
-  const [capacity, setCapacity] = useState(0);
 
-  const sendFormData = () => {
+  const setFormData = (direction: number, tilt: number, capacity: number) => {
     const data: FormPostData = {
       site_uuid: 1,
       client_name: 'name',
@@ -62,15 +55,8 @@ const FormProvider: FC<FormProviderProps> = ({ children }) => {
       updated_utc: 'utc_update',
       orientation: direction,
       tilt: tilt,
-      capacity: capacity,
     };
     trigger(data);
-  };
-  const setFormData = (direction: number, tilt: number, capacity: number) => {
-    setDirection(direction);
-    setTilt(tilt);
-    setCapacity(capacity);
-    sendFormData();
   };
   const setMapData = (lat: number, long: number) => {
     setLatLong([lat, long]);
@@ -80,9 +66,6 @@ const FormProvider: FC<FormProviderProps> = ({ children }) => {
     <FormContext.Provider
       value={{
         latLong,
-        direction,
-        tilt,
-        capacity,
         setFormData,
         setMapData,
       }}

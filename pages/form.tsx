@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import Input from '~/components/Input';
 import { withPageAuthRequired } from '~/lib/auth';
@@ -27,19 +27,17 @@ const Form = () => {
   const router = useRouter();
   const { setFormData } = useFormContext();
   const [show, setShow] = useState<boolean>(false);
+  const [direction, setDirection] = useState('');
+  const [tilt, setTilt] = useState('');
+  const [capacity, setCapacity] = useState('');
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-
-    const direction = formData.get('solar-panel-direction') as string;
-    const tilt = formData.get('solar-panel-tilt') as string;
-    const capacity = formData.get('solar-panel-capacity') as string;
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     // TODO: Add schema validation with zod
-    const siteDetailsData = Object.entries(
-      formData
-    ) as unknown as PanelFormDataBody;
+    // const siteDetailsData = Object.entries(
+    //   formData
+    // ) as unknown as PanelFormDataBody;
 
     setFormData(parseInt(direction), parseInt(tilt), parseInt(capacity));
     router.push('/dashboard');
@@ -55,8 +53,12 @@ const Form = () => {
         id="solar-panel-direction"
         label="Solar panel direction"
         description="(0º = North, 90º = East, 180º = South, 270º = West)"
+        value={direction}
         help="I don't know"
         onHelpClick={() => setShow(true)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setDirection(e.currentTarget.value)
+        }
         inputProps={{
           type: 'number',
           placeholder: '135º',
@@ -72,6 +74,10 @@ const Form = () => {
         id="solar-panel-tilt"
         label="Solar panel tilt"
         description="(Degrees above the horizontal)"
+        value={tilt}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setTilt(e.currentTarget.value)
+        }
         inputProps={{
           type: 'number',
           placeholder: '40º',
@@ -91,6 +97,10 @@ const Form = () => {
           </>
         }
         id="solar-panel-capacity"
+        value={capacity}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setCapacity(e.currentTarget.value)
+        }
         inputProps={{
           type: 'number',
           placeholder: '2800 kW',
