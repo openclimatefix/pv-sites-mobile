@@ -32,13 +32,11 @@ const Dashboard = () => {
   );
 
   let cur_output = pv_actual
-    ? GetCurrentOutput(pv_actual.pv_actual_values)
+    ? GetCurrentOutput(pv_actual?.pv_actual_values)
     : null;
 
   const { data: site_list } = useSWR('/api/sites/site_list', fetcher);
-  let installed_capacity_kw = site_list
-    ? site_list.site_list[0].installed_capacity_kw
-    : null;
+  let installed_capacity_kw = site_list?.site_list[0].installed_capacity_kw;
 
   return (
     <div className="bg-ocf-black w-screen h-screen px-4">
@@ -47,18 +45,18 @@ const Dashboard = () => {
         <Warnings />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <NumberDisplay title="Today's Expected Output" value="2700 kW" />
+        <NumberDisplay title="Today's Expected Output" value="2700kW" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <NumberDisplay
           title="Current Output"
-          value={`${cur_output?.toFixed(0)} kW`}
+          value={`${cur_output != null ? cur_output.toFixed(0) : 'Loading'} kW`}
         />
         <NumberDisplay
           title="Current Capacity"
           value={`${
             cur_output != null && installed_capacity_kw != null
-              ? (cur_output / installed_capacity_kw).toFixed(0)
+              ? (cur_output / installed_capacity_kw)?.toFixed(0)
               : 'Loading'
           }%`}
         />
