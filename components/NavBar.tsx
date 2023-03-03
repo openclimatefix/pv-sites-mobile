@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useSidebarContext } from './context';
 import { NowcastingLogo, MenuLogo } from './icons/navbar_icons';
 import useSWR, { Fetcher } from 'swr';
+import { AddToHomescreenButton } from './AddToHomescreenButton';
 
 interface SiteProps {
   site_uuid: string;
@@ -36,20 +37,26 @@ const NavBar: FC = () => {
   );
 
   return (
-    <div className="bg-ocf-black w-full pt-2 pb-2 h-20 flex justify-between px-5">
-      <button
-        onClick={openSidebar}
-        className={`${
-          isSidebarOpen || isLoading || data?.site_list.length === 0
-            ? 'opacity-0 pointer-events-none'
-            : 'opacity-100'
-        } transition-opacity ease-linear duration-100 text-gray-600 flex justify-center self-center`}
-      >
-        <MenuLogo />
-      </button>
-      <NowcastingLogo />
-      <div className="w-10 h-10" />
-    </div>
+    <nav className="flex items-center justify-between bg-ocf-black shadow-lg px-6 py-4">
+      {/* Hamburger icon on the left */}
+      <div className="flex items-center">
+        <button
+          onClick={openSidebar}
+          className={`${
+            isSidebarOpen || isLoading || data?.site_list.length === 0
+              ? 'opacity-0 pointer-events-none'
+              : 'opacity-100'
+          } transition-opacity ease-linear duration-100 text-gray-600 flex justify-center self-center`}
+        >
+          <MenuLogo />
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center">
+        <NowcastingLogo />
+      </div>
+      <div className="flex items-center justify-center w-10"></div>
+    </nav>
   );
 };
 
