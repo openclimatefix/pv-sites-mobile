@@ -37,7 +37,7 @@ const NavBar: FC = () => {
   );
 
   return (
-    <nav className="flex items-center justify-between bg-ocf-black shadow-lg px-6 py-4">
+    <nav className="flex items-center justify-between bg-ocf-black px-6 py-4">
       <div className="flex items-center">
         <button
           onClick={openSidebar}
