@@ -1,3 +1,4 @@
+import { redirect } from 'next/dist/server/api-utils';
 import React, { useState, useContext, FC, ReactNode } from 'react';
 import useSWRMutation from 'swr/mutation';
 
@@ -26,6 +27,7 @@ type FormPostData = {
   updated_utc: string;
   orientation: number;
   tilt: number;
+  capacity: number;
 };
 
 async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
@@ -54,13 +56,14 @@ const FormProvider: FC<FormProviderProps> = ({ children }) => {
       client_name: 'name',
       client_site_id: 1,
       client_site_name: 'site_name',
-      latitude: latLong[0],
-      longitude: latLong[1],
+      latitude: 1, // hardcoded since map page doesn't exist
+      longitude: 2, // hardcoded since map page doesn't exist
       installed_capacity_kw: capacity,
       created_utc: 'utc_create',
       updated_utc: 'utc_update',
       orientation: direction,
       tilt: tilt,
+      capacity: capacity,
     };
     trigger(data);
   };

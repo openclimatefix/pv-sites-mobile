@@ -1,6 +1,7 @@
 import Input from '~/components/Input';
 import { withPageAuthRequired } from '~/lib/auth';
 
+import { useFormContext } from '~/lib/context/form_context';
 interface PanelFormDataBody {
   solarPanelDirection: number;
   solarPanelAngleTilt: number;
@@ -19,9 +20,17 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 const Form = () => {
+  const { setFormData } = useFormContext();
+
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+
+    const direction = formData.get('solar-panel-direction') as string;
+    const tilt = formData.get('solar-panel-tilt') as string;
+    const capacity = formData.get('solar-panel-capacity') as string;
+
+    setFormData(parseInt(direction), parseInt(tilt), parseInt(capacity));
 
     // TODO: Add schema validation with zod
     const siteDetailsData = Object.entries(
