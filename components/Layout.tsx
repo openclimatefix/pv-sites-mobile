@@ -8,7 +8,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     <>
       <NavBar />
       <Sidebar />
-      <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start px-10">
+      <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start px-10 mb-[50px]">
         {children}
         <BottomNavBar></BottomNavBar>
       </main>
