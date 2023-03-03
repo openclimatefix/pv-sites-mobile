@@ -16,7 +16,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name="description" content="pv-sites-mobile" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
-          <link rel="mainfest" href="/manifest.webmanifest" />
         </Head>
         <Layout>
           <Component {...pageProps} />

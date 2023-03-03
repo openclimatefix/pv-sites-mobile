@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en" className="dark">
       <Head>
+        <link rel="mainfest" href="/manifest.webmanifest" />
         <link
           rel="stylesheet"
           href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
@@ -59,7 +60,6 @@ export default function Document() {
           sizes="16x16"
           href="/icons/favicon-16x16.png"
         />
-        <link rel="manifest" href="/webmanifest.json" />
         <link
           rel="mask-icon"
           href="/icons/safari-pinned-tab.svg"
