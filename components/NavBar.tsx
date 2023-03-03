@@ -38,7 +38,6 @@ const NavBar: FC = () => {
 
   return (
     <nav className="flex items-center justify-between bg-ocf-black shadow-lg px-6 py-4">
-      {/* Hamburger icon on the left */}
       <div className="flex items-center">
         <button
           onClick={openSidebar}
@@ -55,7 +54,8 @@ const NavBar: FC = () => {
       <div className="flex items-center justify-center">
         <NowcastingLogo />
       </div>
-      <div className="flex items-center justify-center w-10"></div>
+      <div className="flex items-center justify-center w-10" />
+      <AddToHomescreenButton />
     </nav>
   );
 };
