@@ -12,12 +12,13 @@
     "style": "yarn format && yarn lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.8.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@openclimatefix/nowcasting-ui.icons.icons": "^0.0.3",
     "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
     "mapbox-gl": "^2.12.1",
-    "@auth0/nextjs-auth0": "^1.8.0",
-    "@openclimatefix/nowcasting-ui.icons.icons": "^0.0.3",
     "next": "^12.0.0",
+    "next-pwa": "^5.6.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "recharts": "^2.4.3",
