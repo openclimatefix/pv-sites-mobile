@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <div
-      className="flex flex-col gap-2 relative min-h-screen w-screen bg-mapbox-black-900"
+      className="flex flex-col gap-2 relative h-screen w-screen bg-mapbox-black-900"
       id="rootDiv"
     >
       <div className="flex flex-col justify-end h-16 pl-3">
