@@ -1,6 +1,6 @@
-import React from 'react';
+import { FC } from 'react';
 
-export const FutureThresholdLegendIcon: React.FC = ({}) => (
+export const FutureThresholdLegendIcon: FC = ({}) => (
   <svg
     width="73"
     height="20"
@@ -31,7 +31,7 @@ export const FutureThresholdLegendIcon: React.FC = ({}) => (
   </svg>
 );
 
-export const ArrowIcon: React.FC = ({}) => (
+export const ArrowIcon: FC = ({}) => (
   <svg
     width="16"
     height="19"
@@ -44,4 +44,21 @@ export const ArrowIcon: React.FC = ({}) => (
       fill="white"
     />
   </svg>
+);
+
+interface InputProps {
+  x: number;
+  y: number;
+}
+
+export const LineCircle: FC<InputProps> = ({x, y}) => (
+  <>
+    <circle cx={x} cy={y} r="10.0159" stroke="#FFD053" fill="#444444" />
+    <circle
+      cx={x}
+      cy={y}
+      r="5.25796"
+      fill="#FFD053"
+    />
+  </>
 );
