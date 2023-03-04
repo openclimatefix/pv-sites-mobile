@@ -35,9 +35,6 @@ const Form = () => {
     event.preventDefault();
 
     // TODO: Add schema validation with zod
-    // const siteDetailsData = Object.entries(
-    //   formData
-    // ) as unknown as PanelFormDataBody;
 
     setFormData(parseInt(direction), parseInt(tilt), parseInt(capacity));
     router.push('/dashboard');
