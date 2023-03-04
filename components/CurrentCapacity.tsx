@@ -46,8 +46,8 @@ const CurrentCapacity = () => {
       value={`${
         isLoading
           ? 'Loading'
-          : cur_output != null &&
-            installed_capacity_kw != null &&
+          : !!cur_output &&
+            !!installed_capacity_kw &&
             installed_capacity_kw != 0
           ? (cur_output / installed_capacity_kw).toFixed(0) + '%'
           : 'N/A'
