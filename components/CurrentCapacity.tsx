@@ -26,7 +26,7 @@ const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
 const CurrentCapacity = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: pv_actual, loading } = useSWR(
+  const { data: pv_actual } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_actual/${siteUUID}`,
     fetcher
   );
