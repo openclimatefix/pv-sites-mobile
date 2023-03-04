@@ -25,9 +25,10 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
       if (PVSiteMetadataProps.every(doesPropertyExist)) {
         console.log('POST request received! Contents:');
         console.log(req.body);
-        res.status(200);
+        res.status(200).send('success');
+      } else {
+        res.status(400).send('PV site metadata missing required props');
       }
-      res.status(400).send('PV site metadata missing required props');
     }
   } else if (req.method == 'GET') {
     if (
