@@ -1,14 +1,10 @@
-import React, { useState, useContext, FC, ReactNode } from 'react';
+import React, { useState, useContext, FC, PropsWithChildren } from 'react';
 import useSWRMutation from 'swr/mutation';
 
 interface Form {
   latLong: [number, number];
   setFormData: (direction: number, tilt: number, capacity: number) => void;
   setMapData: (lat: number, long: number) => void;
-}
-
-interface FormProviderProps {
-  children: ReactNode | ReactNode[];
 }
 
 type FormPostData = {
@@ -37,12 +33,17 @@ async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
 
 const FormContext = React.createContext<Form | null>(null);
 
-const FormProvider: FC<FormProviderProps> = ({ children }) => {
-  const { trigger } = useSWRMutation('/api/[...mockApiRoute]', sendRequest);
+const FormProvider: FC<PropsWithChildren> = ({ children }) => {
+  const { trigger } = useSWRMutation(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/`,
+    sendRequest
+  );
 
   const [latLong, setLatLong] = useState<[number, number]>([0, 0]);
 
   const setFormData = (direction: number, tilt: number, capacity: number) => {
+    const date = new Date().toISOString();
+    const sentinel = 1;
     const data: FormPostData = {
       site_uuid: 1,
       client_name: 'name',
@@ -50,9 +51,9 @@ const FormProvider: FC<FormProviderProps> = ({ children }) => {
       client_site_name: 'site_name',
       latitude: latLong[0],
       longitude: latLong[1],
-      installed_capacity_kw: capacity,
-      created_utc: 'utc_create',
-      updated_utc: 'utc_update',
+      installed_capacity_kw: !!capacity ? capacity : sentinel,
+      created_utc: date,
+      updated_utc: date,
       orientation: direction,
       tilt: tilt,
     };
