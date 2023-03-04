@@ -17,18 +17,6 @@ const Dashboard = () => {
         <NumberDisplay title="Today's Expected Output" value="2700kW" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
-        {/* <NumberDisplay
-          title="Current Output"
-          value={`${cur_output != null ? cur_output.toFixed(0) : 'Loading'} kW`}
-        />
-        <NumberDisplay
-          title="Current Capacity"
-          value={`${
-            cur_output != null && installed_capacity_kw != null
-              ? (cur_output / installed_capacity_kw)?.toFixed(0)
-              : 'Loading'
-          }%`}
-        /> */}
         <CurrentOutput />
         <CurrentCapacity />
       </div>
