@@ -11,11 +11,15 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 interface MapBoxInputProps {
   setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
+  setLngExternal: (lng: number) => void;
+  setLatExternal: (lat: number) => void;
   zoomLevelThreshold: number;
 }
 
 const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
   setIsSubmissionEnabled,
+  setLatExternal,
+  setLngExternal,
   zoomLevelThreshold,
 }) => {
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
@@ -72,6 +76,8 @@ const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
 
         setLng(newLng);
         setLat(newLat);
+        setLngExternal(newLng);
+        setLatExternal(newLat);
         setZoom(map.current!.getZoom());
         setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold);
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
