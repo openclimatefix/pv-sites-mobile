@@ -19,6 +19,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Source+Code+Pro:wght@400;700&display=swap"
           rel="stylesheet"
         />
+        <meta name="theme-color" content="#14120E" />
       </Head>
       <body className="bg-white dark:bg-ocf-black">
         <Main />
