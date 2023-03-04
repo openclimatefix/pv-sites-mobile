@@ -39,7 +39,7 @@ const CurrentOutput = () => {
       title="Current Output"
       value={`${
         isLoading
-          ? 'Loading'
+          ? 'Loading...'
           : !!cur_output
           ? cur_output.toFixed(0) + ' kW'
           : 'N/A'

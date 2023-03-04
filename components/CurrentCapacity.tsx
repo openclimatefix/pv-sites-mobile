@@ -45,7 +45,7 @@ const CurrentCapacity = () => {
       title="Current Capacity"
       value={`${
         isLoading
-          ? 'Loading'
+          ? 'Loading...'
           : !!cur_output &&
             !!installed_capacity_kw &&
             installed_capacity_kw != 0
