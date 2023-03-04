@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en" className="dark">
       <Head>
+        <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
           href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
