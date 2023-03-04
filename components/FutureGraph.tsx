@@ -1,25 +1,18 @@
 import {
-  CartesianGrid,
-  Line,
-  LineChart,
   ResponsiveContainer,
-  Tooltip,
-  XAxis,
   YAxis,
   AreaChart,
   LabelList,
   Area,
   ReferenceLine,
 } from 'recharts';
-import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import useSWR, { Fetcher } from 'swr';
 import {
   FutureThresholdLegendIcon,
-  ArrowIcon,
+  UpArrowIcon,
+  DownArrowIcon,
   LineCircle,
 } from './icons/future_threshold';
-import { start } from 'repl';
-
 interface ForecastDataPointProps {
   target_datetime_utc: number;
   expected_generation_kw: number;
@@ -46,6 +39,11 @@ interface UnparsedForecastDataProps {
   forecast_values: UnparsedForecastDataPointProps[];
 }
 
+const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+  hour: 'numeric',
+  minute: 'numeric',
+});
+
 const fetcher: Fetcher<ForecastDataProps> = async (url: string) => {
   const tempData: UnparsedForecastDataProps = await fetch(url).then((res) =>
     res.json()
@@ -70,15 +68,9 @@ const fetcher: Fetcher<ForecastDataProps> = async (url: string) => {
 };
 
 const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
+
+/* Represents the threshold (2000 kWh) for the graph */
 const graphThreshold = 0.7;
-
-/*
-
-0.7 - 20
-0.5 - 40
-0.2 - 60
-
-*/
 
 const FutureGraph = () => {
   const { data, isLoading } = useSWR(
@@ -86,9 +78,15 @@ const FutureGraph = () => {
     fetcher
   );
 
+  /* The index of the current time in the forecast data */
+  const getCurrentTimeForecastIndex = () => {
+    return 9;
+  };
+
   /**
-   * Renders customized label for a point if it the closest
-   * to the 85 percentile in the ordered list of points on a Recharts graph
+   * Renders two types of labels for the graph:
+   * - A circle for the current time
+   * - A threshold label
    * @param props data about the point, such as x and y position on the graph
    * @returns SVG element
    */
@@ -96,8 +94,7 @@ const FutureGraph = () => {
     const { x, y, index } = props;
 
     if (!isLoading && data && data.forecast_values.length > 0) {
-      const indexToRender = Math.floor(0.85 * data.forecast_values.length);
-      if (index === indexToRender) {
+      if (index === getCurrentTimeForecastIndex()) {
         return (
           <g>
             <LineCircle x={x} y={y} />
@@ -107,7 +104,7 @@ const FutureGraph = () => {
         return (
           <svg
             x={x - 30}
-            y={-78.95*graphThreshold + 76.84}
+            y={-78.95 * graphThreshold + 76.84}
             width="20"
             height="17"
             viewBox="0 0 20 17"
@@ -127,6 +124,10 @@ const FutureGraph = () => {
     return null;
   };
 
+  /**
+   * Generates the gradient for the graph based on the threshold
+   * @returns SVG gradient
+   */
   const generateGraphGradient = () => {
     if (!isLoading && data) {
       const aboveThreshold = data.forecast_values.some(
@@ -157,12 +158,11 @@ const FutureGraph = () => {
     return null;
   };
 
-  const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-    hour: 'numeric',
-    minute: 'numeric',
-  });
-
-  const generateGraphLabels = () => {
+  /**
+   * Returns the start and end time label on the graph's x-axis
+   * @returns
+   */
+  const renderStartAndEndTime = () => {
     if (!isLoading && data) {
       const numForecastValues = data.forecast_values.length;
 
@@ -188,6 +188,76 @@ const FutureGraph = () => {
     return null;
   };
 
+  const solarIncreasingText = (formattedDate: string) => {
+    return (
+      <div className="flex flex-row justify-center mt-2">
+        <UpArrowIcon />
+        <p className="text-white text-sm font-normal ml-2">
+          Solar activity is increasing until {formattedDate}
+        </p>
+      </div>
+    );
+  };
+
+  const solarDecreasingText = (formattedDate: string) => {
+    return (
+      <div className="flex flex-row justify-center mt-2">
+        <DownArrowIcon />
+        <p className="text-white text-sm font-normal ml-2">
+          Solar activity is decreasing until {formattedDate}
+        </p>
+      </div>
+    );
+  };
+
+  /**
+   * Calculates the next peak/trough starting from the current time
+   * and returns text indicating increasing/decreasing solar activity
+   */
+  const getSolarActivityText = () => {
+    if (data) {
+      let currIndex = getCurrentTimeForecastIndex() + 1;
+
+      while (currIndex < data.forecast_values.length) {
+        const currentExpectedGenerationKW =
+          data.forecast_values[currIndex].expected_generation_kw;
+        const previousExpectedGenerationKW =
+          data.forecast_values[currIndex - 1].expected_generation_kw;
+        const formattedDate = formatter.format(
+          new Date(data.forecast_values[currIndex].target_datetime_utc)
+        );
+
+        if (currIndex === data.forecast_values.length - 1) {
+          if (currentExpectedGenerationKW > previousExpectedGenerationKW) {
+            return solarIncreasingText(formattedDate);
+          } else if (
+            currentExpectedGenerationKW < previousExpectedGenerationKW
+          ) {
+            return solarDecreasingText(formattedDate);
+          }
+        } else {
+          const nextExpectedGenerationKW =
+            data.forecast_values[currIndex + 1].expected_generation_kw;
+
+          if (
+            currentExpectedGenerationKW > previousExpectedGenerationKW &&
+            currentExpectedGenerationKW > nextExpectedGenerationKW
+          ) {
+            return solarIncreasingText(formattedDate);
+          } else if (
+            currentExpectedGenerationKW < previousExpectedGenerationKW &&
+            currentExpectedGenerationKW < nextExpectedGenerationKW
+          ) {
+            return solarDecreasingText(formattedDate);
+          }
+        }
+        currIndex += 1;
+      }
+    }
+
+    return '';
+  };
+
   return (
     <div className="relative my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl content-center">
       <div className="flex flex-col w-full justify-start">
@@ -207,7 +277,7 @@ const FutureGraph = () => {
             <defs>{generateGraphGradient()}</defs>
             <YAxis
               type="number"
-              domain={[0, 1]}
+              domain={[0, 1.1]}
               axisLine={false}
               tick={false}
             />
@@ -234,15 +304,12 @@ const FutureGraph = () => {
         </ResponsiveContainer>
       </div>
       <div className="flex flex-col justify-center content-center absolute bottom-8 inset-x-0 text-center">
-        {generateGraphLabels()}
+        {renderStartAndEndTime()}
 
-        <p className="text-white text-base font-semibold">19:06</p>
-        <div className="flex flex-row justify-center mt-2">
-          <ArrowIcon />
-          <p className="text-white text-sm font-normal ml-2">
-            Solar activity is increasing until 20:20{' '}
-          </p>
-        </div>
+        <p className="text-white text-base font-semibold">
+          {formatter.format(Date.now())}
+        </p>
+        {getSolarActivityText()}
       </div>
     </div>
   );
