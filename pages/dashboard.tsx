@@ -14,7 +14,7 @@ const Dashboard = () => {
         <Warnings />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <NumberDisplay title="Today's Expected Output" value="2700kW" />
+        <NumberDisplay title="Today's Expected Output" value="2700 kW" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <CurrentOutput />

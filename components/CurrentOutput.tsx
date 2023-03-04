@@ -26,12 +26,10 @@ const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
 const CurrentOutput = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: pv_actual } = useSWR(
+  const { data: pv_actual, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_actual/${siteUUID}`,
     fetcher
   );
-  console.log(pv_actual);
-
   let cur_output = pv_actual
     ? GetCurrentOutput(pv_actual?.pv_actual_values)
     : null;
@@ -39,7 +37,13 @@ const CurrentOutput = () => {
   return (
     <NumberDisplay
       title="Current Output"
-      value={`${cur_output != null ? cur_output.toFixed(0) : 'Loading'} kW`}
+      value={`${
+        isLoading
+          ? 'Loading'
+          : cur_output != null
+          ? cur_output.toFixed(0) + ' kW'
+          : 'N/A'
+      }`}
     />
   );
 };

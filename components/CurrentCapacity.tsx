@@ -26,11 +26,10 @@ const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
 const CurrentCapacity = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: pv_actual } = useSWR(
+  const { data: pv_actual, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_actual/${siteUUID}`,
     fetcher
   );
-
   let cur_output = pv_actual
     ? GetCurrentOutput(pv_actual?.pv_actual_values)
     : null;
@@ -45,10 +44,14 @@ const CurrentCapacity = () => {
     <NumberDisplay
       title="Current Capacity"
       value={`${
-        cur_output != null && installed_capacity_kw != null
-          ? (cur_output / installed_capacity_kw)?.toFixed(0)
-          : 'Loading'
-      }%`}
+        isLoading
+          ? 'Loading'
+          : cur_output != null &&
+            installed_capacity_kw != null &&
+            installed_capacity_kw != 0
+          ? (cur_output / installed_capacity_kw).toFixed(0) + '%'
+          : 'N/A'
+      }`}
     />
   );
 };
