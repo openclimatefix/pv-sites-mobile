@@ -12,6 +12,9 @@
     "style": "yarn format && yarn lint"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
+    "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
+    "mapbox-gl": "^2.12.1",
     "@auth0/nextjs-auth0": "^1.8.0",
     "@openclimatefix/nowcasting-ui.icons.icons": "^0.0.3",
     "next": "^12.0.0",
@@ -21,6 +24,7 @@
     "swr": "^2.0.3"
   },
   "devDependencies": {
+    "@types/mapbox-gl": "2.7.10",
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",

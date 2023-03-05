@@ -1,5 +1,5 @@
 import React, { SVGProps, useEffect } from 'react';
-import { useSidebarContext } from './context';
+import { useSidebarContext } from '~/lib/context/sidebar_context';
 import Link from 'next/link';
 import {
   LogoutIcon,
@@ -65,7 +65,7 @@ const Sidebar = () => {
           />
           <div className="text-xs flex flex-col gap-3">
             <MenuLink
-              linkProps={{ href: '/form' }}
+              linkProps={{ href: '/location' }}
               label="Add a Location"
               svg={<LocationIcon />}
               textColor="text-white"
