@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import {
   ResponsiveContainer,
   YAxis,
@@ -26,6 +28,16 @@ const graphThreshold = 0.7;
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
+  const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(formatter.format(Date.now()));
+    }, 1000);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+  });
 
   /**
    * @returns the index of the forecasted date that is closest to the current time
@@ -230,7 +242,7 @@ const ThresholdGraph = () => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {formatter.format(Date.now())}
+        {currentTime}
       </p>
     );
   };
