@@ -67,7 +67,7 @@ const ThresholdGraph = () => {
               y={-78.95 * graphThreshold + 80.84}
               className="text-xs"
             >
-              2000
+              0.4
             </text>
             <text
               fill="#FFD053"
