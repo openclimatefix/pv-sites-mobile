@@ -33,7 +33,6 @@ const ThresholdGraph = () => {
   const getCurrentTimeForecastIndex = () => {
     if (data) {
       const currentDate = new Date();
-      console.log(`currentDate: ${currentDate.toISOString()}`)
 
       const closestDateIndex = data.forecast_values
         .map((forecast_values, index) => ({ ...forecast_values, index: index }))
@@ -47,7 +46,7 @@ const ThresholdGraph = () => {
         .reduce((prev, curr) =>
           prev.difference < curr.difference ? prev : curr
         ).index;
-      console.log(`closestDateIndex: ${closestDateIndex}`)
+
       return closestDateIndex;
     }
     return 0;
