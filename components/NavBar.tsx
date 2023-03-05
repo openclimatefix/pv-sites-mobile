@@ -11,7 +11,7 @@ const NavBar: FC = () => {
   );
 
   return (
-    <div className="bg-ocf-black w-full pt-2 pb-2 h-20 flex justify-between px-5">
+    <div className="bg-ocf-black w-full pt-2 pb-2 h-[var(--nav-height)] flex justify-between px-5">
       <button
         onClick={openSidebar}
         className={`${

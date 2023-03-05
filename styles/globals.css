@@ -1,9 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --nav-height: 80px;
+}
+
 /* Define the .geocoder class */
 .mapboxgl-ctrl-geocoder {
-  @apply bg-mapbox-black rounded-none text-white !important;
+  @apply bg-ocf-black rounded-none text-white !important;
 }
 
 /* Apply additional styles to .mapboxgl-ctrl-geocoder */
@@ -38,9 +43,13 @@
 }
 
 .suggestions {
-  @apply bg-mapbox-black-500 !important;
+  @apply bg-mapbox-black-700  !important;
 }
 
 .suggestions.active {
-  @apply bg-mapbox-black-500 !important;
+  @apply bg-mapbox-black-700 !important;
+}
+
+.suggestions > li:not(.active) .mapboxgl-ctrl-geocoder--suggestion {
+  @apply text-white !important;
 }

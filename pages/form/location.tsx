@@ -1,14 +1,26 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Button from '~/components/Button';
 import MapBoxInput from '~/components/mapbox_input';
 
-export default function Home() {
+import { useFormContext } from '~/lib/context/form_context';
+
+export default function Location() {
+  const router = useRouter();
+  const { setMapData } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
+  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(0);
   const zoomLevelThreshold = 10;
+
+  const onClick = () => {
+    setMapData(lat, lng);
+    router.push('/form/details');
+  };
 
   return (
     <div
-      className="flex flex-col gap-2 relative h-screen w-screen bg-mapbox-black-900"
+      className="flex flex-col gap-2 relative h-[calc(100vh_-_var(--nav-height))] w-screen bg-mapbox-gray-1000"
       id="rootDiv"
     >
       <div className="flex flex-col justify-end h-16 pl-3">
@@ -17,11 +29,15 @@ export default function Home() {
       <div className="w-full h-4/6" id="mapboxInputWrapper">
         <MapBoxInput
           setIsSubmissionEnabled={setIsSubmissionEnabled}
+          setLngExternal={setLng}
+          setLatExternal={setLat}
           zoomLevelThreshold={zoomLevelThreshold}
         />
       </div>
       <div className="self-center w-4/5  max-w-sm h-14">
-        <Button enabled={isSubmissionEnabled}>Next</Button>
+        <Button enabled={isSubmissionEnabled} onClick={onClick}>
+          Next
+        </Button>
       </div>
     </div>
   );
