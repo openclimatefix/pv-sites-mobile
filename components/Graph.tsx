@@ -72,6 +72,7 @@ const Graph = () => {
             type="monotone"
             dataKey="expected_generation_kw"
             stroke="#FFD053"
+            dot={false}
             activeDot={{ r: 8 }}
           />
         </LineChart>

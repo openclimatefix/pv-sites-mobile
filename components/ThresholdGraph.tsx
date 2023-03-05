@@ -46,7 +46,6 @@ const ThresholdGraph = () => {
         .reduce((prev, curr) =>
           prev.difference < curr.difference ? prev : curr
         ).index;
-
       return closestDateIndex;
     }
     return 0;

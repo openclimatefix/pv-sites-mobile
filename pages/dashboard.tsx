@@ -13,7 +13,7 @@ const Dashboard = () => {
         <ThresholdGraph />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <NumberDisplay title="Today's Expected Output" value="2700 kW" />
+        <NumberDisplay title="Today's Expected Output" value="10.23 kWh" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <CurrentOutput />
