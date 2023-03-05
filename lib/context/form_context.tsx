@@ -28,7 +28,7 @@ async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
     headers: {
       'content-type': 'application/json',
     },
-  }).then((res) => res.json());
+  });
 }
 
 const FormContext = React.createContext<Form | null>(null);
