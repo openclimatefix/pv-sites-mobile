@@ -1,3 +1,4 @@
+import { start } from 'repl';
 import useSWR, { Fetcher } from 'swr';
 
 /**
@@ -98,6 +99,15 @@ export const getArrayMaxOrMinAfterIndex = (
   key: string,
   startIndex: number
 ): MinMaxInterface | null => {
+  if (startIndex === array.length - 1) {
+    return {
+      type: Value.Min,
+      index: startIndex,
+    };
+  }
+
+  startIndex += 1;
+
   while (startIndex < array.length) {
     const currentExpectedGenerationKW = array[startIndex][key];
     const previousExpectedGenerationKW = array[startIndex - 1][key];
