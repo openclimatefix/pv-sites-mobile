@@ -20,7 +20,7 @@ export default function Location() {
 
   return (
     <div
-      className="flex flex-col gap-2 relative h-[calc(100vh_-_var(--nav-height))] w-screen bg-mapbox-gray-1000"
+      className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] w-screen bg-mapbox-gray-1000"
       id="rootDiv"
     >
       <div className="flex flex-col justify-end h-16 pl-3">
