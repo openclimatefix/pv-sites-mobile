@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import {
   ResponsiveContainer,
   YAxis,
@@ -26,6 +28,16 @@ const graphThreshold = 0.4;
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
+  const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(formatter.format(Date.now()));
+    }, 1000);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+  });
 
   /**
    * @returns the index of the forecasted date that is closest to the current time
@@ -63,15 +75,15 @@ const ThresholdGraph = () => {
           <g>
             <text
               fill="#FFD053"
-              x={x - 32}
+              x={x - 25}
               y={-78.95 * graphThreshold + 80.84}
               className="text-xs"
             >
-              0.4
+              {graphThreshold}
             </text>
             <text
               fill="#FFD053"
-              x={x - 27}
+              x={x - 25}
               y={-78.95 * graphThreshold + 94.84}
               className="text-xs"
             >
@@ -115,7 +127,14 @@ const ThresholdGraph = () => {
       );
 
       if (aboveThreshold) {
-        let gradientPercentage = -107.5 * graphThreshold + 99.25;
+        const maxExpectedGenerationKW = Math.max.apply(
+          null,
+          data.forecast_values.map(
+            ({ expected_generation_kw }) => expected_generation_kw
+          )
+        );
+        let gradientPercentage =
+          (maxExpectedGenerationKW - graphThreshold) * 100;
 
         if (gradientPercentage < 0) {
           gradientPercentage = 0;
@@ -195,7 +214,7 @@ const ThresholdGraph = () => {
    */
   const getSolarActivityText = () => {
     if (data) {
-      const currIndex = getCurrentTimeForecastIndex() + 1;
+      const currIndex = getCurrentTimeForecastIndex();
       const minMax = getArrayMaxOrMinAfterIndex(
         data.forecast_values,
         'expected_generation_kw',
@@ -214,6 +233,17 @@ const ThresholdGraph = () => {
     }
 
     return '';
+  };
+
+  const renderCurrentTime = () => {
+    return (
+      <p
+        suppressHydrationWarning
+        className="text-white text-base font-semibold"
+      >
+        {currentTime}
+      </p>
+    );
   };
 
   return (
@@ -267,10 +297,7 @@ const ThresholdGraph = () => {
       </div>
       <div className="flex flex-col justify-center content-center absolute bottom-8 inset-x-0 text-center">
         {renderStartAndEndTime()}
-
-        <p className="text-white text-base font-semibold">
-          {formatter.format(Date.now())}
-        </p>
+        {renderCurrentTime()}
         {getSolarActivityText()}
       </div>
     </div>
