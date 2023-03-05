@@ -65,7 +65,7 @@ const Sidebar = () => {
           />
           <div className="text-xs flex flex-col gap-3">
             <MenuLink
-              linkProps={{ href: '/form' }}
+              linkProps={{ href: '/location' }}
               label="Add a Location"
               svg={<LocationIcon />}
               textColor="text-white"
