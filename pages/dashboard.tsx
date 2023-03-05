@@ -1,8 +1,8 @@
-import ThresholdGraph from '~/components/ThresholdGraph';
-import NumberDisplay from '../components/NumberDisplay';
-import Graph from '../components/Graph';
-import CurrentOutput from '../components/CurrentOutput';
-import CurrentCapacity from '../components/CurrentCapacity';
+import ThresholdGraph from '~/components/graphs/ThresholdGraph';
+import NumberDisplay from '../components/dashboard_modules/NumberDisplay';
+import Graph from '../components/graphs/Graph';
+import CurrentOutput from '../components/dashboard_modules/CurrentOutput';
+import CurrentCapacity from '../components/dashboard_modules/CurrentCapacity';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 const Dashboard = () => {
@@ -13,7 +13,7 @@ const Dashboard = () => {
         <ThresholdGraph />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <NumberDisplay title="Today's Expected Output" value="2700 kW" />
+        <NumberDisplay title="Today's Expected Output" value="10.23 kWh" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <CurrentOutput />
