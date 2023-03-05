@@ -1,8 +1,8 @@
-import ThresholdGraph from '~/components/ThresholdGraph';
-import NumberDisplay from '../components/NumberDisplay';
-import Graph from '../components/Graph';
-import CurrentOutput from '../components/CurrentOutput';
-import CurrentCapacity from '../components/CurrentCapacity';
+import ThresholdGraph from '~/components/graphs/ThresholdGraph';
+import NumberDisplay from '../components/dashboard_modules/NumberDisplay';
+import Graph from '../components/graphs/Graph';
+import CurrentOutput from '../components/dashboard_modules/CurrentOutput';
+import CurrentCapacity from '../components/dashboard_modules/CurrentCapacity';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 const Dashboard = () => {

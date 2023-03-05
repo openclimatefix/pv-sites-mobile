@@ -12,7 +12,7 @@ import {
   UpArrowIcon,
   DownArrowIcon,
   LineCircle,
-} from './icons/future_threshold';
+} from '../icons/future_threshold';
 
 import {
   formatter,
