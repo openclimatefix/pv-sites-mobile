@@ -1,7 +1,15 @@
 import Head from 'next/head';
 import { withPageAuthRequired } from '~/lib/auth';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Home(this: any) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/location')
+  }, [router]);
+  
   return (
     <>
       <Head>

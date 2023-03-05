@@ -22,7 +22,7 @@ import {
 } from 'lib/utils';
 
 /* Represents the threshold (2000 kWh) for the graph */
-const graphThreshold = 0.7;
+const graphThreshold = 0.4;
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
@@ -33,6 +33,7 @@ const ThresholdGraph = () => {
   const getCurrentTimeForecastIndex = () => {
     if (data) {
       const currentDate = new Date();
+      console.log(`currentDate: ${currentDate.toISOString()}`)
 
       const closestDateIndex = data.forecast_values
         .map((forecast_values, index) => ({ ...forecast_values, index: index }))
@@ -44,9 +45,9 @@ const ThresholdGraph = () => {
           ),
         }))
         .reduce((prev, curr) =>
-          prev.difference < curr.difference ? curr : prev
+          prev.difference < curr.difference ? prev : curr
         ).index;
-
+      console.log(`closestDateIndex: ${closestDateIndex}`)
       return closestDateIndex;
     }
     return 0;
