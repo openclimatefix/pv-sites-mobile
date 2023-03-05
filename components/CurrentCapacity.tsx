@@ -49,7 +49,7 @@ const CurrentCapacity = () => {
           : cur_output != null &&
             installed_capacity_kw != null &&
             installed_capacity_kw != 0
-          ? (100 * cur_output / installed_capacity_kw).toFixed(2)  + '%'
+          ? ((100 * cur_output) / installed_capacity_kw).toFixed(2) + '%'
           : 'N/A'
       }`}
     />
