@@ -21,7 +21,7 @@ import {
   Value,
 } from 'lib/utils';
 
-/* Represents the threshold (2000 kWh) for the graph */
+/* Represents the threshold for the graph */
 const graphThreshold = 0.7;
 
 const ThresholdGraph = () => {
@@ -64,15 +64,15 @@ const ThresholdGraph = () => {
           <g>
             <text
               fill="#FFD053"
-              x={x - 32}
+              x={x - 25}
               y={-78.95 * graphThreshold + 80.84}
               className="text-xs"
             >
-              2000
+              {graphThreshold}
             </text>
             <text
               fill="#FFD053"
-              x={x - 27}
+              x={x - 25}
               y={-78.95 * graphThreshold + 94.84}
               className="text-xs"
             >
