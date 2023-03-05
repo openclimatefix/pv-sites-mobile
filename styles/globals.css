@@ -43,7 +43,7 @@
 }
 
 .suggestions {
-  @apply bg-mapbox-black-700  !important;
+  @apply bg-mapbox-black-700 !important;
 }
 
 .suggestions.active {
