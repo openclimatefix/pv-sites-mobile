@@ -1,7 +1,10 @@
 import NumberDisplay from '../components/NumberDisplay';
 import Warnings from '../components/Warnings';
 import Graph from '../components/Graph';
+import CurrentOutput from '../components/CurrentOutput';
+import CurrentCapacity from '../components/CurrentCapacity';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import useSWR from 'swr';
 
 const Dashboard = () => {
   return (
@@ -11,11 +14,11 @@ const Dashboard = () => {
         <Warnings />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <NumberDisplay title="Today's Expected Output" value="2700kW" />
+        <NumberDisplay title="Today's Expected Output" value="2700 kW" />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
-        <NumberDisplay title="Current Output" value="2200kW" />
-        <NumberDisplay title="Current Capacity" value="80%" />
+        <CurrentOutput />
+        <CurrentCapacity />
       </div>
       <div className="flex flex-row w-full justify-start">
         <Graph />
