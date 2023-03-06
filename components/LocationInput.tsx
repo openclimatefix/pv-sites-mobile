@@ -9,14 +9,14 @@ import React, {
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
-interface MapBoxInputProps {
+interface LocationInputProps {
   setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
   setLngExternal: (lng: number) => void;
   setLatExternal: (lat: number) => void;
   zoomLevelThreshold: number;
 }
 
-const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
+const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
   setIsSubmissionEnabled,
   setLatExternal,
   setLngExternal,
@@ -72,7 +72,7 @@ const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
 
       map.current.on('movestart', () => setIsSubmissionEnabled(false));
 
-      map.current.on('move', () => {
+      const moveHandler = () => {
         const newLng = map.current!.getCenter().lng;
         const newLat = map.current!.getCenter().lat;
 
@@ -82,7 +82,9 @@ const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
         setLatExternal(newLat);
         setZoom(map.current!.getZoom());
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
-      });
+      }
+
+      map.current.on('move', moveHandler);
 
       map.current.on('moveend', () =>
         setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold)
@@ -118,4 +120,4 @@ function updateMarker(
   }
 }
 
-export default MapBoxInput;
+export default LocationInput;
