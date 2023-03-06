@@ -82,7 +82,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
         setLatExternal(newLat);
         setZoom(map.current!.getZoom());
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
-      }
+      };
 
       map.current.on('move', moveHandler);
 
