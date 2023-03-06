@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Button from '~/components/Button';
-import MapBoxInput from '~/components/mapbox_input';
+import LocationInput from '~/components/LocationInput';
 
 import { useFormContext } from '~/lib/context/form_context';
 
@@ -27,7 +27,7 @@ export default function Location() {
         <h1 className="font-bold text-4xl text-ocf-gray">Site Location</h1>
       </div>
       <div className="w-full h-4/6" id="mapboxInputWrapper">
-        <MapBoxInput
+        <LocationInput
           setIsSubmissionEnabled={setIsSubmissionEnabled}
           setLngExternal={setLng}
           setLatExternal={setLat}
