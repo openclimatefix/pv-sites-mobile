@@ -1,9 +1,18 @@
-import { withPageAuthRequired as auth0WithPageAuthRequired } from '@auth0/nextjs-auth0';
+import {
+  withPageAuthRequired as auth0WithPageAuthRequired,
+  withApiAuthRequired as auth0WithApiAuthRequired,
+} from '@auth0/nextjs-auth0';
 
 export function withPageAuthRequired(
-  ...auth0Params: Parameters<typeof auth0WithPageAuthRequired>
+  ...parameters: Parameters<typeof auth0WithPageAuthRequired>
 ) {
   return process.env.AUTH0_DISABLED
     ? undefined
-    : auth0WithPageAuthRequired(...auth0Params);
+    : auth0WithPageAuthRequired(...parameters);
+}
+
+export function withApiAuthRequired(handler: () => void) {
+  return process.env.AUTH0_DISABLED
+    ? handler
+    : auth0WithApiAuthRequired(handler);
 }
