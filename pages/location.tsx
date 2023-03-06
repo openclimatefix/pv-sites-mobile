@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Button from '~/components/Button';
-import MapBoxInput from '~/components/mapbox_input';
+import MapBoxInput from '~/components/LocationInput';
 
 import { useFormContext } from '~/lib/context/form_context';
 

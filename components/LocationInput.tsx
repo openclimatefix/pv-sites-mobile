@@ -82,6 +82,27 @@ const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
         setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold);
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
       });
+
+      return () => {
+        map?.current?.off('move', () => {
+          const newLng = map.current!.getCenter().lng;
+          const newLat = map.current!.getCenter().lat;
+
+          setLng(newLng);
+          setLat(newLat);
+          setLngExternal(newLng);
+          setLatExternal(newLat);
+          setZoom(map.current!.getZoom());
+          setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold);
+          updateMarker(
+            marker,
+            map.current!,
+            zoomLevelThreshold,
+            newLng,
+            newLat
+          );
+        });
+      };
     }
   }, []);
 
