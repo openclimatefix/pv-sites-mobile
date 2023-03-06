@@ -70,6 +70,8 @@ const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
 
       map.current.on('load', () => setIsMapReady(true));
 
+      map.current.on('movestart', () => setIsSubmissionEnabled(false));
+
       map.current.on('move', () => {
         const newLng = map.current!.getCenter().lng;
         const newLat = map.current!.getCenter().lat;
@@ -79,32 +81,14 @@ const MapBoxInput: FC<PropsWithChildren<MapBoxInputProps>> = ({
         setLngExternal(newLng);
         setLatExternal(newLat);
         setZoom(map.current!.getZoom());
-        setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold);
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
       });
 
-      return () => {
-        map?.current?.off('move', () => {
-          const newLng = map.current!.getCenter().lng;
-          const newLat = map.current!.getCenter().lat;
-
-          setLng(newLng);
-          setLat(newLat);
-          setLngExternal(newLng);
-          setLatExternal(newLat);
-          setZoom(map.current!.getZoom());
-          setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold);
-          updateMarker(
-            marker,
-            map.current!,
-            zoomLevelThreshold,
-            newLng,
-            newLat
-          );
-        });
-      };
+      map.current.on('moveend', () =>
+        setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold)
+      );
     }
-  }, []);
+  });
 
   return (
     <div className="flex flex-col h-full">
