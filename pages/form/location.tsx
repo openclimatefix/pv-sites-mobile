@@ -5,7 +5,7 @@ import LocationInput from '~/components/LocationInput';
 
 import { useFormContext } from '~/lib/context/form_context';
 
-export default function Home() {
+export default function Location() {
   const router = useRouter();
   const { setMapData } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
@@ -15,12 +15,12 @@ export default function Home() {
 
   const onClick = () => {
     setMapData(lat, lng);
-    router.push('/form');
+    router.push('/form/details');
   };
 
   return (
     <div
-      className="flex flex-col gap-2 relative h-screen w-screen bg-mapbox-black-900"
+      className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] w-screen bg-mapbox-gray-1000"
       id="rootDiv"
     >
       <div className="flex flex-col justify-end h-16 pl-3">

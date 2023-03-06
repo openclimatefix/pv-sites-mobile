@@ -6,11 +6,6 @@ import { withPageAuthRequired } from '~/lib/auth';
 import Modal from 'components/Modal';
 
 import { useFormContext } from '~/lib/context/form_context';
-interface PanelFormDataBody {
-  solarPanelDirection: number;
-  solarPanelAngleTilt: number;
-  solarPanelCapacity: number;
-}
 
 /**
  * Prevent users from entering negative numbers into input fields
