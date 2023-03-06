@@ -24,7 +24,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     res.status(401).send('Unauthorized');
     return;
   }
-  session.idToken;
 
   if (typeof mockApiRoute === 'string') {
     mockApiRoute = [mockApiRoute];
