@@ -23,8 +23,8 @@ import {
   Value,
 } from 'lib/utils';
 
-/* Represents the threshold (2000 kWh) for the graph */
-const graphThreshold = 0.4;
+/* Represents the threshold for the graph */
+const graphThreshold = 0.7;
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
@@ -58,6 +58,7 @@ const ThresholdGraph = () => {
         .reduce((prev, curr) =>
           prev.difference < curr.difference ? prev : curr
         ).index;
+
       return closestDateIndex;
     }
     return 0;
@@ -75,7 +76,7 @@ const ThresholdGraph = () => {
           <g>
             <text
               fill="#FFD053"
-              x={x - 32}
+              x={x - 25}
               y={-78.95 * graphThreshold + 80.84}
               className="text-xs"
             >
@@ -83,7 +84,7 @@ const ThresholdGraph = () => {
             </text>
             <text
               fill="#FFD053"
-              x={x - 27}
+              x={x - 25}
               y={-78.95 * graphThreshold + 94.84}
               className="text-xs"
             >
@@ -133,7 +134,9 @@ const ThresholdGraph = () => {
             ({ expected_generation_kw }) => expected_generation_kw
           )
         );
-        let gradientPercentage = -107.5 * graphThreshold + 96;
+
+        let gradientPercentage =
+          100 - (graphThreshold / maxExpectedGenerationKW) * 100;
 
         if (gradientPercentage < 0) {
           gradientPercentage = 0;

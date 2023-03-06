@@ -38,7 +38,7 @@
     },
     {
       "target_datetime_utc": "2023-03-05T08:00:00",
-      "expected_generation_kw": 0.27804112398570846
+      "expected_generation_kw": 0.9
     },
     {
       "target_datetime_utc": "2023-03-05T08:15:00",
