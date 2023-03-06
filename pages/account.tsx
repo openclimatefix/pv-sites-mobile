@@ -15,7 +15,8 @@ const AccountInfo: FC<Props> = ({ inverters }) => {
       <h2 className="text-white">Info</h2>
       {inverters.map((inverter, i) => (
         <p key={i} className="text-white">
-          {inverter.id}
+          Inverter ID: {inverter.id}, rate:{' '}
+          {inverter.productionState.productionRate}
         </p>
       ))}
       <Link href="/api/enode/clear-users">
