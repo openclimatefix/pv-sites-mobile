@@ -6,6 +6,7 @@ import { withPageAuthRequired } from '~/lib/auth';
 import Modal from 'components/Modal';
 
 import { useFormContext } from '~/lib/context/form_context';
+import BackButton from 'components/BackButton';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -106,6 +107,7 @@ const Form = () => {
         Next
       </button>
       <Modal show={show} setShow={setShow} />
+      <BackButton/>
     </form>
   );
 };
