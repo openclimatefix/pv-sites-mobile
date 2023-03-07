@@ -2,7 +2,13 @@ import { FC, PropsWithChildren } from 'react';
 import { EditIcon, DeleteIcon } from './icons/sidebar_icons';
 import Link from 'next/link';
 
-const SiteCard: FC<PropsWithChildren<{}>> = () => {
+interface SiteCardProps {
+  isEditMode: boolean;
+}
+
+const SiteCard: FC<PropsWithChildren<SiteCardProps>> = ({
+  isEditMode = false,
+}) => {
   return (
     <Link href="/dashboard">
       <span className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-md font-bold">
@@ -14,12 +20,14 @@ const SiteCard: FC<PropsWithChildren<{}>> = () => {
           <h3 className="text-ocf-gray-500 text-sm">Panel tilt: 40</h3>
           <h3 className="text-ocf-gray-500 text-sm">Max. capacity: 2800 kWh</h3>
         </div>
-        <div className="flex flex-col w-fit ">
-          <div className="flex-1">
-            <EditIcon />
+        {isEditMode && (
+          <div className="flex flex-col w-fit ">
+            <div className="flex-1">
+              <EditIcon />
+            </div>
+            <DeleteIcon />
           </div>
-          <DeleteIcon />
-        </div>
+        )}
       </span>
     </Link>
   );
