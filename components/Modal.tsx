@@ -1,6 +1,4 @@
-import { FC, useState, useEffect } from 'react';
-import Sidebar from './SideBar';
-import NavBar from './NavBar';
+import { FC } from 'react';
 
 type ModalProps = {
   show: boolean;
