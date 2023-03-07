@@ -26,12 +26,9 @@ const icons = [
 
 const BottomNavBar = () => {
   const { asPath } = useRouter();
-  const fetcher: Fetcher<SiteListProps> = async (url: string) => {
-    return await fetch(url).then((res) => res.json());
-  };
+
   const { data, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/site_list`,
-    fetcher
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/site_list`
   );
 
   return (

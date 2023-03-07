@@ -10,7 +10,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       <Sidebar />
       <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start px-10 mb-[100px]">
         {children}
-        <BottomNavBar></BottomNavBar>
+        <BottomNavBar />
       </main>
     </>
   );
