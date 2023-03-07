@@ -1,4 +1,5 @@
 import useSWR, { Fetcher } from 'swr';
+import { getArrayMaxOrMinAfterIndex, Value } from 'utils';
 
 /**
  * Converts Date object into Hour-Minute format based on device region
@@ -64,3 +65,31 @@ export const useFutureGraphData = () =>
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/pv_forecast/${siteUUID}`,
     forecastFetcher
   );
+
+const getClosestForecastIndex = (forecastData : ForecastData, targetDate: Date) => {
+    if (forecastData) {
+      const closestDateIndex = forecastData.forecast_values
+        .map((forecast_values, index) => ({ ...forecast_values, index: index }))
+        .map((forecast_values) => ({
+          ...forecast_values,
+          difference: Math.abs(
+            targetDate.getTime() -
+              new Date(forecast_values.target_datetime_utc).getTime()
+          ),
+        }))
+        .reduce((prev, curr) =>
+          prev.difference < curr.difference ? prev : curr
+        ).index;
+
+      return closestDateIndex;
+    }
+    return 0;
+  };
+
+export const forecastDataOverDateRange = (forecastData : ForecastData, start_date : Date, end_date : Date) => {
+  const start_index = getClosestForecastIndex(forecastData, start_date);
+  const end_index = getClosestForecastIndex(forecastData, end_date);
+  if (forecastData)
+    forecastData.forecast_values = forecastData?.forecast_values.slice(start_index, end_index + 1);
+  return forecastData;
+}
