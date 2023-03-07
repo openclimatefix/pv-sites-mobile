@@ -44,7 +44,7 @@ const Account: NextPage<Props> = ({ inverters }) => {
           Linking status success: {query.linkSuccess}
         </p>
       )}
-      {inverters.length > 0 ? (
+      {inverters?.length > 0 ? (
         <AccountInfo inverters={inverters} />
       ) : (
         <Link href="/api/enode/link">
