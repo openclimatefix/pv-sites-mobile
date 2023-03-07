@@ -38,7 +38,8 @@ const Form = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1 className="font-bold text-4xl mt-8 dark:text-ocf-gray mb-5">
+      <BackButton />
+      <h1 className="font-bold text-4xl mt-2 dark:text-ocf-gray mb-5">
         Site Details
       </h1>
 
@@ -107,7 +108,6 @@ const Form = () => {
         Next
       </button>
       <Modal show={show} setShow={setShow} />
-      <BackButton/>
     </form>
   );
 };
