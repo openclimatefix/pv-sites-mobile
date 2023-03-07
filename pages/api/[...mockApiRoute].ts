@@ -1,8 +1,6 @@
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
-  getInverters,
   getLinkedVendors,
   getLinkRedirectURL,
   testClientID,
@@ -16,12 +14,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute } = req.query;
   if (!mockApiRoute) {
     res.status(404).send('Not found');
-    return;
-  }
-
-  const session = getSession(req, res);
-  if (!session) {
-    res.status(401).send('Unauthorized');
     return;
   }
 
@@ -97,4 +89,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withApiAuthRequired(handler);
+export default handler;
