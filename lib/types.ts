@@ -1,4 +1,4 @@
-export interface SiteProps {
+export interface Site {
   site_uuid: string;
   client_name: string;
   client_site_id: string;
@@ -16,5 +16,5 @@ export interface SiteProps {
 }
 
 export interface SiteListProps {
-  site_list: SiteProps[];
+  site_list: Site[];
 }
