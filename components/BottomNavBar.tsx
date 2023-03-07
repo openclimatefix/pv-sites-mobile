@@ -4,14 +4,7 @@ import SearchIcon from './icons/SearchIcon';
 import SiteListIcon from './icons/SiteListIcon';
 import { useRouter } from 'next/router';
 import useSWR, { Fetcher } from 'swr';
-
-interface SiteListProps {
-  site_list: SiteProps[];
-}
-
-const fetcher: Fetcher<SiteListProps> = async (url: string) => {
-  return await fetch(url).then((res) => res.json());
-};
+import { SiteListProps } from '~/lib/types';
 
 const icons = [
   {
@@ -33,13 +26,23 @@ const icons = [
 
 const BottomNavBar = () => {
   const { asPath } = useRouter();
+  const fetcher: Fetcher<SiteListProps> = async (url: string) => {
+    return await fetch(url).then((res) => res.json());
+  };
   const { data, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/site_list`,
     fetcher
   );
 
   return (
-    <div className="bg-ocf-gray-1000 w-screen h-[80px] bottom-0 fixed mt-px">
+    <div
+      className={`${
+        data?.site_list.length === 0
+          ? 'opacity-0 pointer-events-none hidden'
+          : 'opacity-100'
+      }
+    bg-ocf-gray-1000 w-screen h-[80px] bottom-0 fixed visible md:invisible`}
+    >
       <div className="flex justify-evenly mt-[15px]">
         {icons.map((val, i) => {
           return (
