@@ -16,12 +16,9 @@ import {
   LineCircle,
 } from '../icons/future_threshold';
 
-import {
-  formatter,
-  useFutureGraphData,
-  getArrayMaxOrMinAfterIndex,
-  Value,
-} from 'lib/utils';
+import { formatter, useFutureGraphData } from 'lib/graphs';
+
+import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 
 /* Represents the threshold for the graph */
 const graphThreshold = 0.7;
