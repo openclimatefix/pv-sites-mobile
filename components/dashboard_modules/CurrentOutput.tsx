@@ -22,12 +22,12 @@ function GetCurrentOutput(forecasted_outputs: ForecastedOutputEntry[]) {
   return forecasted_outputs[index].expected_generation_kw;
 }
 
-const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
+const siteUUID = '725a8670-d012-474d-b901-1179f43e7182';
 
 const CurrentOutput = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data: pv_forecast, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_forecast/${siteUUID}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/pv_forecast/${siteUUID}`,
     fetcher
   );
   let cur_output = pv_forecast
