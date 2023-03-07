@@ -6,14 +6,14 @@ import { withPageAuthRequired } from '~/lib/auth';
 import { getInverters, Inverter, testClientID } from '~/lib/enode';
 
 type Props = {
-  inverters: Inverter[];
+  inverters?: Inverter[];
 };
 
 const AccountInfo: FC<Props> = ({ inverters }) => {
   return (
     <>
       <h2 className="text-white">Info</h2>
-      {inverters.map((inverter, i) => (
+      {inverters?.map((inverter, i) => (
         <p key={i} className="text-white">
           Inverter ID: {inverter.id}, rate:{' '}
           {inverter.productionState.productionRate}
@@ -44,7 +44,7 @@ const Account: NextPage<Props> = ({ inverters }) => {
           Linking status success: {query.linkSuccess}
         </p>
       )}
-      {inverters?.length > 0 ? (
+      {inverters?.length ?? 0 > 0 ? (
         <AccountInfo inverters={inverters} />
       ) : (
         <Link href="/api/enode/link">
