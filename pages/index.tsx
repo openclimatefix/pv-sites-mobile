@@ -41,8 +41,11 @@ export const getServerSideProps = withPageAuthRequired({
       }
     ).then((res) => res.json())) as { site_list: Site[] };
 
-    const destination =
-      site_list.length === 0 ? '/form/location' : '/dashboard';
+    let destination = '/dashboard';
+
+    if (site_list) {
+      destination = site_list.length === 0 ? '/form/location' : '/dashboard';
+    }
 
     return {
       redirect: {
