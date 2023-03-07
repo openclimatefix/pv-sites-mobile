@@ -37,78 +37,80 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <>
       <BackButton />
-      <h1 className="font-bold text-4xl mt-2 dark:text-ocf-gray mb-5">
-        Site Details
-      </h1>
+      <form onSubmit={onSubmit}>
+        <h1 className="font-bold text-4xl mt-2 dark:text-ocf-gray mb-5">
+          Site Details
+        </h1>
 
-      <Input
-        id="solar-panel-direction"
-        label="Solar panel direction"
-        description="(0º = North, 90º = East, 180º = South, 270º = West)"
-        value={direction}
-        help="I don't know"
-        onHelpClick={() => setShow(true)}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setDirection(e.currentTarget.value)
-        }
-        inputProps={{
-          type: 'number',
-          placeholder: '135º',
-          min: '0',
-          max: '360',
-          step: 'any',
-          required: true,
-          onKeyDown: preventMinus,
-        }}
-      />
+        <Input
+          id="solar-panel-direction"
+          label="Solar panel direction"
+          description="(0º = North, 90º = East, 180º = South, 270º = West)"
+          value={direction}
+          help="I don't know"
+          onHelpClick={() => setShow(true)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setDirection(e.currentTarget.value)
+          }
+          inputProps={{
+            type: 'number',
+            placeholder: '135º',
+            min: '0',
+            max: '360',
+            step: 'any',
+            required: true,
+            onKeyDown: preventMinus,
+          }}
+        />
 
-      <Input
-        id="solar-panel-tilt"
-        label="Solar panel tilt"
-        description="(Degrees above the horizontal)"
-        value={tilt}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setTilt(e.currentTarget.value)
-        }
-        inputProps={{
-          type: 'number',
-          placeholder: '40º',
-          min: '0',
-          max: '360',
-          step: 'any',
-          required: true,
-          onKeyDown: preventMinus,
-        }}
-      />
+        <Input
+          id="solar-panel-tilt"
+          label="Solar panel tilt"
+          description="(Degrees above the horizontal)"
+          value={tilt}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTilt(e.currentTarget.value)
+          }
+          inputProps={{
+            type: 'number',
+            placeholder: '40º',
+            min: '0',
+            max: '360',
+            step: 'any',
+            required: true,
+            onKeyDown: preventMinus,
+          }}
+        />
 
-      <Input
-        label={
-          <>
-            Solar panel capacity
-            <span className="text-xs font-normal"> (optional)</span>
-          </>
-        }
-        id="solar-panel-capacity"
-        value={capacity}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setCapacity(e.currentTarget.value)
-        }
-        inputProps={{
-          type: 'number',
-          placeholder: '2800 kW',
-          min: '0',
-          step: 'any',
-          onKeyDown: preventMinus,
-        }}
-      />
+        <Input
+          label={
+            <>
+              Solar panel capacity
+              <span className="text-xs font-normal"> (optional)</span>
+            </>
+          }
+          id="solar-panel-capacity"
+          value={capacity}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setCapacity(e.currentTarget.value)
+          }
+          inputProps={{
+            type: 'number',
+            placeholder: '2800 kW',
+            min: '0',
+            step: 'any',
+            onKeyDown: preventMinus,
+          }}
+        />
 
-      <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-full text-center rounded-md font-bold text-xl uppercase block mt-8 peer-invalid:bg-ocf-gray-300 transition duration-150">
-        Next
-      </button>
-      <Modal show={show} setShow={setShow} />
-    </form>
+        <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-full text-center rounded-md font-bold text-xl uppercase block mt-8 peer-invalid:bg-ocf-gray-300 transition duration-150">
+          Next
+        </button>
+        <Modal show={show} setShow={setShow} />
+      </form>
+    </>
   );
 };
 
