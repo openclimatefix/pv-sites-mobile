@@ -2,8 +2,10 @@ import { getSession } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Sidebar from '~/components/SideBar';
 import { withPageAuthRequired } from '~/lib/auth';
 import { Site } from '~/lib/types';
+import PowerInfoCard from './../components/PowerInfoCard';
 
 export default function Home(this: any) {
   const router = useRouter();
@@ -15,6 +17,7 @@ export default function Home(this: any) {
   return (
     <>
       <Head>
+        <PowerInfoCard />
         <title>Open Climate Fix</title>
         <meta name="description" content="Open Climate Fix" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

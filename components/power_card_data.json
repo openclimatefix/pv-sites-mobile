@@ -1,0 +1,10 @@
+{
+  "Washer/Dryer": {
+    "icon": "washerdryer.svg",
+    "kwh": "3.8"
+  },
+  "Car": {
+    "icon": "car.svg",
+    "kwh": "100"
+  }
+}
