@@ -38,9 +38,9 @@ const BottomNavBar = () => {
           ? 'opacity-0 pointer-events-none hidden'
           : 'opacity-100'
       }
-    bg-ocf-gray-1000 w-screen h-[80px] bottom-0 fixed visible md:invisible`}
+    bg-ocf-gray-1000 w-screen h-[60px] bottom-0 fixed visible md:invisible`}
     >
-      <div className="flex justify-evenly mt-[15px]">
+      <div className="flex justify-evenly mt-[3px]">
         {icons.map((val, i) => {
           return (
             <Link key={i} href={val.link}>
