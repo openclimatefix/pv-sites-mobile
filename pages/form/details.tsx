@@ -62,6 +62,8 @@ const Form = () => {
             step: 'any',
             required: true,
             onKeyDown: preventMinus,
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
           }}
         />
 
@@ -81,6 +83,8 @@ const Form = () => {
             step: 'any',
             required: true,
             onKeyDown: preventMinus,
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
           }}
         />
 
@@ -102,6 +106,8 @@ const Form = () => {
             min: '0',
             step: 'any',
             onKeyDown: preventMinus,
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
           }}
         />
 
