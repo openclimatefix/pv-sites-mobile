@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useSidebarContext } from './context';
 import { NowcastingLogo, MenuLogo } from './icons/navbar_icons';
 import useSWR, { Fetcher } from 'swr';
-import { AddToHomescreenButton } from './AddToHomescreenButton';
+import { InstallPWAButton } from './InstallPWAButton';
 
 interface SiteProps {
   site_uuid: string;
@@ -31,6 +31,7 @@ const fetcher: Fetcher<SiteListProps> = async (url: string) => {
 
 const NavBar: FC = () => {
   const { isSidebarOpen, openSidebar } = useSidebarContext();
+
   const { data, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/site_list`,
     fetcher
@@ -55,7 +56,7 @@ const NavBar: FC = () => {
         <NowcastingLogo />
       </div>
       <div className="flex items-center justify-center w-10" />
-      <AddToHomescreenButton />
+      <InstallPWAButton />
     </nav>
   );
 };
