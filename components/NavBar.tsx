@@ -1,4 +1,3 @@
-import { useUser } from '@auth0/nextjs-auth0';
 import { FC } from 'react';
 import useSWR from 'swr';
 import { useSidebarContext } from '~/lib/context/sidebar_context';
