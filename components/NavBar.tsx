@@ -22,7 +22,7 @@ const NavBar: FC = () => {
             isSidebarOpen || isLoading || data?.site_list.length === 0
               ? 'opacity-0 pointer-events-none'
               : 'opacity-100'
-          } transition-opacity ease-linear duration-100 text-gray-600 flex justify-center self-center invisible md:visible`}
+          } transition-opacity ease-linear duration-100 text-gray-600 flex justify-center invisible md:visible`}
         >
           <MenuLogo />
         </button>

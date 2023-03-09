@@ -9,7 +9,7 @@ export default function Home(this: any) {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/location');
+    router.push('/form/location');
   }, [router]);
 
   return (
