@@ -70,7 +70,7 @@ export function usePWAInstall({ cookieName }: { cookieName: string }) {
     setShowInstallPrompt(false);
     beforeInstallPromptEvent.current = undefined;
     if (!accepted) {
-      Cookies.set(cookieName, '1', { expires: 1 });
+      Cookies.set(cookieName, '1', { expires: 1, sameSite: 'Strict' });
     } else {
       Cookies.remove(cookieName);
     }

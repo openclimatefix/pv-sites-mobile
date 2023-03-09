@@ -30,7 +30,6 @@ const NavBar: FC = () => {
         <NowcastingLogo />
       </div>
       <div className="flex items-center justify-center w-10" />
-      <InstallPWAButton />
     </nav>
   );
 };
