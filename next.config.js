@@ -9,6 +9,7 @@ const nextConfig = {
 
 const withPWA = require('next-pwa')({
   dest: 'public/sw',
+  sw: '/sw/sw.js',
   disable: process.env.NODE_ENV === 'development',
 });
 
