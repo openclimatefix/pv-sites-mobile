@@ -31,7 +31,6 @@ const fetcher: Fetcher<SiteListProps> = async (url: string) => {
 
 const NavBar: FC = () => {
   const { isSidebarOpen, openSidebar } = useSidebarContext();
-
   const { data, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/site_list`,
     fetcher
