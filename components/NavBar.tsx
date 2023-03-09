@@ -14,18 +14,16 @@ const NavBar: FC = () => {
 
   return (
     <div className="bg-ocf-black w-full pt-2 pb-2 h-[var(--nav-height)] flex justify-between px-5">
-      {user && (
-        <button
-          onClick={openSidebar}
-          className={`${
-            isSidebarOpen || isLoading || data?.site_list.length === 0
-              ? 'opacity-0 pointer-events-none'
-              : 'opacity-100'
-          } transition-opacity ease-linear duration-100 text-gray-600 flex justify-center invisible md:visible`}
-        >
-          <MenuLogo />
-        </button>
-      )}
+      <button
+        onClick={openSidebar}
+        className={`${
+          isSidebarOpen || isLoading || data?.site_list.length === 0
+            ? 'opacity-0 pointer-events-none'
+            : 'opacity-100'
+        } transition-opacity ease-linear duration-100 text-gray-600 flex justify-center invisible md:visible`}
+      >
+        <MenuLogo />
+      </button>
       <NowcastingLogo />
       <div className="w-10 h-10" />
     </div>
