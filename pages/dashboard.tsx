@@ -1,13 +1,13 @@
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
+import CurrentCapacity from '../components/dashboard_modules/CurrentCapacity';
+import CurrentOutput from '../components/dashboard_modules/CurrentOutput';
 import NumberDisplay from '../components/dashboard_modules/NumberDisplay';
 import Graph from '../components/graphs/Graph';
-import CurrentOutput from '../components/dashboard_modules/CurrentOutput';
-import CurrentCapacity from '../components/dashboard_modules/CurrentCapacity';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { withPageAuthRequired } from '~/lib/auth';
 
 const Dashboard = () => {
   return (
-    <div className="bg-ocf-black w-screen h-screen px-4">
+    <div className="bg-ocf-black w-screen min-h-screen px-4">
       <h1 className="mt-4 text-ocf-gray text-3xl font-bold">Dashboard</h1>
       <div className="flex flex-row w-full justify-start">
         <ThresholdGraph />
