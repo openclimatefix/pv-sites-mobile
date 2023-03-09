@@ -7,7 +7,7 @@ import { withPageAuthRequired } from '~/lib/auth';
 
 const Dashboard = () => {
   return (
-    <div className="bg-ocf-black w-screen min-h-screen px-4">
+    <div className="bg-ocf-black w-screen min-h-screen px-4 mb-[75px]">
       <h1 className="mt-4 text-ocf-gray text-3xl font-bold">Dashboard</h1>
       <div className="flex flex-row w-full justify-start">
         <ThresholdGraph />
