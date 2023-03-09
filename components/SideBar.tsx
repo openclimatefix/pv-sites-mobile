@@ -1,5 +1,5 @@
 import React, { SVGProps, useEffect } from 'react';
-import { useSidebarContext } from './context';
+import { useSidebarContext } from '~/lib/context/sidebar_context';
 import Link from 'next/link';
 import {
   LogoutIcon,
@@ -45,14 +45,18 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`z-20 transition-all  duration-500  fixed top-0 ${
-        isSidebarOpen ? 'left-0' : '-left-64'
+      className={`z-50 transition-all duration-500 h-full fixed top-0 ${
+        isSidebarOpen
+          ? 'translate-x-0 shadow-lg shadow-ocf-black'
+          : '-translate-x-64'
       }`}
+      // @ts-ignore
+      inert={!isSidebarOpen ? '' : null}
     >
-      <div className="flex h-screen overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 min-h-screen relative">
+      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 relative">
         <button
           onClick={closeSidebar}
-          className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center focus:outline-none ml-6"
+          className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center ml-6"
         >
           <ExitIcon />
         </button>
@@ -65,13 +69,13 @@ const Sidebar = () => {
           />
           <div className="text-xs flex flex-col gap-3">
             <MenuLink
-              linkProps={{ href: '/form' }}
+              linkProps={{ href: '/form/location' }}
               label="Add a Location"
               svg={<LocationIcon />}
               textColor="text-white"
             />
             <MenuLink
-              linkProps={{ href: '/form' }}
+              linkProps={{ href: '/form/details' }}
               label="Edit Site Details"
               svg={<EditIcon />}
               textColor="text-white"

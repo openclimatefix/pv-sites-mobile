@@ -8,76 +8,13 @@ import {
   YAxis,
 } from 'recharts';
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import useSWR, { Fetcher } from 'swr';
-
-interface ForecastDataPointProps {
-  target_datetime_utc: number;
-  expected_generation_kw: number;
-}
-
-interface ForecastDataProps {
-  forecast_uuid: string;
-  site_uuid: string;
-  forecast_creation_datetime: number;
-  forecast_version: string;
-  forecast_values: ForecastDataPointProps[];
-}
-
-interface UnparsedForecastDataPointProps {
-  target_datetime_utc: string | number;
-  expected_generation_kw: number;
-}
-
-interface UnparsedForecastDataProps {
-  forecast_uuid: string;
-  site_uuid: string;
-  forecast_creation_datetime: string | number;
-  forecast_version: string;
-  forecast_values: UnparsedForecastDataPointProps[];
-}
-
-const fetcher: Fetcher<ForecastDataProps> = async (url: string) => {
-  const tempData: UnparsedForecastDataProps = await fetch(url).then((res) =>
-    res.json()
-  );
-
-  if (typeof tempData.forecast_creation_datetime === 'string') {
-    tempData.forecast_creation_datetime = Date.parse(
-      tempData.forecast_creation_datetime
-    );
-  } else {
-    throw new Error('Data contains values with incompatible types');
-  }
-
-  tempData.forecast_values.map(({ target_datetime_utc }) => {
-    if (typeof target_datetime_utc === 'string') {
-      target_datetime_utc = Date.parse(target_datetime_utc);
-    } else {
-      throw new Error('Data contains values with incompatible types');
-    }
-  });
-  return tempData as ForecastDataProps;
-};
-
-const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
-
-const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-  hour: 'numeric',
-  minute: 'numeric',
-});
+import { formatter, useFutureGraphData } from 'lib/utils';
 
 const Graph = () => {
-  const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_forecast/${siteUUID}`,
-    fetcher
-  );
+  const { data } = useFutureGraphData();
 
   const MAX = data
-    ? Math.max(
-        ...data.forecast_values.map(
-          (obj: ForecastDataPointProps) => obj.expected_generation_kw
-        )
-      )
+    ? Math.max(...data.forecast_values.map((obj) => obj.expected_generation_kw))
     : 0;
 
   const tickArray = [0, MAX / 4, MAX / 2, (3 * MAX) / 4, MAX];
@@ -135,6 +72,7 @@ const Graph = () => {
             type="monotone"
             dataKey="expected_generation_kw"
             stroke="#FFD053"
+            dot={false}
             activeDot={{ r: 8 }}
           />
         </LineChart>
