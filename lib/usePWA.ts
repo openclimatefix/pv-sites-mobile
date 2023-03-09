@@ -1,14 +1,5 @@
 import Cookies from 'js-cookie';
-import { useDebugValue, useEffect, useRef, useState } from 'react';
-
-export const enablePWAInstallBanner =
-  process.env.NEXT_PUBLIC_ENABLE_PWA_INSTALL || false;
-
-export const cookies = {
-  pwaInstallDismissed: {
-    name: 'pwa_install_dissmissed',
-  },
-};
+import { useEffect, useRef, useState } from 'react';
 
 declare global {
   /**
@@ -44,21 +35,13 @@ declare global {
 /**
  * Handle installing website as a PWA
  */
-export function usePWAInstall({
-  enable,
-  cookieName,
-}: {
-  enable: boolean;
-  cookieName: string;
-}) {
+export function usePWAInstall({ cookieName }: { cookieName: string }) {
   const beforeInstallPromptEvent = useRef<
     BeforeInstallPromptEvent | undefined
   >();
   const userChoice = useRef<'dismissed' | 'accepted' | undefined>();
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const mounted = useRef(false);
-
-  useDebugValue({ enable });
 
   useEffect(() => {
     mounted.current = true;
@@ -94,7 +77,6 @@ export function usePWAInstall({
   }
 
   useEffect(() => {
-    if (!enable) return;
     function onAppInstalled() {
       //TODO - send to analytics
     }
@@ -118,7 +100,7 @@ export function usePWAInstall({
       window.removeEventListener('beforeinstallprompt', onBeforeInstallPrompt);
       window.removeEventListener('appinstalled', onAppInstalled);
     };
-  }, [enable, cookieName]);
+  }, [cookieName]);
 
-  return [showInstallPrompt, installPWA, hideInstallPrompt] as const;
+  return [showInstallPrompt, installPWA] as const;
 }

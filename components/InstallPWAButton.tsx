@@ -1,10 +1,9 @@
 import { FC } from 'react';
-import { usePWAInstall, cookies } from '../lib/usePWA';
+import { usePWAInstall } from '../lib/usePWA';
 
 export const InstallPWAButton: FC = () => {
-  const [showInstallPrompt, installPWA, hideInstallPrompt] = usePWAInstall({
-    enable: true,
-    cookieName: cookies.pwaInstallDismissed.name,
+  const [showInstallPrompt, installPWA] = usePWAInstall({
+    cookieName: 'pwaInstallDismissed',
   });
 
   if (!showInstallPrompt) {
