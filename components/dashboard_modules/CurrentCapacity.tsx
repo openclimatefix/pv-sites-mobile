@@ -1,26 +1,27 @@
 import { FC } from 'react';
 import useSWR from 'swr';
 import NumberDisplay from './NumberDisplay';
+import { getClosestForecastIndex } from 'lib/graphs';
 
-interface ForecastedOutputEntry {
-  target_datetime_utc: string;
-  expected_generation_kw: number;
-}
+// interface ForecastedOutputEntry {
+//   target_datetime_utc: string;
+//   expected_generation_kw: number;
+// }
 
-function GetCurrentOutput(forecasted_outputs: ForecastedOutputEntry[]) {
-  var cur_time = Date.now();
-  var time = new Date(forecasted_outputs[0].target_datetime_utc).getTime();
-  var min = Math.abs(cur_time - time);
-  var index = 0;
-  for (var i = 1; i < forecasted_outputs.length; i++) {
-    time = new Date(forecasted_outputs[i].target_datetime_utc).getTime();
-    if (Math.abs(cur_time - time) < min) {
-      min = cur_time - time;
-      index = i;
-    }
-  }
-  return forecasted_outputs[index].expected_generation_kw;
-}
+// function GetCurrentOutput(forecasted_outputs: ForecastedOutputEntry[]) {
+//   var cur_time = Date.now();
+//   var time = new Date(forecasted_outputs[0].target_datetime_utc).getTime();
+//   var min = Math.abs(cur_time - time);
+//   var index = 0;
+//   for (var i = 1; i < forecasted_outputs.length; i++) {
+//     time = new Date(forecasted_outputs[i].target_datetime_utc).getTime();
+//     if (Math.abs(cur_time - time) < min) {
+//       min = cur_time - time;
+//       index = i;
+//     }
+//   }
+//   return forecasted_outputs[index].expected_generation_kw;
+// }
 
 const siteUUID = '725a8670-d012-474d-b901-1179f43e7182';
 
@@ -31,7 +32,9 @@ const CurrentCapacity = () => {
     fetcher
   );
   let cur_output = pv_forecast
-    ? GetCurrentOutput(pv_forecast?.forecast_values)
+    ? pv_forecast.forecast_values[
+        getClosestForecastIndex(pv_forecast, new Date())
+      ].expected_generation_kw
     : null;
 
   const { data: site_list } = useSWR(

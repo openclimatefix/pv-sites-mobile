@@ -20,6 +20,7 @@ import {
   formatter,
   useFutureGraphData,
   forecastDataOverDateRange,
+  getClosestForecastIndex,
 } from 'lib/graphs';
 
 import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
@@ -35,7 +36,8 @@ const ThresholdGraph = () => {
   let endDate = new Date();
   currentDate.setHours(8);
   endDate.setHours(20);
-  let graphData = forecastDataOverDateRange(data, currentDate, endDate);
+  let graphData = data;
+  graphData = forecastDataOverDateRange(graphData, currentDate, endDate);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -50,25 +52,26 @@ const ThresholdGraph = () => {
    * @returns the index of the forecasted date that is closest to the current time
    */
   const getCurrentTimeForecastIndex = () => {
-    if (graphData) {
-      const currentDate = new Date();
+    // if (graphData) {
+    //   const currentDate = new Date();
 
-      const closestDateIndex = graphData.forecast_values
-        .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-        .map((forecast_values) => ({
-          ...forecast_values,
-          difference: Math.abs(
-            currentDate.getTime() -
-              new Date(forecast_values.target_datetime_utc).getTime()
-          ),
-        }))
-        .reduce((prev, curr) =>
-          prev.difference < curr.difference ? prev : curr
-        ).index;
+    //   const closestDateIndex = graphData.forecast_values
+    //     .map((forecast_values, index) => ({ ...forecast_values, index: index }))
+    //     .map((forecast_values) => ({
+    //       ...forecast_values,
+    //       difference: Math.abs(
+    //         currentDate.getTime() -
+    //           new Date(forecast_values.target_datetime_utc).getTime()
+    //       ),
+    //     }))
+    //     .reduce((prev, curr) =>
+    //       prev.difference < curr.difference ? prev : curr
+    //     ).index;
 
-      return closestDateIndex;
-    }
-    return 0;
+    //   return closestDateIndex;
+    // }
+    // return 0;
+    return getClosestForecastIndex(graphData, new Date());
   };
 
   /**
@@ -263,15 +266,7 @@ const ThresholdGraph = () => {
         </div>
         <ResponsiveContainer className="mt-[15px] " width="100%" height={100}>
           <AreaChart
-            data={
-              graphData?.forecast_values
-              // ? forecastDataOverDateRange(
-              //     data.forecast_values,
-              //     new Date('2023-03-06T14:00:00.000-04:00'),
-              //     new Date()
-              //   )
-              // : undefined
-            }
+            data={graphData?.forecast_values}
             margin={{
               top: 0,
               right: 40,

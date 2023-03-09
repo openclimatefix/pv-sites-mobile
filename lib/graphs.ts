@@ -66,7 +66,7 @@ export const useFutureGraphData = () =>
     forecastFetcher
   );
 
-const getClosestForecastIndex = (forecastData : ForecastData, targetDate: Date) => {
+export const getClosestForecastIndex = (forecastData : ForecastData, targetDate: Date) => {
     if (forecastData) {
       const closestDateIndex = forecastData.forecast_values
         .map((forecast_values, index) => ({ ...forecast_values, index: index }))
@@ -90,6 +90,6 @@ export const forecastDataOverDateRange = (forecastData : ForecastData, start_dat
   const start_index = getClosestForecastIndex(forecastData, start_date);
   const end_index = getClosestForecastIndex(forecastData, end_date);
   if (forecastData)
-    forecastData.forecast_values = forecastData?.forecast_values.slice(start_index, end_index + 1);
+    forecastData.forecast_values = forecastData.forecast_values.slice(start_index, end_index + 1);
   return forecastData;
 }
