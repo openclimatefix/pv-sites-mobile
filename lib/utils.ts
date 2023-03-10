@@ -84,7 +84,7 @@ export enum Value {
 }
 interface MinMaxInterface {
   type: Value;
-  index: number;
+  number: number;
 }
 
 /**
@@ -102,7 +102,7 @@ export const getArrayMaxOrMinAfterIndex = (
   if (startIndex === array.length - 1) {
     return {
       type: Value.Min,
-      index: startIndex,
+      number: startIndex,
     };
   }
 
@@ -116,12 +116,12 @@ export const getArrayMaxOrMinAfterIndex = (
       if (currentExpectedGenerationKW > previousExpectedGenerationKW) {
         return {
           type: Value.Max,
-          index: startIndex,
+          number: startIndex,
         };
       } else if (currentExpectedGenerationKW < previousExpectedGenerationKW) {
         return {
           type: Value.Min,
-          index: startIndex,
+          number: startIndex,
         };
       }
     } else {
@@ -133,7 +133,7 @@ export const getArrayMaxOrMinAfterIndex = (
       ) {
         return {
           type: Value.Max,
-          index: startIndex,
+          number: startIndex,
         };
       } else if (
         currentExpectedGenerationKW < previousExpectedGenerationKW &&
@@ -141,7 +141,7 @@ export const getArrayMaxOrMinAfterIndex = (
       ) {
         return {
           type: Value.Min,
-          index: startIndex,
+          number: startIndex,
         };
       }
     }
@@ -149,3 +149,92 @@ export const getArrayMaxOrMinAfterIndex = (
   }
   return null;
 };
+
+/**
+ * @returns the index of the forecasted date that is closest to the current time
+ */
+export const getCurrentTimeForecastIndex = (
+  forecast_values: ForecastDataPoint[]
+) => {
+  if (forecast_values) {
+    const currentDate = new Date();
+
+    const closestDateIndex = forecast_values
+      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
+      .map((forecast_values) => ({
+        ...forecast_values,
+        difference: Math.abs(
+          currentDate.getTime() -
+            new Date(forecast_values.target_datetime_utc).getTime()
+        ),
+      }))
+      .reduce((prev, curr) =>
+        prev.difference < curr.difference ? prev : curr
+      ).index;
+
+    return closestDateIndex;
+  }
+  return 0;
+};
+
+/** Returns the difference in hours between two epoch times */
+const findHourDifference = (date1: number, date2: number): number =>
+  Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) / 36e5;
+
+/**
+ * Determines the hour difference between the current time and the next time we are above or below
+ * the sunny threshold
+ * @param forecast_values expected generated forecast values (kilowatts) at specific times
+ * @param threshold sunny threshold in kilowatts
+ * @returns Object containing hour difference between the next date and
+ * if this date is below (Value.Max) or above (Value.Min) the threshold
+ */
+export const getNextThresholdIndex = (
+  forecast_values: ForecastDataPoint[] | undefined,
+  threshold: number
+): MinMaxInterface | null => {
+  if (forecast_values) {
+    let startIndex = getCurrentTimeForecastIndex(forecast_values);
+    let currentIndex =
+      startIndex + 1 < forecast_values.length ? startIndex + 1 : startIndex;
+
+    const operator =
+      forecast_values[currentIndex].expected_generation_kw >= threshold
+        ? -1
+        : 1;
+
+    const value =
+      forecast_values[currentIndex].expected_generation_kw >= threshold
+        ? Value.Max
+        : Value.Min;
+
+    while (currentIndex < forecast_values.length) {
+      if (
+        operator *
+          (forecast_values[currentIndex].expected_generation_kw - threshold) >
+        0
+      ) {
+        console.log(currentIndex);
+        return {
+          type: value,
+          number: findHourDifference(
+            forecast_values[currentIndex].target_datetime_utc,
+            forecast_values[startIndex].target_datetime_utc
+          ),
+        };
+      }
+      currentIndex += 1;
+    }
+    return {
+      type: value,
+      number: findHourDifference(
+        forecast_values[currentIndex - 1].target_datetime_utc,
+        forecast_values[startIndex].target_datetime_utc
+      ),
+    };
+  }
+  return null;
+};
+
+/* Represents the threshold for the graph */
+export const graphThreshold = 0.7;
