@@ -1,11 +1,9 @@
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
 import CurrentCapacity from '../components/dashboard_modules/CurrentCapacity';
 import CurrentOutput from '../components/dashboard_modules/CurrentOutput';
-import NumberDisplay from '../components/dashboard_modules/NumberDisplay';
+import ExpectedOutput from '../components/dashboard_modules/ExpectedOutput';
 import Graph from '../components/graphs/Graph';
 import { withPageAuthRequired } from '~/lib/auth';
-
-const computeMipointRiemmanSum = () => {};
 
 const Dashboard = () => {
   return (
@@ -15,7 +13,7 @@ const Dashboard = () => {
         <ThresholdGraph />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <NumberDisplay title="Today's Expected Output" value="10.23 kWh" />
+        <ExpectedOutput />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <CurrentOutput />
