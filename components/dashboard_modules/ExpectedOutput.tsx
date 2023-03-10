@@ -6,7 +6,7 @@ interface ForecastDataPoint {
   expected_generation_kw: number;
 }
 
-const computeMipointRiemmanSum = (points: ForecastDataPoint[]) => {
+const getTotalExpectedOutput = (points: ForecastDataPoint[]) => {
   var approxArea = 0.0;
   console.log(points);
 
@@ -31,7 +31,7 @@ const ExpectedOutput = () => {
   return (
     <NumberDisplay
       title="Today's Expected Output"
-      value={data ? computeMipointRiemmanSum(data.forecast_values) : 'Loading'}
+      value={data ? getTotalExpectedOutput(data.forecast_values) : 'Loading'}
     />
   );
 };
