@@ -32,12 +32,17 @@ const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
   const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
 
-  console.log(data);
-
   let currentDate = new Date();
   let endDate = new Date();
   currentDate.setHours(8);
+  currentDate.setMinutes(0);
+  currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0);
+  console.log(currentDate);
   endDate.setHours(20);
+  endDate.setMinutes(0);
+  endDate.setSeconds(0);
+  endDate.setMilliseconds(0);
   const graphData = data
     ? forecastDataOverDateRange(
         JSON.parse(JSON.stringify(data)),
@@ -235,13 +240,14 @@ const ThresholdGraph = () => {
     if (graphData) {
       const currIndex = getCurrentTimeForecastIndex();
       const minMax = getArrayMaxOrMinAfterIndex(
-        data.forecast_values,
+        graphData.forecast_values,
         'expected_generation_kw',
         currIndex
       );
 
       if (minMax) {
         const { type, index } = minMax;
+        console.log(graphData.forecast_values.length);
         const minMaxForecastDate = formatter.format(
           new Date(graphData.forecast_values[index].target_datetime_utc)
         );

@@ -23,7 +23,7 @@ import { getClosestForecastIndex } from 'lib/graphs';
 //   return forecasted_outputs[index].expected_generation_kw;
 // }
 
-const siteUUID = '725a8670-d012-474d-b901-1179f43e7182';
+const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
 const CurrentOutput = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
