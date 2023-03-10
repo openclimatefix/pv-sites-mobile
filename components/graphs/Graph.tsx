@@ -8,10 +8,24 @@ import {
   YAxis,
 } from 'recharts';
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import { formatter, useFutureGraphData } from 'lib/graphs';
+import {
+  formatter,
+  useFutureGraphData,
+  forecastDataOverDateRange,
+} from 'lib/graphs';
 
 const Graph = () => {
   const { data } = useFutureGraphData();
+
+  let endDate = new Date();
+  endDate.setHours(endDate.getHours() + 48);
+  const graphData = data
+    ? forecastDataOverDateRange(
+        JSON.parse(JSON.stringify(data)),
+        new Date(),
+        endDate
+      )
+    : null;
 
   const MAX = data
     ? Math.max(...data.forecast_values.map((obj) => obj.expected_generation_kw))

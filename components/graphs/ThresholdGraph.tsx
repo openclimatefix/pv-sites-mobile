@@ -32,12 +32,19 @@ const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
   const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
 
+  console.log(data);
+
   let currentDate = new Date();
   let endDate = new Date();
   currentDate.setHours(8);
   endDate.setHours(20);
-  let graphData = data;
-  graphData = forecastDataOverDateRange(graphData, currentDate, endDate);
+  const graphData = data
+    ? forecastDataOverDateRange(
+        JSON.parse(JSON.stringify(data)),
+        currentDate,
+        endDate
+      )
+    : null;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
