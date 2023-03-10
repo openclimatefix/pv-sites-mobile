@@ -1,0 +1,14 @@
+{
+  "appliances": [
+    {
+      "name": "Car",
+      "icon": "/car.svg",
+      "kwh": "100"
+    },
+    {
+      "name": "Washer/Dryer",
+      "icon": "/washerdryer.svg",
+      "kwh": "3.8"
+    }
+  ]
+}
