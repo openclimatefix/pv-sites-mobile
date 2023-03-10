@@ -1,4 +1,4 @@
-import React, { SVGProps, useEffect } from 'react';
+import React, { SVGProps, useEffect, useRef } from 'react';
 import { useSidebarContext } from '~/lib/context/sidebar_context';
 import Link from 'next/link';
 import {
@@ -10,6 +10,7 @@ import {
 } from './icons/sidebar_icons';
 import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
+import useClickededOutside from '../lib/useClickedOutside';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
@@ -42,6 +43,15 @@ const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useSidebarContext();
   const router = useRouter();
   useEffect(() => router.events.on('routeChangeComplete', closeSidebar));
+  const wrapperRef = useRef(null);
+
+  const clickOutsideSidebarHandler = () => {
+    if (isSidebarOpen) {
+      closeSidebar();
+    }
+  };
+
+  useClickededOutside(wrapperRef, clickOutsideSidebarHandler);
 
   return (
     <div
@@ -52,6 +62,7 @@ const Sidebar = () => {
       }`}
       // @ts-ignore
       inert={!isSidebarOpen ? '' : null}
+      ref={wrapperRef}
     >
       <div className="flex h-full overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 relative">
         <button
