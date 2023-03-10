@@ -5,6 +5,8 @@ import NumberDisplay from '../components/dashboard_modules/NumberDisplay';
 import Graph from '../components/graphs/Graph';
 import { withPageAuthRequired } from '~/lib/auth';
 
+const computeMipointRiemmanSum = () => {};
+
 const Dashboard = () => {
   return (
     <div className="bg-ocf-black w-screen min-h-screen px-4 mb-[75px]">
@@ -26,5 +28,6 @@ const Dashboard = () => {
   );
 };
 
+/// compute value here and pass
 export default Dashboard;
 export const getServerSideProps = withPageAuthRequired();
