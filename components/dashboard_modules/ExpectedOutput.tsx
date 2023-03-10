@@ -6,11 +6,7 @@ interface ForecastDataPoint {
   expected_generation_kw: number;
 }
 
-const computeMipointRiemmanSum = (points: ForecastDataPoint[] | undefined) => {
-  if (!points) {
-    return 'Error';
-  }
-
+const computeMipointRiemmanSum = (points: ForecastDataPoint[]) => {
   var approxArea = 0.0;
   console.log(points);
 
