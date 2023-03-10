@@ -1,7 +1,7 @@
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
 import CurrentCapacity from '../components/dashboard_modules/CurrentCapacity';
 import CurrentOutput from '../components/dashboard_modules/CurrentOutput';
-import ExpectedOutput from '../components/dashboard_modules/ExpectedOutput';
+import ExpectedTotalOutput from '../components/dashboard_modules/ExpectedTotalOutput';
 import Graph from '../components/graphs/Graph';
 import { withPageAuthRequired } from '~/lib/auth';
 
@@ -13,7 +13,7 @@ const Dashboard = () => {
         <ThresholdGraph />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <ExpectedOutput />
+        <ExpectedTotalOutput />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <CurrentOutput />
@@ -26,6 +26,5 @@ const Dashboard = () => {
   );
 };
 
-/// compute value here and pass
 export default Dashboard;
 export const getServerSideProps = withPageAuthRequired();
