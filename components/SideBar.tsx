@@ -17,15 +17,17 @@ type MenuLinkProps = {
   linkProps: LinkProps;
   label: string;
   svg: ReactNode;
-  textColor: string;
+  currentPath: string;
 };
 
 const MenuLink: React.FC<MenuLinkProps> = ({
   linkProps,
   label,
   svg,
-  textColor,
+  currentPath,
 }) => {
+  const textColor =
+    linkProps.href === currentPath ? 'text-amber' : 'text-white';
   return (
     <Link {...linkProps}>
       <a>
@@ -46,9 +48,6 @@ const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useSidebarContext();
   const router = useRouter();
   useEffect(() => router.events.on('routeChangeComplete', closeSidebar));
-
-  const getTextColor = (path: string) =>
-    router.asPath === path ? 'text-amber' : 'text-white';
 
   return (
     <div
@@ -72,20 +71,20 @@ const Sidebar = () => {
             linkProps={{ href: '/dashboard' }}
             label="Dashboard"
             svg={<DashboardIcon />}
-            textColor={getTextColor('/dashboard')}
+            currentPath={router.asPath}
           />
           <div className="text-xs flex flex-col gap-3">
             <MenuLink
               linkProps={{ href: '/form/location' }}
               label="Add a Location"
               svg={<LocationIcon />}
-              textColor={getTextColor('/form/location')}
+              currentPath={router.asPath}
             />
             <MenuLink
               linkProps={{ href: '/form/details' }}
               label="Edit Site Details"
               svg={<EditIcon />}
-              textColor={getTextColor('/form/details')}
+              currentPath={router.asPath}
             />
             <MenuLink
               linkProps={{
@@ -93,9 +92,7 @@ const Sidebar = () => {
               }}
               label="Logout"
               svg={<LogoutIcon />}
-              textColor={getTextColor(
-                `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`
-              )}
+              currentPath={router.asPath}
             />
           </div>
         </div>
