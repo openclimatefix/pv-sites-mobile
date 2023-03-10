@@ -1,27 +1,8 @@
-import { getSession } from '@auth0/nextjs-auth0';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { withPageAuthRequired } from '~/lib/auth';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Site } from '~/lib/types';
 
-export default function Home(this: any) {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push('/form/location');
-  }, [router]);
-
-  return (
-    <>
-      <Head>
-        <title>Open Climate Fix</title>
-        <meta name="description" content="Open Climate Fix" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-    </>
-  );
+export default function Index() {
+  return null;
 }
 
 export const getServerSideProps = withPageAuthRequired({

@@ -1,8 +1,8 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { withPageAuthRequired } from '~/lib/auth';
 import { getInverters, Inverter, testClientID } from '~/lib/enode';
 
 type Props = {
