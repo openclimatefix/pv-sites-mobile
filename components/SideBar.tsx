@@ -1,20 +1,22 @@
-import React, { SVGProps, useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useSidebarContext } from '~/lib/context/sidebar_context';
 import Link from 'next/link';
+
 import {
-  LogoutIcon,
-  EditIcon,
-  LocationIcon,
-  DashboardIcon,
   ExitIcon,
-} from './icons/sidebar_icons';
+  DashboardIcon,
+  LocationIcon,
+  EditIcon,
+  LogoutIcon,
+} from './icons';
+
 import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
   label: string;
-  svg: SVGProps<SVGElement>;
+  svg: ReactNode;
   textColor: string;
 };
 
@@ -27,8 +29,10 @@ const MenuLink: React.FC<MenuLinkProps> = ({
   return (
     <Link {...linkProps}>
       <a>
-        <div className="px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform">
-          <>{svg}</>
+        <div
+          className={`px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform`}
+        >
+          <g className={textColor}>{svg}</g>
           <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
             {label}
           </span>
@@ -42,6 +46,9 @@ const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useSidebarContext();
   const router = useRouter();
   useEffect(() => router.events.on('routeChangeComplete', closeSidebar));
+
+  const getTextColor = (path: string) =>
+    router.asPath === path ? 'text-amber' : 'text-white';
 
   return (
     <div
@@ -60,25 +67,25 @@ const Sidebar = () => {
         >
           <ExitIcon />
         </button>
-        <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
+        <div className="text-xs	flex flex-col mt-6 justify-between flex-1 text-ocf-yellow">
           <MenuLink
             linkProps={{ href: '/dashboard' }}
             label="Dashboard"
             svg={<DashboardIcon />}
-            textColor="text-amber"
+            textColor={getTextColor('/dashboard')}
           />
           <div className="text-xs flex flex-col gap-3">
             <MenuLink
               linkProps={{ href: '/form/location' }}
               label="Add a Location"
               svg={<LocationIcon />}
-              textColor="text-white"
+              textColor={getTextColor('/form/location')}
             />
             <MenuLink
               linkProps={{ href: '/form/details' }}
               label="Edit Site Details"
               svg={<EditIcon />}
-              textColor="text-white"
+              textColor={getTextColor('/form/details')}
             />
             <MenuLink
               linkProps={{
@@ -86,7 +93,9 @@ const Sidebar = () => {
               }}
               label="Logout"
               svg={<LogoutIcon />}
-              textColor="text-white"
+              textColor={getTextColor(
+                `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`
+              )}
             />
           </div>
         </div>

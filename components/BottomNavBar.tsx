@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import DashboardIcon from './icons/DashboardIcon';
-import SearchIcon from './icons/SearchIcon';
-import SiteListIcon from './icons/SiteListIcon';
+
+import { DashboardIcon, SearchIcon, SiteListIcon } from './icons';
+
 import { useRouter } from 'next/router';
-import useSWR, { Fetcher } from 'swr';
-import { SiteListProps } from '~/lib/types';
+import useSWR from 'swr';
 
 const icons = [
   {

@@ -1,10 +1,6 @@
 import { FC } from 'react';
 
-interface DashboardIconProps {
-  color: string;
-}
-
-const DashboardIcon: FC<DashboardIconProps> = ({ color }) => {
+const DashboardIcon: FC = () => {
   return (
     <svg
       width="21"
