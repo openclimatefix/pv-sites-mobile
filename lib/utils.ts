@@ -226,3 +226,11 @@ export const getNextThresholdIndex = (
 
 /* Represents the threshold for the graph */
 export const graphThreshold = 0.7;
+
+/**
+ * Custom hook for time
+ * @param array Array to search for a local minimum or maximum value
+ * @param key The key that represents the values being compared in array
+ * @param startIndex The index to start the search at
+ * @returns The index of the next minimum or maximum value
+ */
