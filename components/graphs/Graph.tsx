@@ -8,7 +8,8 @@ import {
   YAxis,
 } from 'recharts';
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import { formatter, useFutureGraphData } from 'lib/utils';
+import { formatter } from 'lib/utils';
+import { useFutureGraphData } from 'lib/hooks';
 
 const Graph = () => {
   const { data } = useFutureGraphData();

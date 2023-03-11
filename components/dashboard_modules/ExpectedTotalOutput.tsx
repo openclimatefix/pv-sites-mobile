@@ -1,5 +1,5 @@
 import NumberDisplay from './NumberDisplay';
-import { formatter, useFutureGraphData } from 'lib/utils';
+import { useFutureGraphData } from 'lib/hooks';
 
 interface ForecastDataPoint {
   target_datetime_utc: number;
