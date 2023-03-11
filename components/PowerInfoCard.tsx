@@ -3,29 +3,23 @@ import Image from 'next/image';
 
 type PowerInfo = {
   src: string;
-  applicance: string;
+  appliance: string;
   kW: string;
 };
 
-const PowerInfoCard: FC<PowerInfo> = ({ src, applicance, kW }) => {
+const PowerInfoCard: FC<PowerInfo> = ({ src, appliance, kW }) => {
   return (
-    <div className="w-full">
-      <div className="bg-ocf-gray-1000 pt-3 pb-8 rounded-lg flex justify-center align-middle gap-4">
-        <Image
-          src={src}
-          alt={applicance}
-          width={75}
-          height={75}
-          className="flex-1"
-        />
-        <div className="bg-ocf-gray-1000 rounded-2xl ml-3 self-center">
-          <p className="text-ocf-gray text-left m-0 text-base mb-1 font-semibold">
-            {applicance}
-          </p>
-          <p className="text-ocf-gray text-left m-0 text-sm font-semibold">
-            {kW} kW
-          </p>
-        </div>
+    <div className="w-full pt-3 pb-8 flex justify-center align-middle gap-4">
+      <Image
+        src={src}
+        alt={appliance}
+        width={75}
+        height={75}
+        className="flex-1"
+      />
+      <div className="text-ocf-gray ml-3 self-center font-semibold text-left">
+        <p className="m-0 text-base mb-1 font-semibold">{appliance}</p>
+        <p className="text-sm ">{kW} kW</p>
       </div>
     </div>
   );
