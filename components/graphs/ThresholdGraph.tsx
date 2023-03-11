@@ -25,19 +25,23 @@ import {
 } from 'lib/utils';
 
 import { useFutureGraphData } from 'lib/hooks';
+import useTime from '~/lib/hooks/useTime';
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
-  const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
+  // const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(formatter.format(Date.now()));
-    }, 1000);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCurrentTime(formatter.format(Date.now()));
+  //     console.log(currentTime);
+  //   }, 1000);
 
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
-  });
+  //   // clear interval on re-render to avoid memory leaks
+  //   return () => clearInterval(intervalId);
+  // });
+
+  const currentTime = useTime();
 
   /**
    * Renders a text label for the threshold
