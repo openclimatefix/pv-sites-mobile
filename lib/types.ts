@@ -14,3 +14,7 @@ export interface Site {
   created_utc: string;
   updated_utc: string;
 }
+
+export interface SiteListProps {
+  site_list: Site[];
+}
