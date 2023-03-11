@@ -181,59 +181,56 @@ export const getCurrentTimeForecastIndex = (
 const findHourDifference = (date1: number, date2: number): number =>
   Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) / 36e5;
 
+interface NextThresholdInterface {
+  aboveThreshold: boolean;
+  number: number;
+}
+
 /**
  * Determines the hour difference between the current time and the next time we are above or below
  * the sunny threshold
  * @param forecast_values expected generated forecast values (kilowatts) at specific times
  * @param threshold sunny threshold in kilowatts
  * @returns Object containing hour difference between the next date and
- * if this date is below (Value.Max) or above (Value.Min) the threshold
+ * if this date is above or below the threshold
  */
 export const getNextThresholdIndex = (
-  forecast_values: ForecastDataPoint[] | undefined,
+  forecast_values: ForecastDataPoint[],
   threshold: number
-): MinMaxInterface | null => {
-  if (forecast_values) {
-    let startIndex = getCurrentTimeForecastIndex(forecast_values);
-    let currentIndex =
-      startIndex + 1 < forecast_values.length ? startIndex + 1 : startIndex;
+): NextThresholdInterface => {
+  let startIndex = getCurrentTimeForecastIndex(forecast_values);
+  let currentIndex =
+    startIndex + 1 < forecast_values.length ? startIndex + 1 : startIndex;
 
-    const operator =
-      forecast_values[currentIndex].expected_generation_kw >= threshold
-        ? -1
-        : 1;
+  const operator =
+    forecast_values[currentIndex].expected_generation_kw >= threshold ? -1 : 1;
 
-    const value =
-      forecast_values[currentIndex].expected_generation_kw >= threshold
-        ? Value.Max
-        : Value.Min;
+  const aboveThreshold =
+    forecast_values[currentIndex].expected_generation_kw < threshold
+      ? true
+      : false;
 
-    while (currentIndex < forecast_values.length) {
-      if (
-        operator *
-          (forecast_values[currentIndex].expected_generation_kw - threshold) >
-        0
-      ) {
-        console.log(currentIndex);
-        return {
-          type: value,
-          number: findHourDifference(
-            forecast_values[currentIndex].target_datetime_utc,
-            forecast_values[startIndex].target_datetime_utc
-          ),
-        };
-      }
-      currentIndex += 1;
+  while (currentIndex < forecast_values.length) {
+    const thresholdDifference =
+      forecast_values[currentIndex].expected_generation_kw - threshold;
+    if (operator * thresholdDifference > 0) {
+      return {
+        aboveThreshold,
+        number: findHourDifference(
+          forecast_values[currentIndex].target_datetime_utc,
+          forecast_values[startIndex].target_datetime_utc
+        ),
+      };
     }
-    return {
-      type: value,
-      number: findHourDifference(
-        forecast_values[currentIndex - 1].target_datetime_utc,
-        forecast_values[startIndex].target_datetime_utc
-      ),
-    };
+    currentIndex += 1;
   }
-  return null;
+  return {
+    aboveThreshold,
+    number: findHourDifference(
+      forecast_values[currentIndex - 1].target_datetime_utc,
+      forecast_values[startIndex].target_datetime_utc
+    ),
+  };
 };
 
 /* Represents the threshold for the graph */
