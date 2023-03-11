@@ -1,4 +1,3 @@
-import { start } from 'repl';
 import useSWR, { Fetcher } from 'swr';
 
 /**
@@ -47,7 +46,7 @@ interface UnparsedForecastData {
   forecast_values: UnparsedForecastDataPoint[];
 }
 
-const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
+export const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
   const tempData: UnparsedForecastData = await fetch(url).then((res) =>
     res.json()
   );
@@ -69,14 +68,6 @@ const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
   });
   return tempData as ForecastData;
 };
-
-const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
-
-export const useFutureGraphData = () =>
-  useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_forecast/${siteUUID}`,
-    forecastFetcher
-  );
 
 export enum Value {
   Min = 'Minimum',

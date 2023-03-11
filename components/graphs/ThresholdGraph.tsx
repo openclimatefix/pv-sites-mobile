@@ -18,12 +18,13 @@ import {
 
 import {
   formatter,
-  useFutureGraphData,
   getArrayMaxOrMinAfterIndex,
   Value,
   getCurrentTimeForecastIndex,
   graphThreshold,
 } from 'lib/utils';
+
+import { useFutureGraphData } from 'lib/hooks';
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
