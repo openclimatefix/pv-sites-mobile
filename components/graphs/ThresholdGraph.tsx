@@ -29,19 +29,7 @@ import useTime from '~/lib/hooks/useTime';
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
-  // const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCurrentTime(formatter.format(Date.now()));
-  //     console.log(currentTime);
-  //   }, 1000);
-
-  //   // clear interval on re-render to avoid memory leaks
-  //   return () => clearInterval(intervalId);
-  // });
-
-  const [currentTime, isDaytime] = useTime();
+  const { currentTimeNoFilter, isDaytime } = useTime();
 
   /**
    * Renders a text label for the threshold
@@ -222,7 +210,7 @@ const ThresholdGraph = () => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {currentTime}
+        {formatter.format(currentTimeNoFilter)}
       </p>
     );
   };
