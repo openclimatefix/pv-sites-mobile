@@ -41,7 +41,7 @@ const ThresholdGraph = () => {
   //   return () => clearInterval(intervalId);
   // });
 
-  const currentTime = useTime();
+  const [currentTime, isDaytime] = useTime();
 
   /**
    * Renders a text label for the threshold
