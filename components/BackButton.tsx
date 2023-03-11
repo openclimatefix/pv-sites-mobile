@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LeftChevron } from './icons/sidebar_icons';
+import { LeftChevron } from './icons';
 import { useRouter } from 'next/router';
 
 const BackButton: FC = () => {

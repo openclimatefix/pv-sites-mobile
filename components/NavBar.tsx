@@ -7,14 +7,18 @@ import { Site } from '~/lib/types';
 import { MenuLogo, NowcastingLogo } from './icons/navbar_icons';
 
 const NavBar: FC = () => {
-  const { user } = useUser();
   const { isSidebarOpen, openSidebar } = useSidebarContext();
   const { data, isLoading } = useSWR<{ site_list: Site[] }>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/site_list`
   );
+  const { user } = useUser();
 
   return (
-    <div className="bg-ocf-black w-full pt-2 pb-2 h-[var(--nav-height)] flex justify-between px-5">
+    <div
+      className={`bg-ocf-black w-full pt-2 pb-2 h-[var(--nav-height)] flex ${
+        user ? 'justify-between' : 'justify-center'
+      } px-5`}
+    >
       {user && (
         <button
           onClick={openSidebar}

@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Input from '~/components/Input';
-import { withPageAuthRequired } from '~/lib/auth';
 import Modal from 'components/Modal';
 
 import { useFormContext } from '~/lib/context/form_context';
 import BackButton from 'components/BackButton';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -62,6 +62,8 @@ const Form = () => {
             step: 'any',
             required: true,
             onKeyDown: preventMinus,
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
           }}
         />
 
@@ -81,6 +83,8 @@ const Form = () => {
             step: 'any',
             required: true,
             onKeyDown: preventMinus,
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
           }}
         />
 
@@ -102,6 +106,8 @@ const Form = () => {
             min: '0',
             step: 'any',
             onKeyDown: preventMinus,
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
           }}
         />
 
