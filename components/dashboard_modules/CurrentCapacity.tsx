@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import useSWR from 'swr';
 import NumberDisplay from './NumberDisplay';
 

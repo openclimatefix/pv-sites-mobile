@@ -18,3 +18,8 @@ export interface Site {
 export interface SiteListProps {
   site_list: Site[];
 }
+
+export interface ForecastDataPoint {
+  target_datetime_utc: number;
+  expected_generation_kw: number;
+}
