@@ -3,7 +3,7 @@
     {
       "name": "Car",
       "icon": "/car.svg",
-      "kWh": "100"
+      "kW": "100"
     },
     {
       "name": "Washer/Dryer",
