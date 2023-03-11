@@ -10,7 +10,7 @@ import {
 } from './icons/sidebar_icons';
 import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
-import useClickededOutside from '../lib/useClickedOutside';
+import { useClickedOutside }from '../lib/hooks';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
@@ -51,7 +51,7 @@ const Sidebar = () => {
     }
   };
 
-  useClickededOutside(wrapperRef, clickOutsideSidebarHandler);
+  useClickedOutside(wrapperRef, clickOutsideSidebarHandler);
 
   return (
     <div

@@ -18,10 +18,12 @@ import {
 
 import {
   formatter,
-  useFutureGraphData,
   getArrayMaxOrMinAfterIndex,
   Value,
 } from 'lib/utils';
+
+import { useFutureGraphData } from 'lib/hooks';
+
 
 /* Represents the threshold for the graph */
 const graphThreshold = 0.7;

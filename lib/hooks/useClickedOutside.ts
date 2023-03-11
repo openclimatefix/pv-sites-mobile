@@ -1,6 +1,6 @@
 import { useEffect, RefObject } from 'react';
 
-const useClickededOutside = (ref: RefObject<any>, handler: () => void) => {
+const useClickedOutside = (ref: RefObject<any>, handler: () => void) => {
   useEffect(() => {
     /**
      * Call handler() if clicked on outside of element
@@ -19,4 +19,4 @@ const useClickededOutside = (ref: RefObject<any>, handler: () => void) => {
   }, [ref, handler]);
 };
 
-export default useClickededOutside;
+export default useClickedOutside;
