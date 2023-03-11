@@ -23,7 +23,7 @@ const PowerInfoCard: FC<PowerInfo> = ({ src, applicance, kW }) => {
             {applicance}
           </p>
           <p className="text-ocf-gray text-left m-0 text-sm font-semibold">
-            {kWh} kWh
+            {kW} kW
           </p>
         </div>
       </div>
