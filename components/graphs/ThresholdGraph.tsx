@@ -29,7 +29,7 @@ import useTime from '~/lib/hooks/useTime';
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
-  const { currentTimeNoFilter, isDaytime } = useTime(51.5, -0.1);
+  const { currentTime, isDaytime } = useTime(51.5, -0.1);
 
   /**
    * Renders a text label for the threshold
@@ -210,7 +210,7 @@ const ThresholdGraph = () => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {formatter.format(currentTimeNoFilter)}
+        {formatter.format(currentTime)}
       </p>
     );
   };
