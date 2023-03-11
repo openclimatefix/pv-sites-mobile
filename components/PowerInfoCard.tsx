@@ -4,7 +4,7 @@ import Image from 'next/image';
 type PowerInfo = {
   src: string;
   applicance: string;
-  kWh: string;
+  kW: string;
 };
 
 const PowerInfoCard: FC<PowerInfo> = ({ src, applicance, kWh }) => {
