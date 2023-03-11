@@ -8,7 +8,7 @@
     {
       "name": "Washer/Dryer",
       "icon": "/washerdryer.svg",
-      "kWh": "3.8"
+      "kW": "3.8"
     }
   ]
 }
