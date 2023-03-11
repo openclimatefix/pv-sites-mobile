@@ -10,7 +10,7 @@ type PowerInfo = {
 const PowerInfoCard: FC<PowerInfo> = ({ src, applicance, kWh }) => {
   return (
     <div className="w-full">
-      <div className="bg-ocf-gray-1000 pt-3 pb-7 rounded-lg flex justify-center align-middle">
+      <div className="bg-ocf-gray-1000 pt-3 pb-8 rounded-lg flex justify-center align-middle">
         <Image
           src={src}
           alt={applicance}
