@@ -2,11 +2,9 @@ import { FC } from 'react';
 
 import NumberDisplay from './NumberDisplay';
 
-import {
-  useFutureGraphData,
-  getNextThresholdIndex,
-  graphThreshold,
-} from 'lib/utils';
+import { getNextThresholdIndex, graphThreshold } from 'lib/utils';
+
+import { useFutureGraphData } from 'lib/hooks';
 
 const SunnyTimeframe: FC = () => {
   const { data } = useFutureGraphData();
