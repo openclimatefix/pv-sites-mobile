@@ -61,7 +61,6 @@ const useSiteData = (siteUUID: string) => {
     siteListFetcher
   );
 
-  // const error = forecastError || siteListError ? AggregateError(forecastError, siteListError) : null;
   const error = AggregateError([forecastError, siteListError]);
   const isLoading = isSiteListLoading || isForecastLoading;
 
