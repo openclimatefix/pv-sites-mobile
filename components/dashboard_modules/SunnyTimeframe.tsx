@@ -4,17 +4,17 @@ import NumberDisplay from './NumberDisplay';
 
 import { getNextThresholdIndex, graphThreshold } from 'lib/utils';
 
-import { useFutureGraphData } from 'lib/hooks';
+import { useSiteData } from 'lib/hooks';
 
-const SunnyTimeframe: FC = () => {
-  const { data } = useFutureGraphData();
+const SunnyTimeframe: FC<{siteUUID: string}> = ({siteUUID}) => {
+  const { forecastData } = useSiteData(siteUUID);
 
-  if (!data) {
+  if (!forecastData) {
     return null;
   }
 
   const nextThreshold = getNextThresholdIndex(
-    data.forecast_values,
+    forecastData.forecast_values,
     graphThreshold
   );
 

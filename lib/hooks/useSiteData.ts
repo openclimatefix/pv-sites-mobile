@@ -2,15 +2,7 @@
 import useSWR from 'swr';
 import { Fetcher } from 'swr';
 import { Site, SiteListProps } from '../types';
-import { ForecastDataPoint } from '../types';
-
-interface ForecastData {
-  forecast_uuid: string;
-  site_uuid: string;
-  forecast_creation_datetime: number;
-  forecast_version: string;
-  forecast_values: ForecastDataPoint[];
-}
+import { ForecastData } from '../types';
 
 interface UnparsedForecastData {
   forecast_uuid: string;

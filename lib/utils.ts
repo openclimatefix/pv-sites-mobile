@@ -1,3 +1,5 @@
+import { ForecastDataPoint } from './types';
+
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
  * @param id the HTML element id
@@ -116,6 +118,10 @@ export const getCurrentTimeForecastIndex = (
   }
   return 0;
 };
+
+export const getCurrentTimeForecast = (forecast_values: ForecastDataPoint[]) =>
+  forecast_values[getCurrentTimeForecastIndex(forecast_values)]
+    .expected_generation_kw;
 
 /** Returns the difference in hours between two epoch times */
 const findHourDifference = (date1: number, date2: number): number =>
