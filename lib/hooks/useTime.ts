@@ -3,11 +3,11 @@ import { formatter } from '../utils';
 
 const SunCalc = require('suncalc');
 
-const useTime = () => {
+const useTime = (latitude: number, longitude: number) => {
   const [currentTimeNoFilter, setCurrentTimeNoFilter] = useState(Date.now());
 
   // get sunrise/sunset info for london
-  const times = SunCalc.getTimes(Date.now(), 51.5, -0.1);
+  const times = SunCalc.getTimes(Date.now(), latitude, longitude);
   const sunriseTime = times.sunrise;
   const sunsetTime = times.sunset;
   console.log(sunriseTime);

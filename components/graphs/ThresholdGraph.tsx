@@ -29,7 +29,7 @@ import useTime from '~/lib/hooks/useTime';
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
-  const { currentTimeNoFilter, isDaytime } = useTime();
+  const { currentTimeNoFilter, isDaytime } = useTime(51.5, -0.1);
 
   /**
    * Renders a text label for the threshold
