@@ -16,12 +16,15 @@ import {
   LineCircle,
 } from '../icons/future_threshold';
 
-import { formatter, getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
+import {
+  formatter,
+  getArrayMaxOrMinAfterIndex,
+  Value,
+  getCurrentTimeForecastIndex,
+  graphThreshold,
+} from 'lib/utils';
 
 import { useFutureGraphData } from 'lib/hooks';
-
-/* Represents the threshold for the graph */
-const graphThreshold = 0.7;
 
 const ThresholdGraph = () => {
   const { data, isLoading } = useFutureGraphData();
@@ -35,31 +38,6 @@ const ThresholdGraph = () => {
     // clear interval on re-render to avoid memory leaks
     return () => clearInterval(intervalId);
   });
-
-  /**
-   * @returns the index of the forecasted date that is closest to the current time
-   */
-  const getCurrentTimeForecastIndex = () => {
-    if (data) {
-      const currentDate = new Date();
-
-      const closestDateIndex = data.forecast_values
-        .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-        .map((forecast_values) => ({
-          ...forecast_values,
-          difference: Math.abs(
-            currentDate.getTime() -
-              new Date(forecast_values.target_datetime_utc).getTime()
-          ),
-        }))
-        .reduce((prev, curr) =>
-          prev.difference < curr.difference ? prev : curr
-        ).index;
-
-      return closestDateIndex;
-    }
-    return 0;
-  };
 
   /**
    * Renders a text label for the threshold
@@ -102,7 +80,7 @@ const ThresholdGraph = () => {
    */
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
     if (data && data.forecast_values.length > 0) {
-      if (index === getCurrentTimeForecastIndex()) {
+      if (index === getCurrentTimeForecastIndex(data?.forecast_values)) {
         return (
           <g>
             <LineCircle x={x} y={y} />
@@ -213,7 +191,7 @@ const ThresholdGraph = () => {
    */
   const getSolarActivityText = () => {
     if (data) {
-      const currIndex = getCurrentTimeForecastIndex();
+      const currIndex = getCurrentTimeForecastIndex(data?.forecast_values);
       const minMax = getArrayMaxOrMinAfterIndex(
         data.forecast_values,
         'expected_generation_kw',
@@ -221,7 +199,7 @@ const ThresholdGraph = () => {
       );
 
       if (minMax) {
-        const { type, index } = minMax;
+        const { type, number: index } = minMax;
         const minMaxForecastDate = formatter.format(
           new Date(data.forecast_values[index].target_datetime_utc)
         );
