@@ -1,19 +1,19 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { withPageAuthRequired } from '~/lib/auth';
 import { getInverters, Inverter, testClientID } from '~/lib/enode';
 
 type Props = {
-  inverters: Inverter[];
+  inverters?: Inverter[];
 };
 
 const AccountInfo: FC<Props> = ({ inverters }) => {
   return (
     <>
       <h2 className="text-white">Info</h2>
-      {inverters.map((inverter, i) => (
+      {inverters?.map((inverter, i) => (
         <p key={i} className="text-white">
           Inverter ID: {inverter.id}, rate:{' '}
           {inverter.productionState.productionRate}
@@ -44,7 +44,7 @@ const Account: NextPage<Props> = ({ inverters }) => {
           Linking status success: {query.linkSuccess}
         </p>
       )}
-      {inverters.length > 0 ? (
+      {inverters?.length ? (
         <AccountInfo inverters={inverters} />
       ) : (
         <Link href="/api/enode/link">
