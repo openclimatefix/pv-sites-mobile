@@ -16,17 +16,17 @@ const Dashboard = () => {
         <SunnyTimeframe siteUUID={siteUUID} />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <ThresholdGraph siteUUID={siteUUID}/>
+        <ThresholdGraph siteUUID={siteUUID} />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <ExpectedTotalOutput siteUUID={siteUUID}/>
+        <ExpectedTotalOutput siteUUID={siteUUID} />
       </div>
       <div className="flex flex-row w-full justify-center space-x-4">
         <CurrentOutput siteUUID={siteUUID} />
         <CurrentCapacity siteUUID={siteUUID} />
       </div>
       <div className="flex flex-row w-full justify-start">
-        <Graph siteUUID={siteUUID}/>
+        <Graph siteUUID={siteUUID} />
       </div>
     </div>
   );

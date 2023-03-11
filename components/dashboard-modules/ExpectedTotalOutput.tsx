@@ -23,12 +23,16 @@ const getTotalExpectedOutput = (points: ForecastDataPoint[]) => {
   return approxArea.toFixed(2).toString() + ' kWh';
 };
 
-const ExpectedTotalOutput: FC<{siteUUID: string}> = ({siteUUID}) => {
+const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData } = useSiteData(siteUUID);
   return (
     <NumberDisplay
       title="Today's Expected Output"
-      value={forecastData ? getTotalExpectedOutput(forecastData.forecast_values) : 'Loading'}
+      value={
+        forecastData
+          ? getTotalExpectedOutput(forecastData.forecast_values)
+          : 'Loading'
+      }
     />
   );
 };

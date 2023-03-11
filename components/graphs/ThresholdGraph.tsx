@@ -80,7 +80,9 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    */
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
     if (forecastData && forecastData.forecast_values.length > 0) {
-      if (index === getCurrentTimeForecastIndex(forecastData?.forecast_values)) {
+      if (
+        index === getCurrentTimeForecastIndex(forecastData?.forecast_values)
+      ) {
         return (
           <g>
             <LineCircle x={x} y={y} />
@@ -147,7 +149,9 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         );
         const endTime = formatter.format(
           new Date(
-            forecastData.forecast_values[numForecastValues - 1].target_datetime_utc
+            forecastData.forecast_values[
+              numForecastValues - 1
+            ].target_datetime_utc
           )
         );
 
@@ -191,7 +195,9 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    */
   const getSolarActivityText = () => {
     if (forecastData) {
-      const currIndex = getCurrentTimeForecastIndex(forecastData?.forecast_values);
+      const currIndex = getCurrentTimeForecastIndex(
+        forecastData?.forecast_values
+      );
       const minMax = getArrayMaxOrMinAfterIndex(
         forecastData.forecast_values,
         'expected_generation_kw',

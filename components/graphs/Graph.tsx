@@ -12,14 +12,24 @@ import { formatter } from 'lib/utils';
 import { useSiteData } from 'lib/hooks';
 import { FC } from 'react';
 
-const Graph: FC<{siteUUID: string}> = ({siteUUID}) => {
+const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData } = useSiteData(siteUUID);
 
   const maxGeneration = forecastData
-    ? Math.max(...forecastData.forecast_values.map((value) => value.expected_generation_kw))
+    ? Math.max(
+        ...forecastData.forecast_values.map(
+          (value) => value.expected_generation_kw
+        )
+      )
     : 0;
 
-  const tickArray = [0, maxGeneration / 4, maxGeneration / 2, (3 * maxGeneration) / 4, maxGeneration];
+  const tickArray = [
+    0,
+    maxGeneration / 4,
+    maxGeneration / 2,
+    (3 * maxGeneration) / 4,
+    maxGeneration,
+  ];
 
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">

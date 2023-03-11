@@ -6,7 +6,7 @@ import { getNextThresholdIndex, graphThreshold } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 
-const SunnyTimeframe: FC<{siteUUID: string}> = ({siteUUID}) => {
+const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData } = useSiteData(siteUUID);
 
   if (!forecastData) {
