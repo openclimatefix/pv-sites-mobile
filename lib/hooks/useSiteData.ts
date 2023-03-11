@@ -1,8 +1,7 @@
 // const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 import useSWR from 'swr';
 import { Fetcher } from 'swr';
-import { Site, SiteListProps } from '../types';
-import { ForecastData } from '../types';
+import { Site, SiteListProps, ForecastData } from '../types';
 
 interface UnparsedForecastData {
   forecast_uuid: string;
@@ -62,11 +61,12 @@ const useSiteData = (siteUUID: string) => {
     siteListFetcher
   );
 
-  const error = AggregateError(forecastError, siteListError);
+  // const error = forecastError || siteListError ? AggregateError(forecastError, siteListError) : null;
+  const error = AggregateError([forecastError, siteListError]);
   const isLoading = isSiteListLoading || isForecastLoading;
 
   const siteData: Site | undefined = siteListData
-    ? siteListData.site_list.find(site => site.site_uuid === siteUUID)
+    ? siteListData.site_list.find((site) => site.site_uuid === siteUUID)
     : undefined;
 
   return { forecastData, ...siteData, error, isLoading };
