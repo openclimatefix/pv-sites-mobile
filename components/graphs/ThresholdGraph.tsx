@@ -30,7 +30,7 @@ import useTime from '~/lib/hooks/useTime';
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
-  const { currentTime } = useTime(latitude, longitude)
+  const { currentTime } = useTime(latitude, longitude);
 
   /**
    * Renders a text label for the threshold
