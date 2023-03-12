@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC } from 'react';
 
 import {
   ResponsiveContainer,
@@ -25,19 +25,12 @@ import {
 } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
+import useTime from '~/lib/hooks/useTime';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, isLoading } = useSiteData(siteUUID);
-  const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(formatter.format(Date.now()));
-    }, 1000);
-
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
-  });
+  const { forecastData, latitude, longitude, isLoading } =
+    useSiteData(siteUUID);
+  const { currentTime } = useTime(latitude, longitude)
 
   /**
    * Renders a text label for the threshold
@@ -224,7 +217,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {currentTime}
+        {formatter.format(currentTime)}
       </p>
     );
   };
