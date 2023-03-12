@@ -61,7 +61,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
         mapboxgl: mapboxgl,
         placeholder: 'Where is your solar panel located?',
         marker: false,
-        reverseGeocode:true
+        reverseGeocode: true,
       });
       if (geocoderContainer.current) {
         geocoderContainer.current.appendChild(geocoder.onAdd(map.current));
@@ -100,14 +100,14 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
       map.current.on('moveend', () => {
         console.log(`${savedLat}, ${savedLng}`);
         geocoder.query(`${savedLat}, ${savedLng}`);
-        return setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold)
-    });
+        return setIsSubmissionEnabled(
+          map.current!.getZoom() > zoomLevelThreshold
+        );
+      });
     }
   });
 
-  useEffect(() => {
-    
-  })
+  useEffect(() => {});
 
   return (
     <div className="flex flex-col h-full">
