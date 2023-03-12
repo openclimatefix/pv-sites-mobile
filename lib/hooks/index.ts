@@ -1,5 +1,4 @@
 import useClickedOutside from './useClickedOutside';
-import useFutureGraphData from './useFutureGraphData';
-import useTime from './useTime';
+import useSiteData from './useSiteData';
 
-export { useClickedOutside, useFutureGraphData, useTime };
+export { useClickedOutside, useSiteData };

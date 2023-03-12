@@ -1,10 +1,7 @@
+import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
-import { useFutureGraphData } from 'lib/hooks';
-
-interface ForecastDataPoint {
-  target_datetime_utc: number;
-  expected_generation_kw: number;
-}
+import { useSiteData } from 'lib/hooks';
+import { ForecastDataPoint } from '~/lib/types';
 
 const getTotalExpectedOutput = (points: ForecastDataPoint[]) => {
   let approxArea = 0;
@@ -26,12 +23,16 @@ const getTotalExpectedOutput = (points: ForecastDataPoint[]) => {
   return approxArea.toFixed(2).toString() + ' kWh';
 };
 
-const ExpectedTotalOutput = () => {
-  const { data } = useFutureGraphData();
+const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
+  const { forecastData } = useSiteData(siteUUID);
   return (
     <NumberDisplay
       title="Today's Expected Output"
-      value={data ? getTotalExpectedOutput(data.forecast_values) : 'Loading'}
+      value={
+        forecastData
+          ? getTotalExpectedOutput(forecastData.forecast_values)
+          : 'Loading'
+      }
     />
   );
 };

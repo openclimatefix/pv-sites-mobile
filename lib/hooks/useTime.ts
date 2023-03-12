@@ -7,16 +7,19 @@ const SunCalc = require('suncalc');
  * Creates a hook more accessesing specific values like the current time, whether it is daytime
  * @param latitude, the latitude float value that is passed in
  * @param longitude, the longitude number value that is passed in
- * @returns currentTimes, unfiltered version of the current time (right now) that a user can format
+ * @returns currentTimes, version of the current time (right now) that a user can format
  * @returns isDaytime, boolean value indicating whether it is daytime or not based on current time zone.
  */
-const useTime = (latitude: number, longitude: number) => {
+const useTime = (latitude?: number, longitude?: number) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
   // get sunrise/sunset time for passed in location
-  const times = SunCalc.getTimes(Date.now(), latitude, longitude);
-  const sunriseTime = times.sunrise;
-  const sunsetTime = times.sunset;
+  const times =
+    latitude && longitude
+      ? SunCalc.getTimes(Date.now(), latitude, longitude)
+      : null;
+  const sunriseTime = times ? times.sunrise : null;
+  const sunsetTime = times ? times.sunset : null;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -27,7 +30,10 @@ const useTime = (latitude: number, longitude: number) => {
     return () => clearInterval(intervalId);
   });
 
-  const isDaytime = currentTime >= sunriseTime && currentTime <= sunsetTime;
+  // default to daytime
+  const isDaytime = times
+    ? currentTime >= sunriseTime && currentTime <= sunsetTime
+    : true;
 
   return { currentTime, isDaytime };
 };
