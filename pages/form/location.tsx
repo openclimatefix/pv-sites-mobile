@@ -12,6 +12,7 @@ export default function Location() {
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
   const zoomLevelThreshold = 10;
+  const reverseGeocodingZoomThreshold = 16;
 
   const onClick = () => {
     setMapData(lat, lng);
@@ -32,6 +33,7 @@ export default function Location() {
           setLngExternal={setLng}
           setLatExternal={setLat}
           zoomLevelThreshold={zoomLevelThreshold}
+          reverseGeocodingZoomThreshold={reverseGeocodingZoomThreshold}
         />
       </div>
       <div className="self-center w-4/5  max-w-sm h-14">

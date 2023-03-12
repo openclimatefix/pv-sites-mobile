@@ -14,6 +14,7 @@ interface LocationInputProps {
   setLngExternal: (lng: number) => void;
   setLatExternal: (lat: number) => void;
   zoomLevelThreshold: number;
+  reverseGeocodingZoomThreshold: number;
 }
 
 const originalLng = -2.3175601;
@@ -24,6 +25,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
   setLatExternal,
   setLngExternal,
   zoomLevelThreshold,
+  reverseGeocodingZoomThreshold,
 }) => {
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
   const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -98,11 +100,13 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
       map.current.on('move', moveHandler);
 
       map.current.on('moveend', () => {
-        console.log(`${savedLat}, ${savedLng}`);
-        geocoder.query(`${savedLat}, ${savedLng}`);
-        return setIsSubmissionEnabled(
-          map.current!.getZoom() > zoomLevelThreshold
-        );
+        const currentZoom = map.current!.getZoom();
+
+        if (currentZoom >= reverseGeocodingZoomThreshold) {
+          geocoder.query(`${savedLat}, ${savedLng}`);
+        }
+
+        return setIsSubmissionEnabled(currentZoom > zoomLevelThreshold);
       });
     }
   });
