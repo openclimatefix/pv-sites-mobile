@@ -16,6 +16,9 @@ interface LocationInputProps {
   zoomLevelThreshold: number;
 }
 
+const originalLng = -2.3175601;
+const originalLat = 54.70534432;
+
 const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
   setIsSubmissionEnabled,
   setLatExternal,
@@ -27,8 +30,8 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
   const [isMapReady, setIsMapReady] = useState(false);
-  const [lng, setLng] = useState<number>(-2.3175601);
-  const [lat, setLat] = useState<number>(54.70534432);
+  const [lng, setLng] = useState<number>(originalLng);
+  const [lat, setLat] = useState<number>(originalLat);
   const [zoom, setZoom] = useState<number>(5);
 
   useEffect(() => {
@@ -58,6 +61,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
         mapboxgl: mapboxgl,
         placeholder: 'Where is your solar panel located?',
         marker: false,
+        reverseGeocode:true
       });
       if (geocoderContainer.current) {
         geocoderContainer.current.appendChild(geocoder.onAdd(map.current));
@@ -72,6 +76,9 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
 
       map.current.on('movestart', () => setIsSubmissionEnabled(false));
 
+      let savedLat = originalLng;
+      let savedLng = originalLat;
+
       const moveHandler = () => {
         const newLng = map.current!.getCenter().lng;
         const newLat = map.current!.getCenter().lat;
@@ -80,17 +87,27 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
         setLat(newLat);
         setLngExternal(newLng);
         setLatExternal(newLat);
+
+        savedLat = newLat;
+        savedLng = newLng;
+
         setZoom(map.current!.getZoom());
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
       };
 
       map.current.on('move', moveHandler);
 
-      map.current.on('moveend', () =>
-        setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold)
-      );
+      map.current.on('moveend', () => {
+        console.log(`${savedLat}, ${savedLng}`);
+        geocoder.query(`${savedLat}, ${savedLng}`);
+        return setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold)
+    });
     }
   });
+
+  useEffect(() => {
+    
+  })
 
   return (
     <div className="flex flex-col h-full">
