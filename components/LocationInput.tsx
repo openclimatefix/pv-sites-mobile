@@ -111,8 +111,6 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
     }
   });
 
-  useEffect(() => {});
-
   return (
     <div className="flex flex-col h-full">
       <div ref={geocoderContainer} className="z-20" id="geocoderContainer" />
