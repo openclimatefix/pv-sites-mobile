@@ -15,7 +15,7 @@ const Dashboard = () => {
       <h1 className="mt-4 text-ocf-gray text-3xl font-bold">Dashboard</h1>
       <div className="flex flex-row w-full justify-center space-x-4">
         <SunnyTimeframe siteUUID={siteUUID} />
-        <EnergyRecommendation></EnergyRecommendation>
+        <EnergyRecommendation siteUUID={siteUUID} />
       </div>
       <div className="flex flex-row w-full justify-start">
         <ThresholdGraph siteUUID={siteUUID} />

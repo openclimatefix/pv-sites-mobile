@@ -1,0 +1,16 @@
+{
+  "appliances": [
+    {
+      "name": "Car",
+      "icon": "/car.svg",
+      "kW": 100,
+      "description": "You have enough energy to charge your car"
+    },
+    {
+      "name": "Washer/Dryer",
+      "icon": "/washerdryer.svg",
+      "kW": 3.8,
+      "description": "You have enough energy to use your Washer/Dryer"
+    }
+  ]
+}
