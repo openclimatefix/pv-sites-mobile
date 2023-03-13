@@ -5,6 +5,7 @@ import CurrentOutput from '../components/dashboard-modules/CurrentOutput';
 import ExpectedTotalOutput from '../components/dashboard-modules/ExpectedTotalOutput';
 import Graph from '../components/graphs/Graph';
 import SunnyTimeframe from '../components/dashboard-modules/SunnyTimeframe';
+import EnergyRecommendation from '~/components/dashboard-modules/EnergyReccomendation';
 
 const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
@@ -14,6 +15,7 @@ const Dashboard = () => {
       <h1 className="mt-4 text-ocf-gray text-3xl font-bold">Dashboard</h1>
       <div className="flex flex-row w-full justify-center space-x-4">
         <SunnyTimeframe siteUUID={siteUUID} />
+        <EnergyRecommendation></EnergyRecommendation>
       </div>
       <div className="flex flex-row w-full justify-start">
         <ThresholdGraph siteUUID={siteUUID} />
