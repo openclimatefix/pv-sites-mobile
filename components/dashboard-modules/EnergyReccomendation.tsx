@@ -2,14 +2,28 @@ import Image from 'next/image';
 import { FC } from 'react';
 import { useSiteData } from '~/lib/hooks';
 import { getCurrentTimeForecast } from '~/lib/utils';
+import content from '../../content/energy-rec-content.json';
 
 /**
  * Determines the appliance with the greatest energy required that is less than or equal to the current output
- * @param forecast_values expected generated forecast values (kilowatts) at specific times
- * @returns Object containing hour difference between the next date and
+ * @param currentOutput the current output in kw based on the getCurrentTimeForecast
+ * @returns the index of the appliance with the greatest enrgy requiement less than or equal to the current ouput
  */
-const getBestRecomendationIndex = (currentOutput: number) => {
-  //   for (let i = 0; i <)
+
+const getBestRecomendationIndex = (currentOutput: number | undefined) => {
+  if (currentOutput != undefined) {
+    let maxIndex = -1;
+    let maxKW = 0;
+    for (let i = 0; i < content.appliances.length; i++) {
+      const currAppliance = content.appliances[i];
+      if (currAppliance.kW > maxKW && currAppliance.kW <= currentOutput) {
+        maxIndex = i;
+        maxKW = currAppliance.kW;
+      }
+    }
+    return maxIndex;
+  }
+  return -1;
 };
 
 const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
@@ -17,7 +31,10 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const currentOutput = forecastData
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
-  console.log(typeof currentOutput);
+  const testOuput = 240;
+  const reccomendation = getBestRecomendationIndex(testOuput);
+  console.log(reccomendation);
+  //   console.log(content.appliances[reccomendation]);
   return (
     <div
       className="
