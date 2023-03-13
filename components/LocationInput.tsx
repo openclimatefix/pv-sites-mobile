@@ -76,7 +76,14 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
 
       map.current.on('load', () => setIsMapReady(true));
 
-      map.current.on('movestart', () => setIsSubmissionEnabled(false));
+      map.current.on('idle', () => {
+        // Enables fly to animation on search
+        geocoder.setFlyTo(true);
+      });
+
+      map.current.on('movestart', () => {
+        setIsSubmissionEnabled(true);
+      });
 
       let savedLat = originalLng;
       let savedLng = originalLat;
@@ -101,15 +108,24 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
 
       map.current.on('moveend', () => {
         const currentZoom = map.current!.getZoom();
-
         if (currentZoom >= reverseGeocodingZoomThreshold) {
-          geocoder.query(`${savedLat}, ${savedLng}`);
+          // If the user is close to full zoom on the map,
+          // update the search box location based on the final latitude/longitude
+          geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
         }
-
         return setIsSubmissionEnabled(currentZoom > zoomLevelThreshold);
       });
     }
-  });
+  }, [
+    lat,
+    lng,
+    setIsSubmissionEnabled,
+    reverseGeocodingZoomThreshold,
+    setLatExternal,
+    setLngExternal,
+    zoom,
+    zoomLevelThreshold,
+  ]);
 
   return (
     <div className="flex flex-col h-full">
