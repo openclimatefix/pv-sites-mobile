@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { FC } from 'react';
 
 import {
   ResponsiveContainer,
@@ -18,51 +18,19 @@ import {
 
 import {
   formatter,
-  useFutureGraphData,
   getArrayMaxOrMinAfterIndex,
   Value,
+  getCurrentTimeForecastIndex,
+  graphThreshold,
 } from 'lib/utils';
 
-/* Represents the threshold for the graph */
-const graphThreshold = 0.7;
+import { useSiteData } from 'lib/hooks';
+import useTime from '~/lib/hooks/useTime';
 
-const ThresholdGraph = () => {
-  const { data, isLoading } = useFutureGraphData();
-  const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(formatter.format(Date.now()));
-    }, 1000);
-
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
-  });
-
-  /**
-   * @returns the index of the forecasted date that is closest to the current time
-   */
-  const getCurrentTimeForecastIndex = () => {
-    if (data) {
-      const currentDate = new Date();
-
-      const closestDateIndex = data.forecast_values
-        .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-        .map((forecast_values) => ({
-          ...forecast_values,
-          difference: Math.abs(
-            currentDate.getTime() -
-              new Date(forecast_values.target_datetime_utc).getTime()
-          ),
-        }))
-        .reduce((prev, curr) =>
-          prev.difference < curr.difference ? prev : curr
-        ).index;
-
-      return closestDateIndex;
-    }
-    return 0;
-  };
+const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
+  const { forecastData, latitude, longitude, isLoading } =
+    useSiteData(siteUUID);
+  const { currentTime } = useTime(latitude, longitude);
 
   /**
    * Renders a text label for the threshold
@@ -70,7 +38,7 @@ const ThresholdGraph = () => {
    * @returns SVG element
    */
   const renderThresholdLabel = ({ x, index }: any) => {
-    if (data && data.forecast_values.length > 0) {
+    if (forecastData && forecastData.forecast_values.length > 0) {
       if (index === 0) {
         return (
           <g>
@@ -104,8 +72,10 @@ const ThresholdGraph = () => {
    * @returns SVG element
    */
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
-    if (data && data.forecast_values.length > 0) {
-      if (index === getCurrentTimeForecastIndex()) {
+    if (forecastData && forecastData.forecast_values.length > 0) {
+      if (
+        index === getCurrentTimeForecastIndex(forecastData?.forecast_values)
+      ) {
         return (
           <g>
             <LineCircle x={x} y={y} />
@@ -122,15 +92,15 @@ const ThresholdGraph = () => {
    * @returns SVG gradient
    */
   const generateGraphGradient = () => {
-    if (!isLoading && data) {
-      const aboveThreshold = data.forecast_values.some(
+    if (!isLoading && forecastData) {
+      const aboveThreshold = forecastData.forecast_values.some(
         (forecast) => forecast.expected_generation_kw > graphThreshold
       );
 
       if (aboveThreshold) {
         const maxExpectedGenerationKW = Math.max.apply(
           null,
-          data.forecast_values.map(
+          forecastData.forecast_values.map(
             ({ expected_generation_kw }) => expected_generation_kw
           )
         );
@@ -163,16 +133,18 @@ const ThresholdGraph = () => {
    * @returns the start and end time label on the graph's x-axis
    */
   const renderStartAndEndTime = () => {
-    if (!isLoading && data) {
-      const numForecastValues = data.forecast_values.length;
+    if (!isLoading && forecastData) {
+      const numForecastValues = forecastData.forecast_values.length;
 
       if (numForecastValues > 0) {
         const startTime = formatter.format(
-          new Date(data.forecast_values[0].target_datetime_utc)
+          new Date(forecastData.forecast_values[0].target_datetime_utc)
         );
         const endTime = formatter.format(
           new Date(
-            data.forecast_values[numForecastValues - 1].target_datetime_utc
+            forecastData.forecast_values[
+              numForecastValues - 1
+            ].target_datetime_utc
           )
         );
 
@@ -215,18 +187,20 @@ const ThresholdGraph = () => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (data) {
-      const currIndex = getCurrentTimeForecastIndex();
+    if (forecastData) {
+      const currIndex = getCurrentTimeForecastIndex(
+        forecastData?.forecast_values
+      );
       const minMax = getArrayMaxOrMinAfterIndex(
-        data.forecast_values,
+        forecastData.forecast_values,
         'expected_generation_kw',
         currIndex
       );
 
       if (minMax) {
-        const { type, index } = minMax;
+        const { type, number: index } = minMax;
         const minMaxForecastDate = formatter.format(
-          new Date(data.forecast_values[index].target_datetime_utc)
+          new Date(forecastData.forecast_values[index].target_datetime_utc)
         );
         return type === Value.Max
           ? solarIncreasingText(minMaxForecastDate)
@@ -243,7 +217,7 @@ const ThresholdGraph = () => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {currentTime}
+        {formatter.format(currentTime)}
       </p>
     );
   };
@@ -256,7 +230,7 @@ const ThresholdGraph = () => {
         </div>
         <ResponsiveContainer className="mt-[15px] " width="100%" height={100}>
           <AreaChart
-            data={data?.forecast_values}
+            data={forecastData?.forecast_values}
             margin={{
               top: 0,
               right: 40,
