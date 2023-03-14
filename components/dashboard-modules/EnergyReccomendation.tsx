@@ -36,7 +36,7 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const currentOutput = forecastData
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
-  const reccomendationIdx = getBestRecomendationIndex(currentOutput);
+  const reccomendationIdx = getBestRecomendationIndex(40);
 
   if (reccomendationIdx < 0) {
     return <NumberDisplay title="Recommendations" value="N/A" />;
