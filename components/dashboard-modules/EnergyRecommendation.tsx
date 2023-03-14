@@ -12,9 +12,9 @@ import NumberDisplay from './NumberDisplay';
  * or -1 if an index could not be found
  */
 
-const getBestRecomendationIndex = (currentOutput: number | undefined) => {
+const getBestRecommendationIndex = (currentOutput: number | undefined) => {
   if (currentOutput != undefined) {
-    let maxIndex = -1;
+    let maxIndex = null;
     let maxKW = 0;
 
     content.appliances.forEach((appliance, i) => {
@@ -29,7 +29,7 @@ const getBestRecomendationIndex = (currentOutput: number | undefined) => {
 
     return maxIndex;
   }
-  return -1;
+  return null;
 };
 
 const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
@@ -37,12 +37,15 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const currentOutput = forecastData
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
-  const reccomendationIdx = getBestRecomendationIndex(currentOutput);
 
-  if (reccomendationIdx < 0) {
+  const recommendationIdx = currentOutput
+    ? getBestRecommendationIndex(currentOutput)
+    : null;
+
+  if (recommendationIdx === null) {
     return <NumberDisplay title="Recommendations" value="N/A" />;
   } else {
-    const appliance = content.appliances[reccomendationIdx];
+    const appliance = content.appliances[recommendationIdx];
     return (
       <div
         className="

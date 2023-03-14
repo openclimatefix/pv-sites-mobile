@@ -5,7 +5,7 @@ import CurrentOutput from '../components/dashboard-modules/CurrentOutput';
 import ExpectedTotalOutput from '../components/dashboard-modules/ExpectedTotalOutput';
 import Graph from '../components/graphs/Graph';
 import SunnyTimeframe from '../components/dashboard-modules/SunnyTimeframe';
-import EnergyRecommendation from '~/components/dashboard-modules/EnergyReccomendation';
+import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 
 const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
