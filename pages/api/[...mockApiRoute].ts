@@ -5,13 +5,15 @@ import {
   getLinkRedirectURL,
   testClientID,
 } from '~/lib/enode';
-
+import pvActualMultipleJson from '../../data/pv-actual-multiple.json';
 import pvActualJson from '../../data/pv-actual.json';
+import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  let { mockApiRoute } = req.query;
+  let { mockApiRoute, site_uuids } = req.query;
+  console.log(req.query);
   if (!mockApiRoute) {
     res.status(404).send('Not found');
     return;
@@ -21,6 +23,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     mockApiRoute = [mockApiRoute];
   }
   mockApiRoute = mockApiRoute.join('/');
+
+  if (site_uuids) {
+    mockApiRoute += `?site_uuids=${site_uuids}`;
+  }
 
   if (req.method == 'POST') {
     if (mockApiRoute === 'sites') {
@@ -49,14 +55,24 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method == 'GET') {
     if (
-      mockApiRoute === 'sites/pv_actual/b97f68cd-50e0-49bb-a850-108d4a9f7b7e'
+      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/pv_actual'
     ) {
       res.status(200).json(pvActualJson);
     } else if (
-      mockApiRoute === 'sites/pv_forecast/b97f68cd-50e0-49bb-a850-108d4a9f7b7e'
+      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/pv_forecast'
     ) {
       res.status(200).json(pvForecastJson);
-    } else if (mockApiRoute === 'sites/site_list') {
+    } else if (
+      mockApiRoute ===
+      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,9570f807-fc9e-47e9-b5e3-5915ddddef3d'
+    ) {
+      res.status(200).json(pvActualMultipleJson);
+    } else if (
+      mockApiRoute ===
+      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,9570f807-fc9e-47e9-b5e3-5915ddddef3d'
+    ) {
+      res.status(200).json(pvForecastMultipleJson);
+    } else if (mockApiRoute === 'sites') {
       res.status(200).json(siteListJson);
     } else if (mockApiRoute === 'enode/link') {
       const redirectURL = await getLinkRedirectURL(
