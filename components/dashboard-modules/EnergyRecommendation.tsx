@@ -13,23 +13,17 @@ import NumberDisplay from './NumberDisplay';
  */
 
 const getBestRecommendationIndex = (currentOutput: number) => {
-  if (currentOutput != undefined) {
-    let maxIndex = null;
-    let maxKW = 0;
+  let maxIndex = null;
+  let maxKW = 0;
 
-    content.appliances.forEach((appliance, i) => {
-      if (
-        Number(appliance.kW) > maxKW &&
-        Number(appliance.kW) <= currentOutput
-      ) {
-        maxIndex = i;
-        maxKW = Number(appliance.kW);
-      }
-    });
+  content.appliances.forEach((appliance, i) => {
+    if (Number(appliance.kW) > maxKW && Number(appliance.kW) <= currentOutput) {
+      maxIndex = i;
+      maxKW = Number(appliance.kW);
+    }
+  });
 
-    return maxIndex;
-  }
-  return null;
+  return maxIndex;
 };
 
 const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
@@ -38,11 +32,10 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
 
-  // const recommendationIdx = currentOutput
-  //   ? getBestRecommendationIndex(currentOutput)
-  //   : null;
+  const recommendationIdx = currentOutput
+    ? getBestRecommendationIndex(currentOutput)
+    : null;
 
-  const recommendationIdx = getBestRecommendationIndex(5);
   if (recommendationIdx === null) {
     return <NumberDisplay title="Recommendations" value="N/A" />;
   } else {
