@@ -125,7 +125,7 @@ const Form = () => {
         >
           {didSubmit && <Spinner />}
           Next
-          {didSubmit && <div className="w-8 mx-2" />}
+          {didSubmit && <div className="w-6 mx-4" />}
         </button>
         <Modal show={showModal} setShow={setShowModal} />
       </form>

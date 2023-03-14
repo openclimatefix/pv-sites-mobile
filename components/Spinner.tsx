@@ -3,7 +3,7 @@ import { FC } from 'react';
 const Spinner: FC = () => (
   <svg
     aria-hidden="true"
-    className="w-8 h-8 mx-2 text-gray-200 animate-spin dark:text-ocf-gray-800 fill-ocf-yellow"
+    className="w-6 h-6 mx-4 text-gray-200 animate-spin dark:text-ocf-gray-300 fill-ocf-black"
     viewBox="0 0 100 101"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
