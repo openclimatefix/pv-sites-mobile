@@ -11,6 +11,12 @@
       "icon": "/washerdryer.svg",
       "kW": "3.8",
       "description": "You have enough power to use your washer"
+    },
+    {
+      "name": "Air Conditioning",
+      "icon": "/airconditioning.svg",
+      "kW": "4.85",
+      "description": "You have enough power to use your A.C."
     }
   ]
 }
