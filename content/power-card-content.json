@@ -3,12 +3,20 @@
     {
       "name": "Car",
       "icon": "/car.svg",
-      "kW": "100"
+      "kW": "100",
+      "description": "You have enough power to charge your car"
     },
     {
       "name": "Washer/Dryer",
       "icon": "/washerdryer.svg",
-      "kW": "3.8"
+      "kW": "3.8",
+      "description": "You have enough power to use your washer"
+    },
+    {
+      "name": "Air Conditioning",
+      "icon": "/airconditioning.svg",
+      "kW": "4.85",
+      "description": "You have enough power to use your A.C."
     }
   ]
 }
