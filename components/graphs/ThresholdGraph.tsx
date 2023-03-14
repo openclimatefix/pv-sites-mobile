@@ -64,25 +64,6 @@ const ThresholdGraph = () => {
    * @returns the index of the forecasted date that is closest to the current time
    */
   const getCurrentTimeForecastIndex = () => {
-    // if (graphData) {
-    //   const currentDate = new Date();
-
-    //   const closestDateIndex = graphData.forecast_values
-    //     .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-    //     .map((forecast_values) => ({
-    //       ...forecast_values,
-    //       difference: Math.abs(
-    //         currentDate.getTime() -
-    //           new Date(forecast_values.target_datetime_utc).getTime()
-    //       ),
-    //     }))
-    //     .reduce((prev, curr) =>
-    //       prev.difference < curr.difference ? prev : curr
-    //     ).index;
-
-    //   return closestDateIndex;
-    // }
-    // return 0;
     return getClosestForecastIndex(graphData, new Date());
   };
 

@@ -58,8 +58,7 @@ const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
   return tempData as ForecastData;
 };
 
-const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e'
-//const siteUUID = '725a8670-d012-474d-b901-1179f43e7182';
+const siteUUID = '725a8670-d012-474d-b901-1179f43e7182';
 
 export const useFutureGraphData = () =>
   useSWR(
@@ -67,33 +66,61 @@ export const useFutureGraphData = () =>
     forecastFetcher
   );
 
-export const getClosestForecastIndex = (forecastData : ForecastData, targetDate: Date) => {
-    if (forecastData) {
-      const closestDateIndex = forecastData.forecast_values
-        .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-        .map((forecast_values) => ({
-          ...forecast_values,
-          difference: Math.abs(
-            targetDate.getTime() -
-              new Date(forecast_values.target_datetime_utc).getTime()
-          ),
-        }))
-        .reduce((prev, curr) =>
-          prev.difference < curr.difference ? prev : curr
-        ).index;
+/**
+ * @returns the index of the forecasted date that is closest to the target time
+ */
+export const getClosestForecastIndex = (
+  forecastData: ForecastData,
+  targetDate: Date
+) => {
+  if (forecastData) {
+    const closestDateIndex = forecastData.forecast_values
+      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
+      .map((forecast_values) => ({
+        ...forecast_values,
+        difference: Math.abs(
+          targetDate.getTime() -
+            new Date(forecast_values.target_datetime_utc).getTime()
+        ),
+      }))
+      .reduce((prev, curr) =>
+        prev.difference < curr.difference ? prev : curr
+      ).index;
 
-      return closestDateIndex;
-    }
-    return 0;
-  };
+    return closestDateIndex;
+  }
+  return 0;
+};
 
-export const forecastDataOverDateRange = (forecastData : ForecastData, start_date : Date, end_date : Date) => {
-  console.log("start date ", formatter.format(start_date), "end date ", formatter.format(end_date));
+export const forecastDataOverDateRange = (
+  forecastData: ForecastData,
+  start_date: Date,
+  end_date: Date
+) => {
+  console.log(
+    'start date ',
+    formatter.format(start_date),
+    'end date ',
+    formatter.format(end_date)
+  );
   const start_index = getClosestForecastIndex(forecastData, start_date);
-  console.log("closest start date", formatter.format(new Date(forecastData.forecast_values[start_index].target_datetime_utc)));
+  console.log(
+    'closest start date',
+    formatter.format(
+      new Date(forecastData.forecast_values[start_index].target_datetime_utc)
+    )
+  );
   const end_index = getClosestForecastIndex(forecastData, end_date);
-  console.log("closest end date", formatter.format(new Date(forecastData.forecast_values[end_index].target_datetime_utc)));
+  console.log(
+    'closest end date',
+    formatter.format(
+      new Date(forecastData.forecast_values[end_index].target_datetime_utc)
+    )
+  );
   if (forecastData)
-    forecastData.forecast_values = forecastData.forecast_values.slice(start_index, end_index + 1);
+    forecastData.forecast_values = forecastData.forecast_values.slice(
+      start_index,
+      end_index + 1
+    );
   return forecastData;
-}
+};
