@@ -12,7 +12,8 @@ import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  let { mockApiRoute } = req.query;
+  let { mockApiRoute, site_uuids } = req.query;
+  console.log(req.query);
   if (!mockApiRoute) {
     res.status(404).send('Not found');
     return;
@@ -22,6 +23,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     mockApiRoute = [mockApiRoute];
   }
   mockApiRoute = mockApiRoute.join('/');
+
+  if (site_uuids) {
+    mockApiRoute += `?site_uuids=${site_uuids}`;
+  }
 
   if (req.method == 'POST') {
     if (mockApiRoute === 'sites') {
