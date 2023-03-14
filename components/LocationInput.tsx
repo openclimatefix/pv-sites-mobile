@@ -39,7 +39,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
     if (mapContainer.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/dark-v10',
+        style: 'mapbox://styles/alester3/clf1lj7jg000b01n4ya2880gi',
         center: [lng, lat],
         zoom,
         keyboard: false,
