@@ -36,7 +36,7 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const currentOutput = forecastData
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
-  const reccomendationIdx = getBestRecomendationIndex(40);
+  const reccomendationIdx = getBestRecomendationIndex(currentOutput);
 
   if (reccomendationIdx < 0) {
     return <NumberDisplay title="Recommendations" value="N/A" />;
@@ -58,7 +58,6 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           alt={appliance.name}
           width={34.5}
           height={28.75}
-          className=""
         />
         <div className="text-ocf-gray ml-3 self-center font-normal text-left flex-1">
           <p className="m-0 text-[10px] mb-1">{appliance.description}</p>
