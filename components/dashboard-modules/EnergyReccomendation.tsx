@@ -16,16 +16,17 @@ const getBestRecomendationIndex = (currentOutput: number | undefined) => {
   if (currentOutput != undefined) {
     let maxIndex = -1;
     let maxKW = 0;
-    for (let i = 0; i < content.appliances.length; i++) {
-      const currAppliance = content.appliances[i];
+
+    content.appliances.forEach((appliance, i) => {
       if (
-        Number(currAppliance.kW) > maxKW &&
-        Number(currAppliance.kW) <= currentOutput
+        Number(appliance.kW) > maxKW &&
+        Number(appliance.kW) <= currentOutput
       ) {
         maxIndex = i;
-        maxKW = Number(currAppliance.kW);
+        maxKW = Number(appliance.kW);
       }
-    }
+    });
+
     return maxIndex;
   }
   return -1;
