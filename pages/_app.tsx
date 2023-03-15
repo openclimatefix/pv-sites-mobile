@@ -14,7 +14,7 @@ import '~/styles/globals.css';
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <UserProvider>
-      <SWRConfig value={{ fetcher }}>
+      <SWRConfig value={{ fetcher: fetcher, refreshInterval: 10000 }}>
         <FormProvider>
           <SidebarProvider>
             <Head>
