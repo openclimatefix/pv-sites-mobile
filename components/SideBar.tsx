@@ -79,24 +79,12 @@ const Sidebar = () => {
         >
           <ExitIcon />
         </button>
-        <div className="text-xs	flex flex-col mt-6 justify-between flex-1 text-ocf-yellow">
-          <MenuLink
-            linkProps={{ href: '/dashboard' }}
-            label="Dashboard"
-            svg={<DashboardIcon />}
-            currentPath={router.asPath}
-          />
-          <div className="text-xs flex flex-col gap-3">
+        <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
+          <div className="flex flex-col gap-3">
             <MenuLink
-              linkProps={{ href: '/form/location' }}
-              label="Add a Location"
-              svg={<LocationIcon />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/form/details' }}
-              label="Edit Site Details"
-              svg={<EditIcon />}
+              linkProps={{ href: '/dashboard' }}
+              label="Dashboard"
+              svg={<DashboardIcon />}
               currentPath={router.asPath}
             />
             <MenuLink
@@ -109,6 +97,20 @@ const Sidebar = () => {
               linkProps={{ href: '/more-info' }}
               label="More Info"
               svg={<SearchIcon color={'white'} />}
+              currentPath={router.asPath}
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <MenuLink
+              linkProps={{ href: '/form/location' }}
+              label="Add a Location"
+              svg={<LocationIcon />}
+              currentPath={router.asPath}
+            />
+            <MenuLink
+              linkProps={{ href: '/form/details' }}
+              label="Edit Site Details"
+              svg={<EditIcon />}
               currentPath={router.asPath}
             />
             <MenuLink
