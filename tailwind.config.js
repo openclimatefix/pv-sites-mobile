@@ -108,7 +108,7 @@ module.exports = {
           DEFAULT: '#E4E4E4',
           50: '#FFFFFF',
           100: '#FFFFFF',
-          200: '#FFFFFF',
+          200: '#D9D9D9',
           300: '#DDDDDD',
           400: '#F8F8F8',
           500: '#E4E4E4',

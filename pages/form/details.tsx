@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import Spinner from '~/components/Spinner';
 import Input from '~/components/Input';
 import Modal from 'components/Modal';
 
@@ -22,18 +23,26 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 const Form = () => {
   const router = useRouter();
   const { setFormData } = useFormContext();
-  const [show, setShow] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [didSubmit, setDidSubmit] = useState<boolean>(false);
   const [direction, setDirection] = useState('');
   const [tilt, setTilt] = useState('');
   const [capacity, setCapacity] = useState('');
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // TODO: Add schema validation with zod
+    if (!didSubmit) {
+      setDidSubmit(true);
+      // TODO: Add schema validation with zod
 
-    setFormData(parseInt(direction), parseInt(tilt), parseInt(capacity));
-    router.push('/dashboard');
+      await setFormData(
+        parseInt(direction),
+        parseInt(tilt),
+        parseInt(capacity)
+      );
+      router.push('/dashboard');
+    }
   };
 
   return (
@@ -50,7 +59,7 @@ const Form = () => {
           description="(0º = North, 90º = East, 180º = South, 270º = West)"
           value={direction}
           help="I don't know"
-          onHelpClick={() => setShow(true)}
+          onHelpClick={() => setShowModal(true)}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setDirection(e.currentTarget.value)
           }
@@ -110,11 +119,15 @@ const Form = () => {
             inputMode: 'numeric',
           }}
         />
-
-        <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-full text-center rounded-md font-bold text-xl uppercase block mt-8 peer-invalid:bg-ocf-gray-300 transition duration-150">
+        <button
+          disabled={didSubmit}
+          className="mt-8 font-bold uppercase text-xl w-full peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
+        >
+          {didSubmit && <Spinner />}
           Next
+          {didSubmit && <div className="w-5 mx-4" />}
         </button>
-        <Modal show={show} setShow={setShow} />
+        <Modal show={showModal} setShow={setShowModal} />
       </form>
     </>
   );

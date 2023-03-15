@@ -14,7 +14,7 @@ export const getServerSideProps = withPageAuthRequired({
     }
 
     const { site_list } = (await fetch(
-      `${process.env.AUTH0_BASE_URL}/api/sites/site_list`,
+      `${process.env.AUTH0_BASE_URL}/api/sites`,
       {
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
