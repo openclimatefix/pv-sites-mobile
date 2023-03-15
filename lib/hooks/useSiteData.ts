@@ -2,6 +2,11 @@ import useSWR from 'swr';
 import { Site } from '../types';
 import { siteListFetcher, forecastFetcher } from './utils';
 
+/**
+ * Gets forecasted and solar panel data for a single site
+ * @param siteUUID UUID corresponding to a single site
+ * @returns forecasted and site data
+ */
 const useSiteData = (siteUUID: string) => {
   const {
     data: forecastData,

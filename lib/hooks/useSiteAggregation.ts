@@ -2,6 +2,12 @@ import useSWR from 'swr';
 import { siteListFetcher, manyForecastDataFetcher } from './utils';
 import { ForecastDataPoint } from '../types';
 
+/**
+ * Sums the capacity and forecasts of multiple solar sites across
+ * all dates reported by the pv-sites API.
+ * @param allSiteUUID A list of UUIDs corresponding to multiple solar sites
+ * @return Aggregated predictions sorted by datetime
+ */
 const useSiteAggregation = (allSiteUUID: string[]) => {
   const {
     data: siteListData,
