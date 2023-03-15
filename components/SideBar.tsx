@@ -8,6 +8,8 @@ import {
   LocationIcon,
   EditIcon,
   LogoutIcon,
+  SiteListIcon,
+  SearchIcon,
 } from './icons';
 
 import { LinkProps } from 'next/link';
@@ -95,6 +97,18 @@ const Sidebar = () => {
               linkProps={{ href: '/form/details' }}
               label="Edit Site Details"
               svg={<EditIcon />}
+              currentPath={router.asPath}
+            />
+            <MenuLink
+              linkProps={{ href: '/sites' }}
+              label="My Sites"
+              svg={<SiteListIcon />}
+              currentPath={router.asPath}
+            />
+            <MenuLink
+              linkProps={{ href: '/more-info' }}
+              label="More Info"
+              svg={<SearchIcon />}
               currentPath={router.asPath}
             />
             <MenuLink

@@ -13,8 +13,8 @@ const PowerInfoCard: FC<PowerInfo> = ({ src, appliance, kW }) => {
       <Image
         src={src}
         alt={appliance}
-        width={75}
-        height={75}
+        width={65}
+        height={65}
         className="flex-1"
       />
       <div className="text-ocf-gray ml-3 self-center font-semibold text-left">
