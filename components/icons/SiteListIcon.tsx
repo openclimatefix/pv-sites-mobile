@@ -4,7 +4,7 @@ interface SiteListIconProps {
   color: string;
 }
 
-const SiteListIcon: FC = () => {
+const SiteListIcon: FC<SiteListIconProps> = ({ color }) => {
   return (
     <svg
       width="24"

@@ -102,13 +102,13 @@ const Sidebar = () => {
             <MenuLink
               linkProps={{ href: '/sites' }}
               label="My Sites"
-              svg={<SiteListIcon />}
+              svg={<SiteListIcon color={'white'} />}
               currentPath={router.asPath}
             />
             <MenuLink
               linkProps={{ href: '/more-info' }}
               label="More Info"
-              svg={<SearchIcon />}
+              svg={<SearchIcon color={'white'} />}
               currentPath={router.asPath}
             />
             <MenuLink

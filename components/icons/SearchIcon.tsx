@@ -1,6 +1,10 @@
 import { FC } from 'react';
 
-const SearchIcon: FC = () => {
+interface SearchIconProps {
+  color: string;
+}
+
+const SearchIcon: FC<SearchIconProps> = ({ color }) => {
   return (
     <svg
       width="24"
