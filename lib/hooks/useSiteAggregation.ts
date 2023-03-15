@@ -18,16 +18,14 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     siteListFetcher
   );
 
-  const parsedAllSiteUUID = allSiteUUID
-    .reduce((prev, curr) => `${prev},${curr}`)
-    .substring(1);
-
   const {
     data: manyForecastData,
     error: manyForecastError,
     isLoading: isManyForecastLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pv_forecast?site_uuids=${parsedAllSiteUUID}`,
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL
+    }/api/pv_forecast?site_uuids=${allSiteUUID.join(',')}`,
     manyForecastDataFetcher
   );
 
@@ -41,8 +39,9 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
           prevTotalSiteCapacity + newSite.installed_capacity_kw,
         0
       )
-    : 0;
-  let totalExpectedGeneration: ForecastDataPoint[] = [];
+    : undefined;
+
+  let totalExpectedGeneration: ForecastDataPoint[] | undefined = undefined;
 
   // Sum the expected generation for each date returned in all of the site forecasts
   if (manyForecastData) {
