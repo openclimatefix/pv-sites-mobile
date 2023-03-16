@@ -13,7 +13,7 @@ const SiteCard: FC<PropsWithChildren<SiteCardProps>> = ({
     <Link href="/dashboard">
       <span className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-lg font-bold">
         <div className="flex flex-col flex-1">
-          <h1 className="text-amber text-xl font-bold">My Home</h1>
+          <h2 className="text-amber text-xl font-semibold">My Home</h2>
           <div className="flex flex-col mt-2 gap-1">
             <p className="text-ocf-gray-500 text-xs font-medium">
               Panel direction: 135
@@ -27,7 +27,7 @@ const SiteCard: FC<PropsWithChildren<SiteCardProps>> = ({
           </div>
         </div>
         {isEditMode && (
-          <div className="flex flex-col w-fit ">
+          <div className="flex flex-col w-fit">
             <div className="flex-1">
               <EditIcon />
             </div>
