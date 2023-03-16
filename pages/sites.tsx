@@ -1,7 +1,7 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
-import SiteCard from '~/components/SiteCard';
 import { EditIcon } from '~/components/icons';
 import { useState } from 'react';
+import SiteCardLink from '~/components/SiteCard';
 
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
@@ -18,10 +18,10 @@ const Sites = () => {
           )}
         </button>
       </div>
-      <SiteCard isEditMode={editMode} />
-      <SiteCard isEditMode={editMode} />
-      <SiteCard isEditMode={editMode} />
-      <SiteCard isEditMode={editMode} />
+      <SiteCardLink isEditMode={editMode} />
+      <SiteCardLink isEditMode={editMode} />
+      <SiteCardLink isEditMode={editMode} />
+      <SiteCardLink isEditMode={editMode} />
     </div>
   );
 };
