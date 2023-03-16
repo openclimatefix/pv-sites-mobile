@@ -11,14 +11,18 @@ const SiteCard: FC<PropsWithChildren<SiteCardProps>> = ({
 }) => {
   return (
     <Link href="/dashboard">
-      <span className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-md font-bold">
+      <span className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-lg font-bold">
         <div className="flex flex-col flex-1">
           <h1 className="text-amber text-xl font-bold">My Home</h1>
-          <h3 className="text-ocf-gray-500 text-sm mt-1.5">
+          <div className="flex flex-col mt-2 gap-1">
+          <p className="text-ocf-gray-500 text-xs font-medium">
             Panel direction: 135
-          </h3>
-          <h3 className="text-ocf-gray-500 text-sm">Panel tilt: 40</h3>
-          <h3 className="text-ocf-gray-500 text-sm">Max. capacity: 2800 kWh</h3>
+          </p>
+          <p className="text-ocf-gray-500 font-medium text-xs">Panel tilt: 40</p>
+          <p className="text-ocf-gray-500 font-medium text-xs">
+            Max. capacity: 2800 kWh
+          </p>
+          </div>
         </div>
         {isEditMode && (
           <div className="flex flex-col w-fit ">
