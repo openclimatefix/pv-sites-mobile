@@ -15,13 +15,15 @@ const SiteCard: FC<PropsWithChildren<SiteCardProps>> = ({
         <div className="flex flex-col flex-1">
           <h1 className="text-amber text-xl font-bold">My Home</h1>
           <div className="flex flex-col mt-2 gap-1">
-          <p className="text-ocf-gray-500 text-xs font-medium">
-            Panel direction: 135
-          </p>
-          <p className="text-ocf-gray-500 font-medium text-xs">Panel tilt: 40</p>
-          <p className="text-ocf-gray-500 font-medium text-xs">
-            Max. capacity: 2800 kWh
-          </p>
+            <p className="text-ocf-gray-500 text-xs font-medium">
+              Panel direction: 135
+            </p>
+            <p className="text-ocf-gray-500 font-medium text-xs">
+              Panel tilt: 40
+            </p>
+            <p className="text-ocf-gray-500 font-medium text-xs">
+              Max. capacity: 2800 kWh
+            </p>
           </div>
         </div>
         {isEditMode && (

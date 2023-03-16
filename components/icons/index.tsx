@@ -1,5 +1,5 @@
 import DashboardIcon from './DashboardIcon';
-import DeleteIcon  from './DeleteIcon';
+import DeleteIcon from './DeleteIcon';
 import EditIcon from './EditIcon';
 import ExitIcon from './ExitIcon';
 import LogoutIcon from './LogoutIcon';
