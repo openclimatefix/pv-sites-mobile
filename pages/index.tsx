@@ -1,27 +1,8 @@
-import { getSession } from '@auth0/nextjs-auth0';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { withPageAuthRequired } from '~/lib/auth';
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Site } from '~/lib/types';
 
-export default function Home(this: any) {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push('/location');
-  }, [router]);
-
-  return (
-    <>
-      <Head>
-        <title>Open Climate Fix</title>
-        <meta name="description" content="Open Climate Fix" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-    </>
-  );
+export default function Index() {
+  return null;
 }
 
 export const getServerSideProps = withPageAuthRequired({
@@ -33,7 +14,7 @@ export const getServerSideProps = withPageAuthRequired({
     }
 
     const { site_list } = (await fetch(
-      `${process.env.AUTH0_BASE_URL}/api/sites/site_list`,
+      `${process.env.AUTH0_BASE_URL}/api/sites`,
       {
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
@@ -41,8 +22,11 @@ export const getServerSideProps = withPageAuthRequired({
       }
     ).then((res) => res.json())) as { site_list: Site[] };
 
-    const destination =
-      site_list.length === 0 ? '/form/location' : '/dashboard';
+    let destination = '/dashboard';
+
+    if (site_list) {
+      destination = site_list.length === 0 ? '/form/location' : '/dashboard';
+    }
 
     return {
       redirect: {

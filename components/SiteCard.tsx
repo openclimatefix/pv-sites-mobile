@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import { EditIcon, DeleteIcon } from './icons/sidebar_icons';
+import { DeleteIcon, EditIcon } from './icons';
 import Link from 'next/link';
 
 interface SiteCardProps {
