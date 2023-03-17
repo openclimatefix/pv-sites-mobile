@@ -5,7 +5,7 @@ interface Props {
   callback: () => void;
 }
 
-const BackButton: FC<Props> = ({callback}) => {
+const BackButton: FC<Props> = ({ callback }) => {
   return (
     <div className="w-4/5 max-w-sm flex flex-row flex-start">
       <button

@@ -27,7 +27,14 @@ interface Props {
 
 const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   const router = useRouter();
-  const { setFormData, panelDetails: {direction: contextDirection, tilt: contextTilt, capacity: contextCapacity} } = useFormContext();
+  const {
+    setFormData,
+    panelDetails: {
+      direction: contextDirection,
+      tilt: contextTilt,
+      capacity: contextCapacity,
+    },
+  } = useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
   const [direction, setDirection] = useState(String(contextDirection));

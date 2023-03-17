@@ -10,9 +10,9 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 interface LocationInputProps {
-  originalLng: number,
-  originalLat: number,
-  shouldZoomIntoOriginal: boolean,
+  originalLng: number;
+  originalLat: number;
+  shouldZoomIntoOriginal: boolean;
   setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
   setLngExternal: (lng: number) => void;
   setLatExternal: (lat: number) => void;
@@ -80,7 +80,7 @@ const LocationInput: FC<LocationInputProps> = ({
         if (shouldZoomIntoOriginal) {
           geocoder.query(`${lat}, ${lng}`).setFlyTo(true);
         }
-    });
+      });
 
       map.current.on('idle', () => {
         // Enables fly to animation on search
@@ -109,7 +109,8 @@ const LocationInput: FC<LocationInputProps> = ({
       map.current.on('move', moveHandler);
 
       map.current.on('moveend', () => {
-        const isPastZoomThreshold = map.current!.getZoom() >= zoomLevelThreshold;
+        const isPastZoomThreshold =
+          map.current!.getZoom() >= zoomLevelThreshold;
         if (isPastZoomThreshold) {
           // update the search box location based on the final latitude/longitude
           geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
@@ -119,6 +120,7 @@ const LocationInput: FC<LocationInputProps> = ({
       });
     }
   }, [
+    shouldZoomIntoOriginal,
     originalLat,
     originalLng,
     lat,

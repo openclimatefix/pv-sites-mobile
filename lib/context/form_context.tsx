@@ -55,9 +55,9 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     originalLng,
   ]);
   const [panelDetails, setPanelDetails] = useState<PanelDetails>({
-    direction: "",
-    tilt: "",
-    capacity: "",
+    direction: '',
+    tilt: '',
+    capacity: '',
   });
 
   const setFormData = (
@@ -66,7 +66,11 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     capacity: number,
     shouldTrigger: boolean
   ) => {
-    setPanelDetails({ direction: String(direction), tilt: String(tilt), capacity: String(capacity) });
+    setPanelDetails({
+      direction: String(direction),
+      tilt: String(tilt),
+      capacity: String(capacity),
+    });
 
     if (shouldTrigger) {
       const date = new Date().toISOString();

@@ -11,7 +11,10 @@ interface Props {
 }
 
 const Location: FC<Props> = ({ nextPageCallback }) => {
-  const { latLong: [contextLat, contextLng], setMapData } = useFormContext();
+  const {
+    latLong: [contextLat, contextLng],
+    setMapData,
+  } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
 
   const [lat, setLat] = useState(contextLat);
@@ -24,7 +27,8 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
   };
 
   // The map should zopm into the initial coordinates if they were entered by the user
-  const shouldZoomIntoOriginal = originalLat !== contextLat || originalLng !== contextLng;
+  const shouldZoomIntoOriginal =
+    originalLat !== contextLat || originalLng !== contextLng;
 
   return (
     <div
