@@ -10,16 +10,19 @@ import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 interface LocationInputProps {
+  originalLng: number,
+  originalLat: number,
+  shouldZoomIntoOriginal: boolean,
   setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
   setLngExternal: (lng: number) => void;
   setLatExternal: (lat: number) => void;
   zoomLevelThreshold: number;
 }
 
-const originalLng = -2.3175601;
-const originalLat = 54.70534432;
-
-const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
+const LocationInput: FC<LocationInputProps> = ({
+  originalLat,
+  originalLng,
+  shouldZoomIntoOriginal,
   setIsSubmissionEnabled,
   setLatExternal,
   setLngExternal,
@@ -32,7 +35,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
   const [isMapReady, setIsMapReady] = useState(false);
   const [lng, setLng] = useState<number>(originalLng);
   const [lat, setLat] = useState<number>(originalLat);
-  const [zoom, setZoom] = useState<number>(5);
+  const [zoom, setZoom] = useState<number>(4);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -40,7 +43,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/alester3/clf1lj7jg000b01n4ya2880gi',
-        center: [lng, lat],
+        center: [originalLng, originalLat],
         zoom,
         keyboard: false,
         attributionControl: false,
@@ -72,19 +75,20 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
         color: '#FFD053',
       }).setLngLat([lng, lat]);
 
-      map.current.on('load', () => setIsMapReady(true));
+      map.current.on('load', () => {
+        setIsMapReady(true);
+        if (shouldZoomIntoOriginal) {
+          geocoder.query(`${lat}, ${lng}`).setFlyTo(true);
+        }
+    });
 
       map.current.on('idle', () => {
         // Enables fly to animation on search
         geocoder.setFlyTo(true);
       });
 
-      map.current.on('movestart', () => {
-        setIsSubmissionEnabled(true);
-      });
-
-      let savedLat = originalLng;
-      let savedLng = originalLat;
+      let savedLat = lat;
+      let savedLng = lng;
 
       const moveHandler = () => {
         const newLng = map.current!.getCenter().lng;
@@ -105,7 +109,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
       map.current.on('move', moveHandler);
 
       map.current.on('moveend', () => {
-        const isPastZoomThreshold = map.current!.getZoom() > zoomLevelThreshold;
+        const isPastZoomThreshold = map.current!.getZoom() >= zoomLevelThreshold;
         if (isPastZoomThreshold) {
           // update the search box location based on the final latitude/longitude
           geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
@@ -115,6 +119,8 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
       });
     }
   }, [
+    originalLat,
+    originalLng,
     lat,
     lng,
     setIsSubmissionEnabled,

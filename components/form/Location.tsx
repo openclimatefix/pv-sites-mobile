@@ -1,22 +1,30 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import Button from '~/components/Button';
 import LocationInput from '~/components/LocationInput';
 
 import { useFormContext } from '~/lib/context/form_context';
+import { originalLat, originalLng } from '~/lib/utils';
 
-export default function Location() {
-  const router = useRouter();
-  const { setMapData } = useFormContext();
+interface Props {
+  nextPageCallback: () => void;
+}
+
+const Location: FC<Props> = ({ nextPageCallback }) => {
+  const { latLong: [contextLat, contextLng], setMapData } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
-  const [lng, setLng] = useState(0);
-  const [lat, setLat] = useState(0);
+
+  const [lat, setLat] = useState(contextLat);
+  const [lng, setLng] = useState(contextLng);
   const zoomLevelThreshold = 10;
 
   const onClick = () => {
     setMapData(lat, lng);
-    router.push('/form/details');
+    nextPageCallback();
   };
+
+  // The map should zopm into the initial coordinates if they were entered by the user
+  const shouldZoomIntoOriginal = originalLat !== contextLat || originalLng !== contextLng;
 
   return (
     <div
@@ -28,6 +36,9 @@ export default function Location() {
       </div>
       <div className="w-full h-4/6" id="mapboxInputWrapper">
         <LocationInput
+          shouldZoomIntoOriginal={shouldZoomIntoOriginal}
+          originalLat={lat}
+          originalLng={lng}
           setIsSubmissionEnabled={setIsSubmissionEnabled}
           setLngExternal={setLng}
           setLatExternal={setLat}
@@ -41,4 +52,6 @@ export default function Location() {
       </div>
     </div>
   );
-}
+};
+
+export default Location;

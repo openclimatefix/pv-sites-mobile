@@ -13,7 +13,6 @@ import siteListJson from '../../data/site-list.json';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids } = req.query;
-  console.log(req.query);
   if (!mockApiRoute) {
     res.status(404).send('Not found');
     return;
@@ -44,8 +43,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const doesPropertyExist = (propname: string) => !!req.body[propname];
 
       if (PVSiteMetadataProps.every(doesPropertyExist)) {
-        console.log('POST request received! Contents:');
-        console.log(req.body);
         res.status(200).send('success');
       } else {
         res.status(400).send('PV site metadata missing required props');

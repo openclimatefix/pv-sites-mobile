@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { useRouter } from 'next/router';
 
 import Spinner from '~/components/Spinner';
@@ -20,14 +20,19 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
   }
 };
 
-const Form = () => {
+interface Props {
+  lastPageCallback: () => void;
+  nextPageCallback: () => void;
+}
+
+const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   const router = useRouter();
-  const { setFormData } = useFormContext();
+  const { setFormData, panelDetails: {direction: contextDirection, tilt: contextTilt, capacity: contextCapacity} } = useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
-  const [direction, setDirection] = useState('');
-  const [tilt, setTilt] = useState('');
-  const [capacity, setCapacity] = useState('');
+  const [direction, setDirection] = useState(String(contextDirection));
+  const [tilt, setTilt] = useState(String(contextTilt));
+  const [capacity, setCapacity] = useState(String(contextCapacity));
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,15 +44,26 @@ const Form = () => {
       await setFormData(
         parseInt(direction),
         parseInt(tilt),
-        parseInt(capacity)
+        parseInt(capacity),
+        true
       );
-      router.push('/dashboard');
+      nextPageCallback();
     }
+  };
+
+  const goBack = async () => {
+    await setFormData(
+      parseInt(direction),
+      parseInt(tilt),
+      parseInt(capacity),
+      true
+    );
+    lastPageCallback();
   };
 
   return (
     <>
-      <BackButton />
+      <BackButton callback={goBack} />
       <form onSubmit={onSubmit}>
         <h1 className="font-bold text-4xl mt-2 dark:text-ocf-gray mb-5">
           Site Details
@@ -133,6 +149,6 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Details;
 
 export const getServerSideProps = withPageAuthRequired();

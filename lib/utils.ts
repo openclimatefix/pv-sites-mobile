@@ -181,3 +181,7 @@ export const getNextThresholdIndex = (
 
 /* Represents the threshold for the graph */
 export const graphThreshold = 0.7;
+
+/* Latitude/longitude for London, England */
+export const originalLat = 51.5072;
+export const originalLng = 0.1276;

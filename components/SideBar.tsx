@@ -102,18 +102,6 @@ const Sidebar = () => {
           </div>
           <div className="flex flex-col gap-3">
             <MenuLink
-              linkProps={{ href: '/form/location' }}
-              label="Add a Location"
-              svg={<LocationIcon />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/form/details' }}
-              label="Edit Site Details"
-              svg={<EditIcon />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
               linkProps={{
                 href: `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`,
               }}
