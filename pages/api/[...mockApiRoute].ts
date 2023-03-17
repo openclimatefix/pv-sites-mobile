@@ -13,7 +13,7 @@ import siteListJson from '../../data/site-list.json';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids } = req.query;
-  console.log(req.query);
+
   if (!mockApiRoute) {
     res.status(404).send('Not found');
     return;

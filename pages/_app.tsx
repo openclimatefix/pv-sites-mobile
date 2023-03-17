@@ -1,20 +1,34 @@
-import { UserProvider } from '@auth0/nextjs-auth0';
-import { AppProps } from 'next/app';
+import { UserProfile, UserProvider } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
-
-import { SidebarProvider } from '~/lib/context/sidebar_context';
-import { FormProvider } from '~/lib/context/form_context';
-
-import { FC } from 'react';
 import { SWRConfig } from 'swr';
+import { AppType } from 'next/app';
 import Layout from '~/components/Layout';
+import { FormProvider } from '~/lib/context/form_context';
+import { SidebarProvider } from '~/lib/context/sidebar_context';
 import { fetcher } from '~/lib/swr';
+import { Site } from '~/lib/types';
 import '~/styles/globals.css';
 
-const App: FC<AppProps> = ({ Component, pageProps }) => {
+interface PageProps {
+  user: UserProfile;
+}
+
+// @ts-ignore
+const SitesApp: AppType<PageProps> = ({ Component, pageProps, siteList }) => {
+  const swrFallback = siteList
+    ? {
+        [`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`]: siteList,
+      }
+    : undefined;
+
   return (
-    <UserProvider>
-      <SWRConfig value={{ fetcher }}>
+    <UserProvider user={pageProps.user}>
+      <SWRConfig
+        value={{
+          fetcher,
+          fallback: swrFallback,
+        }}
+      >
         <FormProvider>
           <SidebarProvider>
             <Head>
@@ -37,4 +51,31 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
   );
 };
 
-export default App;
+// @ts-ignore
+SitesApp.getInitialProps = async ({ ctx }) => {
+  const { accessToken } = await fetch(
+    `${process.env.AUTH0_BASE_URL}/api/get_token`,
+    {
+      credentials: 'include',
+      headers: {
+        cookie: ctx.req?.headers.cookie ?? '',
+      },
+    }
+  ).then((res) => res.json());
+
+  if (!accessToken) {
+    return {};
+  }
+
+  const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((res) => res.json())) as { site_list: Site[] };
+
+  return {
+    siteList,
+  };
+};
+
+export default SitesApp;
