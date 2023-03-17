@@ -31,6 +31,7 @@ const SitesApp: SitesAppType = ({ Component, pageProps, siteList }) => {
         value={{
           fetcher,
           fallback: swrFallback,
+          refreshInterval: 10000,
         }}
       >
         <FormProvider>

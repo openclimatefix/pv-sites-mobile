@@ -1,4 +1,5 @@
 import DashboardIcon from './DashboardIcon';
+import DeleteIcon from './DeleteIcon';
 import EditIcon from './EditIcon';
 import ExitIcon from './ExitIcon';
 import LogoutIcon from './LogoutIcon';
@@ -11,6 +12,7 @@ import SiteListIcon from './SiteListIcon';
 
 export {
   DashboardIcon,
+  DeleteIcon,
   ExitIcon,
   LogoutIcon,
   LocationIcon,

@@ -4,6 +4,8 @@ import { useSiteData } from '~/lib/hooks';
 import { getCurrentTimeForecast } from '~/lib/utils';
 import content from '../../content/power-card-content.json';
 import NumberDisplay from './NumberDisplay';
+import useTime from '~/lib/hooks/useTime';
+import RecommendationDisplay from './RecommendationDisplay';
 
 /**
  * Determines the appliance with the greatest energy required that is less than or equal to the current output
@@ -27,7 +29,7 @@ const getBestRecommendationIndex = (currentOutput: number) => {
 };
 
 const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, isLoading } = useSiteData(siteUUID);
+  const { forecastData, latitude, longitude } = useSiteData(siteUUID);
   const currentOutput = forecastData
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
@@ -35,35 +37,26 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const recommendationIdx = currentOutput
     ? getBestRecommendationIndex(currentOutput)
     : null;
-
-  if (recommendationIdx === null) {
-    return <NumberDisplay title="Recommendations" value="N/A" />;
-  } else {
+  const { isDaytime } = useTime(latitude, longitude);
+  if (!isDaytime && currentOutput === 0) {
+    return (
+      <RecommendationDisplay
+        src="/nighttime.svg"
+        alt="Moon and stars"
+        description="The solar output is currently 0"
+      />
+    );
+  } else if (recommendationIdx) {
     const appliance = content.appliances[recommendationIdx];
     return (
-      <div
-        className="
-          flex-1
-          flex
-          my-2
-          p-4
-          text-center
-          justify-center
-          align-center
-          bg-ocf-gray-1000
-          rounded-2xl"
-      >
-        <Image
-          src={appliance.icon}
-          alt={appliance.name}
-          width={34.5}
-          height={28.75}
-        />
-        <div className="text-ocf-gray ml-3 self-center font-normal text-left flex-1 max-w-max">
-          <p className="m-0 text-[10px] mb-1">{appliance.description}</p>
-        </div>
-      </div>
+      <RecommendationDisplay
+        src={appliance.icon}
+        alt=""
+        description={appliance.description}
+      />
     );
+  } else {
+    return <NumberDisplay title="Recommendations" value="N/A" />;
   }
 };
 
