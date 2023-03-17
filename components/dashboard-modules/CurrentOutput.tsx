@@ -10,16 +10,23 @@ const CurrentOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
 
+  function outputMessage(
+    isLoading: boolean,
+    currentOutput: number | undefined
+  ) {
+    if (isLoading) {
+      return 'Loading...';
+    } else if (currentOutput === undefined) {
+      return 'N/A';
+    } else {
+      return currentOutput.toFixed(2);
+    }
+  }
+
   return (
     <NumberDisplay
       title="Current Output"
-      value={`${
-        isLoading
-          ? 'Loading...'
-          : currentOutput === undefined
-          ? 'N/A'
-          : currentOutput.toFixed(2)
-      }`}
+      value={`${outputMessage(isLoading, currentOutput)}`}
     />
   );
 };

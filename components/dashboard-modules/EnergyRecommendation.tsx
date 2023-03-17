@@ -42,7 +42,7 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     return (
       <RecommendationDisplay
         src="/nighttime.svg"
-        alt=""
+        alt="Moon and stars"
         description="The solar output is currently 0"
       />
     );
@@ -51,7 +51,7 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     return (
       <RecommendationDisplay
         src={appliance.icon}
-        alt={appliance.name}
+        alt=""
         description={appliance.description}
       />
     );
