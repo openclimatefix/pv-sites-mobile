@@ -16,9 +16,9 @@ const CurrentOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       value={`${
         isLoading
           ? 'Loading...'
-          : currentOutput
-          ? currentOutput.toFixed(2) + ' kW'
-          : 'N/A'
+          : currentOutput === undefined
+          ? 'N/A'
+          : currentOutput.toFixed(2)
       }`}
     />
   );

@@ -33,7 +33,7 @@ const useTime = (latitude?: number, longitude?: number) => {
   // default to daytime
   const isDaytime = times
     ? currentTime >= sunriseTime && currentTime <= sunsetTime
-    : true;
+    : false;
 
   return { currentTime, isDaytime };
 };
