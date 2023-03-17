@@ -1,20 +1,24 @@
 import { UserProfile, UserProvider } from '@auth0/nextjs-auth0';
+import { NextComponentType } from 'next';
+import { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
-import { AppType } from 'next/app';
 import Layout from '~/components/Layout';
 import { FormProvider } from '~/lib/context/form_context';
 import { SidebarProvider } from '~/lib/context/sidebar_context';
 import { fetcher } from '~/lib/swr';
-import { Site } from '~/lib/types';
+import { Site, SiteList } from '~/lib/types';
 import '~/styles/globals.css';
 
-interface PageProps {
-  user: UserProfile;
-}
+type InitialProps = { siteList?: SiteList };
 
-// @ts-ignore
-const SitesApp: AppType<PageProps> = ({ Component, pageProps, siteList }) => {
+type SitesAppType = NextComponentType<
+  AppContext,
+  InitialProps,
+  AppProps<{ user: UserProfile }> & InitialProps
+>;
+
+const SitesApp: SitesAppType = ({ Component, pageProps, siteList }) => {
   const swrFallback = siteList
     ? {
         [`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`]: siteList,
@@ -51,7 +55,6 @@ const SitesApp: AppType<PageProps> = ({ Component, pageProps, siteList }) => {
   );
 };
 
-// @ts-ignore
 SitesApp.getInitialProps = async ({ ctx }) => {
   const { accessToken } = await fetch(
     `${process.env.AUTH0_BASE_URL}/api/get_token`,
