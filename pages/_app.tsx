@@ -12,13 +12,13 @@ import '~/styles/globals.css';
 
 type InitialProps = { siteList?: SiteList };
 
-type SitesAppType = NextComponentType<
+type AppType = NextComponentType<
   AppContext,
   InitialProps,
   AppProps<{ user: UserProfile }> & InitialProps
 >;
 
-const SitesApp: SitesAppType = ({ Component, pageProps, siteList }) => {
+const App: AppType = ({ Component, pageProps, siteList }) => {
   const swrFallback = siteList
     ? {
         [`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`]: siteList,
@@ -56,7 +56,7 @@ const SitesApp: SitesAppType = ({ Component, pageProps, siteList }) => {
   );
 };
 
-SitesApp.getInitialProps = async ({ ctx }) => {
+App.getInitialProps = async ({ ctx }) => {
   const { accessToken } = await fetch(
     `${process.env.AUTH0_BASE_URL}/api/get_token`,
     {
@@ -82,4 +82,4 @@ SitesApp.getInitialProps = async ({ ctx }) => {
   };
 };
 
-export default SitesApp;
+export default App;
