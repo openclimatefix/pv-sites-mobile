@@ -5,9 +5,9 @@ export default function Index() {
 }
 
 export const getServerSideProps = withSites({
-  async getServerSideProps(ctx) {
+  async getServerSideProps({ siteList }) {
     const destination =
-      ctx.siteList.site_list.length === 0 ? '/form/location' : '/dashboard';
+      siteList.site_list.length === 0 ? '/form/location' : '/dashboard';
 
     return {
       redirect: {
