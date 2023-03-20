@@ -4,6 +4,7 @@ import { Carousel } from 'react-responsive-carousel';
 import PowerInfoCard from '~/components/PowerInfoCard';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Image from 'next/image';
+import { withSites } from '~/lib/utils';
 
 const MoreInfo = () => {
   return (
@@ -76,4 +77,4 @@ const MoreInfo = () => {
 
 export default MoreInfo;
 
-export const getServerSideProps = withPageAuthRequired();
+export const getServerSideProps = withSites();

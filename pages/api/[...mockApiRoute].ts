@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
+  getInverters,
   getLinkedVendors,
   getLinkRedirectURL,
   testClientID,
@@ -74,6 +75,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(200).json(pvForecastMultipleJson);
     } else if (mockApiRoute === 'sites') {
       res.status(200).json(siteListJson);
+    } else if (mockApiRoute === 'inverters') {
+      res.status(200).json(await getInverters(testClientID));
     } else if (mockApiRoute === 'enode/link') {
       const redirectURL = await getLinkRedirectURL(
         testClientID,
