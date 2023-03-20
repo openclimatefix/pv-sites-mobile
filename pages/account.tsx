@@ -11,10 +11,18 @@ type Props = {
 };
 
 const AccountInfo: FC<Props> = ({ inverters }) => {
+  if (!inverters) {
+    return (
+      <Link href="/api/enode/link">
+        <a className="text-white">Link account</a>
+      </Link>
+    );
+  }
+
   return (
     <>
       <h2 className="text-white">Info</h2>
-      {inverters?.map((inverter, i) => (
+      {inverters.map((inverter, i) => (
         <p key={i} className="text-white">
           Inverter ID: {inverter.id}, rate:{' '}
           {inverter.productionState.productionRate}
@@ -37,7 +45,7 @@ const Account: NextPage<Props> = () => {
   //     }
   //   }, []);
 
-  const { data: inverters } = useSWR<Inverter[]>(
+  const { data: inverters, isLoading } = useSWR<Inverter[]>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/inverters`,
     {
       revalidateIfStale: true,
@@ -52,12 +60,10 @@ const Account: NextPage<Props> = () => {
           Linking status success: {query.linkSuccess}
         </p>
       )}
-      {inverters?.length ? (
-        <AccountInfo inverters={inverters} />
+      {isLoading ? (
+        <p className="text-white">Loading...</p>
       ) : (
-        <Link href="/api/enode/link">
-          <a className="text-white">Link account</a>
-        </Link>
+        <AccountInfo inverters={inverters} />
       )}
     </>
   );
