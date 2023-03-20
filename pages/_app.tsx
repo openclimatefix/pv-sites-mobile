@@ -57,6 +57,8 @@ const App: AppType = ({ Component, pageProps, siteList }) => {
 };
 
 App.getInitialProps = async ({ ctx }) => {
+  console.log('Requesting token... "', ctx.pathname, '"');
+
   const { accessToken } = await fetch(
     `${process.env.AUTH0_BASE_URL}/api/get_token`,
     {
@@ -66,6 +68,8 @@ App.getInitialProps = async ({ ctx }) => {
       },
     }
   ).then((res) => res.json());
+
+  console.log('Token received: ', accessToken);
 
   if (!accessToken) {
     return {};
