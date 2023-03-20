@@ -191,11 +191,11 @@ export const graphThreshold = 0.7;
 type WithSitesOptions = {
   getServerSideProps?: (
     ctx: GetServerSidePropsContext & { siteList: SiteList }
-  ) => ReturnType<GetServerSideProps<{ siteList: SiteList }>>;
+  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
 };
 export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   return withPageAuthRequired({
-    getServerSideProps: async (ctx) => {
+    async getServerSideProps(ctx) {
       const accessToken = getAccessToken(ctx.req, ctx.res);
 
       const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
@@ -204,12 +204,20 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
         },
       }).then((res) => res.json())) as SiteList;
 
-      return {
-        props: {
-          siteList,
-          ...(await getServerSideProps?.({ ...ctx, siteList })),
-        },
-      };
+      const otherProps: any = await getServerSideProps?.({
+        ...ctx,
+        siteList,
+      });
+      if (otherProps?.props instanceof Promise) {
+        return {
+          ...otherProps,
+          props: otherProps.props.then((props: any) => ({
+            ...props,
+            siteList,
+          })),
+        };
+      }
+      return { ...otherProps, props: { ...otherProps?.props, siteList } };
     },
   });
 }

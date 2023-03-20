@@ -14,7 +14,6 @@ export const getServerSideProps = withSites({
         permanent: false,
         destination,
       },
-      props: {},
     };
   },
 });
