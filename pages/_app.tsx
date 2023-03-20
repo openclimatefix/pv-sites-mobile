@@ -1,27 +1,21 @@
 import { UserProfile, UserProvider } from '@auth0/nextjs-auth0';
-import { NextComponentType } from 'next';
-import { AppContext, AppProps } from 'next/app';
+import { AppType } from 'next/app';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import Layout from '~/components/Layout';
 import { FormProvider } from '~/lib/context/form_context';
 import { SidebarProvider } from '~/lib/context/sidebar_context';
 import { fetcher } from '~/lib/swr';
-import { Site, SiteList } from '~/lib/types';
+import { SiteList } from '~/lib/types';
 import '~/styles/globals.css';
 
-type InitialProps = { siteList?: SiteList };
+type AppProps = { siteList?: SiteList; user?: UserProfile };
 
-type AppType = NextComponentType<
-  AppContext,
-  InitialProps,
-  AppProps<{ user: UserProfile }> & InitialProps
->;
-
-const App: AppType = ({ Component, pageProps, siteList }) => {
-  const swrFallback = siteList
+const App: AppType<AppProps> = ({ Component, pageProps }) => {
+  const swrFallback = pageProps.siteList
     ? {
-        [`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`]: siteList,
+        [`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`]:
+          pageProps.siteList,
       }
     : undefined;
 
@@ -54,32 +48,6 @@ const App: AppType = ({ Component, pageProps, siteList }) => {
       </SWRConfig>
     </UserProvider>
   );
-};
-
-App.getInitialProps = async ({ ctx }) => {
-  const { accessToken } = await fetch(
-    `${process.env.AUTH0_BASE_URL}/api/get_token`,
-    {
-      credentials: 'include',
-      headers: {
-        cookie: ctx.req?.headers.cookie ?? '',
-      },
-    }
-  ).then((res) => res.json());
-
-  if (!accessToken) {
-    return {};
-  }
-
-  const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  }).then((res) => res.json())) as { site_list: Site[] };
-
-  return {
-    siteList,
-  };
 };
 
 export default App;

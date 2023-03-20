@@ -1,9 +1,10 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { getInverters, Inverter, testClientID } from '~/lib/enode';
+import { Inverter } from '~/lib/enode';
+import { withSites } from '~/lib/utils';
+import useSWR from 'swr';
 
 type Props = {
   inverters?: Inverter[];
@@ -26,7 +27,7 @@ const AccountInfo: FC<Props> = ({ inverters }) => {
   );
 };
 
-const Account: NextPage<Props> = ({ inverters }) => {
+const Account: NextPage<Props> = () => {
   const { query, replace } = useRouter();
 
   // To add later after this is a toast...
@@ -35,6 +36,13 @@ const Account: NextPage<Props> = ({ inverters }) => {
   //       replace('/account');
   //     }
   //   }, []);
+
+  const { data: inverters } = useSWR<Inverter[]>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/inverters`,
+    {
+      revalidateIfStale: true,
+    }
+  );
 
   return (
     <>
@@ -55,16 +63,6 @@ const Account: NextPage<Props> = ({ inverters }) => {
   );
 };
 
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps() {
-    const inverters = await getInverters(testClientID);
-
-    return {
-      props: {
-        inverters,
-      },
-    };
-  },
-});
+export const getServerSideProps = withSites();
 
 export default Account;
