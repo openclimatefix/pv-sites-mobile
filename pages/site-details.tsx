@@ -1,7 +1,7 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
-import Details from '~/components/form/details';
-import Location from '~/components/form/location';
+import Details from '~/components/form/Details';
+import Location from '~/components/form/Location';
 import { useRouter } from 'next/router';
 
 import { FC, useState } from 'react';
