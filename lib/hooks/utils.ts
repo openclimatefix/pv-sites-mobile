@@ -1,6 +1,5 @@
-import { url } from 'inspector';
-import { SiteList, ForecastData, UnparsedForecastData } from '../types';
 import { Fetcher } from 'swr';
+import { ForecastData, SiteList, UnparsedForecastData } from '../types';
 
 export const siteListFetcher: Fetcher<SiteList> = async (url: string) =>
   fetch(url).then((res) => res.json());

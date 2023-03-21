@@ -1,4 +1,4 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
 import CurrentCapacity from '../components/dashboard-modules/CurrentCapacity';
 import CurrentOutput from '../components/dashboard-modules/CurrentOutput';
@@ -6,6 +6,8 @@ import ExpectedTotalOutput from '../components/dashboard-modules/ExpectedTotalOu
 import Graph from '../components/graphs/Graph';
 import SunnyTimeframe from '../components/dashboard-modules/SunnyTimeframe';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
+import { withSites } from '~/lib/utils';
+import { SiteList } from '~/lib/types';
 
 const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
 
@@ -41,4 +43,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-export const getServerSideProps = withPageAuthRequired();
+export const getServerSideProps = withSites();

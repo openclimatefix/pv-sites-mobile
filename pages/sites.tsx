@@ -2,6 +2,7 @@ import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { EditIcon } from '~/components/icons';
 import { useState } from 'react';
 import SiteCardLink from '~/components/SiteCard';
+import { withSites } from '~/lib/utils';
 
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
@@ -27,4 +28,4 @@ const Sites = () => {
 };
 
 export default Sites;
-export const getServerSideProps = withPageAuthRequired();
+export const getServerSideProps = withSites();
