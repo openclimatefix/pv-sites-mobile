@@ -16,14 +16,14 @@ import {
   LineCircle,
 } from '../icons/future_threshold';
 
-import { formatter, forecastDataOverDateRange } from 'lib/graphs';
-
 import {
-  getArrayMaxOrMinAfterIndex,
-  Value,
+  formatter,
+  forecastDataOverDateRange,
   getCurrentTimeForecastIndex,
   graphThreshold,
-} from 'lib/utils';
+} from 'lib/graphs';
+
+import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';

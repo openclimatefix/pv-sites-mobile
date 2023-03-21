@@ -1,5 +1,4 @@
 import useSWR, { Fetcher } from 'swr';
-import { getArrayMaxOrMinAfterIndex, Value } from 'utils';
 
 /**
  * Converts Date object into Hour-Minute format based on device region
@@ -104,3 +103,35 @@ export const forecastDataOverDateRange = (
     );
   return forecastData;
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// new functions
+
+/**
+ * @returns the index of the forecasted date that is closest to the current time
+ */
+export const getCurrentTimeForecastIndex = (
+  forecast_values: ForecastDataPoint[]
+) => {
+  if (forecast_values) {
+    const currentDate = new Date();
+
+    const closestDateIndex = forecast_values
+      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
+      .map((forecast_values) => ({
+        ...forecast_values,
+        difference: Math.abs(
+          currentDate.getTime() -
+            new Date(forecast_values.target_datetime_utc).getTime()
+        ),
+      }))
+      .reduce((prev, curr) =>
+        prev.difference < curr.difference ? prev : curr
+      ).index;
+
+    return closestDateIndex;
+  }
+  return 0;
+};
+
+/* Represents the threshold for the graph */
+export const graphThreshold = 0.7;

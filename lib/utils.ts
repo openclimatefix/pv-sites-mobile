@@ -5,6 +5,7 @@ import {
   GetServerSideProps,
 } from 'next';
 import { ForecastDataPoint, SiteList } from './types';
+import { getCurrentTimeForecastIndex } from './graphs';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -90,32 +91,39 @@ export const getArrayMaxOrMinAfterIndex = (
   return null;
 };
 
-/**
- * @returns the index of the forecasted date that is closest to the current time
- */
-export const getCurrentTimeForecastIndex = (
-  forecast_values: ForecastDataPoint[]
-) => {
-  if (forecast_values) {
-    const currentDate = new Date();
-
-    const closestDateIndex = forecast_values
-      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-      .map((forecast_values) => ({
-        ...forecast_values,
-        difference: Math.abs(
-          currentDate.getTime() -
-            new Date(forecast_values.target_datetime_utc).getTime()
-        ),
-      }))
-      .reduce((prev, curr) =>
-        prev.difference < curr.difference ? prev : curr
-      ).index;
-
-    return closestDateIndex;
-  }
-  return 0;
+type WithSitesOptions = {
+  getServerSideProps?: (
+    ctx: GetServerSidePropsContext & { siteList: SiteList }
+  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
 };
+export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
+  return withPageAuthRequired({
+    async getServerSideProps(ctx) {
+      const accessToken = getAccessToken(ctx.req, ctx.res);
+
+      const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then((res) => res.json())) as SiteList;
+
+      const otherProps: any = await getServerSideProps?.({
+        ...ctx,
+        siteList,
+      });
+      if (otherProps?.props instanceof Promise) {
+        return {
+          ...otherProps,
+          props: otherProps.props.then((props: any) => ({
+            ...props,
+            siteList,
+          })),
+        };
+      }
+      return { ...otherProps, props: { ...otherProps?.props, siteList } };
+    },
+  });
+}
 
 export const getCurrentTimeForecast = (forecast_values: ForecastDataPoint[]) =>
   forecast_values[getCurrentTimeForecastIndex(forecast_values)]
@@ -176,40 +184,3 @@ export const getNextThresholdIndex = (
     ),
   };
 };
-
-/* Represents the threshold for the graph */
-export const graphThreshold = 0.7;
-
-type WithSitesOptions = {
-  getServerSideProps?: (
-    ctx: GetServerSidePropsContext & { siteList: SiteList }
-  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
-};
-export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
-  return withPageAuthRequired({
-    async getServerSideProps(ctx) {
-      const accessToken = getAccessToken(ctx.req, ctx.res);
-
-      const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }).then((res) => res.json())) as SiteList;
-
-      const otherProps: any = await getServerSideProps?.({
-        ...ctx,
-        siteList,
-      });
-      if (otherProps?.props instanceof Promise) {
-        return {
-          ...otherProps,
-          props: otherProps.props.then((props: any) => ({
-            ...props,
-            siteList,
-          })),
-        };
-      }
-      return { ...otherProps, props: { ...otherProps?.props, siteList } };
-    },
-  });
-}
