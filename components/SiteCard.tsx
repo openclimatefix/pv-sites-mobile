@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useSiteData } from '~/lib/hooks';
 import { getCurrentTimeForecast } from '~/lib/utils';
 
+import SiteGraph from './graphs/SiteGraph';
+
 interface SiteCardProps {
   href?: string;
   siteUUID: string;
