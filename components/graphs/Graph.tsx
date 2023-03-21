@@ -17,10 +17,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const maxGeneration = forecastData
     ? Math.max(
-      ...forecastData.forecast_values.map(
-        (value) => value.expected_generation_kw
+        ...forecastData.forecast_values.map(
+          (value) => value.expected_generation_kw
+        )
       )
-    )
     : 0;
 
   const tickArray = [
@@ -31,8 +31,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     maxGeneration,
   ];
 
-  console.log(forecastData?.forecast_values);
-  console.log(clearskyData?.clearsky_estimate);
+  // console.log(forecastData?.forecast_values);
+  // console.log(clearskyData?.clearsky_estimate);
 
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
