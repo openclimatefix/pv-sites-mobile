@@ -35,10 +35,14 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
       className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] w-screen bg-mapbox-gray-1000"
       id="rootDiv"
     >
-      <div className="flex flex-col justify-end h-16 pl-3">
-        <h1 className="font-bold text-4xl text-ocf-gray">Site Location</h1>
-      </div>
-      <div className="w-full h-4/6" id="mapboxInputWrapper">
+      <div className="flex flex-col justify-end h-16 pl-3"></div>
+      <div
+        className="self-center md:w-7/12 w-full h-4/6"
+        id="mapboxInputWrapper"
+      >
+        <h1 className="font-medium md:text-3xl text-xl text-ocf-gray pl-3 md:pl-0">
+          Where is your solar panel located?
+        </h1>
         <LocationInput
           shouldZoomIntoOriginal={shouldZoomIntoOriginal}
           originalLat={lat}
@@ -49,7 +53,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
           zoomLevelThreshold={zoomLevelThreshold}
         />
       </div>
-      <div className="self-center w-4/5  max-w-sm h-14">
+      <div className="flex justify-center md:justify-end md:mt-20 mt-10 self-center w-full h-14">
         <Button enabled={isSubmissionEnabled} onClick={onClick}>
           Next
         </Button>

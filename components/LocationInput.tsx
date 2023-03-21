@@ -62,7 +62,7 @@ const LocationInput: FC<LocationInputProps> = ({
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
-        placeholder: 'Where is your solar panel located?',
+        placeholder: 'Search a location',
         marker: false,
         reverseGeocode: true,
       });
