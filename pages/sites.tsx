@@ -6,15 +6,21 @@ import { withSites } from '~/lib/utils';
 import { SiteList } from '~/lib/types';
 import useSWR from 'swr';
 
-const ParseSiteUUIDs = (data: SiteList): string[] => {
-  const res = [];
+/**
+ * Helper function that returns a string[] of all the UUIDs collected from our data
+ * @param data the raw list of all site objects (contains more than just uuid)
+ * @returns siteUUIDs, a string array of all the valid site UUIDs
+ */
+const parseSiteUUIDs = (data: SiteList): string[] => {
+  const siteUUIDs = [];
   if (data) {
     for (let i = 0; i < data.site_list.length; i++) {
-      res.push(data.site_list[i].site_uuid);
+      siteUUIDs.push(data.site_list[i].site_uuid);
     }
   }
-  return res;
+  return siteUUIDs;
 };
+
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
 
@@ -22,7 +28,7 @@ const Sites = () => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`
   );
 
-  const siteUUIDs: string[] = ParseSiteUUIDs(data);
+  const siteUUIDs: string[] = parseSiteUUIDs(data);
 
   return (
     <div className="h-full w-full flex flex-col gap-3 items-center px-5">
