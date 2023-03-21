@@ -10,17 +10,7 @@ const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   if (forecastData && installed_capacity_kw) {
     return (
       <ResponsiveContainer width="100%" height={75}>
-        <AreaChart
-          data={forecastData?.forecast_values}
-          //   height={75}
-          //   width={150}
-          margin={{
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
-          }}
-        >
+        <AreaChart data={forecastData?.forecast_values}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
               <stop offset={'0%'} stopColor="#FFD053" stopOpacity={0.4} />
