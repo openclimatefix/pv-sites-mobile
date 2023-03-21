@@ -2,14 +2,18 @@ import { FC, PropsWithChildren } from 'react';
 import { DeleteIcon, EditIcon } from './icons';
 import Link from 'next/link';
 
+import SiteGraph from './graphs/SiteGraph';
+
 interface SiteCardProps {
   href?: string;
 }
 
+const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
+
 const SiteCard: FC<SiteCardProps> = ({ href }) => (
   <a
     href={href}
-    className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-lg font-bold"
+    className="h-fit w-full max-w-lg flex flex-row bg-ocf-gray-1000 p-3 rounded-lg font-bold"
   >
     <div className="flex flex-col flex-1">
       <h2 className="text-amber text-xl font-semibold">My Home</h2>
@@ -23,6 +27,11 @@ const SiteCard: FC<SiteCardProps> = ({ href }) => (
         </p>
       </div>
     </div>
+    {href && (
+      <div className="flex-1">
+        <SiteGraph siteUUID={siteUUID} />
+      </div>
+    )}
     {!href && (
       <div className="flex flex-col w-fit">
         <div className="flex-1">
