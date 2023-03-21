@@ -29,7 +29,7 @@ const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             strokeWidth={1}
             stroke="#FFD053"
             fill="url(#colorUv)"
-          ></Area>
+          />
         </AreaChart>
       </ResponsiveContainer>
     );
