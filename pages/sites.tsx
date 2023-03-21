@@ -43,7 +43,11 @@ const Sites = () => {
         </button>
       </div>
       {siteUUIDs.map((site_uuid: string, idx: number) => (
-        <SiteCardLink key={idx} siteUUID={site_uuid} isEditMode={editMode} />
+        <SiteCardLink
+          key={site_uuid}
+          siteUUID={site_uuid}
+          isEditMode={editMode}
+        />
       ))}
     </div>
   );

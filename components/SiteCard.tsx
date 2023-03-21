@@ -17,7 +17,7 @@ const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
 
   const currentOutput = forecastData
     ? getCurrentTimeForecast(forecastData.forecast_values)
-    : 0;
+    : undefined;
 
   return (
     <a
@@ -28,7 +28,9 @@ const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
         <h2 className="text-amber text-xl font-semibold">{client_site_name}</h2>
         <div className="flex flex-col mt-2 gap-1">
           <p className="text-ocf-gray-500 text-xs font-medium">
-            Current output: {currentOutput} kW
+            {`Current output: ${
+              currentOutput != undefined ? currentOutput + ' kW' : 'loading...'
+            }`}
           </p>
           {installed_capacity_kw && (
             <p className="text-ocf-gray-500 font-medium text-xs">
@@ -36,11 +38,12 @@ const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
             </p>
           )}
           <p className="text-ocf-gray-500 font-medium text-xs">
-            Current yield:{' '}
-            {installed_capacity_kw
-              ? currentOutput / installed_capacity_kw
-              : currentOutput}
-            %
+            {`Current yield:
+            ${
+              installed_capacity_kw && currentOutput != undefined
+                ? currentOutput / installed_capacity_kw + '%'
+                : 'loading...'
+            }`}
           </p>
         </div>
       </div>
