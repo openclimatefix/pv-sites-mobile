@@ -1,4 +1,10 @@
-import { ForecastDataPoint } from './types';
+import { getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  GetServerSideProps,
+} from 'next';
+import { ForecastDataPoint, SiteList } from './types';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -185,3 +191,37 @@ export const graphThreshold = 0.7;
 /* Latitude/longitude for London, England */
 export const originalLat = 51.5072;
 export const originalLng = 0.1276;
+
+type WithSitesOptions = {
+  getServerSideProps?: (
+    ctx: GetServerSidePropsContext & { siteList: SiteList }
+  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
+};
+export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
+  return withPageAuthRequired({
+    async getServerSideProps(ctx) {
+      const accessToken = getAccessToken(ctx.req, ctx.res);
+
+      const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then((res) => res.json())) as SiteList;
+
+      const otherProps: any = await getServerSideProps?.({
+        ...ctx,
+        siteList,
+      });
+      if (otherProps?.props instanceof Promise) {
+        return {
+          ...otherProps,
+          props: otherProps.props.then((props: any) => ({
+            ...props,
+            siteList,
+          })),
+        };
+      }
+      return { ...otherProps, props: { ...otherProps?.props, siteList } };
+    },
+  });
+}
