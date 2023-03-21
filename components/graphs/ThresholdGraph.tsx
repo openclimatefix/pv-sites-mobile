@@ -117,7 +117,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * @returns SVG gradient
    */
   const generateGraphGradient = () => {
-    if (!isLoading && graphData) {
+    if (!isLoading && graphData.length > 0) {
       const aboveThreshold = graphData.some(
         (forecast) => forecast.expected_generation_kw > graphThreshold
       );
@@ -156,7 +156,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * @returns the start and end time label on the graph's x-axis
    */
   const renderStartAndEndTime = () => {
-    if (!isLoading && graphData) {
+    if (!isLoading && graphData.length > 0) {
       const numForecastValues = graphData.length;
 
       if (numForecastValues > 0) {
