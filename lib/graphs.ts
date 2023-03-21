@@ -71,7 +71,7 @@ export const getClosestForecastIndex = (
         ...forecast_values,
         difference: Math.abs(
           targetDate.getTime() -
-          new Date(forecast_values.target_datetime_utc).getTime()
+            new Date(forecast_values.target_datetime_utc).getTime()
         ),
       }))
       .reduce((prev, curr) =>
@@ -91,10 +91,7 @@ export const forecastDataOverDateRange = (
   const start_index = getClosestForecastIndex(forecastData, start_date);
   const end_index = getClosestForecastIndex(forecastData, end_date);
   if (forecastData)
-    forecastData = forecastData.slice(
-      start_index,
-      end_index + 1
-    );
+    forecastData = forecastData.slice(start_index, end_index + 1);
   return forecastData;
 };
 
@@ -113,7 +110,7 @@ export const getCurrentTimeForecastIndex = (
         ...forecast_values,
         difference: Math.abs(
           currentDate.getTime() -
-          new Date(forecast_values.target_datetime_utc).getTime()
+            new Date(forecast_values.target_datetime_utc).getTime()
         ),
       }))
       .reduce((prev, curr) =>

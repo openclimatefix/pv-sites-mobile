@@ -27,11 +27,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       )
     : [];
   const maxGeneration = graphData
-    ? Math.max(
-        ...graphData.map(
-          (value) => value.expected_generation_kw
-        )
-      )
+    ? Math.max(...graphData.map((value) => value.expected_generation_kw))
     : 0;
 
   const tickArray = [

@@ -121,9 +121,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       if (aboveThreshold) {
         const maxExpectedGenerationKW = Math.max.apply(
           null,
-          graphData.map(
-            ({ expected_generation_kw }) => expected_generation_kw
-          )
+          graphData.map(({ expected_generation_kw }) => expected_generation_kw)
         );
 
         let gradientPercentage =
@@ -162,9 +160,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           new Date(graphData[0].target_datetime_utc)
         );
         const endTime = formatter.format(
-          new Date(
-            graphData[numForecastValues - 1].target_datetime_utc
-          )
+          new Date(graphData[numForecastValues - 1].target_datetime_utc)
         );
 
         return (
