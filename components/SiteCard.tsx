@@ -1,62 +1,79 @@
 import { FC, PropsWithChildren } from 'react';
 import { DeleteIcon, EditIcon } from './icons';
 import Link from 'next/link';
+import { useSiteData } from '~/lib/hooks';
+import { getCurrentTimeForecast } from '~/lib/utils';
 
 import SiteGraph from './graphs/SiteGraph';
 
 interface SiteCardProps {
   href?: string;
+  siteUUID: string;
 }
 
-const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
+const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
+  const { forecastData, client_site_name, installed_capacity_kw } =
+    useSiteData(siteUUID);
 
-const SiteCard: FC<SiteCardProps> = ({ href }) => (
-  <a
-    href={href}
-    className="h-fit w-full max-w-lg flex flex-row bg-ocf-gray-1000 p-3 rounded-lg font-bold"
-  >
-    <div className="flex flex-col flex-1">
-      <h2 className="text-amber text-xl font-semibold">My Home</h2>
-      <div className="flex flex-col mt-2 gap-1">
-        <p className="text-ocf-gray-500 text-xs font-medium">
-          Panel direction: 135
-        </p>
-        <p className="text-ocf-gray-500 font-medium text-xs">Panel tilt: 40</p>
-        <p className="text-ocf-gray-500 font-medium text-xs">
-          Max. capacity: 2800 kWh
-        </p>
+  const currentOutput = forecastData
+    ? getCurrentTimeForecast(forecastData.forecast_values)
+    : undefined;
+
+  return (
+    <a
+      href={href}
+      className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-lg font-bold"
+    >
+      <div className="flex flex-col flex-1">
+        <h2 className="text-amber text-xl font-semibold">{client_site_name}</h2>
+        <div className="flex flex-col mt-2 gap-1">
+          <p className="text-ocf-gray-500 text-xs font-medium">
+            {`Current output: ${
+              currentOutput != undefined ? currentOutput + ' kW' : 'loading...'
+            }`}
+          </p>
+          {installed_capacity_kw && (
+            <p className="text-ocf-gray-500 font-medium text-xs">
+              Max. capacity: {installed_capacity_kw} kW
+            </p>
+          )}
+          <p className="text-ocf-gray-500 font-medium text-xs">
+            {`Current yield:
+            ${
+              installed_capacity_kw && currentOutput != undefined
+                ? currentOutput / installed_capacity_kw + '%'
+                : 'loading...'
+            }`}
+          </p>
+        </div>
       </div>
-    </div>
-    {href && (
-      <div className="flex-1">
-        <SiteGraph siteUUID={siteUUID} />
-      </div>
-    )}
-    {!href && (
-      <div className="flex flex-col w-fit">
-        <div className="flex-1">
+      {!href && (
+        <div className="flex flex-col w-fit">
+          <div className="flex-1">
+            <button>
+              <EditIcon />
+            </button>
+          </div>
           <button>
-            <EditIcon />
+            <DeleteIcon />
           </button>
         </div>
-        <button>
-          <DeleteIcon />
-        </button>
-      </div>
-    )}
-  </a>
-);
+      )}
+    </a>
+  );
+};
 
 interface SiteCardLinkProps {
   isEditMode: boolean;
+  siteUUID: string;
 }
 
-const SiteCardLink: FC<SiteCardLinkProps> = ({ isEditMode }) => {
+const SiteCardLink: FC<SiteCardLinkProps> = ({ isEditMode, siteUUID }) => {
   return isEditMode ? (
-    <SiteCard />
+    <SiteCard siteUUID={siteUUID} />
   ) : (
     <Link href="/dashboard" passHref>
-      <SiteCard />
+      <SiteCard siteUUID={siteUUID} />
     </Link>
   );
 };
