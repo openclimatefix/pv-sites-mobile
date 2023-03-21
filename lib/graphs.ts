@@ -57,27 +57,21 @@ const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
   return tempData as ForecastData;
 };
 
-export const useFutureGraphData = () =>
-  useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/pv_forecast/${siteUUID}`,
-    forecastFetcher
-  );
-
 /**
  * @returns the index of the forecasted date that is closest to the target time
  */
 export const getClosestForecastIndex = (
-  forecastData: ForecastData,
+  forecastData: ForecastDataPoint[],
   targetDate: Date
 ) => {
   if (forecastData) {
-    const closestDateIndex = forecastData.forecast_values
+    const closestDateIndex = forecastData
       .map((forecast_values, index) => ({ ...forecast_values, index: index }))
       .map((forecast_values) => ({
         ...forecast_values,
         difference: Math.abs(
           targetDate.getTime() -
-            new Date(forecast_values.target_datetime_utc).getTime()
+          new Date(forecast_values.target_datetime_utc).getTime()
         ),
       }))
       .reduce((prev, curr) =>
@@ -90,21 +84,19 @@ export const getClosestForecastIndex = (
 };
 
 export const forecastDataOverDateRange = (
-  forecastData: ForecastData,
+  forecastData: ForecastDataPoint[],
   start_date: Date,
   end_date: Date
 ) => {
   const start_index = getClosestForecastIndex(forecastData, start_date);
   const end_index = getClosestForecastIndex(forecastData, end_date);
   if (forecastData)
-    forecastData.forecast_values = forecastData.forecast_values.slice(
+    forecastData = forecastData.slice(
       start_index,
       end_index + 1
     );
   return forecastData;
 };
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// new functions
 
 /**
  * @returns the index of the forecasted date that is closest to the current time
@@ -121,7 +113,7 @@ export const getCurrentTimeForecastIndex = (
         ...forecast_values,
         difference: Math.abs(
           currentDate.getTime() -
-            new Date(forecast_values.target_datetime_utc).getTime()
+          new Date(forecast_values.target_datetime_utc).getTime()
         ),
       }))
       .reduce((prev, curr) =>

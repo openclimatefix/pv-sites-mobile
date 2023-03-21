@@ -21,14 +21,14 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   endDate.setHours(endDate.getHours() + 48);
   const graphData = forecastData
     ? forecastDataOverDateRange(
-        JSON.parse(JSON.stringify(forecastData)),
+        JSON.parse(JSON.stringify(forecastData.forecast_values)),
         new Date(currentTime),
         endDate
       )
     : null;
   const maxGeneration = graphData
     ? Math.max(
-        ...graphData.forecast_values.map(
+        ...graphData.map(
           (value) => value.expected_generation_kw
         )
       )
@@ -51,7 +51,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
         <LineChart
-          data={graphData?.forecast_values}
+          data={graphData}
           margin={{
             top: 0,
             right: 10,
