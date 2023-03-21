@@ -35,11 +35,13 @@ const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
               Max. capacity: {installed_capacity_kw} kW
             </p>
           )}
-          {installed_capacity_kw && (
-            <p className="text-ocf-gray-500 font-medium text-xs">
-              Current yield: {currentOutput / installed_capacity_kw}%
-            </p>
-          )}
+          <p className="text-ocf-gray-500 font-medium text-xs">
+            Current yield:{' '}
+            {installed_capacity_kw
+              ? currentOutput / installed_capacity_kw
+              : currentOutput}
+            %
+          </p>
         </div>
       </div>
       {!href && (
