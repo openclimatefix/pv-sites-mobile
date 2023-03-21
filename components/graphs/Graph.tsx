@@ -25,7 +25,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         new Date(currentTime),
         endDate
       )
-    : null;
+    : [];
   const maxGeneration = graphData
     ? Math.max(
         ...graphData.map(
