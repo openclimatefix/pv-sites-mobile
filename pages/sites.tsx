@@ -3,9 +3,15 @@ import { EditIcon } from '~/components/icons';
 import { useState } from 'react';
 import SiteCardLink from '~/components/SiteCard';
 import { withSites } from '~/lib/utils';
+import { forecastFetcher } from '~/lib/hooks/utils';
+import useSWR from 'swr';
 
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
+
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`
+  );
 
   return (
     <div className="h-full w-full flex flex-col gap-3 items-center px-5">
