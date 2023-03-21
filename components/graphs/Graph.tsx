@@ -10,17 +10,19 @@ import {
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import { formatter, forecastDataOverDateRange } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
+import useTime from '~/lib/hooks/useTime';
 import { FC } from 'react';
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData } = useSiteData(siteUUID);
+  const { forecastData, latitude, longitude } = useSiteData(siteUUID);
+  const { currentTime } = useTime(latitude, longitude);
 
-  let endDate = new Date();
+  const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
   const graphData = forecastData
     ? forecastDataOverDateRange(
         JSON.parse(JSON.stringify(forecastData)),
-        new Date(),
+        new Date(currentTime),
         endDate
       )
     : null;

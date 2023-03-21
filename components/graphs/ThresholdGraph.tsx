@@ -32,16 +32,21 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
   const { currentTime } = useTime(latitude, longitude);
-  let currentDate = new Date();
-  let endDate = new Date();
-  currentDate.setHours(8);
-  currentDate.setMinutes(0);
-  currentDate.setSeconds(0);
-  currentDate.setMilliseconds(0);
-  endDate.setHours(20);
-  endDate.setMinutes(0);
-  endDate.setSeconds(0);
-  endDate.setMilliseconds(0);
+
+  const currentDate = new Date(
+    new Date(currentTime).getFullYear(),
+    new Date(currentTime).getMonth(),
+    new Date(currentTime).getDate(),
+    8
+  );
+  const endDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate(),
+    20
+  );
+  console.log(endDate);
+
   const graphData = forecastData
     ? forecastDataOverDateRange(
         JSON.parse(JSON.stringify(forecastData)),
