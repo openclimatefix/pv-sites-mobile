@@ -32,7 +32,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   ];
 
   // console.log(forecastData?.forecast_values);
-  // console.log(clearskyData?.clearsky_estimate);
+  console.log(clearskyData?.clearsky_estimate);
 
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
@@ -49,7 +49,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
         <LineChart
-          data={forecastData?.forecast_values}
+          // data={forecastData?.forecast_values}`
           margin={{
             top: 0,
             right: 10,
@@ -90,9 +90,18 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             }
           />
           <Line
+            data={forecastData?.forecast_values}
             type="monotone"
             dataKey="expected_generation_kw"
             stroke="#FFD053"
+            dot={false}
+            activeDot={{ r: 8 }}
+          />
+          <Line
+            data={clearskyData?.clearsky_estimate}
+            type="monotone"
+            dataKey="clearsky_generation_kw"
+            stroke="#00B4FF"
             dot={false}
             activeDot={{ r: 8 }}
           />
