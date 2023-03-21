@@ -36,9 +36,15 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
-      <div className="flex ml-[9%] mt-[20px]  text-sm">
-        <LegendLineGraphIcon className="text-ocf-yellow-500" />
-        <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
+      <div className="flex ml-[9%] mt-[20px]  text-sm gap-3 ">
+        <div className="flex">
+          <LegendLineGraphIcon className="text-ocf-yellow-500" />
+          <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
+        </div>
+        <div className="flex">
+          <LegendLineGraphIcon className="text-ocf-blue" />
+          <p className="text-white ml-[5px] mt-[2px]">Clear Sky</p>
+        </div>
       </div>
 
       <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
