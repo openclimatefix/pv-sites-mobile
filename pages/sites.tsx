@@ -5,13 +5,18 @@ import SiteCardLink from '~/components/SiteCard';
 import { withSites } from '~/lib/utils';
 import { forecastFetcher } from '~/lib/hooks/utils';
 import useSWR from 'swr';
+import { mock } from 'node:test';
 
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
 
+  // this is to retrieve our list of mock UUIDs
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`
   );
+
+  const mockUUID = data.site_list[0].site_uuid;
+  const siteUUIDs = [mockUUID, mockUUID, mockUUID, mockUUID];
 
   return (
     <div className="h-full w-full flex flex-col gap-3 items-center px-5">
@@ -25,10 +30,9 @@ const Sites = () => {
           )}
         </button>
       </div>
-      <SiteCardLink isEditMode={editMode} />
-      <SiteCardLink isEditMode={editMode} />
-      <SiteCardLink isEditMode={editMode} />
-      <SiteCardLink isEditMode={editMode} />
+      {siteUUIDs.map((site_uuid, idx) => (
+        <SiteCardLink key={idx} siteUUID={site_uuid} isEditMode={editMode} />
+      ))}
     </div>
   );
 };
