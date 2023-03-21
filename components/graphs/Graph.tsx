@@ -8,30 +8,37 @@ import {
   YAxis,
 } from 'recharts';
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import {
-  formatter,
-  useFutureGraphData,
-  forecastDataOverDateRange,
-} from 'lib/graphs';
+import { formatter, forecastDataOverDateRange } from 'lib/graphs';
+import { useSiteData } from 'lib/hooks';
+import { FC } from 'react';
 
-const Graph = () => {
-  const { data } = useFutureGraphData();
+const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
+  const { forecastData } = useSiteData(siteUUID);
 
   let endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
-  const graphData = data
+  const graphData = forecastData
     ? forecastDataOverDateRange(
-        JSON.parse(JSON.stringify(data)),
+        JSON.parse(JSON.stringify(forecastData)),
         new Date(),
         endDate
       )
     : null;
-
-  const MAX = data
-    ? Math.max(...data.forecast_values.map((obj) => obj.expected_generation_kw))
+  const maxGeneration = graphData
+    ? Math.max(
+        ...graphData.forecast_values.map(
+          (value) => value.expected_generation_kw
+        )
+      )
     : 0;
 
-  const tickArray = [0, MAX / 4, MAX / 2, (3 * MAX) / 4, MAX];
+  const tickArray = [
+    0,
+    maxGeneration / 4,
+    maxGeneration / 2,
+    (3 * maxGeneration) / 4,
+    maxGeneration,
+  ];
 
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
@@ -42,7 +49,7 @@ const Graph = () => {
 
       <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
         <LineChart
-          data={data?.forecast_values}
+          data={graphData?.forecast_values}
           margin={{
             top: 0,
             right: 10,
@@ -64,7 +71,7 @@ const Graph = () => {
           <YAxis
             tickCount={5}
             ticks={tickArray}
-            domain={[0, MAX * 1.25]}
+            domain={[0, maxGeneration * 1.25]}
             interval={0}
             fontSize="10px"
             axisLine={false}

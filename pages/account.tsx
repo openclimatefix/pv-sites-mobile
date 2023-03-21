@@ -2,14 +2,23 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { withPageAuthRequired } from '~/lib/auth';
-import { getInverters, Inverter, testClientID } from '~/lib/enode';
+import { Inverter } from '~/lib/enode';
+import { withSites } from '~/lib/utils';
+import useSWR from 'swr';
 
 type Props = {
-  inverters: Inverter[];
+  inverters?: Inverter[];
 };
 
 const AccountInfo: FC<Props> = ({ inverters }) => {
+  if (!inverters) {
+    return (
+      <Link href="/api/enode/link">
+        <a className="text-white">Link account</a>
+      </Link>
+    );
+  }
+
   return (
     <>
       <h2 className="text-white">Info</h2>
@@ -26,7 +35,7 @@ const AccountInfo: FC<Props> = ({ inverters }) => {
   );
 };
 
-const Account: NextPage<Props> = ({ inverters }) => {
+const Account: NextPage<Props> = () => {
   const { query, replace } = useRouter();
 
   // To add later after this is a toast...
@@ -36,6 +45,13 @@ const Account: NextPage<Props> = ({ inverters }) => {
   //     }
   //   }, []);
 
+  const { data: inverters, isLoading } = useSWR<Inverter[]>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/inverters`,
+    {
+      revalidateIfStale: true,
+    }
+  );
+
   return (
     <>
       <h1 className="text-white">Account</h1>
@@ -44,27 +60,15 @@ const Account: NextPage<Props> = ({ inverters }) => {
           Linking status success: {query.linkSuccess}
         </p>
       )}
-      {inverters.length > 0 ? (
-        <AccountInfo inverters={inverters} />
+      {isLoading ? (
+        <p className="text-white">Loading...</p>
       ) : (
-        <Link href="/api/enode/link">
-          <a className="text-white">Link account</a>
-        </Link>
+        <AccountInfo inverters={inverters} />
       )}
     </>
   );
 };
 
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps() {
-    const inverters = await getInverters(testClientID);
-
-    return {
-      props: {
-        inverters,
-      },
-    };
-  },
-});
+export const getServerSideProps = withSites();
 
 export default Account;

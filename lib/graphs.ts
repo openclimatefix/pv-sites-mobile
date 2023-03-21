@@ -58,8 +58,6 @@ const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
   return tempData as ForecastData;
 };
 
-const siteUUID = '725a8670-d012-474d-b901-1179f43e7182';
-
 export const useFutureGraphData = () =>
   useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/pv_forecast/${siteUUID}`,
@@ -97,26 +95,8 @@ export const forecastDataOverDateRange = (
   start_date: Date,
   end_date: Date
 ) => {
-  console.log(
-    'start date ',
-    formatter.format(start_date),
-    'end date ',
-    formatter.format(end_date)
-  );
   const start_index = getClosestForecastIndex(forecastData, start_date);
-  console.log(
-    'closest start date',
-    formatter.format(
-      new Date(forecastData.forecast_values[start_index].target_datetime_utc)
-    )
-  );
   const end_index = getClosestForecastIndex(forecastData, end_date);
-  console.log(
-    'closest end date',
-    formatter.format(
-      new Date(forecastData.forecast_values[end_index].target_datetime_utc)
-    )
-  );
   if (forecastData)
     forecastData.forecast_values = forecastData.forecast_values.slice(
       start_index,

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { FC } from 'react';
 
 import {
   ResponsiveContainer,
@@ -16,57 +16,39 @@ import {
   LineCircle,
 } from '../icons/future_threshold';
 
+import { formatter, forecastDataOverDateRange } from 'lib/graphs';
+
 import {
-  formatter,
-  useFutureGraphData,
-  forecastDataOverDateRange,
-  getClosestForecastIndex,
-} from 'lib/graphs';
+  getArrayMaxOrMinAfterIndex,
+  Value,
+  getCurrentTimeForecastIndex,
+  graphThreshold,
+} from 'lib/utils';
 
-import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
+import { useSiteData } from 'lib/hooks';
+import useTime from '~/lib/hooks/useTime';
 
-/* Represents the threshold for the graph */
-const graphThreshold = 0.7;
-
-const ThresholdGraph = () => {
-  const { data, isLoading } = useFutureGraphData();
-  const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
-
+const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
+  const { forecastData, latitude, longitude, isLoading } =
+    useSiteData(siteUUID);
+  const { currentTime } = useTime(latitude, longitude);
   let currentDate = new Date();
   let endDate = new Date();
   currentDate.setHours(8);
   currentDate.setMinutes(0);
   currentDate.setSeconds(0);
   currentDate.setMilliseconds(0);
-  console.log(currentDate);
   endDate.setHours(20);
   endDate.setMinutes(0);
   endDate.setSeconds(0);
   endDate.setMilliseconds(0);
-  const graphData = data
+  const graphData = forecastData
     ? forecastDataOverDateRange(
-        JSON.parse(JSON.stringify(data)),
+        JSON.parse(JSON.stringify(forecastData)),
         currentDate,
         endDate
       )
     : null;
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(formatter.format(Date.now()));
-    }, 1000);
-
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
-  });
-
-  /**
-   * @returns the index of the forecasted date that is closest to the current time
-   */
-  const getCurrentTimeForecastIndex = () => {
-    return getClosestForecastIndex(graphData, new Date());
-  };
-
   /**
    * Renders a text label for the threshold
    * @param props data about the point, such as x and y position on the graph
@@ -108,7 +90,7 @@ const ThresholdGraph = () => {
    */
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
     if (graphData && graphData.forecast_values.length > 0) {
-      if (index === getCurrentTimeForecastIndex()) {
+      if (index === getCurrentTimeForecastIndex(graphData?.forecast_values)) {
         return (
           <g>
             <LineCircle x={x} y={y} />
@@ -219,7 +201,7 @@ const ThresholdGraph = () => {
    */
   const getSolarActivityText = () => {
     if (graphData) {
-      const currIndex = getCurrentTimeForecastIndex();
+      const currIndex = getCurrentTimeForecastIndex(graphData?.forecast_values);
       const minMax = getArrayMaxOrMinAfterIndex(
         graphData.forecast_values,
         'expected_generation_kw',
@@ -227,8 +209,7 @@ const ThresholdGraph = () => {
       );
 
       if (minMax) {
-        const { type, index } = minMax;
-        console.log(graphData.forecast_values.length);
+        const { type, number: index } = minMax;
         const minMaxForecastDate = formatter.format(
           new Date(graphData.forecast_values[index].target_datetime_utc)
         );
@@ -247,7 +228,7 @@ const ThresholdGraph = () => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {currentTime}
+        {formatter.format(currentTime)}
       </p>
     );
   };

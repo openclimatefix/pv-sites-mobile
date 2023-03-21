@@ -16,6 +16,9 @@ interface LocationInputProps {
   zoomLevelThreshold: number;
 }
 
+const originalLng = -2.3175601;
+const originalLat = 54.70534432;
+
 const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
   setIsSubmissionEnabled,
   setLatExternal,
@@ -27,8 +30,8 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
   const [isMapReady, setIsMapReady] = useState(false);
-  const [lng, setLng] = useState<number>(-2.3175601);
-  const [lat, setLat] = useState<number>(54.70534432);
+  const [lng, setLng] = useState<number>(originalLng);
+  const [lat, setLat] = useState<number>(originalLat);
   const [zoom, setZoom] = useState<number>(5);
 
   useEffect(() => {
@@ -36,7 +39,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
     if (mapContainer.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/dark-v10',
+        style: 'mapbox://styles/alester3/clf1lj7jg000b01n4ya2880gi',
         center: [lng, lat],
         zoom,
         keyboard: false,
@@ -58,6 +61,7 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
         mapboxgl: mapboxgl,
         placeholder: 'Where is your solar panel located?',
         marker: false,
+        reverseGeocode: true,
       });
       if (geocoderContainer.current) {
         geocoderContainer.current.appendChild(geocoder.onAdd(map.current));
@@ -70,7 +74,17 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
 
       map.current.on('load', () => setIsMapReady(true));
 
-      map.current.on('movestart', () => setIsSubmissionEnabled(false));
+      map.current.on('idle', () => {
+        // Enables fly to animation on search
+        geocoder.setFlyTo(true);
+      });
+
+      map.current.on('movestart', () => {
+        setIsSubmissionEnabled(true);
+      });
+
+      let savedLat = originalLng;
+      let savedLng = originalLat;
 
       const moveHandler = () => {
         const newLng = map.current!.getCenter().lng;
@@ -80,17 +94,35 @@ const LocationInput: FC<PropsWithChildren<LocationInputProps>> = ({
         setLat(newLat);
         setLngExternal(newLng);
         setLatExternal(newLat);
+
+        savedLat = newLat;
+        savedLng = newLng;
+
         setZoom(map.current!.getZoom());
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
       };
 
       map.current.on('move', moveHandler);
 
-      map.current.on('moveend', () =>
-        setIsSubmissionEnabled(map.current!.getZoom() > zoomLevelThreshold)
-      );
+      map.current.on('moveend', () => {
+        const isPastZoomThreshold = map.current!.getZoom() > zoomLevelThreshold;
+        if (isPastZoomThreshold) {
+          // update the search box location based on the final latitude/longitude
+          geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
+        }
+
+        return setIsSubmissionEnabled(isPastZoomThreshold);
+      });
     }
-  });
+  }, [
+    lat,
+    lng,
+    setIsSubmissionEnabled,
+    setLatExternal,
+    setLngExternal,
+    zoom,
+    zoomLevelThreshold,
+  ]);
 
   return (
     <div className="flex flex-col h-full">

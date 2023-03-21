@@ -14,3 +14,32 @@ export interface Site {
   created_utc: string;
   updated_utc: string;
 }
+
+export interface SiteList {
+  site_list: Site[];
+}
+
+export interface ForecastDataPoint {
+  target_datetime_utc: number;
+  expected_generation_kw: number;
+}
+
+export interface ForecastData {
+  forecast_uuid: string;
+  site_uuid: string;
+  forecast_creation_datetime: number;
+  forecast_version: string;
+  forecast_values: ForecastDataPoint[];
+}
+export interface UnparsedForecastData {
+  forecast_uuid: string;
+  site_uuid: string;
+  forecast_creation_datetime: string | number;
+  forecast_version: string;
+  forecast_values: UnparsedForecastDataPoint[];
+}
+
+export interface UnparsedForecastDataPoint {
+  target_datetime_utc: string | number;
+  expected_generation_kw: number;
+}

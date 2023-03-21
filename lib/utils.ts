@@ -1,4 +1,10 @@
-import { start } from 'repl';
+import { getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  GetServerSideProps,
+} from 'next';
+import { ForecastDataPoint, SiteList } from './types';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -18,7 +24,7 @@ export enum Value {
 }
 interface MinMaxInterface {
   type: Value;
-  index: number;
+  number: number;
 }
 
 /**
@@ -36,7 +42,7 @@ export const getArrayMaxOrMinAfterIndex = (
   if (startIndex === array.length - 1) {
     return {
       type: Value.Min,
-      index: startIndex,
+      number: startIndex,
     };
   }
 
@@ -50,12 +56,12 @@ export const getArrayMaxOrMinAfterIndex = (
       if (currentExpectedGenerationKW > previousExpectedGenerationKW) {
         return {
           type: Value.Max,
-          index: startIndex,
+          number: startIndex,
         };
       } else if (currentExpectedGenerationKW < previousExpectedGenerationKW) {
         return {
           type: Value.Min,
-          index: startIndex,
+          number: startIndex,
         };
       }
     } else {
@@ -67,7 +73,7 @@ export const getArrayMaxOrMinAfterIndex = (
       ) {
         return {
           type: Value.Max,
-          index: startIndex,
+          number: startIndex,
         };
       } else if (
         currentExpectedGenerationKW < previousExpectedGenerationKW &&
@@ -75,7 +81,7 @@ export const getArrayMaxOrMinAfterIndex = (
       ) {
         return {
           type: Value.Min,
-          index: startIndex,
+          number: startIndex,
         };
       }
     }
@@ -83,3 +89,127 @@ export const getArrayMaxOrMinAfterIndex = (
   }
   return null;
 };
+
+/**
+ * @returns the index of the forecasted date that is closest to the current time
+ */
+export const getCurrentTimeForecastIndex = (
+  forecast_values: ForecastDataPoint[]
+) => {
+  if (forecast_values) {
+    const currentDate = new Date();
+
+    const closestDateIndex = forecast_values
+      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
+      .map((forecast_values) => ({
+        ...forecast_values,
+        difference: Math.abs(
+          currentDate.getTime() -
+            new Date(forecast_values.target_datetime_utc).getTime()
+        ),
+      }))
+      .reduce((prev, curr) =>
+        prev.difference < curr.difference ? prev : curr
+      ).index;
+
+    return closestDateIndex;
+  }
+  return 0;
+};
+
+export const getCurrentTimeForecast = (forecast_values: ForecastDataPoint[]) =>
+  forecast_values[getCurrentTimeForecastIndex(forecast_values)]
+    .expected_generation_kw;
+
+/** Returns the difference in hours between two epoch times */
+const findHourDifference = (date1: number, date2: number): number =>
+  Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) / 36e5;
+
+interface NextThresholdInterface {
+  aboveThreshold: boolean;
+  number: number;
+}
+
+/**
+ * Determines the hour difference between the current time and the next time we are above or below
+ * the sunny threshold
+ * @param forecast_values expected generated forecast values (kilowatts) at specific times
+ * @param threshold sunny threshold in kilowatts
+ * @returns Object containing hour difference between the next date and
+ * if this date is above or below the threshold
+ */
+export const getNextThresholdIndex = (
+  forecast_values: ForecastDataPoint[],
+  threshold: number
+): NextThresholdInterface => {
+  let startIndex = getCurrentTimeForecastIndex(forecast_values);
+  let currentIndex =
+    startIndex + 1 < forecast_values.length ? startIndex + 1 : startIndex;
+
+  const operator =
+    forecast_values[currentIndex].expected_generation_kw >= threshold ? -1 : 1;
+
+  const aboveThreshold =
+    forecast_values[currentIndex].expected_generation_kw < threshold
+      ? true
+      : false;
+
+  while (currentIndex < forecast_values.length) {
+    const thresholdDifference =
+      forecast_values[currentIndex].expected_generation_kw - threshold;
+    if (operator * thresholdDifference > 0) {
+      return {
+        aboveThreshold,
+        number: findHourDifference(
+          forecast_values[currentIndex].target_datetime_utc,
+          forecast_values[startIndex].target_datetime_utc
+        ),
+      };
+    }
+    currentIndex += 1;
+  }
+  return {
+    aboveThreshold,
+    number: findHourDifference(
+      forecast_values[currentIndex - 1].target_datetime_utc,
+      forecast_values[startIndex].target_datetime_utc
+    ),
+  };
+};
+
+/* Represents the threshold for the graph */
+export const graphThreshold = 0.7;
+
+type WithSitesOptions = {
+  getServerSideProps?: (
+    ctx: GetServerSidePropsContext & { siteList: SiteList }
+  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
+};
+export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
+  return withPageAuthRequired({
+    async getServerSideProps(ctx) {
+      const accessToken = getAccessToken(ctx.req, ctx.res);
+
+      const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then((res) => res.json())) as SiteList;
+
+      const otherProps: any = await getServerSideProps?.({
+        ...ctx,
+        siteList,
+      });
+      if (otherProps?.props instanceof Promise) {
+        return {
+          ...otherProps,
+          props: otherProps.props.then((props: any) => ({
+            ...props,
+            siteList,
+          })),
+        };
+      }
+      return { ...otherProps, props: { ...otherProps?.props, siteList } };
+    },
+  });
+}
