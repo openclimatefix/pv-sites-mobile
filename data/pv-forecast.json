@@ -1,260 +1,72 @@
 {
-  "forecast_uuid": "95833950-de0f-4447-8c73-ffa5138b225d",
+  "forecast_uuid": "4b2bdce4-3708-4b3c-887a-a96c03db2305",
   "site_uuid": "b97f68cd-50e0-49bb-a850-108d4a9f7b7e",
-  "forecast_creation_datetime": "2024-04-16T01:26:20.557211+00:00",
+  "forecast_creation_datetime": "2023-03-21T01:59:56.846143+00:00",
   "forecast_version": "0.0.1",
   "forecast_values": [
     {
-      "target_datetime_utc": "2024-03-05T06:00:00",
+      "target_datetime_utc": "2023-03-21T02:00:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T06:15:00",
+      "target_datetime_utc": "2023-03-21T02:30:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T06:30:00",
+      "target_datetime_utc": "2023-03-21T03:00:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T06:45:00",
-      "expected_generation_kw": 0.0004218978826762374
-    },
-    {
-      "target_datetime_utc": "2024-03-05T07:00:00",
-      "expected_generation_kw": 0.008916361988188959
-    },
-    {
-      "target_datetime_utc": "2024-03-05T07:15:00",
+      "target_datetime_utc": "2023-03-21T03:30:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T07:30:00",
-      "expected_generation_kw": 0.11452934858397432
-    },
-    {
-      "target_datetime_utc": "2024-03-05T07:45:00",
-      "expected_generation_kw": 0.19168379416564915
-    },
-    {
-      "target_datetime_utc": "2024-03-05T08:00:00",
-      "expected_generation_kw": 0.6
-    },
-    {
-      "target_datetime_utc": "2024-03-05T08:15:00",
-      "expected_generation_kw": 0.28806099326029977
-    },
-    {
-      "target_datetime_utc": "2024-03-05T08:30:00",
-      "expected_generation_kw": 0.3402505525010744
-    },
-    {
-      "target_datetime_utc": "2024-03-05T08:45:00",
-      "expected_generation_kw": 0.37105361360942724
-    },
-    {
-      "target_datetime_utc": "2024-03-05T09:00:00",
-      "expected_generation_kw": 0.2516884988551685
-    },
-    {
-      "target_datetime_utc": "2024-03-05T09:15:00",
-      "expected_generation_kw": 0.4063481685041044
-    },
-    {
-      "target_datetime_utc": "2024-03-05T09:30:00",
-      "expected_generation_kw": 0.5006111065555118
-    },
-    {
-      "target_datetime_utc": "2024-03-05T09:45:00",
-      "expected_generation_kw": 0.4886529373056433
-    },
-    {
-      "target_datetime_utc": "2024-03-05T10:00:00",
-      "expected_generation_kw": 0.5278819857198976
-    },
-    {
-      "target_datetime_utc": "2024-03-05T10:15:00",
-      "expected_generation_kw": 0.5346778805260974
-    },
-    {
-      "target_datetime_utc": "2024-03-05T10:30:00",
-      "expected_generation_kw": 0.7377456201371216
-    },
-    {
-      "target_datetime_utc": "2024-03-05T10:45:00",
-      "expected_generation_kw": 0.8379886101513403
-    },
-    {
-      "target_datetime_utc": "2024-03-05T11:00:00",
-      "expected_generation_kw": 0.7395295195962249
-    },
-    {
-      "target_datetime_utc": "2024-03-05T11:15:00",
-      "expected_generation_kw": 0.773384641169678
-    },
-    {
-      "target_datetime_utc": "2024-03-05T11:30:00",
-      "expected_generation_kw": 0.7272500500846495
-    },
-    {
-      "target_datetime_utc": "2024-03-05T11:45:00",
-      "expected_generation_kw": 0.730497088822205
-    },
-    {
-      "target_datetime_utc": "2024-03-05T12:00:00",
-      "expected_generation_kw": 0.7078437112455069
-    },
-    {
-      "target_datetime_utc": "2024-03-05T12:15:00",
-      "expected_generation_kw": 0.732521199699549
-    },
-    {
-      "target_datetime_utc": "2024-03-05T12:30:00",
-      "expected_generation_kw": 0.6159735715531713
-    },
-    {
-      "target_datetime_utc": "2024-03-05T12:45:00",
-      "expected_generation_kw": 0.6031435726983826
-    },
-    {
-      "target_datetime_utc": "2024-03-05T13:00:00",
-      "expected_generation_kw": 0.676393033489853
-    },
-    {
-      "target_datetime_utc": "2024-03-05T13:15:00",
-      "expected_generation_kw": 0.649355345540968
-    },
-    {
-      "target_datetime_utc": "2024-03-05T13:30:00",
-      "expected_generation_kw": 0.617905568804381
-    },
-    {
-      "target_datetime_utc": "2024-03-05T13:45:00",
-      "expected_generation_kw": 0.6813617109232771
-    },
-    {
-      "target_datetime_utc": "2024-03-05T14:00:00",
-      "expected_generation_kw": 0.6218628746509932
-    },
-    {
-      "target_datetime_utc": "2024-03-05T14:15:00",
-      "expected_generation_kw": 0.5894730061442429
-    },
-    {
-      "target_datetime_utc": "2024-03-05T14:30:00",
-      "expected_generation_kw": 0.4458713023271396
-    },
-    {
-      "target_datetime_utc": "2024-03-05T14:45:00",
-      "expected_generation_kw": 0.4666474721787026
-    },
-    {
-      "target_datetime_utc": "2024-03-05T15:00:00",
-      "expected_generation_kw": 0.38848895677195006
-    },
-    {
-      "target_datetime_utc": "2024-03-05T15:15:00",
-      "expected_generation_kw": 0.41062771998201203
-    },
-    {
-      "target_datetime_utc": "2024-03-05T15:30:00",
-      "expected_generation_kw": 0.42840637921487223
-    },
-    {
-      "target_datetime_utc": "2024-03-05T15:45:00",
-      "expected_generation_kw": 0.3674275711826635
-    },
-    {
-      "target_datetime_utc": "2024-03-05T16:00:00",
-      "expected_generation_kw": 0.38928020606560754
-    },
-    {
-      "target_datetime_utc": "2024-03-05T16:15:00",
-      "expected_generation_kw": 0.31144830097728515
-    },
-    {
-      "target_datetime_utc": "2024-03-05T16:30:00",
-      "expected_generation_kw": 0.08364215646205393
-    },
-    {
-      "target_datetime_utc": "2024-03-05T16:45:00",
-      "expected_generation_kw": 0.07314662317528531
-    },
-    {
-      "target_datetime_utc": "2024-03-05T17:00:00",
-      "expected_generation_kw": 0.04105291074159598
-    },
-    {
-      "target_datetime_utc": "2024-03-05T17:15:00",
-      "expected_generation_kw": 0.016494015911219566
-    },
-    {
-      "target_datetime_utc": "2024-03-05T17:30:00",
-      "expected_generation_kw": 0.009363780151191967
-    },
-    {
-      "target_datetime_utc": "2024-03-05T17:45:00",
-      "expected_generation_kw": 0.0003999191904299368
-    },
-    {
-      "target_datetime_utc": "2024-03-05T18:00:00",
+      "target_datetime_utc": "2023-03-21T04:00:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T18:15:00",
+      "target_datetime_utc": "2023-03-21T04:30:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T18:30:00",
+      "target_datetime_utc": "2023-03-21T05:00:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T18:45:00",
+      "target_datetime_utc": "2023-03-21T05:30:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T19:00:00",
+      "target_datetime_utc": "2023-03-21T06:00:00+00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2024-03-05T19:15:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-21T06:30:00+00:00",
+      "expected_generation_kw": 0.017037086855465802
     },
     {
-      "target_datetime_utc": "2024-03-05T19:30:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-21T07:00:00+00:00",
+      "expected_generation_kw": 0.06698729810778072
     },
     {
-      "target_datetime_utc": "2024-03-05T19:45:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-21T07:30:00+00:00",
+      "expected_generation_kw": 0.1464466094067262
     },
     {
-      "target_datetime_utc": "2024-03-05T20:00:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-21T08:00:00+00:00",
+      "expected_generation_kw": 0.24999999999999978
     },
     {
-      "target_datetime_utc": "2024-03-05T20:15:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-21T08:30:00+00:00",
+      "expected_generation_kw": 0.37059047744873963
     },
     {
-      "target_datetime_utc": "2024-03-05T20:30:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-21T09:00:00+00:00",
+      "expected_generation_kw": 0.4999999999999999
     },
     {
-      "target_datetime_utc": "2024-03-05T20:45:00",
-      "expected_generation_kw": 0.0
-    },
-    {
-      "target_datetime_utc": "2024-03-05T21:00:00",
-      "expected_generation_kw": 0.0
-    },
-    {
-      "target_datetime_utc": "2024-03-05T21:15:00",
-      "expected_generation_kw": 0.0
-    },
-    {
-      "target_datetime_utc": "2024-03-05T21:30:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-21T09:30:00+00:00",
+      "expected_generation_kw": 0.62940952255126
     }
   ]
 }
