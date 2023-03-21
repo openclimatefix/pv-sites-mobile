@@ -56,3 +56,6 @@ export const manyForecastDataFetcher: Fetcher<Array<ForecastData>> = async (
 
   return allUnparsedForecasts as Array<ForecastData>;
 };
+
+export const clearskyFetcher: Fetcher<SiteList> = async (url: string) =>
+  fetch(url).then((res) => res.json());

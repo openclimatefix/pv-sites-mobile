@@ -26,14 +26,23 @@ const useSiteData = (siteUUID: string) => {
     siteListFetcher
   );
 
-  const error = AggregateError([forecastError, siteListError]);
-  const isLoading = isSiteListLoading || isForecastLoading;
+  const {
+    data: clearskyData,
+    error: clearskyError,
+    isLoading: isClearskyLoading,
+  } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/${siteUUID}/clearsky`,
+    forecastFetcher
+  );
+
+  const error = AggregateError([forecastError, siteListError, clearskyError]);
+  const isLoading = isSiteListLoading || isForecastLoading || isClearskyLoading;
 
   const siteData: Site | undefined = siteListData
     ? siteListData.site_list.find((site) => site.site_uuid === siteUUID)
     : undefined;
 
-  return { forecastData, ...siteData, error, isLoading };
+  return { forecastData, clearskyData, ...siteData, error, isLoading };
 };
 
 export default useSiteData;
