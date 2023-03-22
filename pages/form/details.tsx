@@ -8,6 +8,7 @@ import Modal from 'components/Modal';
 import { useFormContext } from '~/lib/context/form_context';
 import BackButton from 'components/BackButton';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { withSites } from '~/lib/utils';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -135,4 +136,4 @@ const Form = () => {
 
 export default Form;
 
-export const getServerSideProps = withPageAuthRequired();
+export const getServerSideProps = withSites();
