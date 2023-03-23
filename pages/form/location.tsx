@@ -4,6 +4,7 @@ import Button from '~/components/Button';
 import LocationInput from '~/components/LocationInput';
 
 import { useFormContext } from '~/lib/context/form_context';
+import { withSites } from '~/lib/utils';
 
 export default function Location() {
   const router = useRouter();
@@ -42,3 +43,5 @@ export default function Location() {
     </div>
   );
 }
+
+export const getServerSideProps = withSites();
