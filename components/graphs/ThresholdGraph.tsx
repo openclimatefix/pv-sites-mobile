@@ -21,6 +21,8 @@ import {
   forecastDataOverDateRange,
   getCurrentTimeForecastIndex,
   graphThreshold,
+  getGraphStartDate,
+  getGraphEndDate,
 } from 'lib/graphs';
 
 import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
@@ -33,29 +35,11 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     useSiteData(siteUUID);
   const { currentTime } = useTime(latitude, longitude);
 
-  const currentDate = new Date(currentTime);
-  const startDate = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getHours() > 20
-      ? currentDate.getDate() + 1
-      : currentDate.getDate(),
-    8
-  );
-  const endDate = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getHours() > 20
-      ? currentDate.getDate() + 1
-      : currentDate.getDate(),
-    20
-  );
-
   const graphData = forecastData
     ? forecastDataOverDateRange(
         JSON.parse(JSON.stringify(forecastData.forecast_values)),
-        startDate,
-        endDate
+        getGraphStartDate(currentTime),
+        getGraphEndDate(currentTime)
       )
     : [];
 
@@ -117,7 +101,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * @returns SVG gradient
    */
   const generateGraphGradient = () => {
-    if (!isLoading && graphData.length > 0) {
+    if (!isLoading && graphData) {
       const aboveThreshold = graphData.some(
         (forecast) => forecast.expected_generation_kw > graphThreshold
       );
@@ -156,7 +140,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * @returns the start and end time label on the graph's x-axis
    */
   const renderStartAndEndTime = () => {
-    if (!isLoading && graphData.length > 0) {
+    if (!isLoading && graphData) {
       const numForecastValues = graphData.length;
 
       if (numForecastValues > 0) {

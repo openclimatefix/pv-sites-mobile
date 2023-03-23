@@ -95,6 +95,30 @@ export const forecastDataOverDateRange = (
   return forecastData;
 };
 
+export const getGraphStartDate = (currentTime: number) => {
+  const currentDate = new Date(currentTime);
+  return new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getHours() > 20
+      ? currentDate.getDate() + 1
+      : currentDate.getDate(),
+    8
+  );
+};
+
+export const getGraphEndDate = (currentTime: number) => {
+  const currentDate = new Date(currentTime);
+  return new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getHours() > 20
+      ? currentDate.getDate() + 1
+      : currentDate.getDate(),
+    20
+  );
+};
+
 /**
  * @returns the index of the forecasted date that is closest to the current time
  */
