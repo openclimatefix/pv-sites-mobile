@@ -72,13 +72,14 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
     <>
       <BackButton callback={goBack} />
 
-      <div className="flex flex-row">
-        <div>hi</div>
-        <form onSubmit={onSubmit}>
+      <div className="flex flex-row w-full md:w-11/12 justify-center">
+        {/* <div className="flex-1">
+          {' '}
           <h1 className="font-bold text-4xl mt-2 dark:text-ocf-gray mb-5">
             Your site&apos;s details
           </h1>
-
+        </div> */}
+        <form className="flex-1" onSubmit={onSubmit}>
           <Input
             id="solar-panel-direction"
             label="Solar panel direction"
@@ -147,10 +148,10 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
           />
           <button
             disabled={didSubmit}
-            className="mt-8 font-bold uppercase text-xl w-full peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
+            className="mt-8 font-bold text-xl w-full peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
           >
             {didSubmit && <Spinner />}
-            Next
+            Finish
             {didSubmit && <div className="w-5 mx-4" />}
           </button>
           <Modal show={showModal} setShow={setShowModal} />

@@ -10,8 +10,12 @@ enum Page {
   Location = 'Location',
 }
 
-const SiteDetailsDesktop: FC = () => {
-  const [page, setPage] = useState<Page>(Page.Location);
+interface Props {
+  page: Page;
+  setPage: (page: Page) => void;
+}
+
+const SiteDetailsDesktop: FC<Props> = ({ page, setPage }) => {
   const router = useRouter();
 
   switch (page) {
@@ -29,8 +33,7 @@ const SiteDetailsDesktop: FC = () => {
   }
 };
 
-const SiteDetailsMobile: FC = () => {
-  const [page, setPage] = useState<Page>(Page.Location);
+const SiteDetailsMobile: FC<Props> = ({ page, setPage }) => {
   const router = useRouter();
 
   switch (page) {
@@ -49,13 +52,14 @@ const SiteDetailsMobile: FC = () => {
 };
 
 const SiteDetails: FC = () => {
+  const [page, setPage] = useState<Page>(Page.Location);
   return (
     <>
       <div className="md:hidden block">
-        <SiteDetailsMobile />
+        <SiteDetailsMobile page={page} setPage={setPage} />
       </div>
-      <div className="md:block hidden">
-        <SiteDetailsDesktop />
+      <div className="md:block hidden w-full">
+        <SiteDetailsDesktop page={page} setPage={setPage} />
       </div>
     </>
   );
