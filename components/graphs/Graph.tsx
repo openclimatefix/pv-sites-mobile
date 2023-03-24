@@ -16,8 +16,6 @@ import { ClearSkyDataPoint } from '~/lib/types';
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, clearskyData } = useSiteData(siteUUID);
 
-  // Trim clear sky data to match forecast data
-
   const maxGeneration = forecastData
     ? Math.max(
         ...forecastData.forecast_values.map(
@@ -28,10 +26,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const clearSkyEstimateTrimmed = clearskyData?.clearsky_estimate.filter(
     (clearSkyDataPoint: ClearSkyDataPoint) => {
-      // if (
-      //   new Date(clearSkyDataPoint.target_datetime_utc).getMinutes() === 0 ||
-      //   new Date(clearSkyDataPoint.target_datetime_utc).getMinutes() === 30
-      // ) {
       return (
         (forecastData?.forecast_values[0]?.target_datetime_utc ?? 0) <=
           clearSkyDataPoint.target_datetime_utc &&
@@ -39,7 +33,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           ?.target_datetime_utc ?? 0) >= clearSkyDataPoint.target_datetime_utc
       );
     }
-    // }
   );
 
   const tickArray = [
