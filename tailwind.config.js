@@ -47,9 +47,9 @@ module.exports = {
     extend: {
       gridTemplateAreas: {
         'dashboard-desktop': [
-          'header header header',
-          'main   main   main',
-          'footer    footer footer',
+          'Sunny Expected Recommendation',
+          'site-graph   site-graph   site-graph',
+          'graph   graph graph',
         ],
 
       },
