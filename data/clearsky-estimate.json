@@ -1,0 +1,1100 @@
+{
+  "clearsky_estimate": [
+    {
+      "target_datetime_utc": "2023-03-22T03:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T03:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T04:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T04:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T04:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T04:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T05:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T05:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T05:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T05:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T06:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T06:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T06:30:00+00:00",
+      "clearsky_generation_kw": 0.010658642101584044
+    },
+    {
+      "target_datetime_utc": "2023-03-22T06:45:00+00:00",
+      "clearsky_generation_kw": 0.036604392138739554
+    },
+    {
+      "target_datetime_utc": "2023-03-22T07:00:00+00:00",
+      "clearsky_generation_kw": 0.06991303304313326
+    },
+    {
+      "target_datetime_utc": "2023-03-22T07:15:00+00:00",
+      "clearsky_generation_kw": 0.10718129055847476
+    },
+    {
+      "target_datetime_utc": "2023-03-22T07:30:00+00:00",
+      "clearsky_generation_kw": 0.14637663608070076
+    },
+    {
+      "target_datetime_utc": "2023-03-22T07:45:00+00:00",
+      "clearsky_generation_kw": 0.18626326279029395
+    },
+    {
+      "target_datetime_utc": "2023-03-22T08:00:00+00:00",
+      "clearsky_generation_kw": 0.22603756923394094
+    },
+    {
+      "target_datetime_utc": "2023-03-22T08:15:00+00:00",
+      "clearsky_generation_kw": 0.2651373773115542
+    },
+    {
+      "target_datetime_utc": "2023-03-22T08:30:00+00:00",
+      "clearsky_generation_kw": 0.3031427527004757
+    },
+    {
+      "target_datetime_utc": "2023-03-22T08:45:00+00:00",
+      "clearsky_generation_kw": 0.33972273940658976
+    },
+    {
+      "target_datetime_utc": "2023-03-22T09:00:00+00:00",
+      "clearsky_generation_kw": 0.3746056091782348
+    },
+    {
+      "target_datetime_utc": "2023-03-22T09:15:00+00:00",
+      "clearsky_generation_kw": 0.40756162278690095
+    },
+    {
+      "target_datetime_utc": "2023-03-22T09:30:00+00:00",
+      "clearsky_generation_kw": 0.4383926875570486
+    },
+    {
+      "target_datetime_utc": "2023-03-22T09:45:00+00:00",
+      "clearsky_generation_kw": 0.46692598371049976
+    },
+    {
+      "target_datetime_utc": "2023-03-22T10:00:00+00:00",
+      "clearsky_generation_kw": 0.49300995742655657
+    },
+    {
+      "target_datetime_utc": "2023-03-22T10:15:00+00:00",
+      "clearsky_generation_kw": 0.5165117397111548
+    },
+    {
+      "target_datetime_utc": "2023-03-22T10:30:00+00:00",
+      "clearsky_generation_kw": 0.537315468306128
+    },
+    {
+      "target_datetime_utc": "2023-03-22T10:45:00+00:00",
+      "clearsky_generation_kw": 0.5553211946235241
+    },
+    {
+      "target_datetime_utc": "2023-03-22T11:00:00+00:00",
+      "clearsky_generation_kw": 0.5704441550907614
+    },
+    {
+      "target_datetime_utc": "2023-03-22T11:15:00+00:00",
+      "clearsky_generation_kw": 0.582614291354658
+    },
+    {
+      "target_datetime_utc": "2023-03-22T11:30:00+00:00",
+      "clearsky_generation_kw": 0.5917759401811664
+    },
+    {
+      "target_datetime_utc": "2023-03-22T11:45:00+00:00",
+      "clearsky_generation_kw": 0.5978876271416257
+    },
+    {
+      "target_datetime_utc": "2023-03-22T12:00:00+00:00",
+      "clearsky_generation_kw": 0.6009219382054696
+    },
+    {
+      "target_datetime_utc": "2023-03-22T12:15:00+00:00",
+      "clearsky_generation_kw": 0.6008654464573228
+    },
+    {
+      "target_datetime_utc": "2023-03-22T12:30:00+00:00",
+      "clearsky_generation_kw": 0.5977186758451906
+    },
+    {
+      "target_datetime_utc": "2023-03-22T12:45:00+00:00",
+      "clearsky_generation_kw": 0.5914961014419217
+    },
+    {
+      "target_datetime_utc": "2023-03-22T13:00:00+00:00",
+      "clearsky_generation_kw": 0.5822261819023714
+    },
+    {
+      "target_datetime_utc": "2023-03-22T13:15:00+00:00",
+      "clearsky_generation_kw": 0.5699514328606458
+    },
+    {
+      "target_datetime_utc": "2023-03-22T13:30:00+00:00",
+      "clearsky_generation_kw": 0.5547285563438393
+    },
+    {
+      "target_datetime_utc": "2023-03-22T13:45:00+00:00",
+      "clearsky_generation_kw": 0.5366286406447018
+    },
+    {
+      "target_datetime_utc": "2023-03-22T14:00:00+00:00",
+      "clearsky_generation_kw": 0.5157374757701106
+    },
+    {
+      "target_datetime_utc": "2023-03-22T14:15:00+00:00",
+      "clearsky_generation_kw": 0.4921560365490169
+    },
+    {
+      "target_datetime_utc": "2023-03-22T14:30:00+00:00",
+      "clearsky_generation_kw": 0.4660012051004885
+    },
+    {
+      "target_datetime_utc": "2023-03-22T14:45:00+00:00",
+      "clearsky_generation_kw": 0.4374068783047419
+    },
+    {
+      "target_datetime_utc": "2023-03-22T15:00:00+00:00",
+      "clearsky_generation_kw": 0.4065256575344572
+    },
+    {
+      "target_datetime_utc": "2023-03-22T15:15:00+00:00",
+      "clearsky_generation_kw": 0.37353143396868654
+    },
+    {
+      "target_datetime_utc": "2023-03-22T15:30:00+00:00",
+      "clearsky_generation_kw": 0.3386234342933199
+    },
+    {
+      "target_datetime_utc": "2023-03-22T15:45:00+00:00",
+      "clearsky_generation_kw": 0.30203264028265187
+    },
+    {
+      "target_datetime_utc": "2023-03-22T16:00:00+00:00",
+      "clearsky_generation_kw": 0.26403219110941856
+    },
+    {
+      "target_datetime_utc": "2023-03-22T16:15:00+00:00",
+      "clearsky_generation_kw": 0.224954763042773
+    },
+    {
+      "target_datetime_utc": "2023-03-22T16:30:00+00:00",
+      "clearsky_generation_kw": 0.1852225417596008
+    },
+    {
+      "target_datetime_utc": "2023-03-22T16:45:00+00:00",
+      "clearsky_generation_kw": 0.14540086346205258
+    },
+    {
+      "target_datetime_utc": "2023-03-22T17:00:00+00:00",
+      "clearsky_generation_kw": 0.10629810324176744
+    },
+    {
+      "target_datetime_utc": "2023-03-22T17:15:00+00:00",
+      "clearsky_generation_kw": 0.06915758160941343
+    },
+    {
+      "target_datetime_utc": "2023-03-22T17:30:00+00:00",
+      "clearsky_generation_kw": 0.036023074641372145
+    },
+    {
+      "target_datetime_utc": "2023-03-22T17:45:00+00:00",
+      "clearsky_generation_kw": 0.010307595761541492
+    },
+    {
+      "target_datetime_utc": "2023-03-22T18:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T18:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T18:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T18:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T19:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T19:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T19:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T19:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T20:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T20:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T20:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T20:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T21:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T21:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T21:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T21:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T22:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T22:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T22:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T22:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T23:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T23:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T23:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-22T23:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T00:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T00:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T00:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T00:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T01:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T01:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T01:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T01:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T02:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T02:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T02:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T02:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T03:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T03:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T03:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T03:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T04:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T04:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T04:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T04:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T05:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T05:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T05:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T05:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T06:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T06:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T06:30:00+00:00",
+      "clearsky_generation_kw": 0.013914132935428024
+    },
+    {
+      "target_datetime_utc": "2023-03-23T06:45:00+00:00",
+      "clearsky_generation_kw": 0.04131140954688645
+    },
+    {
+      "target_datetime_utc": "2023-03-23T07:00:00+00:00",
+      "clearsky_generation_kw": 0.07548135224724427
+    },
+    {
+      "target_datetime_utc": "2023-03-23T07:15:00+00:00",
+      "clearsky_generation_kw": 0.113256034749221
+    },
+    {
+      "target_datetime_utc": "2023-03-23T07:30:00+00:00",
+      "clearsky_generation_kw": 0.15275391019874754
+    },
+    {
+      "target_datetime_utc": "2023-03-23T07:45:00+00:00",
+      "clearsky_generation_kw": 0.1928218664853796
+    },
+    {
+      "target_datetime_utc": "2023-03-23T08:00:00+00:00",
+      "clearsky_generation_kw": 0.23270189477665745
+    },
+    {
+      "target_datetime_utc": "2023-03-23T08:15:00+00:00",
+      "clearsky_generation_kw": 0.27185800732874116
+    },
+    {
+      "target_datetime_utc": "2023-03-23T08:30:00+00:00",
+      "clearsky_generation_kw": 0.3098860422204269
+    },
+    {
+      "target_datetime_utc": "2023-03-23T08:45:00+00:00",
+      "clearsky_generation_kw": 0.346464988006154
+    },
+    {
+      "target_datetime_utc": "2023-03-23T09:00:00+00:00",
+      "clearsky_generation_kw": 0.38132966021545867
+    },
+    {
+      "target_datetime_utc": "2023-03-23T09:15:00+00:00",
+      "clearsky_generation_kw": 0.4142547987500924
+    },
+    {
+      "target_datetime_utc": "2023-03-23T09:30:00+00:00",
+      "clearsky_generation_kw": 0.4450454903840743
+    },
+    {
+      "target_datetime_utc": "2023-03-23T09:45:00+00:00",
+      "clearsky_generation_kw": 0.4735312493394038
+    },
+    {
+      "target_datetime_utc": "2023-03-23T10:00:00+00:00",
+      "clearsky_generation_kw": 0.499562288928653
+    },
+    {
+      "target_datetime_utc": "2023-03-23T10:15:00+00:00",
+      "clearsky_generation_kw": 0.5230071163587223
+    },
+    {
+      "target_datetime_utc": "2023-03-23T10:30:00+00:00",
+      "clearsky_generation_kw": 0.5437509685310252
+    },
+    {
+      "target_datetime_utc": "2023-03-23T10:45:00+00:00",
+      "clearsky_generation_kw": 0.5616947943048338
+    },
+    {
+      "target_datetime_utc": "2023-03-23T11:00:00+00:00",
+      "clearsky_generation_kw": 0.5767545765569022
+    },
+    {
+      "target_datetime_utc": "2023-03-23T11:15:00+00:00",
+      "clearsky_generation_kw": 0.588860886932778
+    },
+    {
+      "target_datetime_utc": "2023-03-23T11:30:00+00:00",
+      "clearsky_generation_kw": 0.5979585994094568
+    },
+    {
+      "target_datetime_utc": "2023-03-23T11:45:00+00:00",
+      "clearsky_generation_kw": 0.6040067000902063
+    },
+    {
+      "target_datetime_utc": "2023-03-23T12:00:00+00:00",
+      "clearsky_generation_kw": 0.6069781695137585
+    },
+    {
+      "target_datetime_utc": "2023-03-23T12:15:00+00:00",
+      "clearsky_generation_kw": 0.6068599159797518
+    },
+    {
+      "target_datetime_utc": "2023-03-23T12:30:00+00:00",
+      "clearsky_generation_kw": 0.6036527426804463
+    },
+    {
+      "target_datetime_utc": "2023-03-23T12:45:00+00:00",
+      "clearsky_generation_kw": 0.5973713485130057
+    },
+    {
+      "target_datetime_utc": "2023-03-23T13:00:00+00:00",
+      "clearsky_generation_kw": 0.5880443583477437
+    },
+    {
+      "target_datetime_utc": "2023-03-23T13:15:00+00:00",
+      "clearsky_generation_kw": 0.5757143913503142
+    },
+    {
+      "target_datetime_utc": "2023-03-23T13:30:00+00:00",
+      "clearsky_generation_kw": 0.5604381818855005
+    },
+    {
+      "target_datetime_utc": "2023-03-23T13:45:00+00:00",
+      "clearsky_generation_kw": 0.542286766452677
+    },
+    {
+      "target_datetime_utc": "2023-03-23T14:00:00+00:00",
+      "clearsky_generation_kw": 0.5213457802699023
+    },
+    {
+      "target_datetime_utc": "2023-03-23T14:15:00+00:00",
+      "clearsky_generation_kw": 0.4977159130262743
+    },
+    {
+      "target_datetime_utc": "2023-03-23T14:30:00+00:00",
+      "clearsky_generation_kw": 0.47151359154352923
+    },
+    {
+      "target_datetime_utc": "2023-03-23T14:45:00+00:00",
+      "clearsky_generation_kw": 0.4428720285669743
+    },
+    {
+      "target_datetime_utc": "2023-03-23T15:00:00+00:00",
+      "clearsky_generation_kw": 0.4119428244455941
+    },
+    {
+      "target_datetime_utc": "2023-03-23T15:15:00+00:00",
+      "clearsky_generation_kw": 0.37889841722596784
+    },
+    {
+      "target_datetime_utc": "2023-03-23T15:30:00+00:00",
+      "clearsky_generation_kw": 0.34393591527842965
+    },
+    {
+      "target_datetime_utc": "2023-03-23T15:45:00+00:00",
+      "clearsky_generation_kw": 0.30728317094996604
+    },
+    {
+      "target_datetime_utc": "2023-03-23T16:00:00+00:00",
+      "clearsky_generation_kw": 0.269208602194669
+    },
+    {
+      "target_datetime_utc": "2023-03-23T16:15:00+00:00",
+      "clearsky_generation_kw": 0.2300375612665066
+    },
+    {
+      "target_datetime_utc": "2023-03-23T16:30:00+00:00",
+      "clearsky_generation_kw": 0.19018047561279525
+    },
+    {
+      "target_datetime_utc": "2023-03-23T16:45:00+00:00",
+      "clearsky_generation_kw": 0.1501830359759928
+    },
+    {
+      "target_datetime_utc": "2023-03-23T17:00:00+00:00",
+      "clearsky_generation_kw": 0.11081935331916193
+    },
+    {
+      "target_datetime_utc": "2023-03-23T17:15:00+00:00",
+      "clearsky_generation_kw": 0.07327069865910249
+    },
+    {
+      "target_datetime_utc": "2023-03-23T17:30:00+00:00",
+      "clearsky_generation_kw": 0.03946827853534436
+    },
+    {
+      "target_datetime_utc": "2023-03-23T17:45:00+00:00",
+      "clearsky_generation_kw": 0.01265355971406054
+    },
+    {
+      "target_datetime_utc": "2023-03-23T18:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T18:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T18:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T18:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T19:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T19:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T19:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T19:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T20:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T20:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T20:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T20:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T21:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T21:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T21:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T21:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T22:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T22:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T22:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T22:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T23:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T23:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T23:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-23T23:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T00:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T00:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T00:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T00:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T01:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T01:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T01:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T01:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T02:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T02:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T02:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T02:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T03:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T03:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T03:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T03:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T04:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T04:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T04:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T04:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T05:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T05:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T05:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T05:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T06:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T06:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T06:30:00+00:00",
+      "clearsky_generation_kw": 0.01743527258949116
+    },
+    {
+      "target_datetime_utc": "2023-03-24T06:45:00+00:00",
+      "clearsky_generation_kw": 0.04617920743402238
+    },
+    {
+      "target_datetime_utc": "2023-03-24T07:00:00+00:00",
+      "clearsky_generation_kw": 0.08114108022377005
+    },
+    {
+      "target_datetime_utc": "2023-03-24T07:15:00+00:00",
+      "clearsky_generation_kw": 0.11938089255304339
+    },
+    {
+      "target_datetime_utc": "2023-03-24T07:30:00+00:00",
+      "clearsky_generation_kw": 0.1591559166971868
+    },
+    {
+      "target_datetime_utc": "2023-03-24T07:45:00+00:00",
+      "clearsky_generation_kw": 0.19938864623116764
+    },
+    {
+      "target_datetime_utc": "2023-03-24T08:00:00+00:00",
+      "clearsky_generation_kw": 0.2393629146663166
+    },
+    {
+      "target_datetime_utc": "2023-03-24T08:15:00+00:00",
+      "clearsky_generation_kw": 0.2785669156063122
+    },
+    {
+      "target_datetime_utc": "2023-03-24T08:30:00+00:00",
+      "clearsky_generation_kw": 0.31661114281261826
+    },
+    {
+      "target_datetime_utc": "2023-03-24T08:45:00+00:00",
+      "clearsky_generation_kw": 0.3531838828826281
+    },
+    {
+      "target_datetime_utc": "2023-03-24T09:00:00+00:00",
+      "clearsky_generation_kw": 0.3880261063263948
+    },
+    {
+      "target_datetime_utc": "2023-03-24T09:15:00+00:00",
+      "clearsky_generation_kw": 0.42091679026693
+    },
+    {
+      "target_datetime_utc": "2023-03-24T09:30:00+00:00",
+      "clearsky_generation_kw": 0.4516640459679875
+    },
+    {
+      "target_datetime_utc": "2023-03-24T09:45:00+00:00",
+      "clearsky_generation_kw": 0.4800996198814019
+    },
+    {
+      "target_datetime_utc": "2023-03-24T10:00:00+00:00",
+      "clearsky_generation_kw": 0.5060754242436835
+    },
+    {
+      "target_datetime_utc": "2023-03-24T10:15:00+00:00",
+      "clearsky_generation_kw": 0.5294612959396111
+    },
+    {
+      "target_datetime_utc": "2023-03-24T10:30:00+00:00",
+      "clearsky_generation_kw": 0.5501435388896421
+    },
+    {
+      "target_datetime_utc": "2023-03-24T10:45:00+00:00",
+      "clearsky_generation_kw": 0.5680239769732397
+    },
+    {
+      "target_datetime_utc": "2023-03-24T11:00:00+00:00",
+      "clearsky_generation_kw": 0.5830193237583864
+    },
+    {
+      "target_datetime_utc": "2023-03-24T11:15:00+00:00",
+      "clearsky_generation_kw": 0.5950607698193661
+    },
+    {
+      "target_datetime_utc": "2023-03-24T11:30:00+00:00",
+      "clearsky_generation_kw": 0.6040937185750782
+    },
+    {
+      "target_datetime_utc": "2023-03-24T11:45:00+00:00",
+      "clearsky_generation_kw": 0.6100776113076181
+    },
+    {
+      "target_datetime_utc": "2023-03-24T12:00:00+00:00",
+      "clearsky_generation_kw": 0.6129858195655321
+    },
+    {
+      "target_datetime_utc": "2023-03-24T12:15:00+00:00",
+      "clearsky_generation_kw": 0.6128055847044982
+    },
+    {
+      "target_datetime_utc": "2023-03-24T12:30:00+00:00",
+      "clearsky_generation_kw": 0.6095379881648765
+    },
+    {
+      "target_datetime_utc": "2023-03-24T12:45:00+00:00",
+      "clearsky_generation_kw": 0.6031979527398511
+    },
+    {
+      "target_datetime_utc": "2023-03-24T13:00:00+00:00",
+      "clearsky_generation_kw": 0.593814270676842
+    },
+    {
+      "target_datetime_utc": "2023-03-24T13:15:00+00:00",
+      "clearsky_generation_kw": 0.581429667085411
+    },
+    {
+      "target_datetime_utc": "2023-03-24T13:30:00+00:00",
+      "clearsky_generation_kw": 0.5661009126285232
+    },
+    {
+      "target_datetime_utc": "2023-03-24T13:45:00+00:00",
+      "clearsky_generation_kw": 0.547898998035221
+    },
+    {
+      "target_datetime_utc": "2023-03-24T14:00:00+00:00",
+      "clearsky_generation_kw": 0.5269094125988472
+    },
+    {
+      "target_datetime_utc": "2023-03-24T14:15:00+00:00",
+      "clearsky_generation_kw": 0.503232573754381
+    },
+    {
+      "target_datetime_utc": "2023-03-24T14:30:00+00:00",
+      "clearsky_generation_kw": 0.4769844717184495
+    },
+    {
+      "target_datetime_utc": "2023-03-24T14:45:00+00:00",
+      "clearsky_generation_kw": 0.44829766239946633
+    },
+    {
+      "target_datetime_utc": "2023-03-24T15:00:00+00:00",
+      "clearsky_generation_kw": 0.417322785346695
+    },
+    {
+      "target_datetime_utc": "2023-03-24T15:15:00+00:00",
+      "clearsky_generation_kw": 0.38423088560127255
+    },
+    {
+      "target_datetime_utc": "2023-03-24T15:30:00+00:00",
+      "clearsky_generation_kw": 0.34921704479433247
+    },
+    {
+      "target_datetime_utc": "2023-03-24T15:45:00+00:00",
+      "clearsky_generation_kw": 0.3125061285084145
+    },
+    {
+      "target_datetime_utc": "2023-03-24T16:00:00+00:00",
+      "clearsky_generation_kw": 0.2743620620120228
+    },
+    {
+      "target_datetime_utc": "2023-03-24T16:15:00+00:00",
+      "clearsky_generation_kw": 0.23510325165741874
+    },
+    {
+      "target_datetime_utc": "2023-03-24T16:30:00+00:00",
+      "clearsky_generation_kw": 0.1951290158103624
+    },
+    {
+      "target_datetime_utc": "2023-03-24T16:45:00+00:00",
+      "clearsky_generation_kw": 0.1549665589223846
+    },
+    {
+      "target_datetime_utc": "2023-03-24T17:00:00+00:00",
+      "clearsky_generation_kw": 0.1153578714745262
+    },
+    {
+      "target_datetime_utc": "2023-03-24T17:15:00+00:00",
+      "clearsky_generation_kw": 0.07742617147766187
+    },
+    {
+      "target_datetime_utc": "2023-03-24T17:30:00+00:00",
+      "clearsky_generation_kw": 0.04299674255931885
+    },
+    {
+      "target_datetime_utc": "2023-03-24T17:45:00+00:00",
+      "clearsky_generation_kw": 0.01514233040212702
+    },
+    {
+      "target_datetime_utc": "2023-03-24T18:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T18:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T18:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T18:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T19:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T19:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T19:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T19:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T20:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T20:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T20:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T20:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T21:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T21:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T21:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T21:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T22:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T22:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T22:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T22:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T23:00:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T23:15:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T23:30:00+00:00",
+      "clearsky_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-24T23:45:00+00:00",
+      "clearsky_generation_kw": 0.0
+    }
+  ]
+}

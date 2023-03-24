@@ -32,7 +32,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   ];
 
   return (
-    <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
+    <div className="my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl">
       <div className="flex ml-[9%] mt-[20px]  text-sm">
         <LegendLineGraphIcon className="text-ocf-yellow-500" />
         <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
@@ -70,11 +70,12 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             tickFormatter={(val: number) => val.toFixed(2)}
           />
           <Tooltip
-            contentStyle={{ backgroundColor: 'ocf-gray-1000', opacity: '.7' }}
+            wrapperStyle={{ outline: 'none' }}
+            contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
             labelStyle={{ color: 'white' }}
             formatter={(value: number, name, props) => [
               parseFloat(value.toFixed(5)),
-              'KW',
+              'kW',
             ]}
             labelFormatter={(point: string) =>
               formatter.format(Date.parse(point))
