@@ -1,17 +1,19 @@
 import { getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
-import CurrentCapacity from '../components/dashboard-modules/CurrentCapacity';
-import CurrentOutput from '../components/dashboard-modules/CurrentOutput';
-import ExpectedTotalOutput from '../components/dashboard-modules/ExpectedTotalOutput';
-import Graph from '../components/graphs/Graph';
-import SunnyTimeframe from '../components/dashboard-modules/SunnyTimeframe';
+import CurrentCapacity from './dashboard-modules/CurrentCapacity';
+import CurrentOutput from './dashboard-modules/CurrentOutput';
+import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
+import Graph from './graphs/Graph';
+import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import { withSites } from '~/lib/utils';
 import { SiteList } from '~/lib/types';
+import { FC } from 'react';
 
-const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
-
-const Dashboard = () => {
+interface DashboardProps {
+  siteUUID: string;
+}
+const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
   return (
     <div className="bg-ocf-black max-w-screen-lg w-screen min-h-screen px-4 mb-[75px]">
       <h1 className="mt-4 mb-6 text-ocf-gray text-3xl font-bold">Dashboard</h1>
