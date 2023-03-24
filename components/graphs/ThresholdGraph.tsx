@@ -47,7 +47,6 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   useEffect(() => {
     if (graphData.length === 0) {
-      console.log('updating');
       setGraphData(
         forecastData
           ? forecastDataOverDateRange(
