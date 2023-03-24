@@ -14,7 +14,6 @@ interface DashboardProps {
   siteUUID: string;
 }
 const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
-  console.log(siteUUID);
   return (
     <div className="bg-ocf-black max-w-screen-lg w-screen min-h-screen px-4 mb-[75px]">
       <h1 className="mt-4 mb-6 text-ocf-gray text-3xl font-bold">Dashboard</h1>
