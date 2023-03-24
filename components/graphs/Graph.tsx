@@ -11,9 +11,12 @@ import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import { formatter } from 'lib/utils';
 import { useSiteData } from 'lib/hooks';
 import { FC } from 'react';
+import { ClearSkyData, ClearSkyDataPoint, ForecastData } from '~/lib/types';
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, clearskyData } = useSiteData(siteUUID);
+
+  // Trim clear sky data to match forecast data
 
   const maxGeneration = forecastData
     ? Math.max(
@@ -23,6 +26,23 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       )
     : 0;
 
+  const clearSkyEstimateTrimmed = clearskyData?.clearsky_estimate.filter(
+    (clearSkyDataPoint: ClearSkyDataPoint) => {
+      // if (
+      //   new Date(clearSkyDataPoint.target_datetime_utc).getMinutes() === 0 ||
+      //   new Date(clearSkyDataPoint.target_datetime_utc).getMinutes() === 30
+      // ) {
+      return (
+        (forecastData?.forecast_values[0]?.target_datetime_utc ?? 0) <=
+          clearSkyDataPoint.target_datetime_utc &&
+        (forecastData?.forecast_values[forecastData.forecast_values.length - 1]
+          ?.target_datetime_utc ?? 0) >= clearSkyDataPoint.target_datetime_utc
+      );
+    }
+    // }
+  );
+  console.log(clearSkyEstimateTrimmed);
+
   const tickArray = [
     0,
     maxGeneration / 4,
@@ -31,7 +51,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     maxGeneration,
   ];
 
-  // console.log(forecastData?.forecast_values);
+  console.log(forecastData?.forecast_values);
   console.log(clearskyData?.clearsky_estimate);
 
   return (
@@ -62,6 +82,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             scale="band"
             fontSize="10px"
             dataKey="target_datetime_utc"
+            // type="target_datetime_utc"
+            // allowDuplicatedCategory={false}
             stroke="white"
             axisLine={false}
             tickFormatter={(point: string) =>
@@ -90,18 +112,18 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             }
           />
           <Line
-            data={forecastData?.forecast_values}
+            data={clearSkyEstimateTrimmed}
             type="monotone"
-            dataKey="expected_generation_kw"
-            stroke="#FFD053"
+            dataKey="clearsky_generation_kw"
+            stroke="#00B4FF"
             dot={false}
             activeDot={{ r: 8 }}
           />
           <Line
-            data={clearskyData?.clearsky_estimate}
+            data={forecastData?.forecast_values}
             type="monotone"
-            dataKey="clearsky_generation_kw"
-            stroke="#00B4FF"
+            dataKey="expected_generation_kw"
+            stroke="#FFD053"
             dot={false}
             activeDot={{ r: 8 }}
           />

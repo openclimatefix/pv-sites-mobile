@@ -1,5 +1,5 @@
 import { Fetcher } from 'swr';
-import { ForecastData, SiteList, UnparsedForecastData } from '../types';
+import { ForecastData, SiteList, UnparsedForecastData, ClearSkyData } from '../types';
 
 export const siteListFetcher: Fetcher<SiteList> = async (url: string) =>
   fetch(url).then((res) => res.json());
@@ -57,5 +57,5 @@ export const manyForecastDataFetcher: Fetcher<Array<ForecastData>> = async (
   return allUnparsedForecasts as Array<ForecastData>;
 };
 
-export const clearskyFetcher: Fetcher<SiteList> = async (url: string) =>
+export const clearskyFetcher: Fetcher<ClearSkyData> = async (url: string) =>
   fetch(url).then((res) => res.json());

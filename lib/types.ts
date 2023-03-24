@@ -43,3 +43,12 @@ export interface UnparsedForecastDataPoint {
   target_datetime_utc: string | number;
   expected_generation_kw: number;
 }
+
+export interface ClearSkyData {
+  clearsky_estimate: ClearSkyDataPoint[];
+}
+
+export interface ClearSkyDataPoint {
+  target_datetime_utc: number;
+  clearsky_generation_kw: number;
+}
