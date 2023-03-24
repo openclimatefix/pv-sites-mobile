@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 
 import {
   ResponsiveContainer,
@@ -35,43 +35,63 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     useSiteData(siteUUID);
   const { currentTime } = useTime(latitude, longitude);
 
-  const graphData = forecastData
-    ? forecastDataOverDateRange(
-        JSON.parse(JSON.stringify(forecastData.forecast_values)),
-        getGraphStartDate(currentTime),
-        getGraphEndDate(currentTime)
-      )
-    : [];
+  const [graphData, setGraphData] = useState(
+    forecastData
+      ? forecastDataOverDateRange(
+          forecastData.forecast_values,
+          getGraphStartDate(currentTime),
+          getGraphEndDate(currentTime)
+        )
+      : []
+  );
+
+  useEffect(() => {
+    if (graphData.length === 0) {
+      console.log('updating');
+      setGraphData(
+        forecastData
+          ? forecastDataOverDateRange(
+              forecastData.forecast_values,
+              getGraphStartDate(currentTime),
+              getGraphEndDate(currentTime)
+            )
+          : []
+      );
+    }
+  }, [forecastData, currentTime, graphData]);
 
   /**
    * Renders a text label for the threshold
    * @param props data about the point, such as x and y position on the graph
    * @returns SVG element
    */
-  const renderThresholdLabel = ({ x, y, index }: any) => {
-    console.log(index);
-    return (
-      <g>
-        <text
-          fill="#FFD053"
-          x={x}
-          y={y}
-          className="text-xs"
-        >
-          {graphThreshold}
-        </text>
-        <text
-          fill="#FFD053"
-          x={x}
-          y={y}
-          className="text-xs"
-        >
-          kw
-        </text>
-      </g>
-    )
+  const renderThresholdLabel = ({ x, index }: any) => {
+    if (graphData.length > 0) {
+      if (index === 0) {
+        return (
+          <g>
+            <text
+              fill="#FFD053"
+              x={x - 25}
+              y={-78.95 * graphThreshold + 80.84}
+              className="text-xs"
+            >
+              {graphThreshold}
+            </text>
+            <text
+              fill="#FFD053"
+              x={x - 25}
+              y={-78.95 * graphThreshold + 94.84}
+              className="text-xs"
+            >
+              kw
+            </text>
+          </g>
+        );
+      }
+    }
 
-    // return null;
+    return null;
   };
 
   /**
@@ -80,15 +100,14 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * @returns SVG element
    */
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
-
+    if (graphData.length > 0) {
       if (index === getCurrentTimeForecastIndex(graphData)) {
-        console.log(getCurrentTimeForecastIndex(graphData))
-        console.log(graphData)
         return (
           <g>
             <LineCircle x={x} y={y} />
           </g>
         );
+      }
     }
 
     return null;
