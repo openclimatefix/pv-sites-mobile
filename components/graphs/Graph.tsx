@@ -77,7 +77,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             scale="band"
             fontSize="10px"
             dataKey="target_datetime_utc"
-            type="target_datetime_utc"
             allowDuplicatedCategory={false}
             stroke="white"
             axisLine={false}
