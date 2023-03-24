@@ -27,10 +27,7 @@ interface Props {
 
 const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   const router = useRouter();
-  const {
-    setFormData,
-    panelDetails
-  } = useFormContext();
+  const { setFormData, panelDetails, postPanelData } = useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
 
@@ -40,14 +37,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
     if (!didSubmit) {
       setDidSubmit(true);
       // TODO: Add schema validation with zod
-
-      await setFormData(
-        siteName,
-        parseInt(direction),
-        parseInt(tilt),
-        parseInt(capacity),
-        true
-      );
+      await postPanelData();
       nextPageCallback();
     }
   };
@@ -68,14 +58,14 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
           </h1>
         </div> */}
         <form className="flex-1" onSubmit={onSubmit}>
-        <Input
+          <Input
             id="site-name"
             label="Site name"
             value={panelDetails.siteName}
             help="I don't know"
             onHelpClick={() => setShowModal(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({...panelDetails, siteName: e.currentTarget.value})
+              setFormData({ ...panelDetails, siteName: e.currentTarget.value })
             }
             inputProps={{
               type: 'text',
@@ -90,7 +80,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
             help="I don't know"
             onHelpClick={() => setShowModal(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDirection(e.currentTarget.value)
+              setFormData({ ...panelDetails, direction: e.currentTarget.value })
             }
             inputProps={{
               type: 'number',
@@ -111,7 +101,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
             description="(Degrees above the horizontal)"
             value={String(panelDetails.tilt)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTilt(e.currentTarget.value)
+              setFormData({ ...panelDetails, tilt: e.currentTarget.value })
             }
             inputProps={{
               type: 'number',
@@ -136,7 +126,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
             id="solar-panel-capacity"
             value={String(panelDetails.capacity)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setCapacity(e.currentTarget.value)
+              setFormData({ ...panelDetails, capacity: e.currentTarget.value })
             }
             inputProps={{
               type: 'number',

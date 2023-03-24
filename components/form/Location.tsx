@@ -11,24 +11,18 @@ interface Props {
 }
 
 const Location: FC<Props> = ({ nextPageCallback }) => {
-  const {
-    latLong: [contextLat, contextLng],
-    setMapData,
-  } = useFormContext();
+  const { siteCoordinates, setSiteCoordinates } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
-
-  const [lat, setLat] = useState(contextLat);
-  const [lng, setLng] = useState(contextLng);
   const zoomLevelThreshold = 10;
 
   const onClick = () => {
-    setMapData(lat, lng);
     nextPageCallback();
   };
 
   // The map should zopm into the initial coordinates if they were entered by the user
   const shouldZoomIntoOriginal =
-    originalLat !== contextLat || originalLng !== contextLng;
+    originalLat !== siteCoordinates.latitude ||
+    originalLng !== siteCoordinates.longitude;
 
   return (
     <div
@@ -45,11 +39,10 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
         </h1>
         <LocationInput
           shouldZoomIntoOriginal={shouldZoomIntoOriginal}
-          originalLat={lat}
-          originalLng={lng}
+          originalLat={siteCoordinates.latitude}
+          originalLng={siteCoordinates.longitude}
           setIsSubmissionEnabled={setIsSubmissionEnabled}
-          setLngExternal={setLng}
-          setLatExternal={setLat}
+          setMapCoordinates={setSiteCoordinates}
           zoomLevelThreshold={zoomLevelThreshold}
         />
       </div>

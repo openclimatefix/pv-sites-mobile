@@ -1,38 +1,7 @@
 import React, { useState, useContext, FC, PropsWithChildren } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { originalLng, originalLat } from '../utils';
-interface Form {
-  latLong: [number, number];
-  panelDetails: PanelDetails;
-  setFormData: (
-    name: string,
-    direction: number,
-    tilt: number,
-    capacity: number,
-    shouldTrigger: boolean
-  ) => void;
-  setMapData: (lat: number, long: number) => void;
-}
-interface PanelDetails {
-  name: string;
-  direction: number;
-  tilt: string;
-  capacity: string;
-}
-
-type FormPostData = {
-  site_uuid: number;
-  client_name: string;
-  client_site_id: number;
-  client_site_name: string;
-  latitude: number;
-  longitude: number;
-  installed_capacity_kw: number;
-  created_utc: string;
-  updated_utc: string;
-  orientation: number;
-  tilt: number;
-};
+import { LatitudeLongitude, Form, PanelDetails, FormPostData } from '../types';
 
 async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
   return fetch(url, {
@@ -52,21 +21,26 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     sendRequest
   );
 
-  const [latLong, setLatLong] = useState<[number, number]>([
-    originalLat,
-    originalLng,
-  ]);
+  const [siteCoordinates, setSiteCoordinates] = useState<LatitudeLongitude>({
+    latitude: originalLat,
+    longitude: originalLng,
+  });
+
   const [panelDetails, setPanelDetails] = useState<PanelDetails>({
-    name: '',
+    siteName: '',
     direction: '',
     tilt: '',
     capacity: '',
   });
 
-
-  const setFormData= ({ name, direction, tilt, capacity }: PanelDetails) => {
+  const setFormData = ({
+    siteName,
+    direction,
+    tilt,
+    capacity,
+  }: PanelDetails) => {
     setPanelDetails({
-      name: name,
+      siteName: siteName,
       direction: String(direction),
       tilt: String(tilt),
       capacity: String(capacity),
@@ -75,34 +49,35 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const postPanelData = async () => {
     const date = new Date().toISOString();
-      const sentinel = 1;
-      const data: FormPostData = {
-        site_uuid: 1,
-        client_name: 'name',
-        client_site_id: 1,
-        client_site_name: 'site_name',
-        latitude: latLong[0],
-        longitude: latLong[1],
-        installed_capacity_kw: !!panelDetails.capacity ? panelDetails.capacity  : sentinel,
-        created_utc: date,
-        updated_utc: date,
-        orientation: panelDetails.direction,
-        tilt: panelDetails.tilt,
-      };
-      await trigger(data);
-  }
+    const capacity = parseFloat(panelDetails.capacity);
+    const tilt = parseFloat(panelDetails.tilt);
+    const orientation = parseFloat(panelDetails.direction);
 
-  const setMapData = (lat: number, long: number) => {
-    setLatLong([lat, long]);
+    const sentinel = 1;
+    const data: FormPostData = {
+      site_uuid: 1,
+      client_name: 'name',
+      client_site_id: 1,
+      client_site_name: panelDetails.siteName,
+      latitude: siteCoordinates.latitude,
+      longitude: siteCoordinates.longitude,
+      installed_capacity_kw: !!capacity ? capacity : sentinel,
+      created_utc: date,
+      updated_utc: date,
+      orientation: orientation,
+      tilt: tilt,
+    };
+    await trigger(data);
   };
 
   return (
     <FormContext.Provider
       value={{
-        latLong,
+        siteCoordinates,
         panelDetails,
         setFormData,
-        setMapData,
+        setSiteCoordinates,
+        postPanelData,
       }}
     >
       {children}

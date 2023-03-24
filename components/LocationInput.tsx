@@ -8,14 +8,13 @@ import React, {
 } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-
+import { LatitudeLongitude } from '~/lib/types';
 interface LocationInputProps {
   originalLng: number;
   originalLat: number;
   shouldZoomIntoOriginal: boolean;
   setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
-  setLngExternal: (lng: number) => void;
-  setLatExternal: (lat: number) => void;
+  setMapCoordinates: ({ longitude, latitude }: LatitudeLongitude) => void;
   zoomLevelThreshold: number;
 }
 
@@ -23,18 +22,14 @@ const LocationInput: FC<LocationInputProps> = ({
   originalLat,
   originalLng,
   shouldZoomIntoOriginal,
+  setMapCoordinates,
   setIsSubmissionEnabled,
-  setLatExternal,
-  setLngExternal,
   zoomLevelThreshold,
 }) => {
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
-  const [isMapReady, setIsMapReady] = useState(false);
-  const [lng, setLng] = useState<number>(originalLng);
-  const [lat, setLat] = useState<number>(originalLat);
   const [zoom, setZoom] = useState<number>(4);
 
   useEffect(() => {
@@ -73,12 +68,11 @@ const LocationInput: FC<LocationInputProps> = ({
       const marker = new mapboxgl.Marker({
         draggable: false,
         color: '#FFD053',
-      }).setLngLat([lng, lat]);
+      }).setLngLat([originalLat, originalLng]);
 
       map.current.on('load', () => {
-        setIsMapReady(true);
         if (shouldZoomIntoOriginal) {
-          geocoder.query(`${lat}, ${lng}`).setFlyTo(true);
+          geocoder.query(`${originalLat}, ${originalLng}`).setFlyTo(true);
         }
       });
 
@@ -87,17 +81,14 @@ const LocationInput: FC<LocationInputProps> = ({
         geocoder.setFlyTo(true);
       });
 
-      let savedLat = lat;
-      let savedLng = lng;
+      let savedLat = originalLat;
+      let savedLng = originalLng;
 
       const moveHandler = () => {
         const newLng = map.current!.getCenter().lng;
         const newLat = map.current!.getCenter().lat;
 
-        setLng(newLng);
-        setLat(newLat);
-        setLngExternal(newLng);
-        setLatExternal(newLat);
+        setMapCoordinates({ longitude: newLng, latitude: newLat });
 
         savedLat = newLat;
         savedLng = newLng;
@@ -123,11 +114,8 @@ const LocationInput: FC<LocationInputProps> = ({
     shouldZoomIntoOriginal,
     originalLat,
     originalLng,
-    lat,
-    lng,
     setIsSubmissionEnabled,
-    setLatExternal,
-    setLngExternal,
+    setMapCoordinates,
     zoom,
     zoomLevelThreshold,
   ]);
