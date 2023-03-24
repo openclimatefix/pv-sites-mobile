@@ -21,7 +21,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   endDate.setHours(endDate.getHours() + 48);
   const graphData = forecastData
     ? forecastDataOverDateRange(
-        JSON.parse(JSON.stringify(forecastData.forecast_values)),
+        forecastData.forecast_values,
         new Date(currentTime),
         endDate
       )
