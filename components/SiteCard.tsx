@@ -72,7 +72,7 @@ const SiteCardLink: FC<SiteCardLinkProps> = ({ isEditMode, siteUUID }) => {
   return isEditMode ? (
     <SiteCard siteUUID={siteUUID} />
   ) : (
-    <Link href="/dashboard" passHref>
+    <Link href={'/dashboard/' + siteUUID} passHref>
       <SiteCard siteUUID={siteUUID} />
     </Link>
   );
