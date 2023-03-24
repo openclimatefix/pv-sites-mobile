@@ -11,7 +11,7 @@ import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import { formatter } from 'lib/utils';
 import { useSiteData } from 'lib/hooks';
 import { FC } from 'react';
-import { ClearSkyData, ClearSkyDataPoint, ForecastData } from '~/lib/types';
+import { ClearSkyDataPoint } from '~/lib/types';
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, clearskyData } = useSiteData(siteUUID);
@@ -41,7 +41,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     }
     // }
   );
-  console.log(clearSkyEstimateTrimmed);
 
   const tickArray = [
     0,
@@ -50,9 +49,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     (3 * maxGeneration) / 4,
     maxGeneration,
   ];
-
-  console.log(forecastData?.forecast_values);
-  console.log(clearskyData?.clearsky_estimate);
 
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
@@ -69,7 +65,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
         <LineChart
-          // data={forecastData?.forecast_values}`
           margin={{
             top: 0,
             right: 10,
@@ -82,8 +77,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             scale="band"
             fontSize="10px"
             dataKey="target_datetime_utc"
-            // type="target_datetime_utc"
-            // allowDuplicatedCategory={false}
+            type="target_datetime_utc"
+            allowDuplicatedCategory={false}
             stroke="white"
             axisLine={false}
             tickFormatter={(point: string) =>
