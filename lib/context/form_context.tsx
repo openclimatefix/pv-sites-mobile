@@ -5,6 +5,7 @@ interface Form {
   latLong: [number, number];
   panelDetails: PanelDetails;
   setFormData: (
+    name: string,
     direction: number,
     tilt: number,
     capacity: number,
@@ -13,7 +14,8 @@ interface Form {
   setMapData: (lat: number, long: number) => void;
 }
 interface PanelDetails {
-  direction: string;
+  name: string;
+  direction: number;
   tilt: string;
   capacity: string;
 }
@@ -55,25 +57,24 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     originalLng,
   ]);
   const [panelDetails, setPanelDetails] = useState<PanelDetails>({
+    name: '',
     direction: '',
     tilt: '',
     capacity: '',
   });
 
-  const setFormData = (
-    direction: number,
-    tilt: number,
-    capacity: number,
-    shouldTrigger: boolean
-  ) => {
+
+  const setFormData= ({ name, direction, tilt, capacity }: PanelDetails) => {
     setPanelDetails({
+      name: name,
       direction: String(direction),
       tilt: String(tilt),
       capacity: String(capacity),
     });
+  };
 
-    if (shouldTrigger) {
-      const date = new Date().toISOString();
+  const postPanelData = async () => {
+    const date = new Date().toISOString();
       const sentinel = 1;
       const data: FormPostData = {
         site_uuid: 1,
@@ -82,15 +83,15 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
         client_site_name: 'site_name',
         latitude: latLong[0],
         longitude: latLong[1],
-        installed_capacity_kw: !!capacity ? capacity : sentinel,
+        installed_capacity_kw: !!panelDetails.capacity ? panelDetails.capacity  : sentinel,
         created_utc: date,
         updated_utc: date,
-        orientation: direction,
-        tilt: tilt,
+        orientation: panelDetails.direction,
+        tilt: panelDetails.tilt,
       };
-      trigger(data);
-    }
-  };
+      await trigger(data);
+  }
+
   const setMapData = (lat: number, long: number) => {
     setLatLong([lat, long]);
   };

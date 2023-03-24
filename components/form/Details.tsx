@@ -29,17 +29,10 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   const router = useRouter();
   const {
     setFormData,
-    panelDetails: {
-      direction: contextDirection,
-      tilt: contextTilt,
-      capacity: contextCapacity,
-    },
+    panelDetails
   } = useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
-  const [direction, setDirection] = useState(String(contextDirection));
-  const [tilt, setTilt] = useState(String(contextTilt));
-  const [capacity, setCapacity] = useState(String(contextCapacity));
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,6 +42,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
       // TODO: Add schema validation with zod
 
       await setFormData(
+        siteName,
         parseInt(direction),
         parseInt(tilt),
         parseInt(capacity),
@@ -59,12 +53,6 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   };
 
   const goBack = async () => {
-    await setFormData(
-      parseInt(direction),
-      parseInt(tilt),
-      parseInt(capacity),
-      true
-    );
     lastPageCallback();
   };
 
@@ -80,11 +68,25 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
           </h1>
         </div> */}
         <form className="flex-1" onSubmit={onSubmit}>
+        <Input
+            id="site-name"
+            label="Site name"
+            value={panelDetails.siteName}
+            help="I don't know"
+            onHelpClick={() => setShowModal(true)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormData({...panelDetails, siteName: e.currentTarget.value})
+            }
+            inputProps={{
+              type: 'text',
+              placeholder: 'My House',
+            }}
+          />
           <Input
             id="solar-panel-direction"
             label="Solar panel direction"
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
-            value={direction}
+            value={panelDetails.direction}
             help="I don't know"
             onHelpClick={() => setShowModal(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -107,7 +109,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
             id="solar-panel-tilt"
             label="Solar panel tilt"
             description="(Degrees above the horizontal)"
-            value={tilt}
+            value={String(panelDetails.tilt)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTilt(e.currentTarget.value)
             }
@@ -132,7 +134,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
               </>
             }
             id="solar-panel-capacity"
-            value={capacity}
+            value={String(panelDetails.capacity)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setCapacity(e.currentTarget.value)
             }
