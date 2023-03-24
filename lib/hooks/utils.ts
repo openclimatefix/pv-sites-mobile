@@ -1,5 +1,10 @@
 import { Fetcher } from 'swr';
-import { ForecastData, SiteList, UnparsedForecastData, ClearSkyData } from '../types';
+import {
+  ForecastData,
+  SiteList,
+  UnparsedForecastData,
+  ClearSkyData,
+} from '../types';
 
 export const siteListFetcher: Fetcher<SiteList> = async (url: string) =>
   fetch(url).then((res) => res.json());
