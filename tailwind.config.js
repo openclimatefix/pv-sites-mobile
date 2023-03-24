@@ -45,6 +45,20 @@ module.exports = {
       black: 900,
     },
     extend: {
+      gridTemplateAreas: {
+        'dashboard-desktop': [
+          'header header header',
+          'main   main   main',
+          'footer    footer footer',
+        ],
+
+      },
+      gridTemplateColumns: {
+        'layout': '1fr 1fr 1fr',
+      },
+      gridTemplateRows: {
+        'layout': '1fr 1fr 1fr',
+      },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],
@@ -182,4 +196,7 @@ module.exports = {
   },
   darkMode: 'class',
   // plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")]
+  plugins: [
+    require('@savvywombat/tailwindcss-grid-areas')
+  ]
 };

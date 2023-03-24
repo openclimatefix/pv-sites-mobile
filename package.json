@@ -27,6 +27,7 @@
     "swr": "^2.0.3"
   },
   "devDependencies": {
+    "@savvywombat/tailwindcss-grid-areas": "^3.0.1",
     "@types/mapbox-gl": "2.7.10",
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",
