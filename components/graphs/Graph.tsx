@@ -12,6 +12,7 @@ import { formatter, forecastDataOverDateRange } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
 import { FC } from 'react';
+import { ForecastDataPoint } from '~/lib/types';
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude } = useSiteData(siteUUID);
@@ -19,13 +20,13 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
-  const graphData = forecastData
-    ? forecastDataOverDateRange(
-        forecastData.forecast_values,
-        new Date(currentTime),
-        endDate
-      )
-    : [];
+  const graphData =
+    forecastData &&
+    forecastDataOverDateRange(
+      forecastData.forecast_values,
+      new Date(currentTime),
+      endDate
+    );
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.expected_generation_kw))
     : 0;
@@ -62,8 +63,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             dataKey="target_datetime_utc"
             stroke="white"
             axisLine={false}
-            tickFormatter={(point: string) =>
-              formatter.format(Date.parse(point))
+            tickFormatter={(point: ForecastDataPoint['target_datetime_utc']) =>
+              formatter.format(new Date(point))
             }
           />
           <YAxis
@@ -74,18 +75,20 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             fontSize="10px"
             axisLine={false}
             stroke="white"
-            tickFormatter={(val: number) => val.toFixed(2)}
+            tickFormatter={(val: ForecastDataPoint['expected_generation_kw']) =>
+              val.toFixed(2)
+            }
           />
           <Tooltip
             wrapperStyle={{ outline: 'none' }}
             contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
             labelStyle={{ color: 'white' }}
-            formatter={(value: number, name, props) => [
+            formatter={(value: ForecastDataPoint['expected_generation_kw']) => [
               parseFloat(value.toFixed(5)),
               'kW',
             ]}
-            labelFormatter={(point: string) =>
-              formatter.format(Date.parse(point))
+            labelFormatter={(point: ForecastDataPoint['target_datetime_utc']) =>
+              formatter.format(new Date(point))
             }
           />
           <Line

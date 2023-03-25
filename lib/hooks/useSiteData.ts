@@ -1,6 +1,6 @@
 import useSWR from 'swr';
-import { Site } from '../types';
-import { siteListFetcher, forecastFetcher } from './utils';
+import { Site, SiteList } from '../types';
+import { forecastFetcher } from './utils';
 
 /**
  * Gets forecasted and solar panel data for a single site
@@ -21,10 +21,7 @@ const useSiteData = (siteUUID: string) => {
     data: siteListData,
     error: siteListError,
     isLoading: isSiteListLoading,
-  } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
-    siteListFetcher
-  );
+  } = useSWR<SiteList>(`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`);
 
   const error = AggregateError([forecastError, siteListError]);
   const isLoading = isSiteListLoading || isForecastLoading;
