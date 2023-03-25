@@ -91,40 +91,6 @@ export const getArrayMaxOrMinAfterIndex = (
   return null;
 };
 
-type WithSitesOptions = {
-  getServerSideProps?: (
-    ctx: GetServerSidePropsContext & { siteList: SiteList }
-  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
-};
-export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
-  return withPageAuthRequired({
-    async getServerSideProps(ctx) {
-      const accessToken = getAccessToken(ctx.req, ctx.res);
-
-      const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }).then((res) => res.json())) as SiteList;
-
-      const otherProps: any = await getServerSideProps?.({
-        ...ctx,
-        siteList,
-      });
-      if (otherProps?.props instanceof Promise) {
-        return {
-          ...otherProps,
-          props: otherProps.props.then((props: any) => ({
-            ...props,
-            siteList,
-          })),
-        };
-      }
-      return { ...otherProps, props: { ...otherProps?.props, siteList } };
-    },
-  });
-}
-
 export const getCurrentTimeForecast = (forecast_values: ForecastDataPoint[]) =>
   forecast_values[getCurrentTimeForecastIndex(forecast_values)]
     .expected_generation_kw;
