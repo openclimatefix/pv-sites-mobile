@@ -12,7 +12,7 @@ interface SiteCardProps {
 }
 
 const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
-  const { forecastData, client_site_name, installed_capacity_kw } =
+  const { forecastData, client_site_name, installed_capacity_kw, isLoading } =
     useSiteData(siteUUID);
 
   const currentOutput = forecastData
@@ -26,7 +26,7 @@ const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
     >
       <div className="flex flex-col flex-1">
         <h2 className="text-amber text-xl font-semibold">
-          {client_site_name ?? 'Loading...'}
+          {isLoading ? 'Loading...' : client_site_name ?? 'My Site'}
         </h2>
         <div className="flex flex-col mt-2 gap-1">
           <p className="text-ocf-gray-500 text-xs font-medium">
