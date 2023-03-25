@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { siteListFetcher, manyForecastDataFetcher } from './utils';
+import { manyForecastDataFetcher } from './utils';
 import { ForecastDataPoint } from '../types';
 
 /**
@@ -14,8 +14,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     error: siteListError,
     isLoading: isSiteListLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
-    siteListFetcher
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
 
   const {
