@@ -9,7 +9,7 @@ import { MenuLogo, NowcastingLogo } from './icons/navbar_icons';
 const NavBar: FC = () => {
   const { isSidebarOpen, openSidebar } = useSidebarContext();
   const { data } = useSWR<SiteList>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
   const { user } = useUser();
 

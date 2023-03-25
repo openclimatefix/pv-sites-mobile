@@ -22,7 +22,7 @@ const SiteCard: FC<SiteCardProps> = ({ href, siteUUID }) => {
   return (
     <a
       href={href}
-      className="h-fit w-full max-w-lg flex bg-ocf-gray-1000 p-3 rounded-lg font-bold"
+      className="h-fit w-full max-w-lg flex bg-ocf-black-500 p-3 rounded-lg font-bold"
     >
       <div className="flex flex-col flex-1">
         <h2 className="text-amber text-xl font-semibold">{client_site_name}</h2>
@@ -72,7 +72,7 @@ const SiteCardLink: FC<SiteCardLinkProps> = ({ isEditMode, siteUUID }) => {
   return isEditMode ? (
     <SiteCard siteUUID={siteUUID} />
   ) : (
-    <Link href="/dashboard" passHref>
+    <Link href={'/dashboard/' + siteUUID} passHref>
       <SiteCard siteUUID={siteUUID} />
     </Link>
   );

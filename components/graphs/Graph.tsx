@@ -8,19 +8,26 @@ import {
   YAxis,
 } from 'recharts';
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import { formatter } from 'lib/utils';
+import { formatter, forecastDataOverDateRange } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
+import useTime from '~/lib/hooks/useTime';
 import { FC } from 'react';
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData } = useSiteData(siteUUID);
+  const { forecastData, latitude, longitude } = useSiteData(siteUUID);
+  const { currentTime } = useTime(latitude, longitude);
 
-  const maxGeneration = forecastData
-    ? Math.max(
-        ...forecastData.forecast_values.map(
-          (value) => value.expected_generation_kw
-        )
+  const endDate = new Date();
+  endDate.setHours(endDate.getHours() + 48);
+  const graphData = forecastData
+    ? forecastDataOverDateRange(
+        forecastData.forecast_values,
+        new Date(currentTime),
+        endDate
       )
+    : [];
+  const maxGeneration = graphData
+    ? Math.max(...graphData.map((value) => value.expected_generation_kw))
     : 0;
 
   const tickArray = [
@@ -32,7 +39,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   ];
 
   return (
-    <div className="my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl">
+    <div className="my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl">
       <div className="flex ml-[9%] mt-[20px]  text-sm">
         <LegendLineGraphIcon className="text-ocf-yellow-500" />
         <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
@@ -40,7 +47,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
         <LineChart
-          data={forecastData?.forecast_values}
+          data={graphData}
           margin={{
             top: 0,
             right: 10,
@@ -70,11 +77,12 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             tickFormatter={(val: number) => val.toFixed(2)}
           />
           <Tooltip
-            contentStyle={{ backgroundColor: 'ocf-gray-1000', opacity: '.7' }}
+            wrapperStyle={{ outline: 'none' }}
+            contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
             labelStyle={{ color: 'white' }}
             formatter={(value: number, name, props) => [
               parseFloat(value.toFixed(5)),
-              'KW',
+              'kW',
             ]}
             labelFormatter={(point: string) =>
               formatter.format(Date.parse(point))

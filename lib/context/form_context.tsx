@@ -17,7 +17,7 @@ const FormContext = React.createContext<Form | null>(null);
 
 const FormProvider: FC<PropsWithChildren> = ({ children }) => {
   const { trigger } = useSWRMutation(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites`,
     sendRequest
   );
 
