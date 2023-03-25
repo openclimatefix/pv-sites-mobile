@@ -13,7 +13,7 @@ const useSiteData = (siteUUID: string) => {
     error: forecastError,
     isLoading: isForecastLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/${siteUUID}/pv_forecast`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/pv_forecast`,
     forecastFetcher
   );
 
@@ -22,7 +22,7 @@ const useSiteData = (siteUUID: string) => {
     error: siteListError,
     isLoading: isSiteListLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
     siteListFetcher
   );
 

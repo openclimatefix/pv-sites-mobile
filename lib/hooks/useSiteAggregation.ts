@@ -14,7 +14,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     error: siteListError,
     isLoading: isSiteListLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
     siteListFetcher
   );
 
@@ -24,8 +24,8 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     isLoading: isManyForecastLoading,
   } = useSWR(
     `${
-      process.env.NEXT_PUBLIC_API_BASE_URL
-    }/api/pv_forecast?site_uuids=${allSiteUUID.join(',')}`,
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    }/pv_forecast?site_uuids=${allSiteUUID.join(',')}`,
     manyForecastDataFetcher
   );
 
