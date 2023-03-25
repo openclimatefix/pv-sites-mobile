@@ -3,8 +3,8 @@ import Button from '~/components/Button';
 import LocationInput from '~/components/LocationInput';
 
 import { useFormContext } from '~/lib/context/form_context';
-import { originalLat, originalLng } from '~/lib/utils';
-import { zoomLevelThreshold } from '~/lib/utils';
+import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
+
 interface Props {
   nextPageCallback: () => void;
 }
@@ -47,7 +47,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
             setIsSubmissionEnabled={setIsSubmissionEnabled}
             setMapCoordinates={setSiteCoordinates}
             zoomLevelThreshold={zoomLevelThreshold}
-            initialZoom={4}
+            initialZoom={shouldZoomIntoOriginal ? 16 : 4}
             canEdit={true}
           />
         </div>

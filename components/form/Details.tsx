@@ -49,7 +49,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   return (
     <>
       <div className="flex flex-col">
-        <BackButton callback={lastPageCallback} />
+        <BackButton onClick={lastPageCallback} />
 
         <div className="flex flex-row w-full md:w-9/12 self-center">
           <div className="flex-1 hidden md:block px-8">
@@ -59,7 +59,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
             </h1>
             <LocationInput
               shouldZoomIntoOriginal={true}
-              initialZoom={15}
+              initialZoom={16}
               originalLat={siteCoordinates.latitude}
               originalLng={siteCoordinates.longitude}
               setIsSubmissionEnabled={() => {}}
@@ -193,5 +193,3 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
 };
 
 export default Details;
-
-export const getServerSideProps = withPageAuthRequired();

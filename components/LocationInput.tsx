@@ -9,6 +9,7 @@ import React, {
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { LatitudeLongitude } from '~/lib/types';
+
 interface LocationInputProps {
   originalLng: number;
   originalLat: number;
@@ -88,6 +89,14 @@ const LocationInput: FC<LocationInputProps> = ({
       map.current.on('load', () => {
         if (shouldZoomIntoOriginal) {
           geocoder.query(`${originalLat}, ${originalLng}`).setFlyTo(canEdit);
+          updateMarker(
+            marker,
+            map.current!,
+            zoomLevelThreshold,
+            originalLng,
+            originalLat,
+            canEdit
+          );
         }
       });
 
@@ -99,7 +108,14 @@ const LocationInput: FC<LocationInputProps> = ({
       let savedLat = originalLat;
       let savedLng = originalLng;
 
-      const moveHandler = () => {
+      map.current.on('movestart', () => {
+        if (popup) {
+          popup.remove();
+        }
+      });
+
+      // Saves the map center latitude/longitude to the form context
+      const saveSiteLocation = () => {
         const newLng = map.current!.getCenter().lng;
         const newLat = map.current!.getCenter().lat;
 
@@ -107,6 +123,12 @@ const LocationInput: FC<LocationInputProps> = ({
 
         savedLat = newLat;
         savedLng = newLng;
+      };
+
+      map.current.on('move', () => {
+        const newLng = map.current!.getCenter().lng;
+        const newLat = map.current!.getCenter().lat;
+
         updateMarker(
           marker,
           map.current!,
@@ -117,11 +139,13 @@ const LocationInput: FC<LocationInputProps> = ({
         );
 
         setZoom(map.current!.getZoom());
-      };
 
-      map.current.on('movestart', () => {
-        if (popup) {
-          popup.remove();
+        const isPastZoomThreshold =
+          map.current!.getZoom() >= zoomLevelThreshold;
+
+        if (isPastZoomThreshold) {
+          // save the map coordinates
+          saveSiteLocation();
         }
       });
 
@@ -129,8 +153,6 @@ const LocationInput: FC<LocationInputProps> = ({
         const isPastZoomThreshold =
           map.current!.getZoom() >= zoomLevelThreshold;
         if (isPastZoomThreshold) {
-          moveHandler();
-
           // update the search box location based on the final latitude/longitude
           geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
 
