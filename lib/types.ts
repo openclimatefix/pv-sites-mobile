@@ -31,15 +31,16 @@ export interface ForecastData {
   forecast_version: string;
   forecast_values: ForecastDataPoint[];
 }
+
 export interface UnparsedForecastData {
   forecast_uuid: string;
   site_uuid: string;
-  forecast_creation_datetime: string | number;
+  forecast_creation_datetime: string;
   forecast_version: string;
   forecast_values: UnparsedForecastDataPoint[];
 }
 
 export interface UnparsedForecastDataPoint {
-  target_datetime_utc: string | number;
+  target_datetime_utc: string;
   expected_generation_kw: number;
 }
