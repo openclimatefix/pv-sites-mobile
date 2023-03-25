@@ -16,6 +16,8 @@ interface LocationInputProps {
   setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
   setMapCoordinates: ({ longitude, latitude }: LatitudeLongitude) => void;
   zoomLevelThreshold: number;
+  initialZoom: number;
+  canEdit: boolean;
 }
 
 const LocationInput: FC<LocationInputProps> = ({
@@ -25,12 +27,14 @@ const LocationInput: FC<LocationInputProps> = ({
   setMapCoordinates,
   setIsSubmissionEnabled,
   zoomLevelThreshold,
+  initialZoom,
+  canEdit,
 }) => {
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
-  const [zoom, setZoom] = useState<number>(4);
+  const [zoom, setZoom] = useState<number>(initialZoom);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -42,17 +46,22 @@ const LocationInput: FC<LocationInputProps> = ({
         zoom,
         keyboard: false,
         attributionControl: false,
+        interactive: canEdit,
       });
 
       const nav = new mapboxgl.NavigationControl({ showCompass: false });
       map.current.addControl(nav, 'bottom-right');
-      map.current.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-            enableHighAccuracy: true,
-          },
-        })
-      );
+
+      // Adds a current location button
+      if (canEdit) {
+        map.current.addControl(
+          new mapboxgl.GeolocateControl({
+            positionOptions: {
+              enableHighAccuracy: true,
+            },
+          })
+        );
+      }
 
       let popup: mapboxgl.Popup | null = null;
 
@@ -63,9 +72,13 @@ const LocationInput: FC<LocationInputProps> = ({
         marker: false,
         reverseGeocode: true,
       });
-      if (geocoderContainer.current) {
-        geocoderContainer.current.appendChild(geocoder.onAdd(map.current));
+
+      if (!canEdit) {
+        // Prevent user from changing the geocoder input when the map isn't editable
+        geocoder.setBbox([0, 0, 0, 0]);
       }
+
+      geocoderContainer.current?.appendChild(geocoder.onAdd(map.current));
 
       const marker = new mapboxgl.Marker({
         draggable: false,
@@ -74,7 +87,7 @@ const LocationInput: FC<LocationInputProps> = ({
 
       map.current.on('load', () => {
         if (shouldZoomIntoOriginal) {
-          geocoder.query(`${originalLat}, ${originalLng}`).setFlyTo(true);
+          geocoder.query(`${originalLat}, ${originalLng}`).setFlyTo(canEdit);
         }
       });
 
@@ -94,34 +107,42 @@ const LocationInput: FC<LocationInputProps> = ({
 
         savedLat = newLat;
         savedLng = newLng;
+        updateMarker(
+          marker,
+          map.current!,
+          zoomLevelThreshold,
+          newLng,
+          newLat,
+          canEdit
+        );
 
         setZoom(map.current!.getZoom());
-        updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
       };
 
       map.current.on('movestart', () => {
         if (popup) {
           popup.remove();
         }
-      })
-
-      map.current.on('move', moveHandler);
+      });
 
       map.current.on('moveend', () => {
         const isPastZoomThreshold =
           map.current!.getZoom() >= zoomLevelThreshold;
         if (isPastZoomThreshold) {
+          moveHandler();
+
           // update the search box location based on the final latitude/longitude
           geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
 
-          if (popup === null && map.current) {
+          if (popup === null && map.current && canEdit) {
             popup = new mapboxgl.Popup({
               offset: [0, 10],
               anchor: 'top',
               closeOnClick: false,
               closeButton: false,
               className: 'site-map',
-            }).setLngLat([savedLng, savedLat])
+            })
+              .setLngLat([savedLng, savedLat])
               .setHTML('<p>Drag map to pinpoint exact location.</p>')
               .addTo(map.current);
           }
@@ -131,6 +152,7 @@ const LocationInput: FC<LocationInputProps> = ({
       });
     }
   }, [
+    canEdit,
     shouldZoomIntoOriginal,
     originalLat,
     originalLng,
@@ -141,9 +163,9 @@ const LocationInput: FC<LocationInputProps> = ({
   ]);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className={`flex flex-col ${canEdit ? 'h-full' : 'h-5/6'}`}>
       <div ref={geocoderContainer} className="z-20" id="geocoderContainer" />
-      <div className="h-px w-11/12 self-center bg-white" />
+      <div className="w-11/12 self-center bg-white" />
       <div className="relative top-0 flex flex-col flex-1">
         <div className="absolute top-0 w-full h-1/6 bg-gradient-to-b from-mapbox-black-900 to-transparent z-10 pointer-events-none" />
         <div ref={mapContainer} className="h-full" />
@@ -153,14 +175,18 @@ const LocationInput: FC<LocationInputProps> = ({
   );
 };
 
+/**
+ * Display a marker on the map if the map is zoomed in beyond a threshold or the map isn't editable
+ */
 function updateMarker(
   marker: mapboxgl.Marker,
   map: mapboxgl.Map,
   zoomLevelThreshold: number,
   lng: number,
-  lat: number
+  lat: number,
+  canEdit: boolean
 ) {
-  if (map.getZoom() > zoomLevelThreshold) {
+  if (map.getZoom() > zoomLevelThreshold || !canEdit) {
     marker.addTo(map);
     marker.setLngLat([lng, lat]);
   } else {

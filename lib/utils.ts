@@ -225,3 +225,9 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
     },
   });
 }
+
+/*
+  Represents the zoom threshold for the Site map. 
+  We will track solar sites when the map is zoomed in less than this value.
+*/
+export const zoomLevelThreshold = 10;
