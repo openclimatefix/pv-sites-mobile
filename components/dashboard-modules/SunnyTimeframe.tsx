@@ -2,7 +2,9 @@ import { FC } from 'react';
 
 import NumberDisplay from './NumberDisplay';
 
-import { getNextThresholdIndex, graphThreshold } from 'lib/utils';
+import { getNextThresholdIndex } from 'lib/utils';
+
+import { graphThreshold } from 'lib/graphs';
 
 import { useSiteData } from 'lib/hooks';
 

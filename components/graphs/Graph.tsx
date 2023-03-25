@@ -8,19 +8,26 @@ import {
   YAxis,
 } from 'recharts';
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import { formatter } from 'lib/utils';
+import { formatter, forecastDataOverDateRange } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
+import useTime from '~/lib/hooks/useTime';
 import { FC } from 'react';
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData } = useSiteData(siteUUID);
+  const { forecastData, latitude, longitude } = useSiteData(siteUUID);
+  const { currentTime } = useTime(latitude, longitude);
 
-  const maxGeneration = forecastData
-    ? Math.max(
-        ...forecastData.forecast_values.map(
-          (value) => value.expected_generation_kw
-        )
+  const endDate = new Date();
+  endDate.setHours(endDate.getHours() + 48);
+  const graphData = forecastData
+    ? forecastDataOverDateRange(
+        forecastData.forecast_values,
+        new Date(currentTime),
+        endDate
       )
+    : [];
+  const maxGeneration = graphData
+    ? Math.max(...graphData.map((value) => value.expected_generation_kw))
     : 0;
 
   const tickArray = [
@@ -40,7 +47,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
         <LineChart
-          data={forecastData?.forecast_values}
+          data={graphData}
           margin={{
             top: 0,
             right: 10,

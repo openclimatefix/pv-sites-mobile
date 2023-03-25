@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { formatter } from '../utils';
+import { formatter } from '../graphs';
 
 const SunCalc = require('suncalc');
 
