@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { manyForecastDataFetcher } from './utils';
-import { ForecastDataPoint } from '../types';
+import { ForecastDataPoint, SiteList } from '../types';
 
 /**
  * Sums the capacity and forecasts of multiple solar sites across
@@ -13,7 +13,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     data: siteListData,
     error: siteListError,
     isLoading: isSiteListLoading,
-  } = useSWR(
+  } = useSWR<SiteList>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
 
