@@ -24,6 +24,8 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
     originalLat !== siteCoordinates.latitude ||
     originalLng !== siteCoordinates.longitude;
 
+  const title = shouldZoomIntoOriginal ? "Is this location exact?" : "Where is your solar panel located?"; 
+
   return (
     <div
       className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] w-screen bg-mapbox-gray-1000"
@@ -35,7 +37,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
         id="mapboxInputWrapper"
       >
         <h1 className="font-medium md:text-3xl text-xl text-ocf-gray pl-3 md:pl-0">
-          Where is your solar panel located?
+          {title}
         </h1>
         <LocationInput
           shouldZoomIntoOriginal={shouldZoomIntoOriginal}
@@ -46,7 +48,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
           zoomLevelThreshold={zoomLevelThreshold}
         />
       </div>
-      <div className="flex justify-center md:justify-end md:mt-20 mt-10 self-center w-full h-14">
+      <div className="md:hidden flex justify-center md:justify-end md:mt-20 mt-10 self-center w-full h-14">
         <Button enabled={isSubmissionEnabled} onClick={onClick}>
           Next
         </Button>

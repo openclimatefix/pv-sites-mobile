@@ -54,6 +54,8 @@ const LocationInput: FC<LocationInputProps> = ({
         })
       );
 
+      let popup: mapboxgl.Popup | null = null;
+
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
@@ -97,6 +99,12 @@ const LocationInput: FC<LocationInputProps> = ({
         updateMarker(marker, map.current!, zoomLevelThreshold, newLng, newLat);
       };
 
+      map.current.on('movestart', () => {
+        if (popup) {
+          popup.remove();
+        }
+      })
+
       map.current.on('move', moveHandler);
 
       map.current.on('moveend', () => {
@@ -105,6 +113,18 @@ const LocationInput: FC<LocationInputProps> = ({
         if (isPastZoomThreshold) {
           // update the search box location based on the final latitude/longitude
           geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
+
+          if (popup === null && map.current) {
+            popup = new mapboxgl.Popup({
+              offset: [0, 10],
+              anchor: 'top',
+              closeOnClick: false,
+              closeButton: false,
+              className: 'site-map',
+            }).setLngLat([savedLng, savedLat])
+              .setHTML('<p>Drag map to pinpoint exact location.</p>')
+              .addTo(map.current);
+          }
         }
 
         return setIsSubmissionEnabled(isPastZoomThreshold);
