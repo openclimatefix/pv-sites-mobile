@@ -13,9 +13,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     data: siteListData,
     error: siteListError,
     isLoading: isSiteListLoading,
-  } = useSWR<SiteList>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
-  );
+  } = useSWR<SiteList>(`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`);
 
   const {
     data: manyForecastData,
