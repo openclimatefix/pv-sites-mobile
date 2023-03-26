@@ -68,6 +68,10 @@
   @apply py-[6px] text-white;
 }
 
+.mapbox-gl-geocoder--no-results {
+  @apply bg-ocf-black-500 hover:bg-ocf-black-300 text-white;
+}
+
 .hidden-suggestion {
   @apply hidden !important;
 }

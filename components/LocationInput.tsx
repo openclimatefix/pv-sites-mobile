@@ -31,17 +31,6 @@ const LocationInput: FC<LocationInputProps> = ({
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
   const [zoom, setZoom] = useState<number>(initialZoom);
 
-  const renderFunction = (item: MapboxGeocoder.Result) => {
-    var placeName = item.place_name.split(',');
-    return (
-      '<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">' +
-      placeName[0] +
-      '</div><div class="mapboxgl-ctrl-geocoder--suggestion-address">' +
-      placeName.splice(1, placeName.length).join(',') +
-      '</div></div>'
-    );
-  };
-
   useEffect(() => {
     if (map.current) return; // initialize map only once
     if (mapContainer.current) {
@@ -71,11 +60,24 @@ const LocationInput: FC<LocationInputProps> = ({
 
       let popup: mapboxgl.Popup | null = null;
 
+      const renderFunction = (item: MapboxGeocoder.Result) => {
+        var placeName = item.place_name.split(',');
+        return canEdit
+          ? '<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">' +
+              placeName[0] +
+              '</div><div class="mapboxgl-ctrl-geocoder--suggestion-address">' +
+              placeName.splice(1, placeName.length).join(',') +
+              '</div></div>'
+          : '';
+      };
+
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
+        countries: 'GB',
         placeholder: 'Search a location',
         marker: false,
+        render: renderFunction,
         reverseGeocode: true,
         limit: 3,
       });
@@ -201,7 +203,6 @@ const LocationInput: FC<LocationInputProps> = ({
         ref={geocoderContainer}
         className="z-20 bg-ocf-black"
         id="geocoderContainer"
-        // onClick={() => geocoder.setRenderFunction((result) => '')}
       />
       <div className="w-11/12 self-center bg-white" />
       <div className="relative top-0 flex flex-col flex-1">
