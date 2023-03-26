@@ -10,7 +10,11 @@ const SunCalc = require('suncalc');
  * @returns currentTimes, version of the current time (right now) that a user can format
  * @returns isDaytime, boolean value indicating whether it is daytime or not based on current time zone.
  */
-const useTime = (latitude?: number, longitude?: number) => {
+const useTime = (
+  latitude?: number,
+  longitude?: number,
+  { enabled = false }: { enabled: boolean } = { enabled: false }
+) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
   // get sunrise/sunset time for passed in location
@@ -22,13 +26,15 @@ const useTime = (latitude?: number, longitude?: number) => {
   const sunsetTime = times ? times.sunset : null;
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(Date.now());
-    }, 1000);
+    if (enabled) {
+      const intervalId = setInterval(() => {
+        setCurrentTime(Date.now());
+      }, 1000);
 
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
-  });
+      // clear interval on re-render to avoid memory leaks
+      return () => clearInterval(intervalId);
+    }
+  }, [enabled]);
 
   // default to daytime
   const isDaytime =

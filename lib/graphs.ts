@@ -24,8 +24,7 @@ export const getClosestForecastIndex = (
       .map((forecast_values) => ({
         ...forecast_values,
         difference: Math.abs(
-          targetDate.getTime() -
-            new Date(forecast_values.target_datetime_utc).getTime()
+          targetDate.getTime() - forecast_values.target_datetime_utc
         ),
       }))
       .reduce((prev, curr) =>
