@@ -29,6 +29,9 @@ const LocationInput: FC<LocationInputProps> = ({
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
+  const [isPastZoomThreshold, setIsPastZoomThreshold] =
+    useState<boolean>(false);
+  const [isInUK, setIsInUK] = useState<boolean>(false);
   const [zoom, setZoom] = useState<number>(initialZoom);
 
   useEffect(() => {
@@ -183,7 +186,30 @@ const LocationInput: FC<LocationInputProps> = ({
           }
         }
 
-        return setIsSubmissionEnabled(isPastZoomThreshold);
+        return setIsPastZoomThreshold(isPastZoomThreshold);
+      });
+
+      geocoder.on('result', (result) => {
+        const isUK =
+          result.result.context.find((e: Record<string, string>) =>
+            e.id.includes('country')
+          ).short_code === 'gb';
+
+        if (!isUK && map.current) {
+          popup = new mapboxgl.Popup({
+            offset: [0, 10],
+            anchor: 'top',
+            closeOnClick: false,
+            closeButton: false,
+            className: 'site-map',
+          })
+            .setLngLat([savedLng, savedLat])
+            .setHTML(
+              '<p>Only locations within the UK are currently supported</p>'
+            )
+            .addTo(map.current);
+        }
+        return setIsInUK(isUK);
       });
     }
   }, [
@@ -196,6 +222,8 @@ const LocationInput: FC<LocationInputProps> = ({
     zoom,
     zoomLevelThreshold,
   ]);
+
+  setIsSubmissionEnabled(isInUK && isPastZoomThreshold);
 
   return (
     <div className={`flex flex-col ${canEdit ? 'h-full' : 'h-5/6'}`}>
