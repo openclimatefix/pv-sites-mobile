@@ -79,14 +79,13 @@ const LocationInput: FC<LocationInputProps> = ({
         geocoder.setBbox([0, 0, 0, 0]);
       }
 
-      geocoderContainer.current?.appendChild(geocoder.onAdd(map.current));
-
       const marker = new mapboxgl.Marker({
         draggable: false,
         color: '#FFD053',
       }).setLngLat([originalLat, originalLng]);
 
       map.current.on('load', () => {
+        geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
         if (shouldZoomIntoOriginal) {
           geocoder.query(`${originalLat}, ${originalLng}`).setFlyTo(canEdit);
           updateMarker(
@@ -103,6 +102,12 @@ const LocationInput: FC<LocationInputProps> = ({
       map.current.on('idle', () => {
         // Enables fly to animation on search
         geocoder.setFlyTo({ curve: 1.2, speed: 5 });
+        // @ts-ignore
+        // document.getElementsByClassName('mapboxgl-ctrl-geocoder--input')[0].blur();
+        // if (!geocoderContainer.current?.firstChild) {
+        //   geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
+        // }
+        // geocoderContainer.current?.blur();
       });
 
       let savedLat = originalLat;
@@ -112,7 +117,7 @@ const LocationInput: FC<LocationInputProps> = ({
         if (popup) {
           popup.remove();
         }
-        setIsSubmissionEnabled(false)
+        setIsSubmissionEnabled(false);
       });
 
       // Saves the map center latitude/longitude to the form context
@@ -155,7 +160,16 @@ const LocationInput: FC<LocationInputProps> = ({
           map.current!.getZoom() >= zoomLevelThreshold;
         if (isPastZoomThreshold) {
           // update the search box location based on the final latitude/longitude
-          geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
+          geocoder.setFlyTo(false);
+          // map.current!.removeControl(geocoder);
+          // geocoderContainer.current?.firstElementChild?.children[1].setAttribute('onfocus', 'this.blur()')
+
+          //don't display anything 
+          geocoder.setRenderFunction((result) => '')
+          geocoder.query(`${savedLat}, ${savedLng}`);
+          //@ts-ignore
+          // document.getElementsByClassName('suggestions-wrapper')[0].style.display = 'none';
+          // geocoderContainer.current?.blur();
 
           if (popup === null && map.current && canEdit) {
             popup = new mapboxgl.Popup({
@@ -171,8 +185,15 @@ const LocationInput: FC<LocationInputProps> = ({
           }
         }
 
+        // document
+        //   .getElementsByClassName('mapboxgl-ctrl-geocoder--input')[0] // @ts-ignore
+        //   .blur(); 
+
         return setIsSubmissionEnabled(isPastZoomThreshold);
       });
+      // // geocoder.on('loading', () => {map.current?.getCanvas().click()})
+      // geocoder.on('results', () => {map.current?.getCanvas().focus()});
+      // geocoder.on('clear', () => {map.current?.getCanvas().click()});
     }
   }, [
     canEdit,
@@ -187,12 +208,18 @@ const LocationInput: FC<LocationInputProps> = ({
 
   return (
     <div className={`flex flex-col ${canEdit ? 'h-full' : 'h-5/6'}`}>
-      <div ref={geocoderContainer} className="z-20" id="geocoderContainer" />
+      <div
+        ref={geocoderContainer}
+        className="z-20 bg-ocf-black"
+        id="geocoderContainer"
+      />
       <div className="w-11/12 self-center bg-white" />
       <div className="relative top-0 flex flex-col flex-1">
-        <div className="absolute top-0 w-full h-1/6 bg-gradient-to-b from-mapbox-black-900 to-transparent z-10 pointer-events-none" />
-        <div ref={mapContainer} className="h-full" />
-        <div className="absolute bottom-0 w-full h-1/6 bg-gradient-to-t from-mapbox-black-900 to-transparent z-10 pointer-events-none" />
+        <div
+          ref={mapContainer}
+          className="h-full rounded-3xl"
+          id="mapContainer"
+        />
       </div>
     </div>
   );

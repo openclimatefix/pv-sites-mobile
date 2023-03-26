@@ -30,7 +30,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
       >
         <div className="flex flex-col justify-end h-10"></div>
         <div
-          className="self-center md:w-7/12 w-full h-4/6"
+          className="self-center md:w-1/2 md:min-w-[750px] w-[95%] h-4/6"
           id="mapboxInputWrapper"
         >
           <h1 className="font-medium md:text-3xl text-xl text-ocf-gray pl-3 md:pl-0">
