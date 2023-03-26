@@ -102,7 +102,7 @@ const LocationInput: FC<LocationInputProps> = ({
 
       map.current.on('idle', () => {
         // Enables fly to animation on search
-        geocoder.setFlyTo(true);
+        geocoder.setFlyTo({curve: 1.2, speed: 7.5});
       });
 
       let savedLat = originalLat;
