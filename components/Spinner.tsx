@@ -1,9 +1,15 @@
 import { FC } from 'react';
 
-const Spinner: FC = () => (
+interface Props {
+  width: number;
+  height: number;
+  margin: number;
+}
+
+const Spinner: FC<Props> = ({ width, height, margin }) => (
   <svg
     aria-hidden="true"
-    className="w-5 h-5 mx-4 text-gray-200 animate-spin dark:text-ocf-gray-300 fill-ocf-black"
+    className={`w-${width} h-${height} mx-${margin} text-gray-200 animate-spin dark:text-ocf-gray-300 fill-ocf-black`}
     viewBox="0 0 100 101"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
