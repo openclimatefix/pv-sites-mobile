@@ -1,11 +1,5 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  PropsWithChildren,
-  FC,
-} from 'react';
+import React, { useRef, useState, useEffect, FC } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { LatitudeLongitude } from '~/lib/types';
@@ -36,6 +30,17 @@ const LocationInput: FC<LocationInputProps> = ({
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
   const [zoom, setZoom] = useState<number>(initialZoom);
+
+  const renderFunction = (item: MapboxGeocoder.Result) => {
+    var placeName = item.place_name.split(',');
+    return (
+      '<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">' +
+      placeName[0] +
+      '</div><div class="mapboxgl-ctrl-geocoder--suggestion-address">' +
+      placeName.splice(1, placeName.length).join(',') +
+      '</div></div>'
+    );
+  };
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -72,6 +77,7 @@ const LocationInput: FC<LocationInputProps> = ({
         placeholder: 'Search a location',
         marker: false,
         reverseGeocode: true,
+        limit: 3,
       });
 
       if (!canEdit) {
@@ -102,12 +108,7 @@ const LocationInput: FC<LocationInputProps> = ({
       map.current.on('idle', () => {
         // Enables fly to animation on search
         geocoder.setFlyTo({ curve: 1.2, speed: 5 });
-        // @ts-ignore
-        // document.getElementsByClassName('mapboxgl-ctrl-geocoder--input')[0].blur();
-        // if (!geocoderContainer.current?.firstChild) {
-        //   geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
-        // }
-        // geocoderContainer.current?.blur();
+        geocoder.setRenderFunction(renderFunction);
       });
 
       let savedLat = originalLat;
@@ -161,15 +162,10 @@ const LocationInput: FC<LocationInputProps> = ({
         if (isPastZoomThreshold) {
           // update the search box location based on the final latitude/longitude
           geocoder.setFlyTo(false);
-          // map.current!.removeControl(geocoder);
-          // geocoderContainer.current?.firstElementChild?.children[1].setAttribute('onfocus', 'this.blur()')
 
-          //don't display anything 
-          geocoder.setRenderFunction((result) => '')
+          // don't display anything in suggestions
+          geocoder.setRenderFunction(() => '<div class="hidden-suggestion"/>');
           geocoder.query(`${savedLat}, ${savedLng}`);
-          //@ts-ignore
-          // document.getElementsByClassName('suggestions-wrapper')[0].style.display = 'none';
-          // geocoderContainer.current?.blur();
 
           if (popup === null && map.current && canEdit) {
             popup = new mapboxgl.Popup({
@@ -185,15 +181,8 @@ const LocationInput: FC<LocationInputProps> = ({
           }
         }
 
-        // document
-        //   .getElementsByClassName('mapboxgl-ctrl-geocoder--input')[0] // @ts-ignore
-        //   .blur(); 
-
         return setIsSubmissionEnabled(isPastZoomThreshold);
       });
-      // // geocoder.on('loading', () => {map.current?.getCanvas().click()})
-      // geocoder.on('results', () => {map.current?.getCanvas().focus()});
-      // geocoder.on('clear', () => {map.current?.getCanvas().click()});
     }
   }, [
     canEdit,
@@ -212,6 +201,7 @@ const LocationInput: FC<LocationInputProps> = ({
         ref={geocoderContainer}
         className="z-20 bg-ocf-black"
         id="geocoderContainer"
+        // onClick={() => geocoder.setRenderFunction((result) => '')}
       />
       <div className="w-11/12 self-center bg-white" />
       <div className="relative top-0 flex flex-col flex-1">

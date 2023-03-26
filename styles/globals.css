@@ -13,7 +13,7 @@
 
 /* Apply additional styles to .mapboxgl-ctrl-geocoder */
 .mapboxgl-ctrl-geocoder {
-  @apply min-w-full bg-ocf-black h-14 my-3 md:my-5
+  @apply min-w-full bg-ocf-black h-14 my-3 md:my-5;
 }
 
 /* Apply styles to #map */
@@ -34,11 +34,11 @@
 }
 
 .mapboxgl-ctrl-geocoder--icon {
-  @apply top-[17px]
+  @apply top-[17px];
 }
 
 .mapboxgl-ctrl-geocoder--icon-close {
-  @apply mt-[10px]
+  @apply mt-[10px];
 }
 
 .mapboxgl-ctrl {
@@ -53,19 +53,23 @@
 }
 
 .mapboxgl-ctrl-geocoder--powered-by {
-  display:none !important;
+  @apply hidden !important;
 }
 
-.suggestions {
-  @apply bg-mapbox-black-700 hidden !important;
+.mapboxgl-ctrl-geocoder .suggestions > .active > a {
+  @apply bg-ocf-black-500 hover:bg-ocf-black-300;
 }
 
-.suggestions.active {
-  @apply bg-mapbox-black-700 !important;
+.mapboxgl-ctrl-geocoder .suggestions > li > a {
+  @apply py-0 bg-ocf-black-500 hover:bg-ocf-black-300;
 }
 
-.suggestions > li:not(.active) .mapboxgl-ctrl-geocoder--suggestion {
-  @apply text-white !important;
+.mapboxgl-ctrl-geocoder--suggestion {
+  @apply py-[6px] text-white;
+}
+
+.hidden-suggestion {
+  @apply hidden !important;
 }
 
 /* change popup to be black */
