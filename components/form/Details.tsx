@@ -49,6 +49,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   return (
     <div className="flex flex-col">
       <BackButton onClick={lastPageCallback} />
+      <div className="flex flex-col justify-end h-10"></div>
 
       <div className="flex flex-row w-full md:w-9/12 self-center">
         <div className="flex-1 hidden md:block px-8">
