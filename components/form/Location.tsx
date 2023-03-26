@@ -22,10 +22,6 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
     originalLat !== siteCoordinates.latitude ||
     originalLng !== siteCoordinates.longitude;
 
-  const title = shouldZoomIntoOriginal
-    ? 'Is this location exact?'
-    : 'Where is your solar panel located?';
-
   return (
     <>
       <div
@@ -38,7 +34,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
           id="mapboxInputWrapper"
         >
           <h1 className="font-medium md:text-3xl text-xl text-ocf-gray pl-3 md:pl-0">
-            {title}
+            Where is your solar panel located?
           </h1>
           <LocationInput
             shouldZoomIntoOriginal={shouldZoomIntoOriginal}

@@ -102,7 +102,7 @@ const LocationInput: FC<LocationInputProps> = ({
 
       map.current.on('idle', () => {
         // Enables fly to animation on search
-        geocoder.setFlyTo({curve: 1.2, speed: 7.5});
+        geocoder.setFlyTo({ curve: 1.2, speed: 5 });
       });
 
       let savedLat = originalLat;
@@ -112,6 +112,7 @@ const LocationInput: FC<LocationInputProps> = ({
         if (popup) {
           popup.remove();
         }
+        setIsSubmissionEnabled(false)
       });
 
       // Saves the map center latitude/longitude to the form context
