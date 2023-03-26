@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useCallback } from 'react';
 
 import {
   ResponsiveContainer,
@@ -7,6 +7,7 @@ import {
   LabelList,
   Area,
   ReferenceLine,
+  Label,
 } from 'recharts';
 
 import {
@@ -35,81 +36,29 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     useSiteData(siteUUID);
   const { currentTime } = useTime(latitude, longitude);
 
-  const [graphData, setGraphData] = useState(
-    forecastData
-      ? forecastDataOverDateRange(
-          forecastData.forecast_values,
-          getGraphStartDate(currentTime),
-          getGraphEndDate(currentTime)
-        )
-      : []
-  );
+  const graphData =
+    forecastData &&
+    forecastDataOverDateRange(
+      forecastData.forecast_values,
+      getGraphStartDate(currentTime),
+      getGraphEndDate(currentTime)
+    );
 
-  useEffect(() => {
-    if (graphData.length === 0) {
-      setGraphData(
-        forecastData
-          ? forecastDataOverDateRange(
-              forecastData.forecast_values,
-              getGraphStartDate(currentTime),
-              getGraphEndDate(currentTime)
-            )
-          : []
-      );
-    }
-  }, [forecastData, currentTime, graphData]);
+  const maxGeneration = graphData
+    ? Math.max(...graphData.map((value) => value.expected_generation_kw))
+    : 0;
 
-  /**
-   * Renders a text label for the threshold
-   * @param props data about the point, such as x and y position on the graph
-   * @returns SVG element
-   */
-  const renderThresholdLabel = ({ x, index }: any) => {
-    if (graphData.length > 0) {
-      if (index === 0) {
-        return (
-          <g>
-            <text
-              fill="#FFD053"
-              x={x - 25}
-              y={-78.95 * graphThreshold + 80.84}
-              className="text-xs"
-            >
-              {graphThreshold}
-            </text>
-            <text
-              fill="#FFD053"
-              x={x - 25}
-              y={-78.95 * graphThreshold + 94.84}
-              className="text-xs"
-            >
-              kw
-            </text>
-          </g>
-        );
-      }
-    }
-
-    return null;
-  };
-
-  /**
-   * Renders a marker representing the current time
-   * @param props data about the point, such as x and y position on the graph
-   * @returns SVG element
-   */
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
-    if (graphData.length > 0) {
-      if (index === getCurrentTimeForecastIndex(graphData)) {
-        return (
-          <g>
-            <LineCircle x={x} y={y} />
-          </g>
-        );
-      }
-    }
+    if (!graphData) return null;
 
-    return null;
+    const currentTimeIndex = getCurrentTimeForecastIndex(graphData);
+    if (index !== currentTimeIndex) return null;
+
+    return (
+      <g>
+        <LineCircle x={x} y={y} />
+      </g>
+    );
   };
 
   /**
@@ -117,37 +66,36 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * @returns SVG gradient
    */
   const generateGraphGradient = () => {
-    if (!isLoading && graphData.length > 0) {
-      const aboveThreshold = graphData.some(
-        (forecast) => forecast.expected_generation_kw > graphThreshold
+    if (!graphData) return null;
+
+    const aboveThreshold = graphData.some(
+      (forecast) => forecast.expected_generation_kw > graphThreshold
+    );
+
+    if (aboveThreshold) {
+      const maxExpectedGenerationKW = Math.max.apply(
+        null,
+        graphData.map(({ expected_generation_kw }) => expected_generation_kw)
       );
 
-      if (aboveThreshold) {
-        const maxExpectedGenerationKW = Math.max.apply(
-          null,
-          graphData.map(({ expected_generation_kw }) => expected_generation_kw)
-        );
+      let gradientPercentage =
+        100 - (graphThreshold / maxExpectedGenerationKW) * 100;
 
-        let gradientPercentage =
-          100 - (graphThreshold / maxExpectedGenerationKW) * 100;
-
-        if (gradientPercentage < 0) {
-          gradientPercentage = 0;
-        }
-
-        return (
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="1%" stopColor="#444444" stopOpacity={0} />
-            <stop
-              offset={`${gradientPercentage}%`}
-              stopColor="#FFD053"
-              stopOpacity={0.4}
-            />
-            <stop offset="0%" stopColor="#FFD053" stopOpacity={0} />
-          </linearGradient>
-        );
+      if (gradientPercentage < 0) {
+        gradientPercentage = 0;
       }
-      return null;
+
+      return (
+        <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="1%" stopColor="#444444" stopOpacity={0} />
+          <stop
+            offset={`${gradientPercentage}%`}
+            stopColor="#FFD053"
+            stopOpacity={0.4}
+          />
+          <stop offset="0%" stopColor="#FFD053" stopOpacity={0} />
+        </linearGradient>
+      );
     }
     return null;
   };
@@ -156,27 +104,27 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * @returns the start and end time label on the graph's x-axis
    */
   const renderStartAndEndTime = () => {
-    if (!isLoading && graphData.length > 0) {
-      const numForecastValues = graphData.length;
+    if (!graphData) return null;
 
-      if (numForecastValues > 0) {
-        const startTime = formatter.format(
-          new Date(graphData[0].target_datetime_utc)
-        );
-        const endTime = formatter.format(
-          new Date(graphData[numForecastValues - 1].target_datetime_utc)
-        );
+    const numForecastValues = graphData.length;
 
-        return (
-          <div className="flex flex-row justify-between">
-            <p className="text-white text-xs font-medium ml-6">{startTime}</p>
-            <p className="text-white text-xs font-medium mr-6">{endTime}</p>
-          </div>
-        );
-      }
+    if (numForecastValues <= 0) {
+      return null;
     }
 
-    return null;
+    const startTime = formatter.format(
+      new Date(graphData[0].target_datetime_utc)
+    );
+    const endTime = formatter.format(
+      new Date(graphData[numForecastValues - 1].target_datetime_utc)
+    );
+
+    return (
+      <div className="flex flex-row justify-between">
+        <p className="text-white text-xs font-medium ml-6">{startTime}</p>
+        <p className="text-white text-xs font-medium mr-6">{endTime}</p>
+      </div>
+    );
   };
 
   const solarIncreasingText = (formattedDate: string) => {
@@ -206,23 +154,23 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (graphData.length > 0) {
-      const currIndex = getCurrentTimeForecastIndex(graphData);
-      const minMax = getArrayMaxOrMinAfterIndex(
-        graphData,
-        'expected_generation_kw',
-        currIndex
-      );
+    if (!graphData) return null;
 
-      if (minMax) {
-        const { type, number: index } = minMax;
-        const minMaxForecastDate = formatter.format(
-          new Date(graphData[index].target_datetime_utc)
-        );
-        return type === Value.Max
-          ? solarIncreasingText(minMaxForecastDate)
-          : solarDecreasingText(minMaxForecastDate);
-      }
+    const currIndex = getCurrentTimeForecastIndex(graphData);
+    const minMax = getArrayMaxOrMinAfterIndex(
+      graphData,
+      'expected_generation_kw',
+      currIndex
+    );
+
+    if (minMax) {
+      const { type, number: index } = minMax;
+      const minMaxForecastDate = formatter.format(
+        new Date(graphData[index].target_datetime_utc)
+      );
+      return type === Value.Max
+        ? solarIncreasingText(minMaxForecastDate)
+        : solarDecreasingText(minMaxForecastDate);
     }
 
     return '';
@@ -245,7 +193,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         <div className="flex justify-end mt-[20px] mr-10 text-sm">
           <FutureThresholdLegendIcon />
         </div>
-        <ResponsiveContainer className="mt-[15px] " width="100%" height={100}>
+        <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
           <AreaChart
             data={graphData}
             margin={{
@@ -258,7 +206,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <defs>{generateGraphGradient()}</defs>
             <YAxis
               type="number"
-              domain={[0, 1.1]}
+              domain={[0, maxGeneration + 0.25]}
               axisLine={false}
               tick={false}
             />
@@ -269,11 +217,10 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               stroke="white"
               strokeDasharray="2"
               fill="url(#colorUv)"
+              // Necessary for label list https://stackoverflow.com/a/55724641
+              // Better solution for this would be nice
+              isAnimationActive={false}
             >
-              <LabelList
-                dataKey="expected_generation_kw"
-                content={renderThresholdLabel}
-              />
               <LabelList
                 dataKey="expected_generation_kw"
                 content={renderCurrentTimeMarker}
@@ -284,7 +231,13 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               strokeWidth={2}
               stroke="#FFD053"
               strokeDasharray="2"
-            />
+            >
+              <Label
+                value={graphThreshold + ' kW'}
+                position="left"
+                className="text-xs fill-ocf-yellow"
+              />
+            </ReferenceLine>
           </AreaChart>
         </ResponsiveContainer>
       </div>

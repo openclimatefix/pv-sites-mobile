@@ -1,25 +1,7 @@
 import React, { useState, useContext, FC, PropsWithChildren } from 'react';
 import useSWRMutation from 'swr/mutation';
-
-interface Form {
-  latLong: [number, number];
-  setFormData: (direction: number, tilt: number, capacity: number) => void;
-  setMapData: (lat: number, long: number) => void;
-}
-
-type FormPostData = {
-  site_uuid: number;
-  client_name: string;
-  client_site_id: number;
-  client_site_name: string;
-  latitude: number;
-  longitude: number;
-  installed_capacity_kw: number;
-  created_utc: string;
-  updated_utc: string;
-  orientation: number;
-  tilt: number;
-};
+import { originalLng, originalLat } from '../utils';
+import { LatitudeLongitude, Form, PanelDetails, FormPostData } from '../types';
 
 async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
   return fetch(url, {
@@ -39,36 +21,63 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     sendRequest
   );
 
-  const [latLong, setLatLong] = useState<[number, number]>([0, 0]);
+  const [siteCoordinates, setSiteCoordinates] = useState<LatitudeLongitude>({
+    latitude: originalLat,
+    longitude: originalLng,
+  });
 
-  const setFormData = (direction: number, tilt: number, capacity: number) => {
+  const [panelDetails, setPanelDetails] = useState<PanelDetails>({
+    siteName: '',
+    direction: '',
+    tilt: '',
+    capacity: '',
+  });
+
+  const setFormData = ({
+    siteName,
+    direction,
+    tilt,
+    capacity,
+  }: PanelDetails) => {
+    setPanelDetails({
+      siteName: siteName,
+      direction: String(direction),
+      tilt: String(tilt),
+      capacity: String(capacity),
+    });
+  };
+
+  const postPanelData = async () => {
     const date = new Date().toISOString();
+    const capacity = parseFloat(panelDetails.capacity);
+    const tilt = parseFloat(panelDetails.tilt);
+    const orientation = parseFloat(panelDetails.direction);
+
     const sentinel = 1;
     const data: FormPostData = {
       site_uuid: 1,
       client_name: 'name',
       client_site_id: 1,
-      client_site_name: 'site_name',
-      latitude: latLong[0],
-      longitude: latLong[1],
+      client_site_name: panelDetails.siteName,
+      latitude: siteCoordinates.latitude,
+      longitude: siteCoordinates.longitude,
       installed_capacity_kw: !!capacity ? capacity : sentinel,
       created_utc: date,
       updated_utc: date,
-      orientation: direction,
+      orientation: orientation,
       tilt: tilt,
     };
-    trigger(data);
-  };
-  const setMapData = (lat: number, long: number) => {
-    setLatLong([lat, long]);
+    await trigger(data);
   };
 
   return (
     <FormContext.Provider
       value={{
-        latLong,
+        siteCoordinates,
+        panelDetails,
         setFormData,
-        setMapData,
+        setSiteCoordinates,
+        postPanelData,
       }}
     >
       {children}

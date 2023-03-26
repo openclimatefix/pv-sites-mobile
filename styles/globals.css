@@ -24,6 +24,8 @@
 /* Apply styles to the input text  */
 .mapboxgl-ctrl-geocoder--input {
   @apply text-white !important;
+  @apply border-ocf-yellow-500;
+  @apply border-2;
 }
 
 /* Apply styles to the geocoder button */
@@ -52,4 +54,20 @@
 
 .suggestions > li:not(.active) .mapboxgl-ctrl-geocoder--suggestion {
   @apply text-white !important;
+}
+
+/* change popup to be black */
+.site-map .mapboxgl-popup-content {
+  @apply bg-ocf-black;
+  color: white;
+  border-radius: 10px;
+  padding: 8px 18px 8px 10px;
+}
+
+.site-map .mapboxgl-popup-close-button {
+  margin-right: 6px;
+}
+
+.site-map .mapboxgl-popup-tip {
+  display: none;
 }
