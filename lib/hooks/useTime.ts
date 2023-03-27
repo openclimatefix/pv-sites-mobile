@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { formatter } from '../graphs';
-
 const SunCalc = require('suncalc');
 
+type UseTimeOptions = {
+  enabled: boolean;
+};
+
+const defaultUseTimeOptions = {
+  enabled: true,
+};
 /**
  * Creates a hook more accessesing specific values like the current time, whether it is daytime
  * @param latitude, the latitude float value that is passed in
@@ -13,7 +18,7 @@ const SunCalc = require('suncalc');
 const useTime = (
   latitude?: number,
   longitude?: number,
-  { enabled = false }: { enabled: boolean } = { enabled: false }
+  { enabled = false }: UseTimeOptions = defaultUseTimeOptions
 ) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
