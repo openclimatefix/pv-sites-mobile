@@ -1,1176 +1,1440 @@
 {
-  "forecast_uuid": "95833950-de0f-4447-8c73-ffa5138b225d",
-  "site_uuid": "b97f68cd-50e0-49bb-a850-108d4a9f7b7e",
-  "forecast_creation_datetime": "2023-03-09T00:04:55.637896",
+  "forecast_uuid": "9078c352-08a7-4635-b40f-6037f849e21f",
+  "site_uuid": "725a8670-d012-474d-b901-1179f43e7182",
+  "forecast_creation_datetime": "2023-03-26T00:00:00",
   "forecast_version": "0.0.0",
   "forecast_values": [
     {
-      "target_datetime_utc": "2023-03-09T00:00:00",
+      "target_datetime_utc": "2023-03-26T00:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T00:15:00",
+      "target_datetime_utc": "2023-03-26T00:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T00:30:00",
+      "target_datetime_utc": "2023-03-26T00:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T00:45:00",
+      "target_datetime_utc": "2023-03-26T00:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T01:00:00",
+      "target_datetime_utc": "2023-03-26T01:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T01:15:00",
+      "target_datetime_utc": "2023-03-26T01:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T01:30:00",
+      "target_datetime_utc": "2023-03-26T01:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T01:45:00",
+      "target_datetime_utc": "2023-03-26T01:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T02:00:00",
+      "target_datetime_utc": "2023-03-26T02:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T02:15:00",
+      "target_datetime_utc": "2023-03-26T02:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T02:30:00",
+      "target_datetime_utc": "2023-03-26T02:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T02:45:00",
+      "target_datetime_utc": "2023-03-26T02:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T03:00:00",
+      "target_datetime_utc": "2023-03-26T03:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T03:15:00",
+      "target_datetime_utc": "2023-03-26T03:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T03:30:00",
+      "target_datetime_utc": "2023-03-26T03:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T03:45:00",
+      "target_datetime_utc": "2023-03-26T03:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T04:00:00",
+      "target_datetime_utc": "2023-03-26T04:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T04:15:00",
+      "target_datetime_utc": "2023-03-26T04:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T04:30:00",
+      "target_datetime_utc": "2023-03-26T04:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T04:45:00",
+      "target_datetime_utc": "2023-03-26T04:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T05:00:00",
+      "target_datetime_utc": "2023-03-26T05:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T05:15:00",
+      "target_datetime_utc": "2023-03-26T05:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T05:30:00",
+      "target_datetime_utc": "2023-03-26T05:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T05:45:00",
+      "target_datetime_utc": "2023-03-26T05:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T06:00:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-26T06:00:00",
+      "expected_generation_kw": 0.005957760485018766
     },
     {
-      "target_datetime_utc": "2023-03-09T06:15:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-26T06:15:00",
+      "expected_generation_kw": 0.010709203824223384
     },
     {
-      "target_datetime_utc": "2023-03-09T06:30:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-26T06:30:00",
+      "expected_generation_kw": 0.03023166930095159
     },
     {
-      "target_datetime_utc": "2023-03-09T06:45:00",
-      "expected_generation_kw": 0.008285197475791126
+      "target_datetime_utc": "2023-03-26T06:45:00",
+      "expected_generation_kw": 0.08239015364035492
     },
     {
-      "target_datetime_utc": "2023-03-09T07:00:00",
-      "expected_generation_kw": 0.00947249888839667
+      "target_datetime_utc": "2023-03-26T07:00:00",
+      "expected_generation_kw": 0.15587602390909813
     },
     {
-      "target_datetime_utc": "2023-03-09T07:15:00",
-      "expected_generation_kw": 0.026286701880204186
+      "target_datetime_utc": "2023-03-26T07:15:00",
+      "expected_generation_kw": 0.14207824619792728
     },
     {
-      "target_datetime_utc": "2023-03-09T07:30:00",
-      "expected_generation_kw": 0.03442373252199692
+      "target_datetime_utc": "2023-03-26T07:30:00",
+      "expected_generation_kw": 0.20326176796240208
     },
     {
-      "target_datetime_utc": "2023-03-09T07:45:00",
-      "expected_generation_kw": 0.03154112861047667
+      "target_datetime_utc": "2023-03-26T07:45:00",
+      "expected_generation_kw": 0.22918763076322932
     },
     {
-      "target_datetime_utc": "2023-03-09T08:00:00",
-      "expected_generation_kw": 0.04104629954499092
+      "target_datetime_utc": "2023-03-26T08:00:00",
+      "expected_generation_kw": 0.2571287433189609
     },
     {
-      "target_datetime_utc": "2023-03-09T08:15:00",
-      "expected_generation_kw": 0.04928958402036202
+      "target_datetime_utc": "2023-03-26T08:15:00",
+      "expected_generation_kw": 0.32836377591604227
     },
     {
-      "target_datetime_utc": "2023-03-09T08:30:00",
-      "expected_generation_kw": 0.06581335094073368
+      "target_datetime_utc": "2023-03-26T08:30:00",
+      "expected_generation_kw": 0.46628250457568304
     },
     {
-      "target_datetime_utc": "2023-03-09T08:45:00",
-      "expected_generation_kw": 0.07200294777548
+      "target_datetime_utc": "2023-03-26T08:45:00",
+      "expected_generation_kw": 0.44648562195412245
     },
     {
-      "target_datetime_utc": "2023-03-09T09:00:00",
-      "expected_generation_kw": 0.10632102437079365
+      "target_datetime_utc": "2023-03-26T09:00:00",
+      "expected_generation_kw": 0.4841437263387686
     },
     {
-      "target_datetime_utc": "2023-03-09T09:15:00",
-      "expected_generation_kw": 0.11502648200523281
+      "target_datetime_utc": "2023-03-26T09:15:00",
+      "expected_generation_kw": 0.5400476676629217
     },
     {
-      "target_datetime_utc": "2023-03-09T09:30:00",
-      "expected_generation_kw": 0.21051150105663413
+      "target_datetime_utc": "2023-03-26T09:30:00",
+      "expected_generation_kw": 0.7698081783224572
     },
     {
-      "target_datetime_utc": "2023-03-09T09:45:00",
-      "expected_generation_kw": 0.20628719017453923
+      "target_datetime_utc": "2023-03-26T09:45:00",
+      "expected_generation_kw": 0.5990537680574531
     },
     {
-      "target_datetime_utc": "2023-03-09T10:00:00",
-      "expected_generation_kw": 0.23179934929194393
+      "target_datetime_utc": "2023-03-26T10:00:00",
+      "expected_generation_kw": 0.6619889293837006
     },
     {
-      "target_datetime_utc": "2023-03-09T10:15:00",
-      "expected_generation_kw": 0.25469758715088364
+      "target_datetime_utc": "2023-03-26T10:15:00",
+      "expected_generation_kw": 0.6841846914756979
     },
     {
-      "target_datetime_utc": "2023-03-09T10:30:00",
-      "expected_generation_kw": 0.648429625054327
+      "target_datetime_utc": "2023-03-26T10:30:00",
+      "expected_generation_kw": 0.5768105570380125
     },
     {
-      "target_datetime_utc": "2023-03-09T10:45:00",
-      "expected_generation_kw": 0.42881997063464145
+      "target_datetime_utc": "2023-03-26T10:45:00",
+      "expected_generation_kw": 1.0471872551606614
     },
     {
-      "target_datetime_utc": "2023-03-09T11:00:00",
-      "expected_generation_kw": 0.4476861334438102
+      "target_datetime_utc": "2023-03-26T11:00:00",
+      "expected_generation_kw": 1.0424870514509446
     },
     {
-      "target_datetime_utc": "2023-03-09T11:15:00",
-      "expected_generation_kw": 0.4465543090734827
+      "target_datetime_utc": "2023-03-26T11:15:00",
+      "expected_generation_kw": 0.8711904452891518
     },
     {
-      "target_datetime_utc": "2023-03-09T11:30:00",
-      "expected_generation_kw": 0.5896822716636878
+      "target_datetime_utc": "2023-03-26T11:30:00",
+      "expected_generation_kw": 0.7103572832267105
     },
     {
-      "target_datetime_utc": "2023-03-09T11:45:00",
-      "expected_generation_kw": 0.5926285812655182
+      "target_datetime_utc": "2023-03-26T11:45:00",
+      "expected_generation_kw": 0.7255287987568374
     },
     {
-      "target_datetime_utc": "2023-03-09T12:00:00",
-      "expected_generation_kw": 0.5938504252589144
+      "target_datetime_utc": "2023-03-26T12:00:00",
+      "expected_generation_kw": 0.6637596018221297
     },
     {
-      "target_datetime_utc": "2023-03-09T12:15:00",
-      "expected_generation_kw": 0.6227455818628496
+      "target_datetime_utc": "2023-03-26T12:15:00",
+      "expected_generation_kw": 0.7341473055818497
     },
     {
-      "target_datetime_utc": "2023-03-09T12:30:00",
-      "expected_generation_kw": 0.6330692831638084
+      "target_datetime_utc": "2023-03-26T12:30:00",
+      "expected_generation_kw": 0.5624702473695325
     },
     {
-      "target_datetime_utc": "2023-03-09T12:45:00",
-      "expected_generation_kw": 0.6379359397650408
+      "target_datetime_utc": "2023-03-26T12:45:00",
+      "expected_generation_kw": 0.6534159110113986
     },
     {
-      "target_datetime_utc": "2023-03-09T13:00:00",
-      "expected_generation_kw": 0.6695583064090441
+      "target_datetime_utc": "2023-03-26T13:00:00",
+      "expected_generation_kw": 0.6014856318441578
     },
     {
-      "target_datetime_utc": "2023-03-09T13:15:00",
-      "expected_generation_kw": 0.6481868946703911
+      "target_datetime_utc": "2023-03-26T13:15:00",
+      "expected_generation_kw": 0.535800547817659
     },
     {
-      "target_datetime_utc": "2023-03-09T13:30:00",
-      "expected_generation_kw": 0.6461371668760272
+      "target_datetime_utc": "2023-03-26T13:30:00",
+      "expected_generation_kw": 0.7008258661845675
     },
     {
-      "target_datetime_utc": "2023-03-09T13:45:00",
-      "expected_generation_kw": 0.6450526065954011
+      "target_datetime_utc": "2023-03-26T13:45:00",
+      "expected_generation_kw": 0.6782611543017548
     },
     {
-      "target_datetime_utc": "2023-03-09T14:00:00",
-      "expected_generation_kw": 0.6374992263682681
+      "target_datetime_utc": "2023-03-26T14:00:00",
+      "expected_generation_kw": 0.7897797526153089
     },
     {
-      "target_datetime_utc": "2023-03-09T14:15:00",
-      "expected_generation_kw": 0.5605585421276915
+      "target_datetime_utc": "2023-03-26T14:15:00",
+      "expected_generation_kw": 0.7802887003380994
     },
     {
-      "target_datetime_utc": "2023-03-09T14:30:00",
-      "expected_generation_kw": 0.17784175866381352
+      "target_datetime_utc": "2023-03-26T14:30:00",
+      "expected_generation_kw": 0.7096020709668771
     },
     {
-      "target_datetime_utc": "2023-03-09T14:45:00",
-      "expected_generation_kw": 0.2055074488147231
+      "target_datetime_utc": "2023-03-26T14:45:00",
+      "expected_generation_kw": 0.6481724711043972
     },
     {
-      "target_datetime_utc": "2023-03-09T15:00:00",
-      "expected_generation_kw": 0.3633472427935608
+      "target_datetime_utc": "2023-03-26T15:00:00",
+      "expected_generation_kw": 0.4998996462489832
     },
     {
-      "target_datetime_utc": "2023-03-09T15:15:00",
-      "expected_generation_kw": 0.37534136579787536
+      "target_datetime_utc": "2023-03-26T15:15:00",
+      "expected_generation_kw": 0.46755108534875
     },
     {
-      "target_datetime_utc": "2023-03-09T15:30:00",
-      "expected_generation_kw": 0.15850572296508889
+      "target_datetime_utc": "2023-03-26T15:30:00",
+      "expected_generation_kw": 0.647928809256692
     },
     {
-      "target_datetime_utc": "2023-03-09T15:45:00",
-      "expected_generation_kw": 0.04692170148230631
+      "target_datetime_utc": "2023-03-26T15:45:00",
+      "expected_generation_kw": 0.6383979016410364
     },
     {
-      "target_datetime_utc": "2023-03-09T16:00:00",
-      "expected_generation_kw": 0.023065784669333098
+      "target_datetime_utc": "2023-03-26T16:00:00",
+      "expected_generation_kw": 0.8080789550600522
     },
     {
-      "target_datetime_utc": "2023-03-09T16:15:00",
-      "expected_generation_kw": 0.013725655140861583
+      "target_datetime_utc": "2023-03-26T16:15:00",
+      "expected_generation_kw": 0.47464070195179997
     },
     {
-      "target_datetime_utc": "2023-03-09T16:30:00",
-      "expected_generation_kw": 0.00047676517125089176
+      "target_datetime_utc": "2023-03-26T16:30:00",
+      "expected_generation_kw": 0.18560339534592826
     },
     {
-      "target_datetime_utc": "2023-03-09T16:45:00",
-      "expected_generation_kw": 0.016116870246254394
+      "target_datetime_utc": "2023-03-26T16:45:00",
+      "expected_generation_kw": 0.28504284218005077
     },
     {
-      "target_datetime_utc": "2023-03-09T17:00:00",
-      "expected_generation_kw": 0.03558870576713037
+      "target_datetime_utc": "2023-03-26T17:00:00",
+      "expected_generation_kw": 0.19834702129310697
     },
     {
-      "target_datetime_utc": "2023-03-09T17:15:00",
-      "expected_generation_kw": 0.022481621965630878
+      "target_datetime_utc": "2023-03-26T17:15:00",
+      "expected_generation_kw": 0.12405351012979739
     },
     {
-      "target_datetime_utc": "2023-03-09T17:30:00",
-      "expected_generation_kw": 0.011242465730738947
+      "target_datetime_utc": "2023-03-26T17:30:00",
+      "expected_generation_kw": 0.04610563101106485
     },
     {
-      "target_datetime_utc": "2023-03-09T17:45:00",
-      "expected_generation_kw": 0.004764442966487705
+      "target_datetime_utc": "2023-03-26T17:45:00",
+      "expected_generation_kw": 0.04673122274987138
     },
     {
-      "target_datetime_utc": "2023-03-09T18:00:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-26T18:00:00",
+      "expected_generation_kw": 0.015035026846067548
     },
     {
-      "target_datetime_utc": "2023-03-09T18:15:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-26T18:15:00",
+      "expected_generation_kw": 0.004273699914810725
     },
     {
-      "target_datetime_utc": "2023-03-09T18:30:00",
+      "target_datetime_utc": "2023-03-26T18:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T18:45:00",
+      "target_datetime_utc": "2023-03-26T18:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T19:00:00",
+      "target_datetime_utc": "2023-03-26T19:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T19:15:00",
+      "target_datetime_utc": "2023-03-26T19:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T19:30:00",
+      "target_datetime_utc": "2023-03-26T19:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T19:45:00",
+      "target_datetime_utc": "2023-03-26T19:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T20:00:00",
+      "target_datetime_utc": "2023-03-26T20:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T20:15:00",
+      "target_datetime_utc": "2023-03-26T20:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T20:30:00",
+      "target_datetime_utc": "2023-03-26T20:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T20:45:00",
+      "target_datetime_utc": "2023-03-26T20:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T21:00:00",
+      "target_datetime_utc": "2023-03-26T21:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T21:15:00",
+      "target_datetime_utc": "2023-03-26T21:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T21:30:00",
+      "target_datetime_utc": "2023-03-26T21:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T21:45:00",
+      "target_datetime_utc": "2023-03-26T21:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T22:00:00",
+      "target_datetime_utc": "2023-03-26T22:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T22:15:00",
+      "target_datetime_utc": "2023-03-26T22:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T22:30:00",
+      "target_datetime_utc": "2023-03-26T22:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T22:45:00",
+      "target_datetime_utc": "2023-03-26T22:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T23:00:00",
+      "target_datetime_utc": "2023-03-26T23:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T23:15:00",
+      "target_datetime_utc": "2023-03-26T23:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T23:30:00",
+      "target_datetime_utc": "2023-03-26T23:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-09T23:45:00",
+      "target_datetime_utc": "2023-03-26T23:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T00:00:00",
+      "target_datetime_utc": "2023-03-27T00:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T00:15:00",
+      "target_datetime_utc": "2023-03-27T00:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T00:30:00",
+      "target_datetime_utc": "2023-03-27T00:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T00:45:00",
+      "target_datetime_utc": "2023-03-27T00:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T01:00:00",
+      "target_datetime_utc": "2023-03-27T01:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T01:15:00",
+      "target_datetime_utc": "2023-03-27T01:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T01:30:00",
+      "target_datetime_utc": "2023-03-27T01:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T01:45:00",
+      "target_datetime_utc": "2023-03-27T01:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T02:00:00",
+      "target_datetime_utc": "2023-03-27T02:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T02:15:00",
+      "target_datetime_utc": "2023-03-27T02:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T02:30:00",
+      "target_datetime_utc": "2023-03-27T02:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T02:45:00",
+      "target_datetime_utc": "2023-03-27T02:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T03:00:00",
+      "target_datetime_utc": "2023-03-27T03:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T03:15:00",
+      "target_datetime_utc": "2023-03-27T03:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T03:30:00",
+      "target_datetime_utc": "2023-03-27T03:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T03:45:00",
+      "target_datetime_utc": "2023-03-27T03:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T04:00:00",
+      "target_datetime_utc": "2023-03-27T04:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T04:15:00",
+      "target_datetime_utc": "2023-03-27T04:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T04:30:00",
+      "target_datetime_utc": "2023-03-27T04:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T04:45:00",
+      "target_datetime_utc": "2023-03-27T04:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T05:00:00",
+      "target_datetime_utc": "2023-03-27T05:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T05:15:00",
+      "target_datetime_utc": "2023-03-27T05:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T05:30:00",
+      "target_datetime_utc": "2023-03-27T05:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T05:45:00",
+      "target_datetime_utc": "2023-03-27T05:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T06:00:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-27T06:00:00",
+      "expected_generation_kw": 0.014046521985423652
     },
     {
-      "target_datetime_utc": "2023-03-10T06:15:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-27T06:15:00",
+      "expected_generation_kw": 0.011382926751613244
     },
     {
-      "target_datetime_utc": "2023-03-10T06:30:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-27T06:30:00",
+      "expected_generation_kw": 0.06617447564116723
     },
     {
-      "target_datetime_utc": "2023-03-10T06:45:00",
-      "expected_generation_kw": 0.007039713587441362
+      "target_datetime_utc": "2023-03-27T06:45:00",
+      "expected_generation_kw": 0.1456933053565689
     },
     {
-      "target_datetime_utc": "2023-03-10T07:00:00",
-      "expected_generation_kw": 0.012014430140096585
+      "target_datetime_utc": "2023-03-27T07:00:00",
+      "expected_generation_kw": 0.23142172543705017
     },
     {
-      "target_datetime_utc": "2023-03-10T07:15:00",
-      "expected_generation_kw": 0.028924208291937013
+      "target_datetime_utc": "2023-03-27T07:15:00",
+      "expected_generation_kw": 0.26649025729991743
     },
     {
-      "target_datetime_utc": "2023-03-10T07:30:00",
-      "expected_generation_kw": 0.057042233980374
+      "target_datetime_utc": "2023-03-27T07:30:00",
+      "expected_generation_kw": 0.47394453382558355
     },
     {
-      "target_datetime_utc": "2023-03-10T07:45:00",
-      "expected_generation_kw": 0.0611921673406982
+      "target_datetime_utc": "2023-03-27T07:45:00",
+      "expected_generation_kw": 0.7510099421586515
     },
     {
-      "target_datetime_utc": "2023-03-10T08:00:00",
-      "expected_generation_kw": 0.18126018748578465
+      "target_datetime_utc": "2023-03-27T08:00:00",
+      "expected_generation_kw": 0.9097900713707006
     },
     {
-      "target_datetime_utc": "2023-03-10T08:15:00",
-      "expected_generation_kw": 0.28087884230596316
+      "target_datetime_utc": "2023-03-27T08:15:00",
+      "expected_generation_kw": 1.0158414176686794
     },
     {
-      "target_datetime_utc": "2023-03-10T08:30:00",
-      "expected_generation_kw": 0.3243511472516837
+      "target_datetime_utc": "2023-03-27T08:30:00",
+      "expected_generation_kw": 1.0550700825561095
     },
     {
-      "target_datetime_utc": "2023-03-10T08:45:00",
-      "expected_generation_kw": 0.40838464934989716
+      "target_datetime_utc": "2023-03-27T08:45:00",
+      "expected_generation_kw": 1.2107206661852161
     },
     {
-      "target_datetime_utc": "2023-03-10T09:00:00",
-      "expected_generation_kw": 0.482969341609322
+      "target_datetime_utc": "2023-03-27T09:00:00",
+      "expected_generation_kw": 1.3709676878586379
     },
     {
-      "target_datetime_utc": "2023-03-10T09:15:00",
-      "expected_generation_kw": 0.5491384193767498
+      "target_datetime_utc": "2023-03-27T09:15:00",
+      "expected_generation_kw": 1.4802866375783499
     },
     {
-      "target_datetime_utc": "2023-03-10T09:30:00",
-      "expected_generation_kw": 0.5806786382080038
+      "target_datetime_utc": "2023-03-27T09:30:00",
+      "expected_generation_kw": 1.5990741000032962
     },
     {
-      "target_datetime_utc": "2023-03-10T09:45:00",
-      "expected_generation_kw": 0.6193998749198265
+      "target_datetime_utc": "2023-03-27T09:45:00",
+      "expected_generation_kw": 1.6872070967372825
     },
     {
-      "target_datetime_utc": "2023-03-10T10:00:00",
-      "expected_generation_kw": 0.6512900256305925
+      "target_datetime_utc": "2023-03-27T10:00:00",
+      "expected_generation_kw": 1.8365782091879421
     },
     {
-      "target_datetime_utc": "2023-03-10T10:15:00",
-      "expected_generation_kw": 0.6852242092920103
+      "target_datetime_utc": "2023-03-27T10:15:00",
+      "expected_generation_kw": 1.9838708853295952
     },
     {
-      "target_datetime_utc": "2023-03-10T10:30:00",
-      "expected_generation_kw": 0.7096690587247337
+      "target_datetime_utc": "2023-03-27T10:30:00",
+      "expected_generation_kw": 1.841389154007574
     },
     {
-      "target_datetime_utc": "2023-03-10T10:45:00",
-      "expected_generation_kw": 0.7350958516520231
+      "target_datetime_utc": "2023-03-27T10:45:00",
+      "expected_generation_kw": 1.921076117740083
     },
     {
-      "target_datetime_utc": "2023-03-10T11:00:00",
-      "expected_generation_kw": 0.7527164928085508
+      "target_datetime_utc": "2023-03-27T11:00:00",
+      "expected_generation_kw": 1.4055745308860141
     },
     {
-      "target_datetime_utc": "2023-03-10T11:15:00",
-      "expected_generation_kw": 0.7754923994651587
+      "target_datetime_utc": "2023-03-27T11:15:00",
+      "expected_generation_kw": 1.257577841451849
     },
     {
-      "target_datetime_utc": "2023-03-10T11:30:00",
-      "expected_generation_kw": 0.7533810935895043
+      "target_datetime_utc": "2023-03-27T11:30:00",
+      "expected_generation_kw": 1.1967060666276303
     },
     {
-      "target_datetime_utc": "2023-03-10T11:45:00",
-      "expected_generation_kw": 0.6370303518477513
+      "target_datetime_utc": "2023-03-27T11:45:00",
+      "expected_generation_kw": 1.3446309718942249
     },
     {
-      "target_datetime_utc": "2023-03-10T12:00:00",
-      "expected_generation_kw": 0.6182334732775792
+      "target_datetime_utc": "2023-03-27T12:00:00",
+      "expected_generation_kw": 1.1726081787951028
     },
     {
-      "target_datetime_utc": "2023-03-10T12:15:00",
-      "expected_generation_kw": 0.7877282480167127
+      "target_datetime_utc": "2023-03-27T12:15:00",
+      "expected_generation_kw": 1.1243652132898558
     },
     {
-      "target_datetime_utc": "2023-03-10T12:30:00",
-      "expected_generation_kw": 0.7697462380895895
+      "target_datetime_utc": "2023-03-27T12:30:00",
+      "expected_generation_kw": 1.0516870706787889
     },
     {
-      "target_datetime_utc": "2023-03-10T12:45:00",
-      "expected_generation_kw": 0.6668778506336934
+      "target_datetime_utc": "2023-03-27T12:45:00",
+      "expected_generation_kw": 0.720500769579375
     },
     {
-      "target_datetime_utc": "2023-03-10T13:00:00",
-      "expected_generation_kw": 0.6701554269971449
+      "target_datetime_utc": "2023-03-27T13:00:00",
+      "expected_generation_kw": 0.679589941566448
     },
     {
-      "target_datetime_utc": "2023-03-10T13:15:00",
-      "expected_generation_kw": 0.7409495666765846
+      "target_datetime_utc": "2023-03-27T13:15:00",
+      "expected_generation_kw": 0.876318068706422
     },
     {
-      "target_datetime_utc": "2023-03-10T13:30:00",
-      "expected_generation_kw": 0.7077817973159459
+      "target_datetime_utc": "2023-03-27T13:30:00",
+      "expected_generation_kw": 0.8265360522998159
     },
     {
-      "target_datetime_utc": "2023-03-10T13:45:00",
-      "expected_generation_kw": 0.7001118099819242
+      "target_datetime_utc": "2023-03-27T13:45:00",
+      "expected_generation_kw": 1.6146399619230576
     },
     {
-      "target_datetime_utc": "2023-03-10T14:00:00",
-      "expected_generation_kw": 0.671040065272466
+      "target_datetime_utc": "2023-03-27T14:00:00",
+      "expected_generation_kw": 1.6301602227689942
     },
     {
-      "target_datetime_utc": "2023-03-10T14:15:00",
-      "expected_generation_kw": 0.616777776286987
+      "target_datetime_utc": "2023-03-27T14:15:00",
+      "expected_generation_kw": 1.0963998018986945
     },
     {
-      "target_datetime_utc": "2023-03-10T14:30:00",
-      "expected_generation_kw": 0.6208204098847058
+      "target_datetime_utc": "2023-03-27T14:30:00",
+      "expected_generation_kw": 1.224384632481154
     },
     {
-      "target_datetime_utc": "2023-03-10T14:45:00",
-      "expected_generation_kw": 0.5343816887686115
+      "target_datetime_utc": "2023-03-27T14:45:00",
+      "expected_generation_kw": 1.0658571451386718
     },
     {
-      "target_datetime_utc": "2023-03-10T15:00:00",
-      "expected_generation_kw": 0.5322974558181629
+      "target_datetime_utc": "2023-03-27T15:00:00",
+      "expected_generation_kw": 1.1466217631923268
     },
     {
-      "target_datetime_utc": "2023-03-10T15:15:00",
-      "expected_generation_kw": 0.529904195702509
+      "target_datetime_utc": "2023-03-27T15:15:00",
+      "expected_generation_kw": 1.1482193645673404
     },
     {
-      "target_datetime_utc": "2023-03-10T15:30:00",
-      "expected_generation_kw": 0.3907709587857058
+      "target_datetime_utc": "2023-03-27T15:30:00",
+      "expected_generation_kw": 0.44473696890990355
     },
     {
-      "target_datetime_utc": "2023-03-10T15:45:00",
-      "expected_generation_kw": 0.36372872568986525
+      "target_datetime_utc": "2023-03-27T15:45:00",
+      "expected_generation_kw": 0.559647822383223
     },
     {
-      "target_datetime_utc": "2023-03-10T16:00:00",
-      "expected_generation_kw": 0.31792780815962396
+      "target_datetime_utc": "2023-03-27T16:00:00",
+      "expected_generation_kw": 0.5430687677562431
     },
     {
-      "target_datetime_utc": "2023-03-10T16:15:00",
-      "expected_generation_kw": 0.27750042819903536
+      "target_datetime_utc": "2023-03-27T16:15:00",
+      "expected_generation_kw": 0.4601922975387358
     },
     {
-      "target_datetime_utc": "2023-03-10T16:30:00",
-      "expected_generation_kw": 0.22410234360133538
+      "target_datetime_utc": "2023-03-27T16:30:00",
+      "expected_generation_kw": 0.7034253518224444
     },
     {
-      "target_datetime_utc": "2023-03-10T16:45:00",
-      "expected_generation_kw": 0.16964336686115727
+      "target_datetime_utc": "2023-03-27T16:45:00",
+      "expected_generation_kw": 0.5533108152031198
     },
     {
-      "target_datetime_utc": "2023-03-10T17:00:00",
-      "expected_generation_kw": 0.10910550104126941
+      "target_datetime_utc": "2023-03-27T17:00:00",
+      "expected_generation_kw": 0.3626040695658603
     },
     {
-      "target_datetime_utc": "2023-03-10T17:15:00",
-      "expected_generation_kw": 0.04813982381159988
+      "target_datetime_utc": "2023-03-27T17:15:00",
+      "expected_generation_kw": 0.26101598757851263
     },
     {
-      "target_datetime_utc": "2023-03-10T17:30:00",
-      "expected_generation_kw": 0.014497995456765281
+      "target_datetime_utc": "2023-03-27T17:30:00",
+      "expected_generation_kw": 0.10810850423446815
     },
     {
-      "target_datetime_utc": "2023-03-10T17:45:00",
-      "expected_generation_kw": 0.007926766040734317
+      "target_datetime_utc": "2023-03-27T17:45:00",
+      "expected_generation_kw": 0.0778930345129759
     },
     {
-      "target_datetime_utc": "2023-03-10T18:00:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-27T18:00:00",
+      "expected_generation_kw": 0.024903422401060485
     },
     {
-      "target_datetime_utc": "2023-03-10T18:15:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-27T18:15:00",
+      "expected_generation_kw": 0.005034606487114658
     },
     {
-      "target_datetime_utc": "2023-03-10T18:30:00",
+      "target_datetime_utc": "2023-03-27T18:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T18:45:00",
+      "target_datetime_utc": "2023-03-27T18:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T19:00:00",
+      "target_datetime_utc": "2023-03-27T19:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T19:15:00",
+      "target_datetime_utc": "2023-03-27T19:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T19:30:00",
+      "target_datetime_utc": "2023-03-27T19:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T19:45:00",
+      "target_datetime_utc": "2023-03-27T19:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T20:00:00",
+      "target_datetime_utc": "2023-03-27T20:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T20:15:00",
+      "target_datetime_utc": "2023-03-27T20:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T20:30:00",
+      "target_datetime_utc": "2023-03-27T20:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T20:45:00",
+      "target_datetime_utc": "2023-03-27T20:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T21:00:00",
+      "target_datetime_utc": "2023-03-27T21:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T21:15:00",
+      "target_datetime_utc": "2023-03-27T21:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T21:30:00",
+      "target_datetime_utc": "2023-03-27T21:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T21:45:00",
+      "target_datetime_utc": "2023-03-27T21:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T22:00:00",
+      "target_datetime_utc": "2023-03-27T22:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T22:15:00",
+      "target_datetime_utc": "2023-03-27T22:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T22:30:00",
+      "target_datetime_utc": "2023-03-27T22:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T22:45:00",
+      "target_datetime_utc": "2023-03-27T22:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T23:00:00",
+      "target_datetime_utc": "2023-03-27T23:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T23:15:00",
+      "target_datetime_utc": "2023-03-27T23:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T23:30:00",
+      "target_datetime_utc": "2023-03-27T23:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-10T23:45:00",
+      "target_datetime_utc": "2023-03-27T23:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T00:00:00",
+      "target_datetime_utc": "2023-03-28T00:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T00:15:00",
+      "target_datetime_utc": "2023-03-28T00:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T00:30:00",
+      "target_datetime_utc": "2023-03-28T00:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T00:45:00",
+      "target_datetime_utc": "2023-03-28T00:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T01:00:00",
+      "target_datetime_utc": "2023-03-28T01:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T01:15:00",
+      "target_datetime_utc": "2023-03-28T01:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T01:30:00",
+      "target_datetime_utc": "2023-03-28T01:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T01:45:00",
+      "target_datetime_utc": "2023-03-28T01:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T02:00:00",
+      "target_datetime_utc": "2023-03-28T02:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T02:15:00",
+      "target_datetime_utc": "2023-03-28T02:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T02:30:00",
+      "target_datetime_utc": "2023-03-28T02:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T02:45:00",
+      "target_datetime_utc": "2023-03-28T02:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T03:00:00",
+      "target_datetime_utc": "2023-03-28T03:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T03:15:00",
+      "target_datetime_utc": "2023-03-28T03:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T03:30:00",
+      "target_datetime_utc": "2023-03-28T03:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T03:45:00",
+      "target_datetime_utc": "2023-03-28T03:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T04:00:00",
+      "target_datetime_utc": "2023-03-28T04:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T04:15:00",
+      "target_datetime_utc": "2023-03-28T04:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T04:30:00",
+      "target_datetime_utc": "2023-03-28T04:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T04:45:00",
+      "target_datetime_utc": "2023-03-28T04:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T05:00:00",
+      "target_datetime_utc": "2023-03-28T05:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T05:15:00",
+      "target_datetime_utc": "2023-03-28T05:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T05:30:00",
+      "target_datetime_utc": "2023-03-28T05:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T05:45:00",
+      "target_datetime_utc": "2023-03-28T05:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T06:00:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-28T06:00:00",
+      "expected_generation_kw": 0.0053441429412843236
     },
     {
-      "target_datetime_utc": "2023-03-11T06:15:00",
-      "expected_generation_kw": 0.0
+      "target_datetime_utc": "2023-03-28T06:15:00",
+      "expected_generation_kw": 0.020844721234943787
+    },
+    {
+      "target_datetime_utc": "2023-03-28T06:30:00",
+      "expected_generation_kw": 0.050194156290508725
+    },
+    {
+      "target_datetime_utc": "2023-03-28T06:45:00",
+      "expected_generation_kw": 0.09183782650752013
+    },
+    {
+      "target_datetime_utc": "2023-03-28T07:00:00",
+      "expected_generation_kw": 0.17358201215569366
+    },
+    {
+      "target_datetime_utc": "2023-03-28T07:15:00",
+      "expected_generation_kw": 0.2082953278894086
+    },
+    {
+      "target_datetime_utc": "2023-03-28T07:30:00",
+      "expected_generation_kw": 0.23548200836980485
+    },
+    {
+      "target_datetime_utc": "2023-03-28T07:45:00",
+      "expected_generation_kw": 0.28511408675089345
+    },
+    {
+      "target_datetime_utc": "2023-03-28T08:00:00",
+      "expected_generation_kw": 0.3487605986638002
+    },
+    {
+      "target_datetime_utc": "2023-03-28T08:15:00",
+      "expected_generation_kw": 0.40907918394099185
+    },
+    {
+      "target_datetime_utc": "2023-03-28T08:30:00",
+      "expected_generation_kw": 0.40706194831560877
+    },
+    {
+      "target_datetime_utc": "2023-03-28T08:45:00",
+      "expected_generation_kw": 0.4679952435849324
+    },
+    {
+      "target_datetime_utc": "2023-03-28T09:00:00",
+      "expected_generation_kw": 0.5885586197754774
+    },
+    {
+      "target_datetime_utc": "2023-03-28T09:15:00",
+      "expected_generation_kw": 0.6244521004249091
+    },
+    {
+      "target_datetime_utc": "2023-03-28T09:30:00",
+      "expected_generation_kw": 0.6832946662718936
+    },
+    {
+      "target_datetime_utc": "2023-03-28T09:45:00",
+      "expected_generation_kw": 0.6585489219213773
     },
     {
-      "target_datetime_utc": "2023-03-11T06:30:00",
-      "expected_generation_kw": 0.0006167646136834078
+      "target_datetime_utc": "2023-03-28T10:00:00",
+      "expected_generation_kw": 0.760482769529709
     },
     {
-      "target_datetime_utc": "2023-03-11T06:45:00",
-      "expected_generation_kw": 0.008389150627608487
+      "target_datetime_utc": "2023-03-28T10:15:00",
+      "expected_generation_kw": 0.7764231796636281
     },
     {
-      "target_datetime_utc": "2023-03-11T07:00:00",
-      "expected_generation_kw": 0.016147123602887444
+      "target_datetime_utc": "2023-03-28T10:30:00",
+      "expected_generation_kw": 0.7161797246186248
     },
     {
-      "target_datetime_utc": "2023-03-11T07:15:00",
-      "expected_generation_kw": 0.04384160838109012
+      "target_datetime_utc": "2023-03-28T10:45:00",
+      "expected_generation_kw": 0.7907013177194907
     },
     {
-      "target_datetime_utc": "2023-03-11T07:30:00",
-      "expected_generation_kw": 0.08846503838904177
+      "target_datetime_utc": "2023-03-28T11:00:00",
+      "expected_generation_kw": 0.7347593393027455
     },
     {
-      "target_datetime_utc": "2023-03-11T07:45:00",
-      "expected_generation_kw": 0.12638827931152394
+      "target_datetime_utc": "2023-03-28T11:15:00",
+      "expected_generation_kw": 0.603648427229555
     },
     {
-      "target_datetime_utc": "2023-03-11T08:00:00",
-      "expected_generation_kw": 0.16988936052102346
+      "target_datetime_utc": "2023-03-28T11:30:00",
+      "expected_generation_kw": 0.7802273958945708
     },
     {
-      "target_datetime_utc": "2023-03-11T08:15:00",
-      "expected_generation_kw": 0.25662494490764454
+      "target_datetime_utc": "2023-03-28T11:45:00",
+      "expected_generation_kw": 0.4917133140525425
     },
     {
-      "target_datetime_utc": "2023-03-11T08:30:00",
-      "expected_generation_kw": 0.2832861429986766
+      "target_datetime_utc": "2023-03-28T12:00:00",
+      "expected_generation_kw": 0.6329731910650469
     },
     {
-      "target_datetime_utc": "2023-03-11T08:45:00",
-      "expected_generation_kw": 0.3677781772541242
+      "target_datetime_utc": "2023-03-28T12:15:00",
+      "expected_generation_kw": 0.6247344115149269
     },
     {
-      "target_datetime_utc": "2023-03-11T09:00:00",
-      "expected_generation_kw": 0.44468138631604365
+      "target_datetime_utc": "2023-03-28T12:30:00",
+      "expected_generation_kw": 0.5649470797580093
     },
     {
-      "target_datetime_utc": "2023-03-11T09:15:00",
-      "expected_generation_kw": 0.4951072278901655
+      "target_datetime_utc": "2023-03-28T12:45:00",
+      "expected_generation_kw": 0.6168474078724617
     },
     {
-      "target_datetime_utc": "2023-03-11T09:30:00",
-      "expected_generation_kw": 0.5199531945345016
+      "target_datetime_utc": "2023-03-28T13:00:00",
+      "expected_generation_kw": 0.5260169703970055
     },
     {
-      "target_datetime_utc": "2023-03-11T09:45:00",
-      "expected_generation_kw": 0.5808303545220155
+      "target_datetime_utc": "2023-03-28T13:15:00",
+      "expected_generation_kw": 0.759912408422941
     },
     {
-      "target_datetime_utc": "2023-03-11T10:00:00",
-      "expected_generation_kw": 0.6153124834997993
+      "target_datetime_utc": "2023-03-28T13:30:00",
+      "expected_generation_kw": 0.6879556420184656
     },
     {
-      "target_datetime_utc": "2023-03-11T10:15:00",
-      "expected_generation_kw": 0.6569921963916446
+      "target_datetime_utc": "2023-03-28T13:45:00",
+      "expected_generation_kw": 0.6431681982940527
     },
     {
-      "target_datetime_utc": "2023-03-11T10:30:00",
-      "expected_generation_kw": 0.6835537423790717
+      "target_datetime_utc": "2023-03-28T14:00:00",
+      "expected_generation_kw": 0.4693597498649047
     },
     {
-      "target_datetime_utc": "2023-03-11T10:45:00",
-      "expected_generation_kw": 0.7200304922382939
+      "target_datetime_utc": "2023-03-28T14:15:00",
+      "expected_generation_kw": 0.44853220908258423
     },
     {
-      "target_datetime_utc": "2023-03-11T11:00:00",
-      "expected_generation_kw": 0.7625586813237182
+      "target_datetime_utc": "2023-03-28T14:30:00",
+      "expected_generation_kw": 0.42535947494119203
     },
     {
-      "target_datetime_utc": "2023-03-11T11:15:00",
-      "expected_generation_kw": 0.7751135140986197
+      "target_datetime_utc": "2023-03-28T14:45:00",
+      "expected_generation_kw": 0.4689628129970254
     },
     {
-      "target_datetime_utc": "2023-03-11T11:30:00",
-      "expected_generation_kw": 0.7629800006344492
+      "target_datetime_utc": "2023-03-28T15:00:00",
+      "expected_generation_kw": 0.27384143347467366
     },
     {
-      "target_datetime_utc": "2023-03-11T11:45:00",
-      "expected_generation_kw": 0.6629464001372922
+      "target_datetime_utc": "2023-03-28T15:15:00",
+      "expected_generation_kw": 0.25230288361600206
     },
     {
-      "target_datetime_utc": "2023-03-11T12:00:00",
-      "expected_generation_kw": 0.6139904439627027
+      "target_datetime_utc": "2023-03-28T15:30:00",
+      "expected_generation_kw": 0.29265702699264423
     },
     {
-      "target_datetime_utc": "2023-03-11T12:15:00",
-      "expected_generation_kw": 0.8271847853214308
+      "target_datetime_utc": "2023-03-28T15:45:00",
+      "expected_generation_kw": 0.3299134418713949
     },
     {
-      "target_datetime_utc": "2023-03-11T12:30:00",
-      "expected_generation_kw": 0.7697578691254378
+      "target_datetime_utc": "2023-03-28T16:00:00",
+      "expected_generation_kw": 0.20648603079166003
     },
     {
-      "target_datetime_utc": "2023-03-11T12:45:00",
-      "expected_generation_kw": 0.7051517317166872
+      "target_datetime_utc": "2023-03-28T16:15:00",
+      "expected_generation_kw": 0.1643234948420556
     },
     {
-      "target_datetime_utc": "2023-03-11T13:00:00",
-      "expected_generation_kw": 0.7562453178757718
+      "target_datetime_utc": "2023-03-28T16:30:00",
+      "expected_generation_kw": 0.13703194082032658
     },
     {
-      "target_datetime_utc": "2023-03-11T13:15:00",
-      "expected_generation_kw": 0.8024437823863627
+      "target_datetime_utc": "2023-03-28T16:45:00",
+      "expected_generation_kw": 0.1455674015931521
     },
     {
-      "target_datetime_utc": "2023-03-11T13:30:00",
-      "expected_generation_kw": 0.7758519821748151
+      "target_datetime_utc": "2023-03-28T17:00:00",
+      "expected_generation_kw": 0.08599058093627052
     },
     {
-      "target_datetime_utc": "2023-03-11T13:45:00",
-      "expected_generation_kw": 0.7606216502201415
+      "target_datetime_utc": "2023-03-28T17:15:00",
+      "expected_generation_kw": 0.054781229295517854
     },
     {
-      "target_datetime_utc": "2023-03-11T14:00:00",
-      "expected_generation_kw": 0.7573654340577877
+      "target_datetime_utc": "2023-03-28T17:30:00",
+      "expected_generation_kw": 0.036225196090925164
     },
     {
-      "target_datetime_utc": "2023-03-11T14:15:00",
-      "expected_generation_kw": 0.7086948043745842
+      "target_datetime_utc": "2023-03-28T17:45:00",
+      "expected_generation_kw": 0.027289652446259204
     },
     {
-      "target_datetime_utc": "2023-03-11T14:30:00",
-      "expected_generation_kw": 0.6869273983882783
+      "target_datetime_utc": "2023-03-28T18:00:00",
+      "expected_generation_kw": 0.015599583386472266
     },
     {
-      "target_datetime_utc": "2023-03-11T14:45:00",
-      "expected_generation_kw": 0.5934898996910513
+      "target_datetime_utc": "2023-03-28T18:15:00",
+      "expected_generation_kw": 0.004485246290804021
     },
     {
-      "target_datetime_utc": "2023-03-11T15:00:00",
-      "expected_generation_kw": 0.5411359533631164
+      "target_datetime_utc": "2023-03-28T18:30:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-28T18:45:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-28T19:00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-28T19:15:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T15:15:00",
-      "expected_generation_kw": 0.5565179896572753
+      "target_datetime_utc": "2023-03-28T19:30:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-28T19:45:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-28T20:00:00",
+      "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-28T20:15:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T15:30:00",
-      "expected_generation_kw": 0.42031546969333283
+      "target_datetime_utc": "2023-03-28T20:30:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T15:45:00",
-      "expected_generation_kw": 0.3965224139780447
+      "target_datetime_utc": "2023-03-28T20:45:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T16:00:00",
-      "expected_generation_kw": 0.33716967392971053
+      "target_datetime_utc": "2023-03-28T21:00:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T16:15:00",
-      "expected_generation_kw": 0.28668521397636587
+      "target_datetime_utc": "2023-03-28T21:15:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T16:30:00",
-      "expected_generation_kw": 0.2167215138914298
+      "target_datetime_utc": "2023-03-28T21:30:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T16:45:00",
-      "expected_generation_kw": 0.16548133111575
+      "target_datetime_utc": "2023-03-28T21:45:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T17:00:00",
-      "expected_generation_kw": 0.11062597635029095
+      "target_datetime_utc": "2023-03-28T22:00:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T17:15:00",
-      "expected_generation_kw": 0.05265710746544779
+      "target_datetime_utc": "2023-03-28T22:15:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T17:30:00",
-      "expected_generation_kw": 0.017293526459092913
+      "target_datetime_utc": "2023-03-28T22:30:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T17:45:00",
-      "expected_generation_kw": 0.007701199958307459
+      "target_datetime_utc": "2023-03-28T22:45:00",
+      "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T18:00:00",
+      "target_datetime_utc": "2023-03-28T23:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T18:15:00",
+      "target_datetime_utc": "2023-03-28T23:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T18:30:00",
+      "target_datetime_utc": "2023-03-28T23:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T18:45:00",
+      "target_datetime_utc": "2023-03-28T23:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T19:00:00",
+      "target_datetime_utc": "2023-03-29T00:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T19:15:00",
+      "target_datetime_utc": "2023-03-29T00:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T19:30:00",
+      "target_datetime_utc": "2023-03-29T00:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T19:45:00",
+      "target_datetime_utc": "2023-03-29T00:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T20:00:00",
+      "target_datetime_utc": "2023-03-29T01:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T20:15:00",
+      "target_datetime_utc": "2023-03-29T01:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T20:30:00",
+      "target_datetime_utc": "2023-03-29T01:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T20:45:00",
+      "target_datetime_utc": "2023-03-29T01:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T21:00:00",
+      "target_datetime_utc": "2023-03-29T02:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T21:15:00",
+      "target_datetime_utc": "2023-03-29T02:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T21:30:00",
+      "target_datetime_utc": "2023-03-29T02:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T21:45:00",
+      "target_datetime_utc": "2023-03-29T02:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T22:00:00",
+      "target_datetime_utc": "2023-03-29T03:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T22:15:00",
+      "target_datetime_utc": "2023-03-29T03:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T22:30:00",
+      "target_datetime_utc": "2023-03-29T03:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T22:45:00",
+      "target_datetime_utc": "2023-03-29T03:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T23:00:00",
+      "target_datetime_utc": "2023-03-29T04:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T23:15:00",
+      "target_datetime_utc": "2023-03-29T04:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T23:30:00",
+      "target_datetime_utc": "2023-03-29T04:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-11T23:45:00",
+      "target_datetime_utc": "2023-03-29T04:45:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-12T00:00:00",
+      "target_datetime_utc": "2023-03-29T05:00:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-12T00:15:00",
+      "target_datetime_utc": "2023-03-29T05:15:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-12T00:30:00",
+      "target_datetime_utc": "2023-03-29T05:30:00",
       "expected_generation_kw": 0.0
     },
     {
-      "target_datetime_utc": "2023-03-12T00:45:00",
+      "target_datetime_utc": "2023-03-29T05:45:00",
       "expected_generation_kw": 0.0
+    },
+    {
+      "target_datetime_utc": "2023-03-29T06:00:00",
+      "expected_generation_kw": 0.008622483407496306
+    },
+    {
+      "target_datetime_utc": "2023-03-29T06:15:00",
+      "expected_generation_kw": 0.022344872421374326
+    },
+    {
+      "target_datetime_utc": "2023-03-29T06:30:00",
+      "expected_generation_kw": 0.06029323009106624
+    },
+    {
+      "target_datetime_utc": "2023-03-29T06:45:00",
+      "expected_generation_kw": 0.1086953780456044
+    },
+    {
+      "target_datetime_utc": "2023-03-29T07:00:00",
+      "expected_generation_kw": 0.18588866359358786
+    },
+    {
+      "target_datetime_utc": "2023-03-29T07:15:00",
+      "expected_generation_kw": 0.23949931916796827
+    },
+    {
+      "target_datetime_utc": "2023-03-29T07:30:00",
+      "expected_generation_kw": 0.27787966995185487
+    },
+    {
+      "target_datetime_utc": "2023-03-29T07:45:00",
+      "expected_generation_kw": 0.34485161491391025
+    },
+    {
+      "target_datetime_utc": "2023-03-29T08:00:00",
+      "expected_generation_kw": 0.41035238680726194
+    },
+    {
+      "target_datetime_utc": "2023-03-29T08:15:00",
+      "expected_generation_kw": 0.4799506481779057
+    },
+    {
+      "target_datetime_utc": "2023-03-29T08:30:00",
+      "expected_generation_kw": 0.47604920307039317
+    },
+    {
+      "target_datetime_utc": "2023-03-29T08:45:00",
+      "expected_generation_kw": 0.5313174381338435
+    },
+    {
+      "target_datetime_utc": "2023-03-29T09:00:00",
+      "expected_generation_kw": 0.676888368787403
+    },
+    {
+      "target_datetime_utc": "2023-03-29T09:15:00",
+      "expected_generation_kw": 0.7135223620068266
+    },
+    {
+      "target_datetime_utc": "2023-03-29T09:30:00",
+      "expected_generation_kw": 0.785605820143733
+    },
+    {
+      "target_datetime_utc": "2023-03-29T09:45:00",
+      "expected_generation_kw": 0.7837886546625077
+    },
+    {
+      "target_datetime_utc": "2023-03-29T10:00:00",
+      "expected_generation_kw": 0.9022794414255039
+    },
+    {
+      "target_datetime_utc": "2023-03-29T10:15:00",
+      "expected_generation_kw": 0.9328078997742919
+    },
+    {
+      "target_datetime_utc": "2023-03-29T10:30:00",
+      "expected_generation_kw": 0.85160260110222
+    },
+    {
+      "target_datetime_utc": "2023-03-29T10:45:00",
+      "expected_generation_kw": 0.9316646473047869
+    },
+    {
+      "target_datetime_utc": "2023-03-29T11:00:00",
+      "expected_generation_kw": 0.8783981320283059
+    },
+    {
+      "target_datetime_utc": "2023-03-29T11:15:00",
+      "expected_generation_kw": 0.7474025923596485
+    },
+    {
+      "target_datetime_utc": "2023-03-29T11:30:00",
+      "expected_generation_kw": 0.9206344544087572
+    },
+    {
+      "target_datetime_utc": "2023-03-29T11:45:00",
+      "expected_generation_kw": 0.6409572208786731
+    },
+    {
+      "target_datetime_utc": "2023-03-29T12:00:00",
+      "expected_generation_kw": 0.7748740879465335
+    },
+    {
+      "target_datetime_utc": "2023-03-29T12:15:00",
+      "expected_generation_kw": 0.7757652053010088
+    },
+    {
+      "target_datetime_utc": "2023-03-29T12:30:00",
+      "expected_generation_kw": 0.699857844418452
+    },
+    {
+      "target_datetime_utc": "2023-03-29T12:45:00",
+      "expected_generation_kw": 0.7658861907360068
+    },
+    {
+      "target_datetime_utc": "2023-03-29T13:00:00",
+      "expected_generation_kw": 0.6636907082003846
+    },
+    {
+      "target_datetime_utc": "2023-03-29T13:15:00",
+      "expected_generation_kw": 0.8902528812750556
+    },
+    {
+      "target_datetime_utc": "2023-03-29T13:30:00",
+      "expected_generation_kw": 0.8147634426456664
+    },
+    {
+      "target_datetime_utc": "2023-03-29T13:45:00",
+      "expected_generation_kw": 0.7578220540423565
+    },
+    {
+      "target_datetime_utc": "2023-03-29T14:00:00",
+      "expected_generation_kw": 0.578973992272177
+    },
+    {
+      "target_datetime_utc": "2023-03-29T14:15:00",
+      "expected_generation_kw": 0.5534113307118652
+    },
+    {
+      "target_datetime_utc": "2023-03-29T14:30:00",
+      "expected_generation_kw": 0.5249796931563315
+    },
+    {
+      "target_datetime_utc": "2023-03-29T14:45:00",
+      "expected_generation_kw": 0.5554292624083198
+    },
+    {
+      "target_datetime_utc": "2023-03-29T15:00:00",
+      "expected_generation_kw": 0.35014834112145754
+    },
+    {
+      "target_datetime_utc": "2023-03-29T15:15:00",
+      "expected_generation_kw": 0.32281291607264845
+    },
+    {
+      "target_datetime_utc": "2023-03-29T15:30:00",
+      "expected_generation_kw": 0.3575861675777015
+    },
+    {
+      "target_datetime_utc": "2023-03-29T15:45:00",
+      "expected_generation_kw": 0.39483582041860676
+    },
+    {
+      "target_datetime_utc": "2023-03-29T16:00:00",
+      "expected_generation_kw": 0.25608185931779404
+    },
+    {
+      "target_datetime_utc": "2023-03-29T16:15:00",
+      "expected_generation_kw": 0.20724229594266386
+    },
+    {
+      "target_datetime_utc": "2023-03-29T16:30:00",
+      "expected_generation_kw": 0.167625355325311
+    },
+    {
+      "target_datetime_utc": "2023-03-29T16:45:00",
+      "expected_generation_kw": 0.18109875750857848
+    },
+    {
+      "target_datetime_utc": "2023-03-29T17:00:00",
+      "expected_generation_kw": 0.10214874904055618
+    },
+    {
+      "target_datetime_utc": "2023-03-29T17:15:00",
+      "expected_generation_kw": 0.07148498079329425
     }
   ]
 }

@@ -33,7 +33,7 @@ export async function getInverters(userID: string) {
   }).then((res) => res.json())) as string[];
 
   if (!inverterIDs.length) {
-    return [];
+    return null;
   }
 
   const inverters = await Promise.all(
