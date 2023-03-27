@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 const SunCalc = require('suncalc');
 
 type UseTimeOptions = {
-  enabled: boolean;
+  updateEnabled: boolean;
 };
 
 const defaultUseTimeOptions = {
-  enabled: true,
+  updateEnabled: true,
 };
 /**
  * Creates a hook more accessesing specific values like the current time, whether it is daytime
@@ -18,7 +18,7 @@ const defaultUseTimeOptions = {
 const useTime = (
   latitude?: number,
   longitude?: number,
-  { enabled = false }: UseTimeOptions = defaultUseTimeOptions
+  { updateEnabled = false }: UseTimeOptions = defaultUseTimeOptions
 ) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
@@ -31,7 +31,7 @@ const useTime = (
   const sunsetTime = times ? times.sunset : null;
 
   useEffect(() => {
-    if (enabled) {
+    if (updateEnabled) {
       const intervalId = setInterval(() => {
         setCurrentTime(Date.now());
       }, 1000);
@@ -39,7 +39,7 @@ const useTime = (
       // clear interval on re-render to avoid memory leaks
       return () => clearInterval(intervalId);
     }
-  }, [enabled]);
+  }, [updateEnabled]);
 
   // default to daytime
   const isDaytime =

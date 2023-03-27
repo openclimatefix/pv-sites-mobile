@@ -34,7 +34,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     useSiteData(siteUUID);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
-    enabled: timeEnabled,
+    updateEnabled: timeEnabled,
   });
 
   const endDate = new Date();
