@@ -24,8 +24,7 @@ export const getClosestForecastIndex = (
       .map((forecast_values) => ({
         ...forecast_values,
         difference: Math.abs(
-          targetDate.getTime() -
-            new Date(forecast_values.target_datetime_utc).getTime()
+          targetDate.getTime() - forecast_values.target_datetime_utc
         ),
       }))
       .reduce((prev, curr) =>
@@ -79,25 +78,7 @@ export const getGraphEndDate = (currentTime: number) => {
 export const getCurrentTimeForecastIndex = (
   forecast_values: ForecastDataPoint[]
 ) => {
-  if (forecast_values) {
-    const currentDate = new Date();
-
-    const closestDateIndex = forecast_values
-      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-      .map((forecast_values) => ({
-        ...forecast_values,
-        difference: Math.abs(
-          currentDate.getTime() -
-            new Date(forecast_values.target_datetime_utc).getTime()
-        ),
-      }))
-      .reduce((prev, curr) =>
-        prev.difference < curr.difference ? prev : curr
-      ).index;
-
-    return closestDateIndex;
-  }
-  return 0;
+  return getClosestForecastIndex(forecast_values, new Date());
 };
 
 /* Represents the threshold for the graph */

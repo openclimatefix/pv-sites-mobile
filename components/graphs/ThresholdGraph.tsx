@@ -34,7 +34,10 @@ import useTime from '~/lib/hooks/useTime';
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
-  const { currentTime } = useTime(latitude, longitude);
+  const [timeEnabled, setTimeEnabled] = useState(false);
+  const { currentTime } = useTime(latitude, longitude, {
+    updateEnabled: timeEnabled,
+  });
 
   const graphData =
     forecastData &&
@@ -193,53 +196,53 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         <div className="flex justify-end mt-[20px] mr-10 text-sm">
           <FutureThresholdLegendIcon />
         </div>
-        <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
-          <AreaChart
-            data={graphData}
-            margin={{
-              top: 0,
-              right: 40,
-              left: 0,
-              bottom: 10,
-            }}
-          >
-            <defs>{generateGraphGradient()}</defs>
-            <YAxis
-              type="number"
-              domain={[0, maxGeneration + 0.25]}
-              axisLine={false}
-              tick={false}
-            />
-            <Area
-              type="monotone"
-              dataKey="expected_generation_kw"
-              strokeWidth={2}
-              stroke="white"
-              strokeDasharray="2"
-              fill="url(#colorUv)"
-              // Necessary for label list https://stackoverflow.com/a/55724641
-              // Better solution for this would be nice
-              isAnimationActive={false}
+        {!isLoading && (
+          <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
+            <AreaChart
+              data={graphData}
+              margin={{
+                top: 0,
+                right: 40,
+                left: 0,
+                bottom: 10,
+              }}
             >
-              <LabelList
+              <defs>{generateGraphGradient()}</defs>
+              <YAxis
+                type="number"
+                domain={[0, maxGeneration + 0.25]}
+                axisLine={false}
+                tick={false}
+              />
+              <Area
+                type="monotone"
                 dataKey="expected_generation_kw"
-                content={renderCurrentTimeMarker}
-              />
-            </Area>
-            <ReferenceLine
-              y={graphThreshold}
-              strokeWidth={2}
-              stroke="#FFD053"
-              strokeDasharray="2"
-            >
-              <Label
-                value={graphThreshold + ' kW'}
-                position="left"
-                className="text-xs fill-ocf-yellow"
-              />
-            </ReferenceLine>
-          </AreaChart>
-        </ResponsiveContainer>
+                strokeWidth={2}
+                stroke="white"
+                strokeDasharray="2"
+                fill="url(#colorUv)"
+                onAnimationEnd={() => setTimeEnabled(true)}
+              >
+                <LabelList
+                  dataKey="expected_generation_kw"
+                  content={renderCurrentTimeMarker}
+                />
+              </Area>
+              <ReferenceLine
+                y={graphThreshold}
+                strokeWidth={2}
+                stroke="#FFD053"
+                strokeDasharray="2"
+              >
+                <Label
+                  value={graphThreshold + ' kW'}
+                  position="left"
+                  className="text-xs fill-ocf-yellow"
+                />
+              </ReferenceLine>
+            </AreaChart>
+          </ResponsiveContainer>
+        )}
       </div>
       <div className="flex flex-col justify-center content-center absolute bottom-8 inset-x-0 text-center">
         {renderStartAndEndTime()}
