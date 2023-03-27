@@ -37,6 +37,11 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     updateEnabled: timeEnabled,
   });
 
+  const [timeRange, setTimeRange] = useState('1D');
+  const handleChange = (event: any) => {
+    setTimeRange(event.target.value);
+  };
+
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
   const graphData =
@@ -85,7 +90,35 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         <LegendLineGraphIcon className="text-ocf-yellow-500" />
         <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
       </div>
-
+      <div className="radio">
+        <label>
+          <input
+            type="radio"
+            name="radio"
+            value="1H"
+            onChange={handleChange}
+          />
+          1H
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="radio"
+            value="1D"
+            onChange={handleChange}
+          />
+          1D
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="radio"
+            value="3D"
+            onChange={handleChange}
+          />
+          3D
+        </label>
+      </div>
       {!isLoading && (
         <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
           <LineChart
