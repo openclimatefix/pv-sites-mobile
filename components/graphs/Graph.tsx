@@ -1,6 +1,13 @@
+import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
+import {
+  forecastDataOverDateRange,
+  formatter,
+  getCurrentTimeForecastIndex,
+} from 'lib/graphs';
+import { useSiteData } from 'lib/hooks';
+import { FC, useState } from 'react';
 import {
   CartesianGrid,
-  Label,
   Line,
   LineChart,
   ReferenceLine,
@@ -9,17 +16,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import {
-  formatter,
-  forecastDataOverDateRange,
-  getCurrentTimeForecastIndex,
-} from 'lib/graphs';
-import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
-import { FC, useState } from 'react';
 import { ForecastDataPoint } from '~/lib/types';
-import { LineCircle } from '../icons/future_threshold';
 
 function getGraphStartDate(currentTime: number) {
   const currentDate = new Date(currentTime);
@@ -30,35 +28,6 @@ function getGraphStartDate(currentTime: number) {
     currentDate.getHours() - 5
   );
 }
-
-const CustomizedLabel: FC<any> = ({
-  value,
-  offset,
-  viewBox: { x },
-  className,
-  height,
-}) => {
-  const yy = height * 0.75 + 5;
-  return (
-    <g>
-      <g className="fill-white">
-        <text
-          x={x + 1}
-          y={yy + 15}
-          stroke="white"
-          strokeWidth="5em"
-          textAnchor="middle"
-        >
-          {/* Use invisible "H" character with stroke width to create white background around text */}
-          {'H'.repeat(value.length)}
-        </text>
-        <text x={x + 1} y={yy + 15} textAnchor="middle" className={className}>
-          {value}
-        </text>
-      </g>
-    </g>
-  );
-};
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
@@ -88,6 +57,27 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     (3 * maxGeneration) / 4,
     maxGeneration,
   ];
+
+  const renderLabel = ({ viewBox: { x }, height }: any) => {
+    const yy = height * 0.75 + 5;
+    const textProps = {
+      className: 'text-xs fill-ocf-gray-1000',
+      textAnchor: 'middle',
+      x: x + 1,
+      y: yy + 10,
+    };
+    return (
+      <g>
+        <g className="fill-white">
+          <text stroke="white" strokeWidth="1em" {...textProps}>
+            {/* Use invisible "H" character with stroke width to create white background around text */}
+            {'H'.repeat('Now'.length)}
+          </text>
+          <text {...textProps}>Now</text>
+        </g>
+      </g>
+    );
+  };
 
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl">
@@ -156,15 +146,9 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                       .target_datetime_utc
                   : 0
               }
-              strokeWidth={2}
+              strokeWidth={1}
               stroke="white"
-              label={
-                <CustomizedLabel
-                  value="Now"
-                  height={200}
-                  className="text-xs fill-ocf-gray-1000 uppercase font-semibold"
-                />
-              }
+              label={(props) => renderLabel({ ...props, height: 200 })}
             ></ReferenceLine>
           </LineChart>
         </ResponsiveContainer>
