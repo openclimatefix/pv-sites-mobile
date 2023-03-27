@@ -11,6 +11,9 @@ import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
+import { UnparsedForecastData } from '~/lib/types';
+import { parseNowcastingDatetime } from '~/lib/hooks/utils';
+import { addMilliseconds } from 'date-fns';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids } = req.query;
@@ -54,12 +57,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method == 'GET') {
     if (
-      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/pv_actual'
+      mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_actual'
     ) {
+      fakeDates(pvActualJson as any);
       res.status(200).json(pvActualJson);
     } else if (
-      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/pv_forecast'
+      mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_forecast'
     ) {
+      fakeDates(pvForecastJson as any);
       res.status(200).json(pvForecastJson);
     } else if (
       mockApiRoute ===
@@ -97,13 +102,30 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         new URLSearchParams({ linkSuccess: linkSuccess.toString() });
       res.redirect(307, redirectURL);
       return;
-    } else if ('enode/clear-users') {
+    } else if (mockApiRoute === 'enode/clear-users') {
       await clearUsers([testClientID]);
       res.redirect(307, '/account');
     } else {
       res.status(404).send('URL Not Found');
     }
   }
+}
+
+function fakeDates(forecastData: UnparsedForecastData) {
+  const today = new Date();
+  const first = new Date(
+    parseNowcastingDatetime(forecastData.forecast_values[0].target_datetime_utc)
+  );
+  first.setUTCDate(today.getUTCDate());
+  forecastData.forecast_values = forecastData.forecast_values.map((value) => {
+    const date = new Date(parseNowcastingDatetime(value.target_datetime_utc));
+    addMilliseconds(date, date.getTime() - first.getTime());
+    return {
+      ...value,
+      target_datetime_utc: date.toISOString(),
+    };
+  });
+  return forecastData;
 }
 
 export default handler;
