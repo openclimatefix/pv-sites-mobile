@@ -1,11 +1,5 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  PropsWithChildren,
-  FC,
-} from 'react';
+import React, { useRef, useState, useEffect, FC } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { LatitudeLongitude } from '~/lib/types';
@@ -35,6 +29,9 @@ const LocationInput: FC<LocationInputProps> = ({
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
+  const [isPastZoomThreshold, setIsPastZoomThreshold] =
+    useState<boolean>(false);
+  const [isInUK, setIsInUK] = useState<boolean>(false);
   const [zoom, setZoom] = useState<number>(initialZoom);
 
   useEffect(() => {
@@ -66,20 +63,34 @@ const LocationInput: FC<LocationInputProps> = ({
 
       let popup: mapboxgl.Popup | null = null;
 
+      const renderFunction = (item: MapboxGeocoder.Result) => {
+        var placeName = item.place_name.split(',');
+        return canEdit
+          ? '<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">' +
+              placeName[0] +
+              '</div><div class="mapboxgl-ctrl-geocoder--suggestion-address">' +
+              placeName.splice(1, placeName.length).join(',') +
+              '</div></div>'
+          : '';
+      };
+
       const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl,
+        countries: 'GB',
         placeholder: 'Search a location',
         marker: false,
+        render: renderFunction,
         reverseGeocode: true,
+        limit: 3,
       });
+
+      geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
 
       if (!canEdit) {
         // Prevent user from changing the geocoder input when the map isn't editable
         geocoder.setBbox([0, 0, 0, 0]);
       }
-
-      geocoderContainer.current?.appendChild(geocoder.onAdd(map.current));
 
       const marker = new mapboxgl.Marker({
         draggable: false,
@@ -102,7 +113,8 @@ const LocationInput: FC<LocationInputProps> = ({
 
       map.current.on('idle', () => {
         // Enables fly to animation on search
-        geocoder.setFlyTo(true);
+        geocoder.setFlyTo({ curve: 1.2, speed: 5 });
+        geocoder.setRenderFunction(renderFunction);
       });
 
       let savedLat = originalLat;
@@ -112,6 +124,7 @@ const LocationInput: FC<LocationInputProps> = ({
         if (popup) {
           popup.remove();
         }
+        setIsSubmissionEnabled(false);
       });
 
       // Saves the map center latitude/longitude to the form context
@@ -154,7 +167,11 @@ const LocationInput: FC<LocationInputProps> = ({
           map.current!.getZoom() >= zoomLevelThreshold;
         if (isPastZoomThreshold) {
           // update the search box location based on the final latitude/longitude
-          geocoder.query(`${savedLat}, ${savedLng}`).setFlyTo(false);
+          geocoder.setFlyTo(false);
+
+          // don't display anything in suggestions
+          geocoder.setRenderFunction(() => '<div class="hidden-suggestion"/>');
+          geocoder.query(`${savedLat}, ${savedLng}`);
 
           if (popup === null && map.current && canEdit) {
             popup = new mapboxgl.Popup({
@@ -170,7 +187,30 @@ const LocationInput: FC<LocationInputProps> = ({
           }
         }
 
-        return setIsSubmissionEnabled(isPastZoomThreshold);
+        setIsPastZoomThreshold(isPastZoomThreshold);
+      });
+
+      geocoder.on('result', (result) => {
+        const isUK =
+          result.result.context.find((e: Record<string, string>) =>
+            e.id.includes('country')
+          ).short_code === 'gb';
+
+        if (!isUK && map.current) {
+          popup = new mapboxgl.Popup({
+            offset: [0, 10],
+            anchor: 'top',
+            closeOnClick: false,
+            closeButton: false,
+            className: 'site-map',
+          })
+            .setLngLat([savedLng, savedLat])
+            .setHTML(
+              '<p>Only locations within the UK are currently supported</p>'
+            )
+            .addTo(map.current);
+        }
+        setIsInUK(isUK);
       });
     }
   }, [
@@ -184,14 +224,24 @@ const LocationInput: FC<LocationInputProps> = ({
     zoomLevelThreshold,
   ]);
 
+  useEffect(() => {
+    setIsSubmissionEnabled(isInUK && isPastZoomThreshold);
+  }, [isInUK, isPastZoomThreshold, setIsSubmissionEnabled]);
+
   return (
     <div className={`flex flex-col ${canEdit ? 'h-full' : 'h-5/6'}`}>
-      <div ref={geocoderContainer} className="z-20" id="geocoderContainer" />
+      <div
+        ref={geocoderContainer}
+        className="z-20 bg-ocf-black"
+        id="geocoderContainer"
+      />
       <div className="w-11/12 self-center bg-white" />
       <div className="relative top-0 flex flex-col flex-1">
-        <div className="absolute top-0 w-full h-1/6 bg-gradient-to-b from-mapbox-black-900 to-transparent z-10 pointer-events-none" />
-        <div ref={mapContainer} className="h-full" />
-        <div className="absolute bottom-0 w-full h-1/6 bg-gradient-to-t from-mapbox-black-900 to-transparent z-10 pointer-events-none" />
+        <div
+          ref={mapContainer}
+          className="h-full rounded-3xl"
+          id="mapContainer"
+        />
       </div>
     </div>
   );
