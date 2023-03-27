@@ -10,9 +10,8 @@ interface SiteCardProps {
   siteUUID: string;
 }
 
-// eslint-disable-next-line react/display-name
-const SiteCard: FC<SiteCardProps> = React.forwardRef(
-  ({ href, siteUUID, onClick }, ref: React.ForwardedRef<HTMLAnchorElement>) => {
+const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
+  ({ href, siteUUID, onClick }, ref) => {
     const { forecastData, client_site_name, installed_capacity_kw, isLoading } =
       useSiteData(siteUUID);
 
@@ -70,6 +69,7 @@ const SiteCard: FC<SiteCardProps> = React.forwardRef(
     );
   }
 );
+SiteCard.displayName = 'SiteCard';
 
 interface SiteCardLinkProps {
   isEditMode: boolean;
