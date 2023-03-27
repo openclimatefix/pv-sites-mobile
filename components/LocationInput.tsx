@@ -85,6 +85,8 @@ const LocationInput: FC<LocationInputProps> = ({
         limit: 3,
       });
 
+      geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
+
       if (!canEdit) {
         // Prevent user from changing the geocoder input when the map isn't editable
         geocoder.setBbox([0, 0, 0, 0]);
@@ -96,7 +98,6 @@ const LocationInput: FC<LocationInputProps> = ({
       }).setLngLat([originalLat, originalLng]);
 
       map.current.on('load', () => {
-        geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
         if (shouldZoomIntoOriginal) {
           geocoder.query(`${originalLat}, ${originalLng}`).setFlyTo(canEdit);
           updateMarker(
@@ -186,7 +187,7 @@ const LocationInput: FC<LocationInputProps> = ({
           }
         }
 
-        return setIsPastZoomThreshold(isPastZoomThreshold);
+        setIsPastZoomThreshold(isPastZoomThreshold);
       });
 
       geocoder.on('result', (result) => {
@@ -209,7 +210,7 @@ const LocationInput: FC<LocationInputProps> = ({
             )
             .addTo(map.current);
         }
-        return setIsInUK(isUK);
+        setIsInUK(isUK);
       });
     }
   }, [
@@ -223,7 +224,9 @@ const LocationInput: FC<LocationInputProps> = ({
     zoomLevelThreshold,
   ]);
 
-  setIsSubmissionEnabled(isInUK && isPastZoomThreshold);
+  useEffect(() => {
+    setIsSubmissionEnabled(isInUK && isPastZoomThreshold);
+  }, [isInUK, isPastZoomThreshold, setIsSubmissionEnabled]);
 
   return (
     <div className={`flex flex-col ${canEdit ? 'h-full' : 'h-5/6'}`}>
