@@ -3,17 +3,11 @@ import { EditIcon } from '~/components/icons';
 import { useState } from 'react';
 import SiteCardLink from '~/components/SiteCard';
 import { withSites } from '~/lib/utils';
-import { useEffect } from 'react';
 
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
 
   const [isDisabled, setIsDisabled] = useState(false);
-  // useEffect(() => {
-  //   if (isDisabled) {
-
-  //   }
-  // }, [])
 
   return (
     <div className="h-full w-full flex flex-col gap-3 items-center px-5">
