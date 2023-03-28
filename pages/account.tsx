@@ -53,6 +53,15 @@ const Account: NextPage<Props> = () => {
     }
   );
 
+  const { data: statistics } = useSWR<Inverter[] | null>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/statistics`,
+    {
+      revalidateIfStale: true,
+    }
+  );
+
+  console.table(statistics);
+
   return (
     <>
       <h1 className="text-white">Account</h1>

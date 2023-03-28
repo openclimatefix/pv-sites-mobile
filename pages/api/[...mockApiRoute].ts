@@ -4,6 +4,7 @@ import {
   getInverters,
   getLinkedVendors,
   getLinkRedirectURL,
+  getProductionStatistics,
   testClientID,
 } from '~/lib/enode';
 import pvActualMultipleJson from '../../data/pv-actual-multiple.json';
@@ -80,6 +81,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(200).json(siteListJson);
     } else if (mockApiRoute === 'inverters') {
       res.status(200).json(await getInverters(testClientID));
+    } else if (mockApiRoute === 'statistics') {
+      res.status(200).json(
+        await getProductionStatistics(testClientID, {
+          id: '88c798e8-6836-443f-a481-77e648393d01',
+        })
+      );
     } else if (mockApiRoute === 'enode/link') {
       const redirectURL = await getLinkRedirectURL(
         testClientID,

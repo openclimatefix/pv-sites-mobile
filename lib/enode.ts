@@ -1,5 +1,6 @@
 // THIS FILE WILL BE REMOVED, all functions will be implemented in the pv-site-api repo
 import { redis } from './redis';
+import { subDays } from 'date-fns';
 
 const enodeBaseURL = process.env.ENODE_BASE_URL;
 
@@ -14,6 +15,54 @@ export async function clearUsers(userIDs: string[]) {
       method: 'DELETE',
     });
   }
+}
+
+type ProductionStatisticsOptions = {
+  resolution?:
+    | 'QUARTER_HOUR'
+    | 'HALF_HOUR'
+    | 'HOUR'
+    | 'DAY'
+    | 'WEEK'
+    | 'MONTH'
+    | 'YEAR';
+  startDate: string;
+  endDate?: string;
+  type?: 'inverter';
+  id?: string;
+  utcOffset?: number;
+  chargingLocationId?: string;
+};
+function getDefaultProductionStatisticsOptions() {
+  return {
+    startDate: subDays(new Date(), 100).toISOString(),
+  };
+}
+export async function getProductionStatistics(
+  userID: string,
+  options?: Partial<ProductionStatisticsOptions>
+) {
+  options = {
+    ...getDefaultProductionStatisticsOptions(),
+    ...options,
+  };
+
+  const queryOptions = {} as Record<string, string>;
+  for (const [key, val] of Object.entries(options)) {
+    queryOptions[key] = val.toString();
+  }
+
+  const productionStatistics = (await enodeFetch(
+    '/statistics/production?' + new URLSearchParams(queryOptions).toString(),
+    {
+      method: 'GET',
+      headers: {
+        'Enode-User-Id': userID,
+      },
+    }
+  ).then((res) => res.json())) as {};
+
+  return productionStatistics;
 }
 
 // Not all properties
