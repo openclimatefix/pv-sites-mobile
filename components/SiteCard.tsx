@@ -15,12 +15,6 @@ const SiteCard: FC<SiteCardProps> = ({ isEditMode }) => {
   const animationElement = useRef<HTMLDivElement>(null);
   const [displayGraph, setDisplayGraph] = useState(!isEditMode);
 
-  // useEffect(() => {
-  //   if (!isEditMode) {
-  //     setDisplayGraph(true);
-  //   }
-  // }, [isEditMode, setDisplayGraph]);
-
   useEffect(() => {
     animationElement.current?.addEventListener('transitionend', () => {
       if (isEditMode) {
@@ -74,9 +68,13 @@ const SiteCard: FC<SiteCardProps> = ({ isEditMode }) => {
               isEditMode ? '-translate-x-40' : 'translate-x-40'
             } ${!isEditMode ?? 'pointer-events-none'}`}
           >
-            <div className="self-center justify-center">
-              <EditIcon />
-              {/* <p className="text-xs	text-center">Edit site details</p> */}
+            <div className="flex flex-col self-center justify-center items-center">
+              <div className="flex-1 mb-2">
+                <EditIcon color="#14120E" />
+              </div>
+              <p className="flex-1 text-[8px]	text-center px-5">
+                Edit site details
+              </p>
             </div>
           </a>
         </Link>
@@ -86,9 +84,13 @@ const SiteCard: FC<SiteCardProps> = ({ isEditMode }) => {
               isEditMode ? '-translate-x-40' : 'translate-x-0'
             } ${!isEditMode ?? 'pointer-events-none'}`}
           >
-            <div className="self-center justify-center ">
-              <DeleteIcon />
-              {/* <p className="text-xs	text-center">Delete site</p> */}
+            <div className="flex flex-col self-center justify-center items-center">
+              <div className="flex-1 mb-2">
+                <DeleteIcon />
+              </div>
+              <p className="flex-1 text-[8px]	text-center px-5 text-[#E4E4E4] mb-2">
+                Delete site
+              </p>
             </div>
           </a>
         </Link>

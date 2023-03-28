@@ -110,7 +110,7 @@ const Sidebar = () => {
             <MenuLink
               linkProps={{ href: '/form/details' }}
               label="Edit Site Details"
-              svg={<EditIcon />}
+              svg={<EditIcon color="#E4E4E4" />}
               currentPath={router.asPath}
             />
             <MenuLink

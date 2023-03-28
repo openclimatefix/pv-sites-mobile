@@ -15,7 +15,7 @@ const Sites = () => {
           {editMode ? (
             <p className="text-amber text-md font-semibold">Done</p>
           ) : (
-            <EditIcon />
+            <EditIcon color="#E4E4E4" />
           )}
         </button>
       </div>
