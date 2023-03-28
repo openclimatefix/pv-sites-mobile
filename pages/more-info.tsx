@@ -10,7 +10,7 @@ const MoreInfo = () => {
   return (
     <div className="bg-ocf-black w-screen min-h-screen max-w-screen-lg px-4">
       <h1 className="my-2 mt-4 text-ocf-gray text-3xl font-bold">More Info</h1>
-      <div className="bg-ocf-gray-1000 rounded-lg">
+      <div className="bg-ocf-black-500 rounded-lg">
         <Carousel
           showStatus={false}
           showThumbs={false}

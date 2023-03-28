@@ -4,13 +4,31 @@ import { Area, AreaChart, YAxis, ResponsiveContainer } from 'recharts';
 
 import { useSiteData } from 'lib/hooks';
 
-const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, installed_capacity_kw } = useSiteData(siteUUID);
+import useTime from '~/lib/hooks/useTime';
 
-  if (forecastData && installed_capacity_kw) {
+import {
+  forecastDataOverDateRange,
+  getGraphStartDate,
+  getGraphEndDate,
+} from 'lib/graphs';
+
+const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
+  const { forecastData, latitude, longitude, installed_capacity_kw } =
+    useSiteData(siteUUID);
+
+  const { currentTime } = useTime(latitude, longitude);
+  const graphData = forecastData
+    ? forecastDataOverDateRange(
+        JSON.parse(JSON.stringify(forecastData.forecast_values)),
+        getGraphStartDate(currentTime),
+        getGraphEndDate(currentTime)
+      )
+    : [];
+
+  if (graphData && installed_capacity_kw) {
     return (
       <ResponsiveContainer minWidth={0} width="99%" height={75}>
-        <AreaChart data={forecastData?.forecast_values}>
+        <AreaChart data={graphData}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
               <stop offset={'0%'} stopColor="#FFD053" stopOpacity={0.4} />
