@@ -48,8 +48,8 @@ module.exports = {
       gridTemplateAreas: {
         'dashboard-desktop': [
           'Sunny Expected Recommendation',
-          'site-graph   site-graph   site-graph',
-          'graph   graph graph',
+          'site-graph   site-graph   ',
+          'graph   graph     graph',
         ],
 
       },
