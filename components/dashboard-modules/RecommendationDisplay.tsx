@@ -13,7 +13,6 @@ const RecommendationDisplay: FC<Props> = ({ src, alt, description }) => {
       className="
           flex-1
           flex
-          my-2
           p-4
           text-center
           justify-center
