@@ -44,7 +44,11 @@ export async function getInverters(userID: string) {
     )
   );
 
-  return inverters;
+  const inverterProductionData = inverters.map((inverter) => ({
+    productionState: inverter.productionState,
+  }));
+
+  return inverterProductionData;
 }
 
 type Vendor = {
