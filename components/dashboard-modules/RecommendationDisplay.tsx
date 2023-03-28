@@ -19,7 +19,8 @@ const RecommendationDisplay: FC<Props> = ({ src, alt, description }) => {
           justify-center
           align-center
           bg-ocf-gray-1000
-          rounded-2xl"
+          rounded-2xl
+          h-[100%]"
     >
       <Image src={src} alt={alt} width={34.5} height={28.75} />
       <div className="text-ocf-gray ml-3 self-center font-normal text-left flex-1 max-w-max">

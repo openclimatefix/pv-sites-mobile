@@ -47,18 +47,29 @@ module.exports = {
     extend: {
       gridTemplateAreas: {
         'dashboard-desktop': [
-          'Sunny Expected Recommendation',
-          'site-graph   site-graph   ',
-          'graph   graph     graph',
+          'Sunny  Expected  Yield',
+          'Site-Graph   Site-Graph   Recommendation',
+          'Graph   Graph     Graph',
+        ],
+        'dashboard-mobile': [
+          'Heading1 Heading1',
+          'Sunny Recommendation',
+          'Site-Graph   Site-Graph',
+          'Heading2 Heading2',
+          'Expected Yield',
+          'Graph Graph',
         ],
 
       },
       gridTemplateColumns: {
-        'layout': '1fr 1fr 1fr',
+        'desktop-columns': '1fr 1fr 1fr',
+        'mobile-columns': '1fr 1fr',
       },
       gridTemplateRows: {
-        'layout': '1fr 1fr 1fr',
+        'desktop-rows': 'auto auto auto',
+        'mobile-rows': 'auto auto auto auto auto auto',
       },
+      
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],
