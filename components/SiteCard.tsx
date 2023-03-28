@@ -83,6 +83,7 @@ const SiteCard: FC<SiteCardProps> = ({ isEditMode }) => {
             className={`w-full flex bg-[#D44545] flex-end justify-center ease-in-out transition duration-[900ms] ${
               isEditMode ? '-translate-x-40' : 'translate-x-0'
             } ${!isEditMode ?? 'pointer-events-none'}`}
+            
           >
             <div className="flex flex-col self-center justify-center items-center">
               <div className="flex-1 mb-2">
