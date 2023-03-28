@@ -20,6 +20,11 @@ export async function clearUsers(userIDs: string[]) {
 export type Inverter = {
   id: string;
   vendor: string;
+  chargingLocationId: string | null;
+  lastSeen: string;
+  isReachable: boolean;
+  information: {};
+  location: {};
   productionState: {
     productionRate: number;
   };
