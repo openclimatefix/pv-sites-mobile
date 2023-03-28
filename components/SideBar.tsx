@@ -5,8 +5,6 @@ import Link from 'next/link';
 import {
   ExitIcon,
   DashboardIcon,
-  LocationIcon,
-  EditIcon,
   LogoutIcon,
   SiteListIcon,
   SearchIcon,
@@ -101,18 +99,6 @@ const Sidebar = () => {
             />
           </div>
           <div className="flex flex-col gap-3">
-            <MenuLink
-              linkProps={{ href: '/form/location' }}
-              label="Add a Location"
-              svg={<LocationIcon />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/form/details' }}
-              label="Edit Site Details"
-              svg={<EditIcon color="#E4E4E4" />}
-              currentPath={router.asPath}
-            />
             <MenuLink
               linkProps={{
                 href: `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`,

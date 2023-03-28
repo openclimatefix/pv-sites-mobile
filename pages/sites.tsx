@@ -21,6 +21,8 @@ const parseSiteUUIDs = (data: SiteList): string[] => {
   return siteUUIDs;
 };
 
+export const transitionDuration = 900;
+
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
 
@@ -44,7 +46,7 @@ const Sites = () => {
             setIsDisabled(true);
             setTimeout(() => {
               setIsDisabled(false);
-            }, 900);
+            }, transitionDuration);
           }}
           className={isDisabled ? 'pointer-events-none' : ''}
         >
