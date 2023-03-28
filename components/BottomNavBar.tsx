@@ -27,7 +27,7 @@ const BottomNavBar = () => {
   const { asPath } = useRouter();
 
   const { data, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
 
   return (

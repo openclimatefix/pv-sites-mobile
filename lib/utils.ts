@@ -5,6 +5,7 @@ import {
   GetServerSideProps,
 } from 'next';
 import { ForecastDataPoint, SiteList } from './types';
+import { getCurrentTimeForecastIndex } from './graphs';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -17,14 +18,6 @@ export function camelCaseID(id: string) {
     part[0].toUpperCase() + part.substring(1);
   return [first, ...rest.map(capitalize)].join('');
 }
-
-/**
- * Converts Date object into Hour-Minute format based on device region
- */
-export const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-  hour: 'numeric',
-  minute: 'numeric',
-});
 
 export enum Value {
   Min = 'Minimum',
@@ -98,33 +91,6 @@ export const getArrayMaxOrMinAfterIndex = (
   return null;
 };
 
-/**
- * @returns the index of the forecasted date that is closest to the current time
- */
-export const getCurrentTimeForecastIndex = (
-  forecast_values: ForecastDataPoint[]
-) => {
-  if (forecast_values) {
-    const currentDate = new Date();
-
-    const closestDateIndex = forecast_values
-      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-      .map((forecast_values) => ({
-        ...forecast_values,
-        difference: Math.abs(
-          currentDate.getTime() -
-            new Date(forecast_values.target_datetime_utc).getTime()
-        ),
-      }))
-      .reduce((prev, curr) =>
-        prev.difference < curr.difference ? prev : curr
-      ).index;
-
-    return closestDateIndex;
-  }
-  return 0;
-};
-
 export const getCurrentTimeForecast = (forecast_values: ForecastDataPoint[]) =>
   forecast_values[getCurrentTimeForecastIndex(forecast_values)]
     .expected_generation_kw;
@@ -188,6 +154,10 @@ export const getNextThresholdIndex = (
 /* Represents the threshold for the graph */
 export const graphThreshold = 0.7;
 
+/* Latitude/longitude for London, England */
+export const originalLat = 51.5072;
+export const originalLng = 0.1276;
+
 type WithSitesOptions = {
   getServerSideProps?: (
     ctx: GetServerSidePropsContext & { siteList: SiteList }
@@ -221,3 +191,9 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
     },
   });
 }
+
+/*
+  Represents the zoom threshold for the Site map. 
+  We will track solar sites when the map is zoomed in less than this value.
+*/
+export const zoomLevelThreshold = 14;

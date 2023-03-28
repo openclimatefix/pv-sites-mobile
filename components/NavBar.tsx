@@ -2,14 +2,14 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { FC } from 'react';
 import useSWR from 'swr';
 import { useSidebarContext } from '~/lib/context/sidebar_context';
-import { Site } from '~/lib/types';
+import { SiteList } from '~/lib/types';
 
 import { MenuLogo, NowcastingLogo } from './icons/navbar_icons';
 
 const NavBar: FC = () => {
   const { isSidebarOpen, openSidebar } = useSidebarContext();
-  const { data } = useSWR<{ site_list: Site[] }>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites`
+  const { data } = useSWR<SiteList>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
   const { user } = useUser();
 

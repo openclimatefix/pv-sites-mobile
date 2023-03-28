@@ -31,16 +31,17 @@ export interface ForecastData {
   forecast_version: string;
   forecast_values: ForecastDataPoint[];
 }
+
 export interface UnparsedForecastData {
   forecast_uuid: string;
   site_uuid: string;
-  forecast_creation_datetime: string | number;
+  forecast_creation_datetime: string;
   forecast_version: string;
   forecast_values: UnparsedForecastDataPoint[];
 }
 
 export interface UnparsedForecastDataPoint {
-  target_datetime_utc: string | number;
+  target_datetime_utc: string;
   expected_generation_kw: number;
 }
 
@@ -52,3 +53,35 @@ export interface ClearSkyDataPoint {
   target_datetime_utc: number;
   clearsky_generation_kw: number;
 }
+export interface LatitudeLongitude {
+  latitude: number;
+  longitude: number;
+}
+
+export interface Form {
+  siteCoordinates: LatitudeLongitude;
+  panelDetails: PanelDetails;
+  setFormData: ({ siteName, direction, tilt, capacity }: PanelDetails) => void;
+  setSiteCoordinates: ({ latitude, longitude }: LatitudeLongitude) => void;
+  postPanelData: () => void;
+}
+export interface PanelDetails {
+  siteName: string;
+  direction: string;
+  tilt: string;
+  capacity: string;
+}
+
+export type FormPostData = {
+  site_uuid: number;
+  client_name: string;
+  client_site_id: number;
+  client_site_name: string;
+  latitude: number;
+  longitude: number;
+  installed_capacity_kw: number;
+  created_utc: string;
+  updated_utc: string;
+  orientation: number;
+  tilt: number;
+};
