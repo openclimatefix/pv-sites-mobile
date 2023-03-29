@@ -176,17 +176,17 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
         </form>
       </div>
       <div className="md:hidden h-20 w-full" />
-          <Modal show={showModal} setShow={setShowModal} />
-          <div className="hidden absolute md:flex md:flex-row md:justify-between bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-14">
-            <Button disabled={false} onClick={lastPageCallback}>
-              Back
-            </Button>
-            <Button form="panel-form" disabled={didSubmit}>
-              {didSubmit && <Spinner width={5} height={5} margin={2} />}
-              Finish
-              {didSubmit && <div className="w-5 mx-2" />}
-            </Button>
-          </div>
+      <Modal show={showModal} setShow={setShowModal} />
+      <div className="hidden absolute md:flex md:flex-row md:justify-between bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-14">
+        <Button disabled={false} onClick={lastPageCallback}>
+          Back
+        </Button>
+        <Button form="panel-form" disabled={didSubmit}>
+          {didSubmit && <Spinner width={5} height={5} margin={2} />}
+          Finish
+          {didSubmit && <div className="w-5 mx-2" />}
+        </Button>
+      </div>
     </div>
   );
 };
