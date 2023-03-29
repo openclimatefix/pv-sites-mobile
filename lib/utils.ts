@@ -1,4 +1,8 @@
-import { getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import {
+  getAccessToken,
+  GetAccessTokenResult,
+  withPageAuthRequired,
+} from '@auth0/nextjs-auth0';
 import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
@@ -166,11 +170,18 @@ type WithSitesOptions = {
 export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   return withPageAuthRequired({
     async getServerSideProps(ctx) {
-      const accessToken = getAccessToken(ctx.req, ctx.res);
+      let accessToken: GetAccessTokenResult;
+      try {
+        accessToken = await getAccessToken(ctx.req, ctx.res);
+      } catch {
+        return {
+          redirect: '/api/auth/login',
+        };
+      }
 
       const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken.accessToken}`,
         },
       }).then((res) => res.json())) as SiteList;
 
