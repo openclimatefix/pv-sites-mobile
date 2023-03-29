@@ -4,6 +4,7 @@
 
 :root {
   --nav-height: 60px;
+  --map-text-height: 75px;
 }
 
 /* Define the .geocoder class */

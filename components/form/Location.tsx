@@ -25,12 +25,12 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
   return (
     <>
       <div
-        className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] w-screen bg-mapbox-gray-1000"
+        className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] md:h-[calc(75vh)] w-screen bg-mapbox-gray-1000"
         id="rootDiv"
       >
         <div className="flex flex-col justify-end h-10"></div>
         <div
-          className="self-center md:w-1/2 md:min-w-[750px] w-[95%] h-4/6"
+          className="self-center md:w-1/2 md:min-w-[750px] w-[95%] h-4/6 md:h-full"
           id="mapboxInputWrapper"
         >
           <h1 className="font-medium md:text-3xl text-xl text-ocf-gray pl-3 md:pl-0">
@@ -53,7 +53,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
           </Button>
         </div>
       </div>
-      <div className="hidden absolute md:flex md:flex-row md:justify-end bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-14">
+      <div className="hidden absolute md:flex md:flex-row md:justify-end -translate-x-1/2 bottom-12 left-1/2 w-3/4 h-14">
         <Button disabled={!isSubmissionEnabled} onClick={nextPageCallback}>
           Next
         </Button>
