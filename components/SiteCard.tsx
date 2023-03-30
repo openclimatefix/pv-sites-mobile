@@ -52,7 +52,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             <p className="text-ocf-gray-500 text-xs font-medium">
               {`Current output: ${
                 currentOutput != undefined
-                  ? currentOutput + ' kW'
+                  ? currentOutput.toFixed(2) + ' kW'
                   : 'loading...'
               }`}
             </p>
@@ -65,7 +65,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               {`Current yield:
             ${
               installed_capacity_kw && currentOutput != undefined
-                ? currentOutput / installed_capacity_kw + '%'
+                ? (currentOutput / installed_capacity_kw).toFixed(2) + '%'
                 : 'loading...'
             }`}
             </p>
