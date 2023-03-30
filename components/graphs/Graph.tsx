@@ -29,12 +29,9 @@ function getGraphStartDate(currentTime: number) {
   );
 }
 
-function getXTickValues(
-  forecastData: ClearSkyDataPoint[] | undefined,
-  numTicks: number
-) {
+function getXTickValues(clearSkyData: ClearSkyDataPoint[], numTicks: number) {
   const tickValues: any[] = [];
-  const dataLength = forecastData.length;
+  const dataLength = clearSkyData.length;
 
   if (dataLength === 0) {
     return tickValues;
@@ -44,7 +41,7 @@ function getXTickValues(
 
   for (let i = 0; i < numTicks; i++) {
     const index = Math.min(i * tickStep, dataLength - 1);
-    const tickValue = forecastData[index].target_datetime_utc;
+    const tickValue = clearSkyData[index].target_datetime_utc;
     tickValues.push(tickValue);
   }
 
@@ -69,11 +66,13 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       endDate
     );
 
-  const clearSkyEstimateTrimmed = outputDataOverDateRange(
-    clearskyData?.clearsky_estimate,
-    getGraphStartDate(currentTime),
-    endDate
-  );
+  const clearSkyEstimateTrimmed = clearskyData
+    ? outputDataOverDateRange(
+        clearskyData?.clearsky_estimate,
+        getGraphStartDate(currentTime),
+        endDate
+      )
+    : undefined;
 
   const maxGeneration = clearSkyEstimateTrimmed
     ? Math.max(
@@ -141,7 +140,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <CartesianGrid
               strokeDasharray="3 3"
               color="white"
-              vertical={false}
+              // vertical={false}
             />
             <XAxis
               tickCount={5}

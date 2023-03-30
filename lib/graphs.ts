@@ -38,8 +38,10 @@ export const getClosestForecastIndex = (
   return 0;
 };
 
-export const outputDataOverDateRange = (
-  forecastData: Pick<ForecastDataPoint, 'target_datetime_utc'>[],
+export const outputDataOverDateRange = <
+  T extends Pick<ForecastDataPoint, 'target_datetime_utc'>
+>(
+  forecastData: T[],
   start_date: Date,
   end_date: Date
 ) => {
