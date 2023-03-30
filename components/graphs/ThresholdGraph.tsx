@@ -1,29 +1,29 @@
-import { FC, useState, useEffect, useCallback } from 'react';
+import { FC, useState } from 'react';
 
 import {
+  Area,
+  AreaChart,
+  Label,
+  LabelList,
+  ReferenceLine,
   ResponsiveContainer,
   YAxis,
-  AreaChart,
-  LabelList,
-  Area,
-  ReferenceLine,
-  Label,
 } from 'recharts';
 
 import {
-  FutureThresholdLegendIcon,
-  UpArrowIcon,
   DownArrowIcon,
+  FutureThresholdLegendIcon,
   LineCircle,
+  UpArrowIcon,
 } from '../icons/future_threshold';
 
 import {
   formatter,
-  outputDataOverDateRange,
   getCurrentTimeForecastIndex,
-  graphThreshold,
-  getGraphStartDate,
   getGraphEndDate,
+  getGraphStartDate,
+  graphThreshold,
+  outputDataOverDateRange,
 } from 'lib/graphs';
 
 import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';

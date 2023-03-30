@@ -140,7 +140,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <CartesianGrid
               strokeDasharray="3 3"
               color="white"
-              vertical={true}
+              vertical={false}
             />
             <XAxis
               tickCount={5}
