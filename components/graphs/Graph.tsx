@@ -5,7 +5,7 @@ import {
   weekdayFormatter,
 } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
-import { FC, useState, memo } from 'react';
+import { FC, useState } from 'react';
 import {
   CartesianGrid,
   Line,
