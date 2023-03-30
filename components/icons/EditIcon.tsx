@@ -1,8 +1,8 @@
-interface props {
+interface Props {
   color: string;
 }
 
-const EditIcon: React.FC<props> = ({ color }) => (
+const EditIcon: React.FC<Props> = ({ color }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
