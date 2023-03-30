@@ -47,7 +47,7 @@ module.exports = {
     extend: {
       gridTemplateAreas: {
         'dashboard-desktop': [
-          'Sunny  Expected  Yield',
+          'Expected Sunny   Yield',
           'Site-Graph   Site-Graph   Recommendation',
           'Graph   Graph     Graph',
         ],

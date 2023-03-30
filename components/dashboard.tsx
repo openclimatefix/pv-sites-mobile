@@ -23,14 +23,12 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
             Solar Activity
           </h2>
         </div>
-        {/* <div className="flex flex-row w-full justify-center space-x-4"> */}
         <div className="grid-in-Sunny border-blue-200">
           <SunnyTimeframe siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Recommendation border-blue-200">
           <EnergyRecommendation siteUUID={siteUUID} />
         </div>
-        {/* </div> */}
         <div className="grid-in-Site-Graph">
           <ThresholdGraph siteUUID={siteUUID} />
         </div>
@@ -44,7 +42,6 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
           <ExpectedTotalOutput siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Yield">
-          {/* <CurrentOutput siteUUID={siteUUID} /> */}
           <CurrentCapacity siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Graph">
