@@ -1,8 +1,8 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import {
   outputDataOverDateRange,
-  formatter,
   getCurrentTimeForecastIndex,
+  weekdayFormatter,
 } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
 import { FC, useState } from 'react';
@@ -145,14 +145,15 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <XAxis
               tickCount={5}
               ticks={xTickArray}
-              fontSize="10px"
+              scale="band"
+              fontSize="9px"
               dataKey="target_datetime_utc"
               allowDuplicatedCategory={false}
               stroke="white"
               axisLine={false}
               tickFormatter={(
                 point: ForecastDataPoint['target_datetime_utc']
-              ) => formatter.format(new Date(point))}
+              ) => weekdayFormatter.format(new Date(point))}
             />
             <YAxis
               tickCount={7}
@@ -175,7 +176,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               ) => [parseFloat(value.toFixed(5)), 'kW']}
               labelFormatter={(
                 point: ForecastDataPoint['target_datetime_utc']
-              ) => formatter.format(new Date(point))}
+              ) => weekdayFormatter.format(new Date(point))}
             />
             <Line
               data={clearSkyEstimateTrimmed}

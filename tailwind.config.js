@@ -45,6 +45,30 @@ module.exports = {
       black: 900,
     },
     extend: {
+      gridTemplateAreas: {
+        'dashboard-desktop': [
+          'Expected Sunny   Yield',
+          'Site-Graph   Site-Graph   Recommendation',
+          'Graph   Graph     Graph',
+        ],
+        'dashboard-mobile': [
+          'Heading1 Heading1',
+          'Sunny Recommendation',
+          'Site-Graph   Site-Graph',
+          'Heading2 Heading2',
+          'Expected Yield',
+          'Graph Graph',
+        ],
+      },
+      gridTemplateColumns: {
+        'desktop-columns': '1fr 1fr 1fr',
+        'mobile-columns': '1fr 1fr',
+      },
+      gridTemplateRows: {
+        'desktop-rows': 'auto auto auto',
+        'mobile-rows': 'auto auto auto auto auto auto',
+      },
+
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],
@@ -182,4 +206,5 @@ module.exports = {
   },
   darkMode: 'class',
   // plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")]
+  plugins: [require('@savvywombat/tailwindcss-grid-areas')],
 };

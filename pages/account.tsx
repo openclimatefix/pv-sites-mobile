@@ -2,9 +2,9 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
+import useSWR from 'swr';
 import { Inverter } from '~/lib/enode';
 import { withSites } from '~/lib/utils';
-import useSWR from 'swr';
 
 type Props = {
   inverters: Inverter[] | null;
@@ -26,6 +26,7 @@ const AccountInfo: FC<Props> = ({ inverters }) => {
         <p key={i} className="text-white">
           Inverter ID: {inverter.id}, rate:{' '}
           {inverter.productionState.productionRate}
+          {JSON.stringify(inverter)}
         </p>
       ))}
       <Link href="/api/enode/clear-users">
