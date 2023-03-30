@@ -29,6 +29,28 @@ function getGraphStartDate(currentTime: number) {
   );
 }
 
+function getXTickValues(
+  forecastData: ClearSkyDataPoint[] | undefined,
+  numTicks: number
+) {
+  const tickValues: any[] = [];
+  const dataLength = forecastData.length;
+
+  if (dataLength === 0) {
+    return tickValues;
+  }
+
+  const tickStep = Math.floor(dataLength / (numTicks - 1));
+
+  for (let i = 0; i < numTicks; i++) {
+    const index = Math.min(i * tickStep, dataLength - 1);
+    const tickValue = forecastData[index].target_datetime_utc;
+    tickValues.push(tickValue);
+  }
+
+  return tickValues;
+}
+
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading, clearskyData } =
     useSiteData(siteUUID);
@@ -59,7 +81,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       )
     : 0;
 
-  const tickArray = [
+  const yTickArray = [
     0,
     maxGeneration / 4,
     maxGeneration / 2,
@@ -88,6 +110,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
   };
 
+  const xTickValues =
+    clearSkyEstimateTrimmed &&
+    getXTickValues(clearSkyEstimateTrimmed as ClearSkyDataPoint[], 5);
+
   return (
     <div className="my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl">
       <div className="flex ml-[9%] mt-[20px]  text-sm gap-3 ">
@@ -104,6 +130,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       {!isLoading && (
         <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
           <LineChart
+            data={forecastDataTrimmed}
             margin={{
               top: 0,
               right: 10,
@@ -111,9 +138,14 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               bottom: 20,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" color="white" />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              color="white"
+              vertical={false}
+            />
             <XAxis
-              scale="band"
+              tickCount={5}
+              ticks={xTickValues}
               fontSize="10px"
               dataKey="target_datetime_utc"
               allowDuplicatedCategory={false}
@@ -124,8 +156,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               ) => formatter.format(new Date(point))}
             />
             <YAxis
-              tickCount={5}
-              ticks={tickArray}
+              tickCount={7}
+              ticks={yTickArray}
               domain={[0, maxGeneration * 1.25]}
               interval={0}
               fontSize="10px"
