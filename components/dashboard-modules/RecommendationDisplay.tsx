@@ -17,7 +17,7 @@ const RecommendationDisplay: FC<Props> = ({ src, alt, description }) => {
           text-center
           justify-center
           align-center
-          bg-ocf-gray-1000
+          bg-ocf-black-500
           rounded-2xl
           h-[100%]"
     >

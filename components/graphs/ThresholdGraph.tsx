@@ -191,7 +191,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   };
 
   return (
-    <div className="relative w-full h-[260px] bg-ocf-gray-1000 rounded-2xl content-center">
+    <div className="relative w-full h-[260px] bg-ocf-black-500 rounded-2xl content-center">
       <div className="flex flex-col w-full justify-start">
         <div className="flex justify-end mt-[20px] mr-10 text-sm">
           <FutureThresholdLegendIcon />

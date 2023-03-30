@@ -21,10 +21,10 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
             Solar Activity
           </h2>
         </div>
-        <div className="grid-in-Sunny border-blue-200">
+        <div className="grid-in-Sunny">
           <SunnyTimeframe siteUUID={siteUUID} />
         </div>
-        <div className="grid-in-Recommendation border-blue-200">
+        <div className="grid-in-Recommendation">
           <EnergyRecommendation siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Site-Graph">

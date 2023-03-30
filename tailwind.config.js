@@ -59,7 +59,6 @@ module.exports = {
           'Expected Yield',
           'Graph Graph',
         ],
-
       },
       gridTemplateColumns: {
         'desktop-columns': '1fr 1fr 1fr',
@@ -69,7 +68,7 @@ module.exports = {
         'desktop-rows': 'auto auto auto',
         'mobile-rows': 'auto auto auto auto auto auto',
       },
-      
+
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],
@@ -207,7 +206,5 @@ module.exports = {
   },
   darkMode: 'class',
   // plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")]
-  plugins: [
-    require('@savvywombat/tailwindcss-grid-areas')
-  ]
+  plugins: [require('@savvywombat/tailwindcss-grid-areas')],
 };
