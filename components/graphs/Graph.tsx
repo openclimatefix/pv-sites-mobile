@@ -114,8 +114,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     getXTickValues(clearSkyEstimateTrimmed as ClearSkyDataPoint[], 5);
 
   return (
-    <div className="my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl">
-      <div className="flex ml-[9%] mt-[20px]  text-sm gap-3 ">
+    <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-1">
+      <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
         <div className="flex">
           <LegendLineGraphIcon className="text-ocf-yellow-500" />
           <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
@@ -127,7 +127,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       </div>
 
       {!isLoading && (
-        <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
+        <ResponsiveContainer className="mt-[20px]" width="100%" height={200}>
           <LineChart
             data={forecastDataTrimmed}
             margin={{
