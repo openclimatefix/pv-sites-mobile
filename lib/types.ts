@@ -53,6 +53,16 @@ export interface ClearSkyDataPoint {
   target_datetime_utc: number;
   clearsky_generation_kw: number;
 }
+
+export interface UnparsedClearSkyData {
+  clearsky_estimate: UnparsedClearSkyDataPoint[];
+}
+
+export interface UnparsedClearSkyDataPoint {
+  target_datetime_utc: string;
+  clearsky_generation_kw: number;
+}
+
 export interface LatitudeLongitude {
   latitude: number;
   longitude: number;

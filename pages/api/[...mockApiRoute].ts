@@ -70,6 +70,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     } else if (
       mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/clearsky'
     ) {
+      fakeDates(clearskyJson as any);
       res.status(200).json(clearskyJson);
     } else if (
       mockApiRoute ===

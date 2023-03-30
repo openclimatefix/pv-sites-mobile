@@ -1,6 +1,6 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import {
-  forecastDataOverDateRange,
+  outputDataOverDateRange,
   formatter,
   getCurrentTimeForecastIndex,
 } from 'lib/graphs';
@@ -39,27 +39,25 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
-  const graphData =
+  const forecastDataTrimmed =
     forecastData &&
-    forecastDataOverDateRange(
+    outputDataOverDateRange(
       forecastData.forecast_values,
       getGraphStartDate(currentTime),
       endDate
     );
-  const maxGeneration = graphData
-    ? Math.max(...graphData.map((value) => value.expected_generation_kw))
-    : 0;
 
-  const clearSkyEstimateTrimmed = clearskyData?.clearsky_estimate.filter(
-    (clearSkyDataPoint: ClearSkyDataPoint) => {
-      return (
-        (forecastData?.forecast_values[0]?.target_datetime_utc ?? 0) <=
-          clearSkyDataPoint.target_datetime_utc &&
-        (forecastData?.forecast_values[forecastData.forecast_values.length - 1]
-          ?.target_datetime_utc ?? 0) >= clearSkyDataPoint.target_datetime_utc
-      );
-    }
+  const clearSkyEstimateTrimmed = outputDataOverDateRange(
+    clearskyData?.clearsky_estimate,
+    getGraphStartDate(currentTime),
+    endDate
   );
+
+  const maxGeneration = clearSkyEstimateTrimmed
+    ? Math.max(
+        ...clearSkyEstimateTrimmed.map((value) => value.clearsky_generation_kw)
+      )
+    : 0;
 
   const tickArray = [
     0,
@@ -106,7 +104,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       {!isLoading && (
         <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
           <LineChart
-            data={graphData}
             margin={{
               top: 0,
               right: 10,
@@ -135,7 +132,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               axisLine={false}
               stroke="white"
               tickFormatter={(
-                val: ForecastDataPoint['expected_generation_kw']
+                val: ClearSkyDataPoint['clearsky_generation_kw']
               ) => val.toFixed(2)}
             />
             <Tooltip
@@ -150,15 +147,16 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               ) => formatter.format(new Date(point))}
             />
             <Line
+              data={clearSkyEstimateTrimmed}
               type="monotone"
-              dataKey="expected_generation_kw"
-              stroke="#FFD053"
+              dataKey="clearsky_generation_kw"
+              stroke="#48B0DF"
               dot={false}
               activeDot={{ r: 8 }}
               onAnimationEnd={() => setTimeEnabled(true)}
             />
             <Line
-              data={forecastData?.forecast_values}
+              data={forecastDataTrimmed}
               type="monotone"
               dataKey="expected_generation_kw"
               stroke="#FFD053"
@@ -167,9 +165,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             />
             <ReferenceLine
               x={
-                graphData
-                  ? graphData[getCurrentTimeForecastIndex(graphData)]
-                      .target_datetime_utc
+                forecastDataTrimmed
+                  ? forecastDataTrimmed[
+                      getCurrentTimeForecastIndex(forecastDataTrimmed)
+                    ].target_datetime_utc
                   : 0
               }
               strokeWidth={1}

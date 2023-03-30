@@ -1,3 +1,5 @@
+import { ClearSkyDataPoint } from './types';
+
 /**
  * Converts Date object into Hour-Minute format based on device region
  */
@@ -15,7 +17,7 @@ interface ForecastDataPoint {
  * @returns the index of the forecasted date that is closest to the target time
  */
 export const getClosestForecastIndex = (
-  forecastData: ForecastDataPoint[],
+  forecastData: Pick<ForecastDataPoint, 'target_datetime_utc'>[],
   targetDate: Date
 ) => {
   if (forecastData) {
@@ -36,8 +38,8 @@ export const getClosestForecastIndex = (
   return 0;
 };
 
-export const forecastDataOverDateRange = (
-  forecastData: ForecastDataPoint[],
+export const outputDataOverDateRange = (
+  forecastData: Pick<ForecastDataPoint, 'target_datetime_utc'>[],
   start_date: Date,
   end_date: Date
 ) => {

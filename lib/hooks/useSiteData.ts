@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { fetcher } from '../swr';
 import { ClearSkyData, Site, SiteList } from '../types';
-import { forecastFetcher } from './utils';
+import { clearSkyFetcher, forecastFetcher } from './utils';
 
 /**
  * Gets forecasted and solar panel data for a single site
@@ -29,8 +29,8 @@ const useSiteData = (siteUUID: string) => {
     error: clearskyError,
     isLoading: isClearskyLoading,
   } = useSWR<ClearSkyData>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/${siteUUID}/clearsky`,
-    fetcher
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/clearsky_estimate`,
+    clearSkyFetcher
   );
 
   const error = AggregateError([forecastError, siteListError, clearskyError]);
