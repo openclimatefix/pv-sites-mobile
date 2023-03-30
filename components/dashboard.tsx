@@ -1,14 +1,12 @@
-import { getAccessToken, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { FC } from 'react';
+import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
+import { withSites } from '~/lib/utils';
 import CurrentCapacity from './dashboard-modules/CurrentCapacity';
 import CurrentOutput from './dashboard-modules/CurrentOutput';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
-import Graph from './graphs/Graph';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
-import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
-import { withSites } from '~/lib/utils';
-import { SiteList } from '~/lib/types';
-import { FC } from 'react';
+import Graph from './graphs/Graph';
 
 interface DashboardProps {
   siteUUID: string;

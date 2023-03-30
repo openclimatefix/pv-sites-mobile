@@ -1,5 +1,4 @@
 import { useState, FC } from 'react';
-import { useRouter } from 'next/router';
 
 import Spinner from '~/components/Spinner';
 import Input from '~/components/Input';
@@ -7,7 +6,6 @@ import Modal from 'components/Modal';
 
 import { useFormContext } from '~/lib/context/form_context';
 import BackButton from 'components/BackButton';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import LocationInput from '../LocationInput';
 import { zoomLevelThreshold } from '../../lib/utils';
 import Button from '~/components/Button';
@@ -29,7 +27,6 @@ interface Props {
 }
 
 const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
-  const router = useRouter();
   const { siteCoordinates, setFormData, panelDetails, postPanelData } =
     useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -57,16 +54,18 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
           <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray mb-5">
             Your site&apos;s details
           </h1>
-          <LocationInput
-            shouldZoomIntoOriginal={true}
-            initialZoom={16}
-            originalLat={siteCoordinates.latitude}
-            originalLng={siteCoordinates.longitude}
-            setIsSubmissionEnabled={() => {}}
-            setMapCoordinates={() => {}}
-            zoomLevelThreshold={zoomLevelThreshold}
-            canEdit={false}
-          />
+          <div className="w-full h-full" onClick={lastPageCallback}>
+            <LocationInput
+              shouldZoomIntoOriginal={true}
+              initialZoom={16}
+              originalLat={siteCoordinates.latitude}
+              originalLng={siteCoordinates.longitude}
+              setIsSubmissionEnabled={() => {}}
+              setMapCoordinates={() => {}}
+              zoomLevelThreshold={zoomLevelThreshold}
+              canEdit={false}
+            />
+          </div>
           <button
             onClick={lastPageCallback}
             className="md:hidden mt-8 font-bold text-xl peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
@@ -91,6 +90,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
               type: 'text',
               placeholder: 'My House',
               required: true,
+              autoFocus: true,
             }}
           />
           <Input

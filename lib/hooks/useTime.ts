@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { formatter } from '../graphs';
-
 const SunCalc = require('suncalc');
 
+type UseTimeOptions = {
+  updateEnabled: boolean;
+};
+
+const defaultUseTimeOptions = {
+  updateEnabled: true,
+};
 /**
  * Creates a hook more accessesing specific values like the current time, whether it is daytime
  * @param latitude, the latitude float value that is passed in
@@ -10,7 +15,11 @@ const SunCalc = require('suncalc');
  * @returns currentTimes, version of the current time (right now) that a user can format
  * @returns isDaytime, boolean value indicating whether it is daytime or not based on current time zone.
  */
-const useTime = (latitude?: number, longitude?: number) => {
+const useTime = (
+  latitude?: number,
+  longitude?: number,
+  { updateEnabled = false }: UseTimeOptions = defaultUseTimeOptions
+) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
   // get sunrise/sunset time for passed in location
@@ -22,13 +31,15 @@ const useTime = (latitude?: number, longitude?: number) => {
   const sunsetTime = times ? times.sunset : null;
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(Date.now());
-    }, 1000);
+    if (updateEnabled) {
+      const intervalId = setInterval(() => {
+        setCurrentTime(Date.now());
+      }, 1000);
 
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
-  });
+      // clear interval on re-render to avoid memory leaks
+      return () => clearInterval(intervalId);
+    }
+  }, [updateEnabled]);
 
   // default to daytime
   const isDaytime =

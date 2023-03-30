@@ -7,7 +7,7 @@ import { ForecastData, UnparsedForecastData } from '../types';
  * @param datetime The nowcasting datetime string
  * @returns The datetime's UNIX timestamp
  */
-function parseNowcastingDatetime(datetime: string) {
+export function parseNowcastingDatetime(datetime: string) {
   if (!datetime.endsWith('Z')) {
     datetime += 'Z';
   }
