@@ -19,13 +19,29 @@ import {
 import useTime from '~/lib/hooks/useTime';
 import { ForecastDataPoint } from '~/lib/types';
 
-function getGraphStartDate(currentTime: number) {
+function getGraphStartDate(currentTime: number, totalHours: number) {
   const currentDate = new Date(currentTime);
   return new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
     currentDate.getDate(),
-    currentDate.getHours() - 5
+    totalHours > 1
+      ? currentDate.getHours() - totalHours / 8
+      : currentDate.getHours(),
+    totalHours > 1 ? 0 : currentDate.getMinutes() - 10
+  );
+}
+
+function getGraphEndDate(currentTime: number, totalHours: number) {
+  const currentDate = new Date(currentTime);
+  return new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate(),
+    totalHours > 1
+      ? currentDate.getHours() + (7 * totalHours) / 8
+      : currentDate.getHours(),
+    totalHours > 1 ? 0 : currentDate.getMinutes() + 50
   );
 }
 
@@ -37,7 +53,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     updateEnabled: timeEnabled,
   });
 
-  const [timeRange, setTimeRange] = useState('1D');
+  const [timeRange, setTimeRange] = useState('24');
   const handleChange = (event: any) => {
     setTimeRange(event.target.value);
   };
@@ -48,8 +64,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     forecastData &&
     forecastDataOverDateRange(
       forecastData.forecast_values,
-      getGraphStartDate(currentTime),
-      endDate
+      getGraphStartDate(currentTime, parseInt(timeRange)),
+      getGraphEndDate(currentTime, parseInt(timeRange))
     );
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.expected_generation_kw))
@@ -85,39 +101,54 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   };
 
   return (
-    <div className="my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl">
+    <div className="my-2 w-full h-[300px] bg-ocf-black-500 rounded-2xl">
+      <div className="mt-5 ml-2">
+        <label>
+          <input
+            className="invisible peer"
+            type="radio"
+            name="1H"
+            id="1H"
+            value="1"
+            checked={timeRange === '1'}
+            onChange={handleChange}
+          />
+          <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+            1H
+          </span>
+        </label>
+        <label>
+          <input
+            className="invisible peer"
+            type="radio"
+            name="1D"
+            id="1D"
+            value="24"
+            checked={timeRange === '24'}
+            onChange={handleChange}
+          />
+          <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+            1D
+          </span>
+        </label>
+        <label>
+          <input
+            className="invisible peer"
+            type="radio"
+            name="3D"
+            id="3D"
+            value="36"
+            checked={timeRange === '36'}
+            onChange={handleChange}
+          />
+          <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+            3D
+          </span>
+        </label>
+      </div>
       <div className="flex ml-[9%] mt-[20px]  text-sm">
         <LegendLineGraphIcon className="text-ocf-yellow-500" />
         <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
-      </div>
-      <div className="radio">
-        <label>
-          <input
-            type="radio"
-            name="radio"
-            value="1H"
-            onChange={handleChange}
-          />
-          1H
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="radio"
-            value="1D"
-            onChange={handleChange}
-          />
-          1D
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="radio"
-            value="3D"
-            onChange={handleChange}
-          />
-          3D
-        </label>
       </div>
       {!isLoading && (
         <ResponsiveContainer className="mt-[30px]" width="100%" height={200}>
