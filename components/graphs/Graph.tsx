@@ -110,7 +110,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
   };
 
-  const xTickValues =
+  const xTickArray =
     clearSkyEstimateTrimmed &&
     getXTickValues(clearSkyEstimateTrimmed as ClearSkyDataPoint[], 5);
 
@@ -145,7 +145,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             />
             <XAxis
               tickCount={5}
-              ticks={xTickValues}
+              ticks={xTickArray}
               fontSize="10px"
               dataKey="target_datetime_utc"
               allowDuplicatedCategory={false}
