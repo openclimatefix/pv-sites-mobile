@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Area, AreaChart, YAxis, ResponsiveContainer } from 'recharts';
 
 import { useSiteData } from 'lib/hooks';
+
 import useTime from '~/lib/hooks/useTime';
 
 import {
@@ -26,7 +27,7 @@ const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   if (graphData && installed_capacity_kw) {
     return (
-      <ResponsiveContainer width="100%" height={75}>
+      <ResponsiveContainer minWidth={0} width="99%" height={75}>
         <AreaChart data={graphData}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">

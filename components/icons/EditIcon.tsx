@@ -1,9 +1,13 @@
-const EditIcon: React.FC = ({}) => (
+interface Props {
+  color: string;
+}
+
+const EditIcon: React.FC<Props> = ({ color }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     className="w-6 h-6"
-    stroke="#e4e4e4"
+    stroke={color}
     fill="none"
     strokeWidth={1.5}
   >

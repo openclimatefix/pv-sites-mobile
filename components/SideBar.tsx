@@ -5,8 +5,6 @@ import Link from 'next/link';
 import {
   ExitIcon,
   DashboardIcon,
-  LocationIcon,
-  EditIcon,
   LogoutIcon,
   SiteListIcon,
   SearchIcon,
