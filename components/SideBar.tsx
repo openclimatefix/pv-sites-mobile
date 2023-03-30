@@ -72,7 +72,7 @@ const Sidebar = () => {
       inert={!isSidebarOpen ? '' : null}
       ref={wrapperRef}
     >
-      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 relative">
+      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black-500 w-64 px-4 py-8 relative">
         <button
           onClick={closeSidebar}
           className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center ml-6"
@@ -101,18 +101,6 @@ const Sidebar = () => {
             />
           </div>
           <div className="flex flex-col gap-3">
-            <MenuLink
-              linkProps={{ href: '/form/location' }}
-              label="Add a Location"
-              svg={<LocationIcon />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/form/details' }}
-              label="Edit Site Details"
-              svg={<EditIcon />}
-              currentPath={router.asPath}
-            />
             <MenuLink
               linkProps={{
                 href: `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`,
