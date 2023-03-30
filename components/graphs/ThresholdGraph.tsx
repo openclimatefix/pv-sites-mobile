@@ -19,7 +19,7 @@ import {
 
 import {
   forecastDataOverDateRange,
-  formatter,
+  timeFormatter,
   getCurrentTimeForecastIndex,
   getGraphEndDate,
   getGraphStartDate,
@@ -115,10 +115,10 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       return null;
     }
 
-    const startTime = formatter.format(
+    const startTime = timeFormatter.format(
       new Date(graphData[0].target_datetime_utc)
     );
-    const endTime = formatter.format(
+    const endTime = timeFormatter.format(
       new Date(graphData[numForecastValues - 1].target_datetime_utc)
     );
 
@@ -168,7 +168,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
     if (minMax) {
       const { type, number: index } = minMax;
-      const minMaxForecastDate = formatter.format(
+      const minMaxForecastDate = timeFormatter.format(
         new Date(graphData[index].target_datetime_utc)
       );
       return type === Value.Max
@@ -185,7 +185,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {formatter.format(currentTime)}
+        {timeFormatter.format(currentTime)}
       </p>
     );
   };
