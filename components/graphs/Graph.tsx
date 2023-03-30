@@ -1,8 +1,8 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import {
   forecastDataOverDateRange,
-  formatter,
   getCurrentTimeForecastIndex,
+  weekdayFormatter,
 } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
 import { FC, useState } from 'react';
@@ -80,8 +80,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   };
 
   return (
-    <div className="my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl">
-      <div className="flex ml-[9%] mt-[20px]  text-sm">
+    <div className="p-[10px] w-full h-[260px] bg-ocf-black-500 rounded-2xl">
+      <div className="flex ml-[9%] text-sm">
         <LegendLineGraphIcon className="text-ocf-yellow-500" />
         <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
       </div>
@@ -100,13 +100,13 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <CartesianGrid strokeDasharray="3 3" color="white" />
             <XAxis
               scale="band"
-              fontSize="10px"
+              fontSize="9px"
               dataKey="target_datetime_utc"
               stroke="white"
               axisLine={false}
               tickFormatter={(
                 point: ForecastDataPoint['target_datetime_utc']
-              ) => formatter.format(new Date(point))}
+              ) => weekdayFormatter.format(new Date(point))}
             />
             <YAxis
               tickCount={5}
@@ -129,7 +129,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               ) => [parseFloat(value.toFixed(5)), 'kW']}
               labelFormatter={(
                 point: ForecastDataPoint['target_datetime_utc']
-              ) => formatter.format(new Date(point))}
+              ) => weekdayFormatter.format(new Date(point))}
             />
             <Line
               type="monotone"

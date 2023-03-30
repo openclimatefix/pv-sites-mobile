@@ -1,29 +1,29 @@
-import { FC, useState, useEffect, useCallback } from 'react';
+import { FC, useState } from 'react';
 
 import {
+  Area,
+  AreaChart,
+  Label,
+  LabelList,
+  ReferenceLine,
   ResponsiveContainer,
   YAxis,
-  AreaChart,
-  LabelList,
-  Area,
-  ReferenceLine,
-  Label,
 } from 'recharts';
 
 import {
-  FutureThresholdLegendIcon,
-  UpArrowIcon,
   DownArrowIcon,
+  FutureThresholdLegendIcon,
   LineCircle,
+  UpArrowIcon,
 } from '../icons/future_threshold';
 
 import {
-  formatter,
   forecastDataOverDateRange,
+  timeFormatter,
   getCurrentTimeForecastIndex,
-  graphThreshold,
-  getGraphStartDate,
   getGraphEndDate,
+  getGraphStartDate,
+  graphThreshold,
 } from 'lib/graphs';
 
 import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
@@ -115,10 +115,10 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       return null;
     }
 
-    const startTime = formatter.format(
+    const startTime = timeFormatter.format(
       new Date(graphData[0].target_datetime_utc)
     );
-    const endTime = formatter.format(
+    const endTime = timeFormatter.format(
       new Date(graphData[numForecastValues - 1].target_datetime_utc)
     );
 
@@ -168,7 +168,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
     if (minMax) {
       const { type, number: index } = minMax;
-      const minMaxForecastDate = formatter.format(
+      const minMaxForecastDate = timeFormatter.format(
         new Date(graphData[index].target_datetime_utc)
       );
       return type === Value.Max
@@ -185,17 +185,18 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {formatter.format(currentTime)}
+        {timeFormatter.format(currentTime)}
       </p>
     );
   };
 
   return (
-    <div className="relative my-2 w-full h-[260px] bg-ocf-black-500 rounded-2xl content-center">
+    <div className="relative w-full h-[260px] bg-ocf-black-500 rounded-2xl content-center">
       <div className="flex flex-col w-full justify-start">
         <div className="flex justify-end mt-[20px] mr-10 text-sm">
           <FutureThresholdLegendIcon />
         </div>
+
         {!isLoading && (
           <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
             <AreaChart

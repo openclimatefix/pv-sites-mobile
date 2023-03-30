@@ -1,3 +1,4 @@
+import { addMilliseconds, getDate } from 'date-fns';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
@@ -6,14 +7,13 @@ import {
   getLinkRedirectURL,
   testClientID,
 } from '~/lib/enode';
+import { parseNowcastingDatetime } from '~/lib/hooks/utils';
+import { UnparsedForecastData } from '~/lib/types';
 import pvActualMultipleJson from '../../data/pv-actual-multiple.json';
 import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
-import { UnparsedForecastData } from '~/lib/types';
-import { parseNowcastingDatetime } from '~/lib/hooks/utils';
-import { addMilliseconds } from 'date-fns';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids } = req.query;
@@ -59,13 +59,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (
       mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_actual'
     ) {
-      fakeDates(pvActualJson as any);
-      res.status(200).json(pvActualJson);
+      const pvActualJsonFake = fakeDates(pvActualJson as any);
+      res.status(200).json(pvActualJsonFake);
     } else if (
       mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_forecast'
     ) {
-      fakeDates(pvForecastJson as any);
-      res.status(200).json(pvForecastJson);
+      const pvForecastJSONFake = fakeDates(pvForecastJson as any);
+      res.status(200).json(pvForecastJSONFake);
     } else if (
       mockApiRoute ===
       'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,9570f807-fc9e-47e9-b5e3-5915ddddef3d'
@@ -113,19 +113,25 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 function fakeDates(forecastData: UnparsedForecastData) {
   const today = new Date();
-  const first = new Date(
+  const oldStart = new Date(
     parseNowcastingDatetime(forecastData.forecast_values[0].target_datetime_utc)
   );
-  first.setUTCDate(today.getUTCDate());
-  forecastData.forecast_values = forecastData.forecast_values.map((value) => {
+  const newStart = new Date(oldStart);
+  newStart.setUTCDate(today.getDate());
+  const difference = newStart.getTime() - oldStart.getTime();
+  const forecast_values = forecastData.forecast_values.map((value) => {
     const date = new Date(parseNowcastingDatetime(value.target_datetime_utc));
-    addMilliseconds(date, date.getTime() - first.getTime());
     return {
       ...value,
-      target_datetime_utc: date.toISOString(),
+      target_datetime_utc: addMilliseconds(date, difference).toISOString(),
     };
   });
-  return forecastData;
+
+  return {
+    ...forecastData,
+    forecast_creation_datetime: newStart.toISOString(),
+    forecast_values,
+  } as UnparsedForecastData;
 }
 
 export default handler;
