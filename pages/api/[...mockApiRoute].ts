@@ -68,7 +68,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const pvForecastJSONFake = fakeDates(pvForecastJson as any);
       res.status(200).json(pvForecastJSONFake);
     } else if (
-      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/clearsky'
+      mockApiRoute ===
+      'sites/725a8670-d012-474d-b901-1179f43e7182/clearsky_estimate'
     ) {
       fakeDates(clearskyJson as any);
       res.status(200).json(clearskyJson);
