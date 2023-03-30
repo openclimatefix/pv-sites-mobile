@@ -28,7 +28,7 @@ function getGraphStartDate(currentTime: number, totalHours: number) {
     totalHours > 1
       ? currentDate.getHours() - totalHours / 8
       : currentDate.getHours(),
-    totalHours > 1 ? 0 : currentDate.getMinutes() - 10
+    totalHours > 1 ? 0 : currentDate.getMinutes() - 60/8
   );
 }
 
@@ -41,7 +41,7 @@ function getGraphEndDate(currentTime: number, totalHours: number) {
     totalHours > 1
       ? currentDate.getHours() + (7 * totalHours) / 8
       : currentDate.getHours(),
-    totalHours > 1 ? 0 : currentDate.getMinutes() + 50
+    totalHours > 1 ? 0 : currentDate.getMinutes() + 7*60/8
   );
 }
 
@@ -137,8 +137,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             type="radio"
             name="3D"
             id="3D"
-            value="36"
-            checked={timeRange === '36'}
+            value="72"
+            checked={timeRange === '72'}
             onChange={handleChange}
           />
           <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
