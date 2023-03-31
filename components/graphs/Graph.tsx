@@ -28,7 +28,7 @@ function getGraphStartDate(currentTime: number, totalHours: number) {
     totalHours > 1
       ? currentDate.getHours() - totalHours / 8
       : currentDate.getHours(),
-    totalHours > 1 ? 0 : currentDate.getMinutes() - 60/8
+    totalHours > 1 ? 0 : currentDate.getMinutes() - 15
   );
 }
 
@@ -41,7 +41,7 @@ function getGraphEndDate(currentTime: number, totalHours: number) {
     totalHours > 1
       ? currentDate.getHours() + (7 * totalHours) / 8
       : currentDate.getHours(),
-    totalHours > 1 ? 0 : currentDate.getMinutes() + 7*60/8
+    totalHours > 1 ? 0 : currentDate.getMinutes() + 45
   );
 }
 
@@ -67,6 +67,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       getGraphStartDate(currentTime, parseInt(timeRange)),
       getGraphEndDate(currentTime, parseInt(timeRange))
     );
+  console.log(graphData);
+
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.expected_generation_kw))
     : 0;
@@ -102,10 +104,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   return (
     <div className="my-2 w-full h-[300px] bg-ocf-black-500 rounded-2xl">
-      <div className="mt-5 ml-2">
-        <label>
+      <div className="mt-4 ml-2">
+        <label className="mx-2">
           <input
-            className="invisible peer"
+            className="hidden peer"
             type="radio"
             name="1H"
             id="1H"
@@ -117,9 +119,9 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             1H
           </span>
         </label>
-        <label>
+        <label className="mx-2">
           <input
-            className="invisible peer"
+            className="hidden peer"
             type="radio"
             name="1D"
             id="1D"
@@ -131,9 +133,9 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             1D
           </span>
         </label>
-        <label>
+        <label className="mx-2">
           <input
-            className="invisible peer"
+            className="hidden peer"
             type="radio"
             name="3D"
             id="3D"
@@ -163,7 +165,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           >
             <CartesianGrid strokeDasharray="3 3" color="white" />
             <XAxis
-              scale="band"
+              //scale="band"
               fontSize="10px"
               dataKey="target_datetime_utc"
               stroke="white"
