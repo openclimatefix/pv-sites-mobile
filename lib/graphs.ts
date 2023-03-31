@@ -9,12 +9,6 @@ export const timeFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
   minute: 'numeric',
 });
 
-// export const weekdayFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-//   weekday: 'short',
-//   hour: 'numeric',
-//   minute: 'numeric',
-// });
-
 interface ForecastDataPoint {
   target_datetime_utc: number;
   expected_generation_kw: number;

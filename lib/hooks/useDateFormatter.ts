@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useSiteData from './useSiteData';
 
 /**
- * Gets forecasted and solar panel data for a single site
+ * Gets the current timezone code based on a user's site location
  * @param long the longitude value of the user's site
  * @param lat the latitude value of the user's site
  * @returns the users timezone based on mapbox's API, this returns GMT otherwise
@@ -15,6 +15,7 @@ const fetchTimeZone = async (long: number, lat: number) => {
   );
   const data = await query.json();
   // get the timezone from the resulting GeoJSON FeatureCollection
+  // temporary fix - GB is a default timezone for if the user's site location was not matched
   const userTimezone = data?.features[0]?.properties?.TZID ?? 'GB';
   return userTimezone;
 };
