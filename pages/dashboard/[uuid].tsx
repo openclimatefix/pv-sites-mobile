@@ -5,6 +5,7 @@ import Dashboard from '~/components/dashboard';
 const SiteDashboard = () => {
   const router = useRouter();
   const { uuid } = router.query;
+  console.log('test');
   return <Dashboard siteUUID={uuid as string} />;
 };
 

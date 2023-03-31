@@ -3,7 +3,7 @@ import Location from '~/components/form/Location';
 import { useRouter } from 'next/router';
 
 import { FC, useState } from 'react';
-import { withSites } from '../lib/utils';
+import { withSites } from '../../lib/utils';
 
 enum Page {
   Details = 'Details',
