@@ -165,7 +165,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           >
             <CartesianGrid strokeDasharray="3 3" color="white" />
             <XAxis
-              //scale="band"
               fontSize="10px"
               dataKey="target_datetime_utc"
               stroke="white"
