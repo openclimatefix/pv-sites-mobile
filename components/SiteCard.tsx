@@ -58,7 +58,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             </p>
             {installed_capacity_kw && (
               <p className="text-ocf-gray-500 font-medium text-xs">
-                Max. capacity: {installed_capacity_kw} kW
+                Max. capacity: {installed_capacity_kw.toFixed(2)} kW
               </p>
             )}
             <p className="text-ocf-gray-500 font-medium text-xs">
