@@ -14,6 +14,7 @@ import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
+import clearskyJson from '../../data/clearsky.json';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids } = req.query;
@@ -66,6 +67,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     ) {
       const pvForecastJSONFake = fakeDates(pvForecastJson as any);
       res.status(200).json(pvForecastJSONFake);
+    } else if (
+      mockApiRoute ===
+      'sites/725a8670-d012-474d-b901-1179f43e7182/clearsky_estimate'
+    ) {
+      fakeDates(clearskyJson as any);
+      res.status(200).json(clearskyJson);
     } else if (
       mockApiRoute ===
       'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,9570f807-fc9e-47e9-b5e3-5915ddddef3d'
