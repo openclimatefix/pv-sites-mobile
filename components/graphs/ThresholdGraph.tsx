@@ -19,6 +19,7 @@ import {
 
 import {
   forecastDataOverDateRange,
+  outputDataOverDateRange,
   getCurrentTimeForecastIndex,
   getGraphEndDate,
   getGraphStartDate,
@@ -42,7 +43,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const graphData =
     forecastData &&
-    forecastDataOverDateRange(
+    outputDataOverDateRange(
       forecastData.forecast_values,
       getGraphStartDate(currentTime),
       getGraphEndDate(currentTime)
