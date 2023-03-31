@@ -135,8 +135,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     getXTickValues(clearSkyEstimateTrimmed as ClearSkyDataPoint[], 5);
 
   return (
-    <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-1">
-      <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
+    <div className="w-full h-[290px] bg-ocf-black-500 rounded-2xl p-1">
+      <div className="mt-3 ml-1">
         <label className="mx-2">
           <input
             className="hidden peer"
@@ -169,112 +169,110 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           <input
             className="hidden peer"
             type="radio"
-            name="3D"
-            id="3D"
-            value="72"
-            checked={timeRange === '72'}
+            name="2D"
+            id="2D"
+            value="36"
+            checked={timeRange === '36'}
             onChange={handleChange}
           />
           <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
-            3D
+            2D
           </span>
         </label>
       </div>
-      <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-1">
-        <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
-          <div className="flex">
-            <LegendLineGraphIcon className="text-ocf-yellow-500" />
-            <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
-          </div>
-          <div className="flex">
-            <LegendLineGraphIcon className="text-ocf-blue" />
-            <p className="text-white ml-[5px] mt-[2px]">Clear Sky</p>
-          </div>
+      <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
+        <div className="flex">
+          <LegendLineGraphIcon className="text-ocf-yellow-500" />
+          <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
         </div>
-        {!isLoading && (
-          <ResponsiveContainer className="mt-[20px]" width="100%" height={200}>
-            <LineChart
-              data={forecastDataTrimmed}
-              margin={{
-                top: 0,
-                right: 10,
-                left: -25,
-                bottom: 20,
-              }}
-            >
-              <CartesianGrid
-                strokeDasharray="3 3"
-                color="white"
-                // vertical={false}
-              />
-              <XAxis
-                tickCount={5}
-                ticks={xTickArray}
-                fontSize="9px"
-                dataKey="target_datetime_utc"
-                allowDuplicatedCategory={false}
-                stroke="white"
-                axisLine={false}
-                tickFormatter={(
-                  point: ForecastDataPoint['target_datetime_utc']
-                ) => weekdayFormatter.format(new Date(point))}
-              />
-              <YAxis
-                tickCount={7}
-                ticks={yTickArray}
-                domain={[0, maxGeneration * 1.25]}
-                interval={0}
-                fontSize="10px"
-                axisLine={false}
-                stroke="white"
-                tickFormatter={(
-                  val: ClearSkyDataPoint['clearsky_generation_kw']
-                ) => val.toFixed(2)}
-              />
-              <Tooltip
-                wrapperStyle={{ outline: 'none' }}
-                contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
-                labelStyle={{ color: 'white' }}
-                formatter={(
-                  value: ForecastDataPoint['expected_generation_kw']
-                ) => [parseFloat(value.toFixed(5)), 'kW']}
-                labelFormatter={(
-                  point: ForecastDataPoint['target_datetime_utc']
-                ) => weekdayFormatter.format(new Date(point))}
-              />
-              <Line
-                data={clearSkyEstimateTrimmed}
-                type="monotone"
-                dataKey="clearsky_generation_kw"
-                stroke="#48B0DF"
-                dot={false}
-                activeDot={{ r: 8 }}
-                onAnimationEnd={() => setTimeEnabled(true)}
-              />
-              <Line
-                data={forecastDataTrimmed}
-                type="monotone"
-                dataKey="expected_generation_kw"
-                stroke="#FFD053"
-                dot={false}
-                activeDot={{ r: 8 }}
-              />
-              <ReferenceLine
-                x={
-                  forecastDataTrimmed
-                    ? forecastDataTrimmed[
-                        getCurrentTimeForecastIndex(forecastDataTrimmed)
-                      ].target_datetime_utc
-                    : 0
-                }
-                strokeWidth={1}
-                stroke="white"
-                label={(props) => renderLabel({ ...props, height: 200 })}
-              ></ReferenceLine>
-            </LineChart>
-          </ResponsiveContainer>
-        )}
+        <div className="flex">
+          <LegendLineGraphIcon className="text-ocf-blue" />
+          <p className="text-white ml-[5px] mt-[2px]">Clear Sky</p>
+        </div>
       </div>
+      {!isLoading && (
+        <ResponsiveContainer className="mt-[20px]" width="100%" height={200}>
+          <LineChart
+            data={forecastDataTrimmed}
+            margin={{
+              top: 0,
+              right: 10,
+              left: -25,
+              bottom: 20,
+            }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+              color="white"
+              // vertical={false}
+            />
+            <XAxis
+              tickCount={5}
+              ticks={xTickArray}
+              fontSize="9px"
+              dataKey="target_datetime_utc"
+              allowDuplicatedCategory={false}
+              stroke="white"
+              axisLine={false}
+              tickFormatter={(
+                point: ForecastDataPoint['target_datetime_utc']
+              ) => weekdayFormatter.format(new Date(point))}
+            />
+            <YAxis
+              tickCount={7}
+              ticks={yTickArray}
+              domain={[0, maxGeneration * 1.25]}
+              interval={0}
+              fontSize="10px"
+              axisLine={false}
+              stroke="white"
+              tickFormatter={(
+                val: ClearSkyDataPoint['clearsky_generation_kw']
+              ) => val.toFixed(2)}
+            />
+            <Tooltip
+              wrapperStyle={{ outline: 'none' }}
+              contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
+              labelStyle={{ color: 'white' }}
+              formatter={(
+                value: ForecastDataPoint['expected_generation_kw']
+              ) => [parseFloat(value.toFixed(5)), 'kW']}
+              labelFormatter={(
+                point: ForecastDataPoint['target_datetime_utc']
+              ) => weekdayFormatter.format(new Date(point))}
+            />
+            <Line
+              data={clearSkyEstimateTrimmed}
+              type="monotone"
+              dataKey="clearsky_generation_kw"
+              stroke="#48B0DF"
+              dot={false}
+              activeDot={{ r: 8 }}
+              onAnimationEnd={() => setTimeEnabled(true)}
+            />
+            <Line
+              data={forecastDataTrimmed}
+              type="monotone"
+              dataKey="expected_generation_kw"
+              stroke="#FFD053"
+              dot={false}
+              activeDot={{ r: 8 }}
+            />
+            <ReferenceLine
+              x={
+                forecastDataTrimmed
+                  ? forecastDataTrimmed[
+                      getCurrentTimeForecastIndex(forecastDataTrimmed)
+                    ].target_datetime_utc
+                  : 0
+              }
+              strokeWidth={1}
+              stroke="white"
+              label={(props) => renderLabel({ ...props, height: 200 })}
+            ></ReferenceLine>
+          </LineChart>
+        </ResponsiveContainer>
+      )}
     </div>
   );
 };
