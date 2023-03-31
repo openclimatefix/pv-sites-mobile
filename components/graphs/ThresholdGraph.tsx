@@ -18,7 +18,6 @@ import {
 } from '../icons/future_threshold';
 
 import {
-  forecastDataOverDateRange,
   outputDataOverDateRange,
   getCurrentTimeForecastIndex,
   getGraphEndDate,
