@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
-import Sidebar from './SideBar';
-import NavBar from './NavBar';
-import BottomNavBar from './BottomNavBar';
+import Sidebar from './nav/SideBar';
+import NavBar from './nav/NavBar';
+import BottomNavBar from './nav/BottomNavBar';
 import { useUser } from '@auth0/nextjs-auth0';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {

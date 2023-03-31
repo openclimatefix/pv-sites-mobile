@@ -8,11 +8,11 @@ import {
   LogoutIcon,
   SiteListIcon,
   SearchIcon,
-} from './icons';
+} from '../icons';
 
 import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
-import { useClickedOutside } from '../lib/hooks';
+import { useClickedOutside } from '../../lib/hooks';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
