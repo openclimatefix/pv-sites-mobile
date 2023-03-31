@@ -7,6 +7,7 @@ import {
   LabelList,
   ReferenceLine,
   ResponsiveContainer,
+  Tooltip,
   YAxis,
 } from 'recharts';
 
@@ -24,12 +25,14 @@ import {
   getGraphEndDate,
   getGraphStartDate,
   graphThreshold,
+  weekdayFormatter,
 } from 'lib/graphs';
 
 import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
+import { ForecastDataPoint } from '~/lib/types';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
@@ -215,11 +218,22 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 axisLine={false}
                 tick={false}
               />
+              <Tooltip
+                wrapperStyle={{ outline: 'none' }}
+                contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
+                labelStyle={{ color: 'white' }}
+                formatter={(
+                  value: ForecastDataPoint['expected_generation_kw']
+                ) => [parseFloat(value.toFixed(5)), 'kW']}
+                labelFormatter={(
+                  point: ForecastDataPoint['target_datetime_utc']
+                ) => weekdayFormatter.format(new Date(point))}
+              />
               <Area
                 type="monotone"
                 dataKey="expected_generation_kw"
                 strokeWidth={2}
-                stroke="white"
+                stroke="#FFD053"
                 strokeDasharray="2"
                 fill="url(#colorUv)"
                 onAnimationEnd={() => setTimeEnabled(true)}
@@ -232,7 +246,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               <ReferenceLine
                 y={graphThreshold}
                 strokeWidth={2}
-                stroke="#FFD053"
+                stroke="white"
                 strokeDasharray="2"
               >
                 <Label
