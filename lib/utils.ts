@@ -175,15 +175,20 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
         accessToken = await getAccessToken(ctx.req, ctx.res);
       } catch {
         return {
-          redirect: '/api/auth/login',
+          redirect: {
+            destination: '/api/auth/login',
+          },
         };
       }
 
-      const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
-        headers: {
-          Authorization: `Bearer ${accessToken.accessToken}`,
-        },
-      }).then((res) => res.json())) as SiteList;
+      const siteList = (await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`,
+          },
+        }
+      ).then((res) => res.json())) as SiteList;
 
       const otherProps: any = await getServerSideProps?.({
         ...ctx,
