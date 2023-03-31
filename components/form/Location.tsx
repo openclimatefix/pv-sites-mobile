@@ -28,7 +28,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
         className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] md:h-[calc(75vh)] w-screen bg-mapbox-gray-1000"
         id="rootDiv"
       >
-        <div className="flex flex-col justify-end h-10"></div>
+        <div className="flex-col justify-end hidden md:flex h-8 short:h-0"></div>
         <div
           className="self-center md:w-1/2 md:min-w-[750px] w-[95%] h-4/6 md:h-full"
           id="mapboxInputWrapper"

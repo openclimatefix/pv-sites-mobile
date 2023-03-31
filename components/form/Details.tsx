@@ -46,7 +46,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   return (
     <div className="flex flex-col">
       <BackButton onClick={lastPageCallback} />
-      <div className="flex flex-col justify-end h-10"></div>
+      <div className="flex-col justify-end hidden md:flex h-8 short:h-0"></div>
 
       <div className="flex flex-row w-full md:w-9/12 self-center">
         <div className="flex-1 hidden md:block px-8">
@@ -74,7 +74,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          <div className="h-10" />
+          <div className="hidden md:block md:h-10" />
           <Input
             id="site-name"
             label="Site name"
