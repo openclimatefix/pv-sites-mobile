@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 
 import {
   Area,
@@ -30,22 +30,27 @@ import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
+import { ForecastDataPoint } from '../../lib/types';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
   const [timeEnabled, setTimeEnabled] = useState(false);
-  const { currentTime } = useTime(latitude, longitude, {
+  const { currentTime, sunsetTime, sunriseTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
 
-  const graphData =
-    forecastData &&
-    forecastDataOverDateRange(
-      forecastData.forecast_values,
-      getGraphStartDate(currentTime),
-      getGraphEndDate(currentTime)
-    );
+  const [graphData, setGraphData] = useState<ForecastDataPoint[] | null>(null);
+
+  useEffect(() => {
+    if (forecastData && sunriseTime && sunsetTime) {
+      setGraphData(forecastDataOverDateRange(
+        forecastData.forecast_values,
+        getGraphStartDate(currentTime),
+        getGraphEndDate(currentTime)
+      ));
+    }
+  }, [forecastData, sunriseTime, sunsetTime]);
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.expected_generation_kw))

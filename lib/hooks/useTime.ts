@@ -45,7 +45,7 @@ const useTime = (
   const isDaytime =
     !!times && currentTime >= sunriseTime && currentTime <= sunsetTime;
 
-  return { currentTime, isDaytime };
+  return { currentTime, isDaytime, sunriseTime, sunsetTime };
 };
 
 export default useTime;
