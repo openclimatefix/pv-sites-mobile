@@ -19,7 +19,6 @@ import {
 
 import {
   forecastDataOverDateRange,
-  timeFormatter,
   getCurrentTimeForecastIndex,
   getGraphEndDate,
   getGraphStartDate,
@@ -30,6 +29,7 @@ import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
+import useDateFormatter from '~/lib/hooks/useDateFormatter';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
@@ -38,6 +38,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
+  const { timeFormatter } = useDateFormatter(siteUUID);
 
   const graphData =
     forecastData &&
