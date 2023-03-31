@@ -1,7 +1,13 @@
 /**
  * Converts Date object into Hour-Minute format based on device region
  */
-export const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+export const timeFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+  hour: 'numeric',
+  minute: 'numeric',
+});
+
+export const weekdayFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+  weekday: 'short',
   hour: 'numeric',
   minute: 'numeric',
 });
