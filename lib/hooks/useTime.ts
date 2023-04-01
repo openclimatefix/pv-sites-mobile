@@ -13,7 +13,9 @@ const defaultUseTimeOptions = {
  * @param latitude, the latitude float value that is passed in
  * @param longitude, the longitude number value that is passed in
  * @returns currentTimes, version of the current time (right now) that a user can format
- * @returns isDaytime, boolean value indicating whether it is daytime or not based on current time zone.
+ * @returns isDayTime, boolean value indicating whether it is daytime or not based on current time zone.
+ * @returns duskTime, date representing the dusk time at latitude, longitude
+ * @returns dawnTime, date representing the dawn time at latitude, longitude
  */
 const useTime = (
   latitude?: number,

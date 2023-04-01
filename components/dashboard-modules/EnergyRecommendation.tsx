@@ -37,8 +37,8 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const recommendationIdx = currentOutput
     ? getBestRecommendationIndex(currentOutput)
     : null;
-  const { isDaytime } = useTime(latitude, longitude);
-  if (!isDaytime && currentOutput === 0) {
+  const { isDayTime } = useTime(latitude, longitude);
+  if (!isDayTime && currentOutput === 0) {
     return (
       <RecommendationDisplay
         src="/nighttime.svg"
