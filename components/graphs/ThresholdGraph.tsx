@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useMemo } from 'react';
 
 import {
   Area,
@@ -20,8 +20,6 @@ import {
 import {
   outputDataOverDateRange,
   getCurrentTimeForecastIndex,
-  getGraphEndDate,
-  getGraphStartDate,
   graphThreshold,
 } from 'lib/graphs';
 
@@ -29,24 +27,28 @@ import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
+import { ForecastDataPoint } from '../../lib/types';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
   const [timeEnabled, setTimeEnabled] = useState(false);
-  const { currentTime } = useTime(latitude, longitude, {
+  const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
   const { timeFormatter } = useDateFormatter(siteUUID);
 
-  const graphData =
-    forecastData &&
-    outputDataOverDateRange(
-      forecastData.forecast_values,
-      getGraphStartDate(currentTime),
-      getGraphEndDate(currentTime)
-    );
+  const graphData = useMemo(() => {
+    if (forecastData && dawnTime && duskTime) {
+      return outputDataOverDateRange(
+        forecastData.forecast_values,
+        dawnTime,
+        duskTime
+      );
+    }
+    return null;
+  }, [forecastData, dawnTime, duskTime]);
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.expected_generation_kw))
@@ -198,7 +200,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           <FutureThresholdLegendIcon />
         </div>
 
-        {!isLoading && (
+        {!isLoading && graphData !== null && (
           <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
             <AreaChart
               data={graphData}
