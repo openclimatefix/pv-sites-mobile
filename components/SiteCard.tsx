@@ -90,9 +90,9 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             href={'/site-details'}
             className={`fixed right-0`}
             passHref
-            legacyBehavior
+            
           >
-            <a
+            <span
               className={`w-full flex bg-amber flex-end justify-center ease-in-out transition duration-[${transitionDuration}ms] pointer-events-auto ${
                 isEditMode ? '-translate-x-40' : 'translate-x-40'
               }`}
@@ -106,7 +106,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                   Edit site details
                 </p>
               </div>
-            </a>
+            </span>
           </Link>
           <Link
             href={'/site-details'}
@@ -114,7 +114,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             passHref
             legacyBehavior
           >
-            <a
+            <span
               className={`w-full flex bg-[#D44545] flex-end justify-center ease-in-out transition duration-[${transitionDuration}ms] pointer-events-auto ${
                 isEditMode ? '-translate-x-40' : 'translate-x-0'
               }`}
@@ -128,7 +128,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                   Delete site
                 </p>
               </div>
-            </a>
+            </span>
           </Link>
         </div>
       </a>
