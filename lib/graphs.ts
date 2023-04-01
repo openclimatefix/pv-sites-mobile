@@ -14,7 +14,7 @@ interface ForecastDataPoint {
 }
 
 /**
- * @returns the index of the forecasted date that is the closest future date to the
+ * @returns the index of the forecasted date that is the closest date to the
  * targetDate
  */
 export const getClosestForecastIndex = (
@@ -22,23 +22,18 @@ export const getClosestForecastIndex = (
   targetDate: Date
 ) => {
   if (forecastData) {
-    const { difference, index } = forecastData
+    const closestIndex = forecastData
       .map((forecast_values, index) => ({ ...forecast_values, index: index }))
       .map((forecast_values) => ({
         ...forecast_values,
-        difference:
-          targetDate.getTime() - forecast_values.target_datetime_utc > 0
-            ? targetDate.getTime() - forecast_values.target_datetime_utc
-            : Infinity,
+        difference: Math.abs(
+          targetDate.getTime() - forecast_values.target_datetime_utc
+        ),
       }))
       .reduce((prev, curr) =>
         prev.difference < curr.difference ? prev : curr
       );
-
-    if (difference !== Infinity) {
-      return index;
-    }
-    return 0;
+    return closestIndex;
   }
   return 0;
 };
