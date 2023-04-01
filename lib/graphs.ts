@@ -14,26 +14,31 @@ interface ForecastDataPoint {
 }
 
 /**
- * @returns the index of the forecasted date that is closest to the target time
+ * @returns the index of the forecasted date that is the closest future date to the
+ * targetDate
  */
 export const getClosestForecastIndex = (
   forecastData: Pick<ForecastDataPoint, 'target_datetime_utc'>[],
   targetDate: Date
 ) => {
   if (forecastData) {
-    const closestDateIndex = forecastData
+    const { difference, index } = forecastData
       .map((forecast_values, index) => ({ ...forecast_values, index: index }))
       .map((forecast_values) => ({
         ...forecast_values,
-        difference: Math.abs(
-          targetDate.getTime() - forecast_values.target_datetime_utc
-        ),
+        difference:
+          targetDate.getTime() - forecast_values.target_datetime_utc > 0
+            ? targetDate.getTime() - forecast_values.target_datetime_utc
+            : Infinity,
       }))
       .reduce((prev, curr) =>
         prev.difference < curr.difference ? prev : curr
-      ).index;
+      );
 
-    return closestDateIndex;
+    if (difference !== Infinity) {
+      return index;
+    }
+    return 0;
   }
   return 0;
 };

@@ -58,7 +58,12 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (!graphData) return null;
 
     const currentTimeIndex = getCurrentTimeForecastIndex(graphData);
-    if (index !== currentTimeIndex) return null;
+    if (
+      index !== currentTimeIndex ||
+      graphData[index].target_datetime_utc < duskTime
+    ) {
+      return null;
+    }
 
     return (
       <g>
