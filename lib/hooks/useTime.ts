@@ -48,7 +48,6 @@ const useTime = (
     [currentTime, times]
   );
 
-  // Updates the
   useEffect(() => {
     if (updateEnabled) {
       const intervalId = setInterval(() => {
