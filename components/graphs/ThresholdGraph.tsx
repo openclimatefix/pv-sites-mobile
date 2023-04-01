@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useMemo } from 'react';
 
 import {
   Area,
@@ -18,11 +18,8 @@ import {
 } from '../icons/future_threshold';
 
 import {
-  forecastDataOverDateRange,
-  timeFormatter,
+  outputDataOverDateRange,
   getCurrentTimeForecastIndex,
-  getGraphEndDate,
-  getGraphStartDate,
   graphThreshold,
 } from 'lib/graphs';
 
@@ -31,6 +28,7 @@ import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
 import { ForecastDataPoint } from '../../lib/types';
+import useDateFormatter from '~/lib/hooks/useDateFormatter';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
@@ -39,19 +37,17 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
+  const { timeFormatter } = useDateFormatter(siteUUID);
 
-  const [graphData, setGraphData] = useState<ForecastDataPoint[]>(null);
-
-  useEffect(() => {
+  const graphData = useMemo(() => {
     if (forecastData && dawnTime && duskTime) {
-      setGraphData(
-        forecastDataOverDateRange(
-          forecastData.forecast_values,
-          dawnTime,
-          duskTime
-        )
+      return outputDataOverDateRange(
+        forecastData.forecast_values,
+        dawnTime,
+        duskTime
       );
     }
+    return null;
   }, [forecastData, dawnTime, duskTime]);
 
   const maxGeneration = graphData
