@@ -46,8 +46,8 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (forecastData && sunriseTime && sunsetTime) {
       setGraphData(forecastDataOverDateRange(
         forecastData.forecast_values,
-        getGraphStartDate(currentTime),
-        getGraphEndDate(currentTime)
+        sunriseTime,
+        sunsetTime
       ));
     }
   }, [forecastData, sunriseTime, sunsetTime]);
