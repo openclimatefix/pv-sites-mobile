@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 const SunCalc = require('suncalc');
 
 type UseTimeOptions = {
@@ -22,14 +22,31 @@ const useTime = (
 ) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
-  // get sunrise/sunset time for passed in location
-  const times =
-    latitude && longitude
-      ? SunCalc.getTimes(Date.now(), latitude, longitude)
-      : null;
-  const sunriseTime = times ? times.sunrise : null;
-  const sunsetTime = times ? times.sunset : null;
+  const times = useMemo(() => {
+    const calculatedTimes =
+      latitude && longitude
+        ? SunCalc.getTimes(Date.now(), latitude, longitude)
+        : null;
 
+    if (calculatedTimes !== null) {
+      return {
+        duskTime: calculatedTimes.dusk,
+        dawnTime: calculatedTimes.dawn,
+      };
+    }
+    return null;
+  }, [latitude, longitude]);
+
+  const isDayTime = useMemo(
+    () =>
+      times !== null &&
+      currentTime >= times.dawnTime.getTime() &&
+      currentTime <= times.duskTime.getTime(),
+
+    [currentTime, times]
+  );
+
+  // Updates the
   useEffect(() => {
     if (updateEnabled) {
       const intervalId = setInterval(() => {
@@ -41,11 +58,7 @@ const useTime = (
     }
   }, [updateEnabled]);
 
-  // default to daytime
-  const isDaytime =
-    !!times && currentTime >= sunriseTime && currentTime <= sunsetTime;
-
-  return { currentTime, isDaytime, sunriseTime, sunsetTime };
+  return { currentTime, isDayTime, ...times };
 };
 
 export default useTime;

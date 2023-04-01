@@ -36,21 +36,23 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
   const [timeEnabled, setTimeEnabled] = useState(false);
-  const { currentTime, sunsetTime, sunriseTime } = useTime(latitude, longitude, {
+  const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
 
-  const [graphData, setGraphData] = useState<ForecastDataPoint[] | null>(null);
+  const [graphData, setGraphData] = useState<ForecastDataPoint[]>(null);
 
   useEffect(() => {
-    if (forecastData && sunriseTime && sunsetTime) {
-      setGraphData(forecastDataOverDateRange(
-        forecastData.forecast_values,
-        sunriseTime,
-        sunsetTime
-      ));
+    if (forecastData && dawnTime && duskTime) {
+      setGraphData(
+        forecastDataOverDateRange(
+          forecastData.forecast_values,
+          dawnTime,
+          duskTime
+        )
+      );
     }
-  }, [forecastData, sunriseTime, sunsetTime]);
+  }, [forecastData, dawnTime, duskTime]);
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.expected_generation_kw))
@@ -202,7 +204,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           <FutureThresholdLegendIcon />
         </div>
 
-        {!isLoading && (
+        {!isLoading && graphData !== null && (
           <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
             <AreaChart
               data={graphData}
