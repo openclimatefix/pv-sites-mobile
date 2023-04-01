@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import Layout from '~/components/Layout';
 import { FormProvider } from '~/lib/context/form_context';
-import { SidebarProvider } from '~/lib/context/sidebar_context';
+import { SideBarProvider } from '~/lib/context/sidebar_context';
 import { fetcher } from '~/lib/swr';
 import { SiteList } from '~/lib/types';
 import '~/styles/globals.css';
@@ -29,7 +29,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
         }}
       >
         <FormProvider>
-          <SidebarProvider>
+          <SideBarProvider>
             <Head>
               <title>Sites | Nowcasting</title>
               <link rel="icon" href="/favicon.ico" />
@@ -43,7 +43,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </SidebarProvider>
+          </SideBarProvider>
         </FormProvider>
       </SWRConfig>
     </UserProvider>

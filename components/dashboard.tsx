@@ -3,7 +3,6 @@ import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommend
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
 import { withSites } from '~/lib/utils';
 import CurrentCapacity from './dashboard-modules/CurrentCapacity';
-import CurrentOutput from './dashboard-modules/CurrentOutput';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';

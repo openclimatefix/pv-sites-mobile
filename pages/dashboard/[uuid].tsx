@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { withSites } from '~/lib/utils';
-import Dashboard from '~/components/Dashboard';
+import Dashboard from '~/components/dashboard';
 
 const SiteDashboard = () => {
   const router = useRouter();

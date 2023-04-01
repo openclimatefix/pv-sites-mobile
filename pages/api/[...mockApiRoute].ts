@@ -1,4 +1,4 @@
-import { addMilliseconds, getDate } from 'date-fns';
+import { addMilliseconds } from 'date-fns';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,

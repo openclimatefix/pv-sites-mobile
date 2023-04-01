@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { FC } from 'react';
 import { useSiteData } from '~/lib/hooks';
 import { getCurrentTimeForecast } from '~/lib/utils';
