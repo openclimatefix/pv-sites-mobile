@@ -57,10 +57,17 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
     if (!graphData) return null;
 
+    /* 
+      Return null if this index doesn't correspond to the current time
+      or if the current time is past the start/end dates of the graph
+    */
     const currentTimeIndex = getCurrentTimeForecastIndex(graphData);
     if (
       index !== currentTimeIndex ||
-      graphData[index].target_datetime_utc < duskTime
+      (currentTimeIndex === 0 &&
+        Date.now() < graphData[index].target_datetime_utc) ||
+      (currentTimeIndex === graphData.length - 1 &&
+        Date.now() > graphData[index].target_datetime_utc)
     ) {
       return null;
     }
