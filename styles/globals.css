@@ -6,6 +6,13 @@
   --nav-height: 60px;
   --map-text-height: 75px;
   --form-header-padding: 32px;
+  --bottom-nav-height: 95px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --bottom-nav-height: 0px;
+  }
 }
 
 /* Define the .geocoder class */
@@ -71,7 +78,7 @@
 }
 
 .mapbox-gl-geocoder--no-results {
-  @apply bg-ocf-black-500 hover:bg-ocf-black-300 text-white;
+  @apply bg-ocf-black-500 hover:bg-ocf-black-300 text-white p-5;
 }
 
 .hidden-suggestion {

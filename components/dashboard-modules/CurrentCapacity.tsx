@@ -13,7 +13,7 @@ const CurrentCapacity: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   return (
     <NumberDisplay
-      title="Current Capacity"
+      title="Percent Yield"
       value={`${
         isLoading
           ? 'Loading...'

@@ -42,7 +42,6 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
         className={`h-fit w-full max-w-lg flex flex-row bg-ocf-black-500 rounded-lg font-bold overflow-hidden ${
           isEditMode && 'pointer-events-none'
         }`}
-        tabIndex={isEditMode ? -1 : 1}
       >
         <div className="flex flex-col flex-1 p-4 pl-5">
           <h2 className="text-amber text-xl font-semibold">
@@ -82,6 +81,8 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
         </div>
 
         <div
+          // @ts-ignore
+          inert={!isEditMode ? '' : null}
           className={`transition-all ${
             isEditMode ? 'w-4/12' : 'w-0'
           } duration-[${transitionDuration}ms] flex translate-x-40`}

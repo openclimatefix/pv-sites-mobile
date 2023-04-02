@@ -37,14 +37,14 @@ const BottomNavBar = () => {
           ? 'opacity-0 pointer-events-none hidden'
           : 'opacity-100'
       }
-    bg-ocf-gray-1000 w-screen h-[60px] bottom-0 fixed visible md:invisible`}
+    bg-ocf-gray-1000 w-screen h-[75px] bottom-0 fixed visible md:invisible pb-2`}
     >
-      <div className="flex justify-evenly mt-[3px]">
+      <div className="flex justify-evenly items-center h-full">
         {icons.map((val, i) => {
           return (
             <Link key={i} href={val.link}>
               <a
-                className={`text-xs items-center mt-[10px] flex flex-col justify-evenly ${
+                className={`text-xs items-center flex flex-col justify-evenly ${
                   asPath == val.link ? 'text-ocf-yellow' : 'text-white'
                 }`}
               >

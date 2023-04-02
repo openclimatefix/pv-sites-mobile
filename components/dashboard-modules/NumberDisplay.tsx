@@ -13,7 +13,9 @@ const NumberDisplay: FC<Props> = ({ title, value, onClick }) => {
       <div className="mb-2 text-xs md:text-lg text-ocf-gray font-semibold md:font-medium">
         {title}
       </div>
-      <div className="mb-1 text-2xl text-ocf-yellow font-semibold">{value}</div>
+      <div className="text-2xl text-ocf-yellow font-semibold leading-none">
+        {value}
+      </div>
     </Element>
   );
 };

@@ -164,7 +164,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     const currIndex = getCurrentTimeGenerationIndex(graphData);
     const minMax = getArrayMaxOrMinAfterIndex(
       graphData,
-      'expected_generation_kw',
+      'generation_kw',
       currIndex
     );
 
@@ -247,7 +247,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           </ResponsiveContainer>
         )}
       </div>
-      <div className="flex flex-col justify-center content-center absolute bottom-8 inset-x-0 text-center">
+      <div className="flex flex-col justify-center content-center bottom-8 inset-x-0 text-center">
         {renderStartAndEndTime()}
         {renderCurrentTime()}
         {getSolarActivityText()}

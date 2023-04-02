@@ -1,4 +1,4 @@
-import Dashboard from '~/components/dashboard';
+import Dashboard from '~/components/Dashboard';
 import { withSites } from '~/lib/utils';
 
 // This will be temporary, just a temporary solution for now

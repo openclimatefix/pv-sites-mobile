@@ -44,14 +44,11 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-[max(var(--bottom-nav-height),20px)] gap-10">
       <BackButton onClick={lastPageCallback} />
-      <div className="flex-col justify-end hidden md:flex h-8 short:h-0"></div>
-
       <div className="flex flex-row w-full md:w-9/12 self-center">
         <div className="flex-1 hidden md:block px-8">
-          {' '}
-          <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray mb-5">
+          <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray">
             Your site&apos;s details
           </h1>
           <div className="w-full h-full" onClick={lastPageCallback}>
@@ -175,9 +172,8 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
           </button>
         </form>
       </div>
-      <div className="md:hidden h-20 w-full" />
       <Modal show={showModal} setShow={setShowModal} />
-      <div className="hidden absolute md:flex md:flex-row md:justify-between bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-14">
+      <div className="hidden md:flex md:flex-row md:justify-between w-10/12 mx-auto mt-auto">
         <Button disabled={false} onClick={lastPageCallback}>
           Back
         </Button>
