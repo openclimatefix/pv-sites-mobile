@@ -29,10 +29,10 @@ const LocationInput: FC<LocationInputProps> = ({
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
-  const [isPastZoomThreshold, setIsPastZoomThreshold] =
-    useState<boolean>(false);
-  const [isInUK, setIsInUK] = useState<boolean>(false);
-  const [zoom, setZoom] = useState<number>(initialZoom);
+  const [isPastZoomThreshold, setIsPastZoomThreshold] = useState(false);
+  const [isInUK, setIsInUK] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
+  const [zoom, setZoom] = useState(initialZoom);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -120,13 +120,6 @@ const LocationInput: FC<LocationInputProps> = ({
       let savedLat = originalLat;
       let savedLng = originalLng;
 
-      map.current.on('movestart', () => {
-        if (popup) {
-          popup.remove();
-        }
-        setIsInUK(false);
-      });
-
       // Saves the map center latitude/longitude to the form context
       const saveSiteLocation = () => {
         const newLng = map.current!.getCenter().lng;
@@ -139,6 +132,10 @@ const LocationInput: FC<LocationInputProps> = ({
       };
 
       map.current.on('move', () => {
+        if (popup) {
+          popup.remove();
+        }
+
         const newLng = map.current!.getCenter().lng;
         const newLat = map.current!.getCenter().lat;
 
@@ -160,6 +157,7 @@ const LocationInput: FC<LocationInputProps> = ({
           // save the map coordinates
           saveSiteLocation();
         }
+        setIsMoving(true);
       });
 
       map.current.on('moveend', () => {
@@ -186,7 +184,7 @@ const LocationInput: FC<LocationInputProps> = ({
               .addTo(map.current);
           }
         }
-
+        setIsMoving(false);
         setIsPastZoomThreshold(isPastZoomThreshold);
       });
 
@@ -225,8 +223,8 @@ const LocationInput: FC<LocationInputProps> = ({
   ]);
 
   useEffect(() => {
-    setIsSubmissionEnabled(isInUK && isPastZoomThreshold);
-  }, [isInUK, isPastZoomThreshold, setIsSubmissionEnabled]);
+    setIsSubmissionEnabled(isInUK && isPastZoomThreshold && !isMoving);
+  }, [isInUK, isPastZoomThreshold, setIsSubmissionEnabled, isMoving]);
 
   return (
     <div

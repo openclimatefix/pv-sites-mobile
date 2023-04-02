@@ -1,4 +1,3 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import content from '../content/power-card-content.json';
 import { Carousel } from 'react-responsive-carousel';
 import PowerInfoCard from '~/components/PowerInfoCard';
