@@ -1,34 +1,51 @@
-import { FC } from 'react';
+import { FC, useMemo, useState } from 'react';
 
-import { Area, AreaChart, YAxis, ResponsiveContainer } from 'recharts';
+import { Area, AreaChart, ResponsiveContainer, YAxis } from 'recharts';
 
 import { useSiteData } from 'lib/hooks';
 
 import useTime from '~/lib/hooks/useTime';
 
-import {
-  generationDataOverDateRange,
-  getGraphStartDate,
-  getGraphEndDate,
-} from 'lib/graphs';
+import { generationDataOverDateRange, makeGraphable } from 'lib/graphs';
 
-const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude, installed_capacity_kw } =
-    useSiteData(siteUUID);
+interface Props {
+  siteUUID: string;
+  hidden?: boolean;
+}
 
-  const { currentTime } = useTime(latitude, longitude);
-  const graphData = forecastData
-    ? generationDataOverDateRange(
+const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
+  const {
+    forecastData,
+    latitude,
+    longitude,
+    installed_capacity_kw,
+    isLoading,
+  } = useSiteData(siteUUID);
+  const [timeEnabled, setTimeEnabled] = useState(false);
+
+  const { duskTime, dawnTime } = useTime(latitude, longitude, {
+    updateEnabled: timeEnabled,
+  });
+
+  const graphData = useMemo(() => {
+    if (forecastData && dawnTime && duskTime) {
+      return generationDataOverDateRange(
         forecastData.forecast_values,
-        getGraphStartDate(currentTime),
-        getGraphEndDate(currentTime)
-      )
-    : undefined;
+        dawnTime,
+        duskTime
+      );
+    }
+    return null;
+  }, [forecastData, dawnTime, duskTime]);
 
-  if (graphData && installed_capacity_kw) {
+  if (!isLoading && graphData && installed_capacity_kw) {
     return (
-      <ResponsiveContainer minWidth={0} width="99%" height={75}>
-        <AreaChart data={graphData}>
+      <ResponsiveContainer
+        width="100%"
+        height={100}
+        className={`${hidden ? 'opacity-0' : 'opacity-1'} transition-opacity`}
+      >
+        <AreaChart data={makeGraphable(graphData)}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
               <stop offset={'0%'} stopColor="#FFD053" stopOpacity={0.4} />
@@ -47,6 +64,7 @@ const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             strokeWidth={1}
             stroke="#FFD053"
             fill="url(#colorUv)"
+            onAnimationEnd={() => setTimeEnabled(true)}
           />
         </AreaChart>
       </ResponsiveContainer>

@@ -20,12 +20,9 @@ const parseSiteUUIDs = (data: SiteList): string[] => {
   return siteUUIDs;
 };
 
-export const transitionDuration = 900;
-
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
 
-  const [isDisabled, setIsDisabled] = useState(false);
   const { data } = useSWR<SiteList>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
@@ -36,19 +33,10 @@ const Sites = () => {
   const siteUUIDs = parseSiteUUIDs(siteData);
 
   return (
-    <div className="h-full w-full flex flex-col gap-3 items-center px-5 mb-[var(--bottom-nav-margin)]">
-      <div className="flex flex-row w-full h-12 items-end mb-4 max-w-lg ">
+    <div className="h-full w-full flex flex-col gap-3 items-center px-5 mb-[var(--bottom-nav-margin)] max-w-lg">
+      <div className="flex flex-row w-full h-12 items-end mb-4">
         <h1 className="flex-1 font-bold text-3xl text-ocf-gray">My Sites</h1>
-        <button
-          onClick={() => {
-            setEditMode(!editMode);
-            setIsDisabled(true);
-            setTimeout(() => {
-              setIsDisabled(false);
-            }, transitionDuration);
-          }}
-          className={isDisabled ? 'pointer-events-none' : ''}
-        >
+        <button onClick={() => setEditMode(!editMode)}>
           {editMode ? (
             <p className="text-amber text-md font-semibold">Done</p>
           ) : (
