@@ -1,15 +1,11 @@
 import { Fetcher } from 'swr';
 import {
-  ForecastData,
-  UnparsedForecastData,
   ClearSkyData,
+  ForecastData,
   UnparsedClearSkyData,
-  GenerationDataPoint,
+  UnparsedForecastData,
 } from '../types';
-import { addMinutes } from 'date-fns';
-import { getClosestForecastIndex } from '../graphs';
 
-const forecastValuePeriod = 3; // 15 minutes between forecast values
 /**
  * Parses a datetime string from the Nowcasting API, assumed to be in UTC.
  * The datetime string may or may not include a timezone indicator.

@@ -25,8 +25,8 @@ const useTime = (
   const [currentTime, setCurrentTime] = useState(Date.now());
 
   const times = useMemo(() => {
-    // TODO: Maybe make this depend on `currentTime` to have it update
-    // at a slower interval though...
+    // TODO: Maybe make this depend on `currentTime` to have it update.
+    // At a slower interval though...
     const calculatedTimes =
       latitude && longitude
         ? SunCalc.getTimes(new Date(), latitude, longitude)
