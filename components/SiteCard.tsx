@@ -57,7 +57,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             </p>
             {installed_capacity_kw && (
               <p className="text-ocf-gray-500 font-medium text-xs">
-                Max. capacity: {installed_capacity_kw} kW
+                Max. capacity: {installed_capacity_kw.toFixed(2)} kW
               </p>
             )}
             <p className="text-ocf-gray-500 font-medium text-xs">
@@ -87,11 +87,12 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             isEditMode ? 'w-4/12' : 'w-0'
           } duration-[${transitionDuration}ms] flex translate-x-40`}
         >
-          <Link href={'/form/details'} className={`fixed right-0`}>
+          <Link href={'/site-details'} className={`fixed right-0`} passHref>
             <a
-              className={`w-full flex bg-amber flex-end justify-center ease-in-out transition duration-[${transitionDuration}ms] ${
+              className={`w-full flex bg-amber flex-end justify-center ease-in-out transition duration-[${transitionDuration}ms] pointer-events-auto ${
                 isEditMode ? '-translate-x-40' : 'translate-x-40'
-              } ${!isEditMode ?? 'pointer-events-none'}`}
+              }`}
+              tabIndex={isEditMode ? 1 : -1}
             >
               <div className="flex flex-col self-center justify-center items-center">
                 <div className="flex-1 mb-2">
@@ -103,11 +104,12 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               </div>
             </a>
           </Link>
-          <Link href={'/form/details'} className={`fixed right-0`}>
+          <Link href={'/site-details'} className={`fixed right-0`} passHref>
             <a
-              className={`w-full flex bg-[#D44545] flex-end justify-center ease-in-out transition duration-[${transitionDuration}ms] ${
+              className={`w-full flex bg-[#D44545] flex-end justify-center ease-in-out transition duration-[${transitionDuration}ms] pointer-events-auto ${
                 isEditMode ? '-translate-x-40' : 'translate-x-0'
-              } ${!isEditMode ?? 'pointer-events-none'}`}
+              }`}
+              tabIndex={isEditMode ? 1 : -1}
             >
               <div className="flex flex-col self-center justify-center items-center">
                 <div className="flex-1 mb-2">

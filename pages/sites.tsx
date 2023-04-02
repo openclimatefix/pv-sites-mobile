@@ -1,4 +1,3 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { EditIcon } from '~/components/icons';
 import { useState } from 'react';
 import SiteCardLink from '~/components/SiteCard';
