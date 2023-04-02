@@ -6,6 +6,7 @@ import {
   setSeconds,
 } from 'date-fns';
 import {
+  addTimePoint,
   generationDataOverDateRange,
   getClosestForecastIndex,
   makeGraphable,
@@ -36,63 +37,6 @@ function getGraphStartDate(currentTime: number) {
       currentDate.getUTCHours() - 5
     )
   );
-}
-
-function getXTickValues(clearSkyData: any, numTicks: number) {
-  const tickValues: any[] = [];
-  const dataLength = clearSkyData.length;
-
-  if (dataLength === 0) {
-    return tickValues;
-  }
-
-  const tickStep = Math.floor(dataLength / (numTicks - 1));
-
-  for (let i = 0; i < numTicks; i++) {
-    const index = Math.min(i * tickStep, dataLength - 1);
-    const tickValue = clearSkyData[index].datetime_utc;
-    tickValues.push(tickValue);
-  }
-
-  return tickValues;
-}
-
-function addTimePoint(generationData: GenerationDataPoint[], date: Date) {
-  const generationDataInterpolated = generationData.map((data) => ({
-    ...data,
-  }));
-
-  const forecastValuePeriod = 15;
-  let forecastValueIndex = getClosestForecastIndex(generationData, date);
-  if (
-    generationData[forecastValueIndex].datetime_utc.getTime() > date.getTime()
-  ) {
-    forecastValueIndex--;
-  }
-
-  const i = millisecondsToMinutes(
-    date.getTime() - generationData[forecastValueIndex].datetime_utc.getTime()
-  );
-
-  const slope =
-    generationData[forecastValueIndex + 1].generation_kw -
-    generationData[forecastValueIndex].generation_kw;
-
-  const interpolatedValue =
-    slope * (i / forecastValuePeriod) +
-    generationData[forecastValueIndex].generation_kw;
-
-  const interpolatedTime = addMinutes(
-    generationData[forecastValueIndex].datetime_utc,
-    i
-  );
-
-  generationDataInterpolated.splice(forecastValueIndex + 1, 0, {
-    generation_kw: interpolatedValue,
-    datetime_utc: interpolatedTime,
-  });
-
-  return generationDataInterpolated;
 }
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
@@ -165,9 +109,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
   };
 
-  const xTickArray =
-    clearSkyEstimateTrimmed && getXTickValues(clearSkyEstimateTrimmed, 5);
-
   return (
     <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-4">
       <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
@@ -197,9 +138,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               // vertical={false}
             />
             <XAxis
-              tickCount={5}
-              ticks={xTickArray}
-              scale="band"
+              // tickCount={5}
+              // ticks={xTickArray}
+              // scale="band"
+              domain={['auto', 'auto']}
               fontSize="9px"
               dataKey="datetime_utc"
               allowDuplicatedCategory={false}
@@ -208,6 +150,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               tickFormatter={(point: GenerationDataPoint['datetime_utc']) =>
                 weekdayFormatter.format(point)
               }
+              type="number"
             />
             <YAxis
               tickCount={7}

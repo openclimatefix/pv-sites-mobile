@@ -1,3 +1,4 @@
+import { addMinutes, millisecondsToMinutes } from 'date-fns';
 import { GenerationDataPoint } from './types';
 
 /**
@@ -76,6 +77,47 @@ export function makeGraphable(generationData: GenerationDataPoint[]) {
     ...point,
     datetime_utc: point.datetime_utc.getTime(),
   }));
+}
+
+export function addTimePoint(
+  generationData: GenerationDataPoint[],
+  date: Date
+) {
+  const generationDataInterpolated = generationData.map((data) => ({
+    ...data,
+  }));
+
+  const forecastValuePeriod = 15;
+  let forecastValueIndex = getClosestForecastIndex(generationData, date);
+  if (
+    generationData[forecastValueIndex].datetime_utc.getTime() > date.getTime()
+  ) {
+    forecastValueIndex--;
+  }
+
+  const i = millisecondsToMinutes(
+    date.getTime() - generationData[forecastValueIndex].datetime_utc.getTime()
+  );
+
+  const slope =
+    generationData[forecastValueIndex + 1].generation_kw -
+    generationData[forecastValueIndex].generation_kw;
+
+  const interpolatedValue =
+    slope * (i / forecastValuePeriod) +
+    generationData[forecastValueIndex].generation_kw;
+
+  const interpolatedTime = addMinutes(
+    generationData[forecastValueIndex].datetime_utc,
+    i
+  );
+
+  generationDataInterpolated.splice(forecastValueIndex + 1, 0, {
+    generation_kw: interpolatedValue,
+    datetime_utc: interpolatedTime,
+  });
+
+  return generationDataInterpolated;
 }
 
 /* Represents the threshold for the threshold graph, in kW  */
