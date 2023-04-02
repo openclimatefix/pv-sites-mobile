@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
-import { withSites } from '~/lib/utils';
 import CurrentCapacity from './dashboard-modules/CurrentCapacity';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
@@ -50,4 +49,3 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
 };
 
 export default Dashboard;
-export const getServerSideProps = withSites();
