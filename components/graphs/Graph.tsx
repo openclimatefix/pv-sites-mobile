@@ -138,9 +138,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               // vertical={false}
             />
             <XAxis
-              // tickCount={5}
-              // ticks={xTickArray}
-              // scale="band"
+              scale="time"
               domain={['auto', 'auto']}
               fontSize="9px"
               dataKey="datetime_utc"
