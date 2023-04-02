@@ -19,76 +19,58 @@ export function camelCaseID(id: string) {
   return [first, ...rest.map(capitalize)].join('');
 }
 
-export enum Value {
-  Min = 'Minimum',
-  Max = 'Maximum',
-}
 interface MinMaxInterface {
-  type: Value;
-  number: number;
+  type: 'min' | 'max';
+  index: number;
 }
 
 /**
- * Determines the next local minimum or maximum value in an array given a start index
+ * Determines the next local minimum or maximum value in a generation array
  * @param array Array to search for a local minimum or maximum value
  * @param key The key that represents the values being compared in array
  * @param startIndex The index to start the search at
  * @returns The index of the next minimum or maximum value
  */
 export const getArrayMaxOrMinAfterIndex = (
-  array: Record<string, any>,
-  key: string,
+  array: GenerationDataPoint[],
   startIndex: number
 ): MinMaxInterface | null => {
   if (startIndex === array.length - 1) {
     return {
-      type: Value.Min,
-      number: startIndex,
+      type: 'min',
+      index: startIndex,
     };
   }
 
+  const first = array[startIndex].generation_kw;
+  const second = array[startIndex + 1].generation_kw;
+
+  const firstDifference = second - first;
+  const firstSlopeSign = Math.sign(firstDifference);
+
   startIndex += 1;
 
-  while (startIndex < array.length) {
-    const currentExpectedGenerationKW = array[startIndex][key];
-    const previousExpectedGenerationKW = array[startIndex - 1][key];
+  while (startIndex < array.length - 1) {
+    const current = array[startIndex].generation_kw;
+    const next = array[startIndex + 1].generation_kw;
 
-    if (startIndex === array.length - 1) {
-      if (currentExpectedGenerationKW > previousExpectedGenerationKW) {
-        return {
-          type: Value.Max,
-          number: startIndex,
-        };
-      } else if (currentExpectedGenerationKW < previousExpectedGenerationKW) {
-        return {
-          type: Value.Min,
-          number: startIndex,
-        };
-      }
-    } else {
-      const nextExpectedGenerationKW = array[startIndex + 1][key];
+    const currentDifference = next - current;
+    const currentSlopeSign = Math.sign(currentDifference);
 
-      if (
-        currentExpectedGenerationKW > previousExpectedGenerationKW &&
-        currentExpectedGenerationKW > nextExpectedGenerationKW
-      ) {
-        return {
-          type: Value.Max,
-          number: startIndex,
-        };
-      } else if (
-        currentExpectedGenerationKW < previousExpectedGenerationKW &&
-        currentExpectedGenerationKW < nextExpectedGenerationKW
-      ) {
-        return {
-          type: Value.Min,
-          number: startIndex,
-        };
-      }
+    if (firstSlopeSign !== currentSlopeSign && currentSlopeSign !== 0) {
+      return {
+        type: firstSlopeSign < currentSlopeSign ? 'min' : 'max',
+        index: startIndex,
+      };
     }
+
     startIndex += 1;
   }
-  return null;
+
+  return {
+    type: firstSlopeSign < 0 ? 'min' : 'max',
+    index: startIndex,
+  };
 };
 
 export const getCurrentTimeGeneration = (

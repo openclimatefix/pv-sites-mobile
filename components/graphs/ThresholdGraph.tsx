@@ -19,13 +19,12 @@ import {
 
 import {
   generationDataOverDateRange,
-  getClosestForecastIndex,
   getCurrentTimeGenerationIndex,
   graphThreshold,
   makeGraphable,
 } from 'lib/graphs';
 
-import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
+import { getArrayMaxOrMinAfterIndex } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
@@ -171,21 +170,24 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (!graphData) return null;
+    if (!forecastData) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(graphData);
+    const currIndex = getCurrentTimeGenerationIndex(
+      forecastData.forecast_values
+    );
     const minMax = getArrayMaxOrMinAfterIndex(
-      graphData,
-      'generation_kw',
+      forecastData.forecast_values,
       currIndex
     );
 
     if (minMax) {
-      const { type, number: index } = minMax;
+      console.log(minMax);
+
+      const { type, index } = minMax;
       const minMaxForecastDate = timeFormatter.format(
-        new Date(graphData[index].datetime_utc)
+        new Date(forecastData.forecast_values[index].datetime_utc)
       );
-      return type === Value.Max
+      return type === 'max'
         ? solarIncreasingText(minMaxForecastDate)
         : solarDecreasingText(minMaxForecastDate);
     }
