@@ -1,4 +1,4 @@
-import React, { useState, useContext, FC, ReactNode } from 'react';
+import React, { useState, useContext, FC, PropsWithChildren } from 'react';
 
 interface SideBar {
   isSideBarOpen: boolean;
@@ -6,13 +6,9 @@ interface SideBar {
   closeSideBar: () => void;
 }
 
-interface SideBarProviderProps {
-  children: ReactNode | ReactNode[];
-}
-
 const SideBarContext = React.createContext<SideBar | null>(null);
 
-const SideBarProvider: FC<SideBarProviderProps> = ({ children }) => {
+const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   const openSideBar = () => {

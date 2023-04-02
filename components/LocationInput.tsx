@@ -29,11 +29,10 @@ const LocationInput: FC<LocationInputProps> = ({
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
-  const [isPastZoomThreshold, setIsPastZoomThreshold] =
-    useState<boolean>(false);
-  const [isInUK, setIsInUK] = useState<boolean>(false);
-  const [isMoving, setIsMoving] = useState<boolean>(false);
-  const [zoom, setZoom] = useState<number>(initialZoom);
+  const [isPastZoomThreshold, setIsPastZoomThreshold] = useState(false);
+  const [isInUK, setIsInUK] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
+  const [zoom, setZoom] = useState(initialZoom);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once

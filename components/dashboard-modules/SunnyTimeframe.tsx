@@ -12,7 +12,7 @@ const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData } = useSiteData(siteUUID);
 
   if (!forecastData) {
-    return <NumberDisplay title={'Loading'} value={'...'} />;
+    return <NumberDisplay title="Loading" value="..." />;
   }
 
   const nextThreshold = getNextThresholdIndex(
