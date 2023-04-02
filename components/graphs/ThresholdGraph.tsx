@@ -219,7 +219,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               />
               <Area
                 type="monotone"
-                dataKey="expected_generation_kw"
+                dataKey="generation_kw"
                 strokeWidth={2}
                 stroke="white"
                 strokeDasharray="2"
@@ -227,7 +227,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 onAnimationEnd={() => setTimeEnabled(true)}
               >
                 <LabelList
-                  dataKey="expected_generation_kw"
+                  dataKey="generation_kw"
                   content={renderCurrentTimeMarker}
                 />
               </Area>
