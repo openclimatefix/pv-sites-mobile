@@ -19,11 +19,11 @@ const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime } = useTime(latitude, longitude);
   const graphData = forecastData
     ? generationDataOverDateRange(
-        JSON.parse(JSON.stringify(forecastData.forecast_values)),
+        forecastData.forecast_values,
         getGraphStartDate(currentTime),
         getGraphEndDate(currentTime)
       )
-    : [];
+    : undefined;
 
   if (graphData && installed_capacity_kw) {
     return (
@@ -43,7 +43,7 @@ const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           />
           <Area
             type="monotone"
-            dataKey="expected_generation_kw"
+            dataKey="generation_kw"
             strokeWidth={1}
             stroke="#FFD053"
             fill="url(#colorUv)"
