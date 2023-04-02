@@ -11,7 +11,7 @@ interface DashboardProps {
 }
 const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
   return (
-    <div className="bg-ocf-black max-w-screen-lg w-screen min-h-screen px-4 mb-[var(--bottom-nav-height)]">
+    <div className="bg-ocf-black max-w-screen-lg w-screen min-h-screen px-4 mb-[var(--bottom-nav-margin)]">
       <h1 className="mt-4 mb-4 text-ocf-gray text-3xl font-bold">Dashboard</h1>
       <div className="grid grid-areas-dashboard-mobile grid-cols-mobile-columns grid-rows-mobile-rows md:grid-areas-dashboard-desktop md:grid-cols-desktop-columns md:grid-rows-desktop-rows w-full gap-4">
         <div className="grid-in-Heading1 block md:hidden">

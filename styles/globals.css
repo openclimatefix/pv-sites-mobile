@@ -6,12 +6,14 @@
   --nav-height: 60px;
   --map-text-height: 75px;
   --form-header-padding: 32px;
-  --bottom-nav-height: 95px;
+  --bottom-nav-height: 75px;
+  --bottom-nav-margin: calc(20px + var(--bottom-nav-height));
 }
 
 @media (min-width: 768px) {
   :root {
-    --bottom-nav-height: 0px;
+    --bottom-nav-height: 0;
+    --bottom-nav-margin: 0;
   }
 }
 

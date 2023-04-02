@@ -1,14 +1,8 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import {
-  addMinutes,
-  millisecondsToMinutes,
-  setMilliseconds,
-  setSeconds,
-} from 'date-fns';
+import { setMilliseconds, setSeconds } from 'date-fns';
 import {
   addTimePoint,
   generationDataOverDateRange,
-  getClosestForecastIndex,
   makeGraphable,
 } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';

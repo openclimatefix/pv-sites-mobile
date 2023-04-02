@@ -181,8 +181,6 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
 
     if (minMax) {
-      console.log(minMax);
-
       const { type, index } = minMax;
       const minMaxForecastDate = timeFormatter.format(
         new Date(forecastData.forecast_values[index].datetime_utc)

@@ -37,7 +37,7 @@ const Sites = () => {
   const siteUUIDs = parseSiteUUIDs(siteData);
 
   return (
-    <div className="h-full w-full flex flex-col gap-3 items-center px-5 mb-[var(--bottom-nav-height)]">
+    <div className="h-full w-full flex flex-col gap-3 items-center px-5 mb-[var(--bottom-nav-margin)]">
       <div className="flex flex-row w-full h-12 items-end mb-4 max-w-lg ">
         <h1 className="flex-1 font-bold text-3xl text-ocf-gray">My Sites</h1>
         <button
