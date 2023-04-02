@@ -33,7 +33,7 @@ import useTime from '~/lib/hooks/useTime';
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
-  const [timeEnabled, setTimeEnabled] = useState(false);
+  const [timeEnabled, setTimeEnabled] = useState(forecastData !== undefined);
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });

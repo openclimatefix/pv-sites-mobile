@@ -21,7 +21,7 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
     installed_capacity_kw,
     isLoading,
   } = useSiteData(siteUUID);
-  const [timeEnabled, setTimeEnabled] = useState(false);
+  const [timeEnabled, setTimeEnabled] = useState(forecastData !== undefined);
 
   const { duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
