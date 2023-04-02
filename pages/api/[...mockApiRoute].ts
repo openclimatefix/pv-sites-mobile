@@ -1,30 +1,24 @@
-import { addMilliseconds, getDate, subDays } from 'date-fns';
+import { addMilliseconds, subDays } from 'date-fns';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
   getInverters,
-  getLinkedVendors,
   getLinkRedirectURL,
+  getLinkedVendors,
   testClientID,
 } from '~/lib/enode';
 import { parseNowcastingDatetime } from '~/lib/hooks/utils';
 import {
-  ClearSkyDataPoint,
-  ForecastDataPoint,
   UnparsedActualData,
-  UnparsedActualDataPoint,
   UnparsedClearSkyData,
-  UnparsedClearSkyDataPoint,
   UnparsedForecastData,
-  UnparsedForecastDataPoint,
 } from '~/lib/types';
+import clearskyJson from '../../data/clearsky.json';
 import pvActualMultipleJson from '../../data/pv-actual-multiple.json';
 import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
-import clearskyJson from '../../data/clearsky.json';
-import { roundToNearestMinutesWithOptions } from 'date-fns/fp';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids } = req.query;
