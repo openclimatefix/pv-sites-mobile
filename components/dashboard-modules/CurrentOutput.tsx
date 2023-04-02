@@ -1,13 +1,12 @@
 import { FC } from 'react';
-import useSWR from 'swr';
 import { useSiteData } from '~/lib/hooks';
-import { getCurrentTimeForecast } from '~/lib/utils';
+import { getCurrentTimeGeneration } from '~/lib/utils';
 import NumberDisplay from './NumberDisplay';
 
 const CurrentOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, isLoading } = useSiteData(siteUUID);
   const currentOutput = forecastData
-    ? getCurrentTimeForecast(forecastData.forecast_values)
+    ? getCurrentTimeGeneration(forecastData.forecast_values)
     : undefined;
 
   function outputMessage(

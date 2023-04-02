@@ -1,89 +1,82 @@
-import { ClearSkyDataPoint } from './types';
-
-/**
- * Converts Date object into Hour-Minute format based on device region
- */
-export const timeFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-  hour: 'numeric',
-  minute: 'numeric',
-});
-
-interface ForecastDataPoint {
-  target_datetime_utc: number;
-  expected_generation_kw: number;
-}
+import { GenerationDataPoint } from './types';
 
 /**
  * @returns the index of the forecasted date that is closest to the target time
  */
-export const getClosestForecastIndex = (
-  forecastData: Pick<ForecastDataPoint, 'target_datetime_utc'>[],
+export function getClosestForecastIndex(
+  generationData: GenerationDataPoint[],
   targetDate: Date
-) => {
-  if (forecastData) {
-    const closestDateIndex = forecastData
-      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-      .map((forecast_values) => ({
-        ...forecast_values,
-        difference: Math.abs(
-          targetDate.getTime() - forecast_values.target_datetime_utc
-        ),
-      }))
-      .reduce((prev, curr) =>
-        prev.difference < curr.difference ? prev : curr
-      ).index;
+) {
+  let closest = 0;
 
-    return closestDateIndex;
+  for (let i = 0; i < generationData.length; i++) {
+    const difference = Math.abs(
+      targetDate.getTime() - generationData[i].datetime_utc.getTime()
+    );
+    const closestDifference = Math.abs(
+      targetDate.getTime() - generationData[closest].datetime_utc.getTime()
+    );
+    if (difference < closestDifference) {
+      closest = i;
+    }
   }
-  return 0;
-};
 
-export const outputDataOverDateRange = <
-  T extends Pick<ForecastDataPoint, 'target_datetime_utc'>
->(
-  forecastData: T[],
-  start_date: Date,
-  end_date: Date
+  return closest;
+}
+
+export const generationDataOverDateRange = (
+  generationData: GenerationDataPoint[],
+  startDate: Date,
+  endDate: Date
 ) => {
-  const start_index = getClosestForecastIndex(forecastData, start_date);
-  const end_index = getClosestForecastIndex(forecastData, end_date);
-  if (forecastData)
-    forecastData = forecastData.slice(start_index, end_index + 1);
-  return forecastData;
+  const startIndex = getClosestForecastIndex(generationData, startDate);
+  const endIndex = getClosestForecastIndex(generationData, endDate);
+  return generationData.slice(startIndex, endIndex + 1);
 };
 
 export const getGraphStartDate = (currentTime: number) => {
   const currentDate = new Date(currentTime);
   return new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getHours() > 20
-      ? currentDate.getDate() + 1
-      : currentDate.getDate(),
-    8
+    Date.UTC(
+      currentDate.getUTCFullYear(),
+      currentDate.getUTCMonth(),
+      currentDate.getUTCHours() > 20
+        ? currentDate.getUTCDate() + 1
+        : currentDate.getUTCDate(),
+      8
+    )
   );
 };
 
 export const getGraphEndDate = (currentTime: number) => {
   const currentDate = new Date(currentTime);
   return new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getHours() > 20
-      ? currentDate.getDate() + 1
-      : currentDate.getDate(),
-    20
+    Date.UTC(
+      currentDate.getUTCFullYear(),
+      currentDate.getUTCMonth(),
+      currentDate.getUTCHours() > 20
+        ? currentDate.getUTCDate() + 1
+        : currentDate.getUTCDate(),
+      20
+    )
   );
 };
 
 /**
  * @returns the index of the forecasted date that is closest to the current time
  */
-export const getCurrentTimeForecastIndex = (
-  forecast_values: ForecastDataPoint[]
-) => {
-  return getClosestForecastIndex(forecast_values, new Date());
-};
+export function getCurrentTimeGenerationIndex(
+  generationData: GenerationDataPoint[]
+) {
+  return getClosestForecastIndex(generationData, new Date());
+}
 
-/* Represents the threshold for the graph */
+export function makeGraphable(generationData: GenerationDataPoint[]) {
+  return generationData.map((point) => ({
+    ...point,
+    datetime_utc: point.datetime_utc.getTime(),
+  }));
+}
+
+/* Represents the threshold for the threshold graph, in kW  */
 export const graphThreshold = 0.7;

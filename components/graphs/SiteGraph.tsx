@@ -7,7 +7,7 @@ import { useSiteData } from 'lib/hooks';
 import useTime from '~/lib/hooks/useTime';
 
 import {
-  outputDataOverDateRange,
+  generationDataOverDateRange,
   getGraphStartDate,
   getGraphEndDate,
 } from 'lib/graphs';
@@ -18,7 +18,7 @@ const SiteGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const { currentTime } = useTime(latitude, longitude);
   const graphData = forecastData
-    ? outputDataOverDateRange(
+    ? generationDataOverDateRange(
         JSON.parse(JSON.stringify(forecastData.forecast_values)),
         getGraphStartDate(currentTime),
         getGraphEndDate(currentTime)

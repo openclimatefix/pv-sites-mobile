@@ -19,17 +19,9 @@ export interface SiteList {
   site_list: Site[];
 }
 
-export interface ForecastDataPoint {
-  target_datetime_utc: number;
-  expected_generation_kw: number;
-}
-
-export interface ForecastData {
-  forecast_uuid: string;
-  site_uuid: string;
-  forecast_creation_datetime: number;
-  forecast_version: string;
-  forecast_values: ForecastDataPoint[];
+export interface GenerationDataPoint {
+  datetime_utc: Date;
+  generation_kw: number;
 }
 
 export interface UnparsedForecastData {
@@ -45,14 +37,27 @@ export interface UnparsedForecastDataPoint {
   expected_generation_kw: number;
 }
 
-export interface ClearSkyData {
-  clearsky_estimate: ClearSkyDataPoint[];
+export type ForecastData = Omit<
+  UnparsedForecastData,
+  'forecast_values' | 'forecast_creation_datetime'
+> & {
+  forecast_creation_datetime: Date;
+  forecast_values: GenerationDataPoint[];
+};
+
+export interface UnparsedActualData {
+  site_uuid: string;
+  pv_actual_values: UnparsedActualDataPoint[];
 }
 
-export interface ClearSkyDataPoint {
-  target_datetime_utc: number;
-  clearsky_generation_kw: number;
+export interface UnparsedActualDataPoint {
+  datetime_utc: string;
+  actual_generation_kw: number;
 }
+
+export type ActualData = Omit<UnparsedActualData, 'pv_actual_values'> & {
+  pv_actual_values: GenerationDataPoint[];
+};
 
 export interface UnparsedClearSkyData {
   clearsky_estimate: UnparsedClearSkyDataPoint[];
@@ -62,6 +67,10 @@ export interface UnparsedClearSkyDataPoint {
   target_datetime_utc: string;
   clearsky_generation_kw: number;
 }
+
+export type ClearSkyData = Omit<UnparsedClearSkyData, 'clearsky_estimate'> & {
+  clearsky_estimate: GenerationDataPoint[];
+};
 
 export interface LatitudeLongitude {
   latitude: number;
@@ -75,6 +84,7 @@ export interface Form {
   setSiteCoordinates: ({ latitude, longitude }: LatitudeLongitude) => void;
   postPanelData: () => void;
 }
+
 export interface PanelDetails {
   siteName: string;
   direction: string;

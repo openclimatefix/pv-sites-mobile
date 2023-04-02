@@ -1,7 +1,14 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import {
-  outputDataOverDateRange,
-  getCurrentTimeForecastIndex,
+  addMinutes,
+  millisecondsToMinutes,
+  setMilliseconds,
+  setSeconds,
+} from 'date-fns';
+import {
+  generationDataOverDateRange,
+  getClosestForecastIndex,
+  makeGraphable,
 } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
 import { FC, useState } from 'react';
@@ -17,19 +24,21 @@ import {
 } from 'recharts';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useTime from '~/lib/hooks/useTime';
-import { ClearSkyDataPoint, ForecastDataPoint } from '~/lib/types';
+import { GenerationDataPoint } from '~/lib/types';
 
 function getGraphStartDate(currentTime: number) {
   const currentDate = new Date(currentTime);
   return new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate(),
-    currentDate.getHours() - 5
+    Date.UTC(
+      currentDate.getUTCFullYear(),
+      currentDate.getUTCMonth(),
+      currentDate.getUTCDate(),
+      currentDate.getUTCHours() - 5
+    )
   );
 }
 
-function getXTickValues(clearSkyData: ClearSkyDataPoint[], numTicks: number) {
+function getXTickValues(clearSkyData: any, numTicks: number) {
   const tickValues: any[] = [];
   const dataLength = clearSkyData.length;
 
@@ -41,11 +50,49 @@ function getXTickValues(clearSkyData: ClearSkyDataPoint[], numTicks: number) {
 
   for (let i = 0; i < numTicks; i++) {
     const index = Math.min(i * tickStep, dataLength - 1);
-    const tickValue = clearSkyData[index].target_datetime_utc;
+    const tickValue = clearSkyData[index].datetime_utc;
     tickValues.push(tickValue);
   }
 
   return tickValues;
+}
+
+function addTimePoint(generationData: GenerationDataPoint[], date: Date) {
+  const generationDataInterpolated = generationData.map((data) => ({
+    ...data,
+  }));
+
+  const forecastValuePeriod = 15;
+  let forecastValueIndex = getClosestForecastIndex(generationData, date);
+  if (
+    generationData[forecastValueIndex].datetime_utc.getTime() > date.getTime()
+  ) {
+    forecastValueIndex--;
+  }
+
+  const i = millisecondsToMinutes(
+    date.getTime() - generationData[forecastValueIndex].datetime_utc.getTime()
+  );
+
+  const slope =
+    generationData[forecastValueIndex + 1].generation_kw -
+    generationData[forecastValueIndex].generation_kw;
+
+  const interpolatedValue =
+    slope * (i / forecastValuePeriod) +
+    generationData[forecastValueIndex].generation_kw;
+
+  const interpolatedTime = addMinutes(
+    generationData[forecastValueIndex].datetime_utc,
+    i
+  );
+
+  generationDataInterpolated.splice(forecastValueIndex + 1, 0, {
+    generation_kw: interpolatedValue,
+    datetime_utc: interpolatedTime,
+  });
+
+  return generationDataInterpolated;
 }
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
@@ -58,26 +105,35 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { weekdayFormatter } = useDateFormatter(siteUUID);
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
+
   const forecastDataTrimmed =
     forecastData &&
-    outputDataOverDateRange(
-      forecastData.forecast_values,
-      getGraphStartDate(currentTime),
-      endDate
+    makeGraphable(
+      addTimePoint(
+        generationDataOverDateRange(
+          forecastData.forecast_values,
+          getGraphStartDate(currentTime),
+          endDate
+        ),
+        new Date(currentTime)
+      )
     );
 
-  const clearSkyEstimateTrimmed = clearskyData
-    ? outputDataOverDateRange(
-        clearskyData?.clearsky_estimate,
-        getGraphStartDate(currentTime),
-        endDate
+  const clearSkyEstimateTrimmed =
+    clearskyData &&
+    makeGraphable(
+      addTimePoint(
+        generationDataOverDateRange(
+          clearskyData?.clearsky_estimate,
+          getGraphStartDate(currentTime),
+          endDate
+        ),
+        new Date(currentTime)
       )
-    : undefined;
+    );
 
   const maxGeneration = clearSkyEstimateTrimmed
-    ? Math.max(
-        ...clearSkyEstimateTrimmed.map((value) => value.clearsky_generation_kw)
-      )
+    ? Math.max(...clearSkyEstimateTrimmed.map((value) => value.generation_kw))
     : 0;
 
   const yTickArray = [
@@ -110,11 +166,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   };
 
   const xTickArray =
-    clearSkyEstimateTrimmed &&
-    getXTickValues(clearSkyEstimateTrimmed as ClearSkyDataPoint[], 5);
+    clearSkyEstimateTrimmed && getXTickValues(clearSkyEstimateTrimmed, 5);
 
   return (
-    <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-1">
+    <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-4">
       <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
         <div className="flex">
           <LegendLineGraphIcon className="text-ocf-yellow-500" />
@@ -129,7 +184,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       {!isLoading && (
         <ResponsiveContainer className="mt-[20px]" width="100%" height={200}>
           <LineChart
-            data={forecastDataTrimmed}
             margin={{
               top: 0,
               right: 10,
@@ -147,13 +201,13 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               ticks={xTickArray}
               scale="band"
               fontSize="9px"
-              dataKey="target_datetime_utc"
+              dataKey="datetime_utc"
               allowDuplicatedCategory={false}
               stroke="white"
               axisLine={false}
-              tickFormatter={(
-                point: ForecastDataPoint['target_datetime_utc']
-              ) => weekdayFormatter.format(new Date(point))}
+              tickFormatter={(point: GenerationDataPoint['datetime_utc']) =>
+                weekdayFormatter.format(point)
+              }
             />
             <YAxis
               tickCount={7}
@@ -163,25 +217,26 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               fontSize="10px"
               axisLine={false}
               stroke="white"
-              tickFormatter={(
-                val: ClearSkyDataPoint['clearsky_generation_kw']
-              ) => val.toFixed(2)}
+              tickFormatter={(val: GenerationDataPoint['generation_kw']) =>
+                val.toFixed(2)
+              }
             />
             <Tooltip
               wrapperStyle={{ outline: 'none' }}
               contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
               labelStyle={{ color: 'white' }}
-              formatter={(
-                value: ForecastDataPoint['expected_generation_kw']
-              ) => [parseFloat(value.toFixed(5)), 'kW']}
-              labelFormatter={(
-                point: ForecastDataPoint['target_datetime_utc']
-              ) => weekdayFormatter.format(new Date(point))}
+              formatter={(value: GenerationDataPoint['generation_kw']) => [
+                parseFloat(value.toFixed(5)),
+                'kW',
+              ]}
+              labelFormatter={(point: GenerationDataPoint['datetime_utc']) =>
+                weekdayFormatter.format(new Date(point))
+              }
             />
             <Line
               data={clearSkyEstimateTrimmed}
               type="monotone"
-              dataKey="clearsky_generation_kw"
+              dataKey="generation_kw"
               stroke="#48B0DF"
               dot={false}
               activeDot={{ r: 8 }}
@@ -190,23 +245,17 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <Line
               data={forecastDataTrimmed}
               type="monotone"
-              dataKey="expected_generation_kw"
+              dataKey="generation_kw"
               stroke="#FFD053"
               dot={false}
               activeDot={{ r: 8 }}
             />
             <ReferenceLine
-              x={
-                forecastDataTrimmed
-                  ? forecastDataTrimmed[
-                      getCurrentTimeForecastIndex(forecastDataTrimmed)
-                    ].target_datetime_utc
-                  : 0
-              }
+              x={setSeconds(setMilliseconds(currentTime, 0), 0).getTime()}
               strokeWidth={1}
               stroke="white"
               label={(props) => renderLabel({ ...props, height: 200 })}
-            ></ReferenceLine>
+            />
           </LineChart>
         </ResponsiveContainer>
       )}

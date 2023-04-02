@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
-import { useSidebarContext } from '~/lib/context/sidebar_context';
+import { useSidebarContext } from '~/lib/context/sidebar';
 import Link from 'next/link';
 
 import {

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSiteData } from '~/lib/hooks';
-import { getCurrentTimeForecast } from '~/lib/utils';
+import { getCurrentTimeGeneration } from '~/lib/utils';
 import { DeleteIcon, EditIcon } from './icons';
 import { transitionDuration } from '~/pages/sites';
 import SiteGraph from './graphs/SiteGraph';
@@ -21,7 +21,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
       useSiteData(siteUUID);
 
     const currentOutput = forecastData
-      ? getCurrentTimeForecast(forecastData.forecast_values)
+      ? getCurrentTimeGeneration(forecastData.forecast_values)
       : undefined;
 
     useEffect(() => {

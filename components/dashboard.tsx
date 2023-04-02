@@ -1,10 +1,8 @@
 import { FC } from 'react';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
-import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import { withSites } from '~/lib/utils';
 import CurrentCapacity from './dashboard-modules/CurrentCapacity';
-import CurrentOutput from './dashboard-modules/CurrentOutput';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';

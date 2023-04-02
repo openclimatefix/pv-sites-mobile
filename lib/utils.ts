@@ -3,13 +3,9 @@ import {
   GetAccessTokenResult,
   withPageAuthRequired,
 } from '@auth0/nextjs-auth0';
-import {
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-  GetServerSideProps,
-} from 'next';
-import { ForecastDataPoint, SiteList } from './types';
-import { getCurrentTimeForecastIndex } from './graphs';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { getCurrentTimeGenerationIndex } from './graphs';
+import { GenerationDataPoint, SiteList } from './types';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -95,64 +91,45 @@ export const getArrayMaxOrMinAfterIndex = (
   return null;
 };
 
-export const getCurrentTimeForecast = (forecast_values: ForecastDataPoint[]) =>
-  forecast_values[getCurrentTimeForecastIndex(forecast_values)]
-    .expected_generation_kw;
+export const getCurrentTimeGeneration = (
+  generationData: GenerationDataPoint[]
+) =>
+  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
 
-/** Returns the difference in hours between two epoch times */
-const findHourDifference = (date1: number, date2: number): number =>
-  Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) / 36e5;
-
-interface NextThresholdInterface {
+interface NextThreshold {
   aboveThreshold: boolean;
-  number: number;
+  index: number;
 }
 
 /**
  * Determines the hour difference between the current time and the next time we are above or below
  * the sunny threshold
- * @param forecast_values expected generated forecast values (kilowatts) at specific times
+ * @param generationData expected generation data (kilowatts) at specific times
  * @param threshold sunny threshold in kilowatts
  * @returns Object containing hour difference between the next date and
  * if this date is above or below the threshold
  */
 export const getNextThresholdIndex = (
-  forecast_values: ForecastDataPoint[],
+  generationData: GenerationDataPoint[],
   threshold: number
-): NextThresholdInterface => {
-  let startIndex = getCurrentTimeForecastIndex(forecast_values);
-  let currentIndex =
-    startIndex + 1 < forecast_values.length ? startIndex + 1 : startIndex;
+): NextThreshold | null => {
+  const startIndex = getCurrentTimeGenerationIndex(generationData);
 
-  const operator =
-    forecast_values[currentIndex].expected_generation_kw >= threshold ? -1 : 1;
+  const currentAboveThreshold =
+    generationData[startIndex].generation_kw >= threshold;
 
-  const aboveThreshold =
-    forecast_values[currentIndex].expected_generation_kw < threshold
-      ? true
-      : false;
-
-  while (currentIndex < forecast_values.length) {
-    const thresholdDifference =
-      forecast_values[currentIndex].expected_generation_kw - threshold;
-    if (operator * thresholdDifference > 0) {
+  for (let i = startIndex; i < generationData.length; i++) {
+    const futureAboveThreshold = generationData[i].generation_kw >= threshold;
+    // If this future point's "aboveThreshold" state is different than current
+    if (futureAboveThreshold !== currentAboveThreshold) {
       return {
-        aboveThreshold,
-        number: findHourDifference(
-          forecast_values[currentIndex].target_datetime_utc,
-          forecast_values[startIndex].target_datetime_utc
-        ),
+        aboveThreshold: futureAboveThreshold,
+        index: i,
       };
     }
-    currentIndex += 1;
   }
-  return {
-    aboveThreshold,
-    number: findHourDifference(
-      forecast_values[currentIndex - 1].target_datetime_utc,
-      forecast_values[startIndex].target_datetime_utc
-    ),
-  };
+
+  return null;
 };
 
 /* Represents the threshold for the graph */

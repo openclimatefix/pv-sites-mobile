@@ -4,7 +4,7 @@ import Spinner from '~/components/Spinner';
 import Input from '~/components/Input';
 import Modal from 'components/Modal';
 
-import { useFormContext } from '~/lib/context/form_context';
+import { useFormContext } from '~/lib/context/form';
 import BackButton from 'components/BackButton';
 import LocationInput from '../LocationInput';
 import { zoomLevelThreshold } from '../../lib/utils';

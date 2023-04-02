@@ -1,4 +1,4 @@
-import { FC, useState, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import {
   Area,
@@ -18,17 +18,18 @@ import {
 } from '../icons/future_threshold';
 
 import {
-  outputDataOverDateRange,
-  getCurrentTimeForecastIndex,
+  generationDataOverDateRange,
+  getClosestForecastIndex,
+  getCurrentTimeGenerationIndex,
   graphThreshold,
+  makeGraphable,
 } from 'lib/graphs';
 
 import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
-import useTime from '~/lib/hooks/useTime';
-import { ForecastDataPoint } from '../../lib/types';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
+import useTime from '~/lib/hooks/useTime';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
@@ -41,7 +42,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const graphData = useMemo(() => {
     if (forecastData && dawnTime && duskTime) {
-      return outputDataOverDateRange(
+      return generationDataOverDateRange(
         forecastData.forecast_values,
         dawnTime,
         duskTime
@@ -51,13 +52,13 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   }, [forecastData, dawnTime, duskTime]);
 
   const maxGeneration = graphData
-    ? Math.max(...graphData.map((value) => value.expected_generation_kw))
+    ? Math.max(...graphData.map((value) => value.generation_kw))
     : 0;
 
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
     if (!graphData) return null;
 
-    const currentTimeIndex = getCurrentTimeForecastIndex(graphData);
+    const currentTimeIndex = getCurrentTimeGenerationIndex(graphData);
     if (index !== currentTimeIndex) return null;
 
     return (
@@ -75,13 +76,13 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (!graphData) return null;
 
     const aboveThreshold = graphData.some(
-      (forecast) => forecast.expected_generation_kw > graphThreshold
+      (forecast) => forecast.generation_kw > graphThreshold
     );
 
     if (aboveThreshold) {
       const maxExpectedGenerationKW = Math.max.apply(
         null,
-        graphData.map(({ expected_generation_kw }) => expected_generation_kw)
+        graphData.map(({ generation_kw }) => generation_kw)
       );
 
       let gradientPercentage =
@@ -118,11 +119,9 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       return null;
     }
 
-    const startTime = timeFormatter.format(
-      new Date(graphData[0].target_datetime_utc)
-    );
+    const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
     const endTime = timeFormatter.format(
-      new Date(graphData[numForecastValues - 1].target_datetime_utc)
+      new Date(graphData[numForecastValues - 1].datetime_utc)
     );
 
     return (
@@ -162,7 +161,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const getSolarActivityText = () => {
     if (!graphData) return null;
 
-    const currIndex = getCurrentTimeForecastIndex(graphData);
+    const currIndex = getCurrentTimeGenerationIndex(graphData);
     const minMax = getArrayMaxOrMinAfterIndex(
       graphData,
       'expected_generation_kw',
@@ -172,7 +171,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (minMax) {
       const { type, number: index } = minMax;
       const minMaxForecastDate = timeFormatter.format(
-        new Date(graphData[index].target_datetime_utc)
+        new Date(graphData[index].datetime_utc)
       );
       return type === Value.Max
         ? solarIncreasingText(minMaxForecastDate)
@@ -203,7 +202,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         {!isLoading && graphData !== null && (
           <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
             <AreaChart
-              data={graphData}
+              data={makeGraphable(graphData)}
               margin={{
                 top: 0,
                 right: 40,
