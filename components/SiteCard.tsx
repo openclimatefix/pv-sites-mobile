@@ -118,7 +118,7 @@ interface SiteCardLinkProps {
 
 const SiteCardLink: FC<SiteCardLinkProps> = ({ isEditMode, siteUUID }) => {
   return (
-    <Link href="/dashboard" passHref>
+    <Link href={`/dashboard/${siteUUID}`} passHref>
       <SiteCard siteUUID={siteUUID} isEditMode={isEditMode} />
     </Link>
   );

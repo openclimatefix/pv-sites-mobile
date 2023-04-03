@@ -13,7 +13,7 @@
 @media (min-width: 768px) {
   :root {
     --bottom-nav-height: 0;
-    --bottom-nav-margin: 0;
+    --bottom-nav-margin: 10px;
   }
 }
 
