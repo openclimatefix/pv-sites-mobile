@@ -125,12 +125,12 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   ];
 
   const renderLabel = ({ viewBox: { x }, height }: any) => {
-    const yy = height * 0.75 + 5;
+    const yy = height * 0.75 + 2.5;
     const textProps = {
       className: 'text-xs fill-ocf-gray-1000',
       textAnchor: 'middle',
       x: x + 1,
-      y: yy + 10,
+      y: yy,
     };
     return (
       <g>
@@ -209,7 +209,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         </div>
       </div>
       {!isLoading && (
-        <ResponsiveContainer className="mt-[20px]" width="100%" height={200}>
+        <ResponsiveContainer className="mt-[20px]" width="100%" height={150}>
           <LineChart
             margin={{
               top: 0,
@@ -283,7 +283,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               x={setSeconds(setMilliseconds(currentTime, 0), 0).getTime()}
               strokeWidth={1}
               stroke="white"
-              label={(props) => renderLabel({ ...props, height: 200 })}
+              label={(props) => renderLabel({ ...props, height: 150 })}
             />
           </LineChart>
         </ResponsiveContainer>
