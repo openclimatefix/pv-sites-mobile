@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import NumberDisplay from './NumberDisplay';
 
@@ -8,9 +8,12 @@ import { graphThreshold } from 'lib/graphs';
 
 import { useSiteData } from 'lib/hooks';
 import { hoursToMinutes, millisecondsToHours } from 'date-fns';
+import useDateFormatter from '~/lib/hooks/useDateFormatter';
 
 const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData } = useSiteData(siteUUID);
+  const [isRelativeTime, setIsRelativeTime] = useState(false);
+  const { timeFormatter } = useDateFormatter(siteUUID);
 
   if (!forecastData) {
     return <NumberDisplay title="Loading" value="..." />;
@@ -27,22 +30,37 @@ const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   const { aboveThreshold, index } = nextThreshold;
 
-  let difference = millisecondsToHours(
-    forecastData.forecast_values[index].datetime_utc.getTime() -
-      new Date().getTime()
-  );
-  let timeUnit = difference === 1 ? 'Hour' : 'Hours';
+  let value = '';
+  let sunnyText = '';
 
-  // If we are under an hour, round to minutes
-  if (difference < 1) {
-    difference = hoursToMinutes(difference);
-    timeUnit = difference ? 'Minute' : 'Minutes';
+  if (isRelativeTime) {
+    let difference = millisecondsToHours(
+      forecastData.forecast_values[index].datetime_utc.getTime() -
+        new Date().getTime()
+    );
+    let timeUnit = difference === 1 ? 'Hour' : 'Hours';
+
+    // If we are under an hour, round to minutes
+    if (difference < 1) {
+      difference = hoursToMinutes(difference);
+      timeUnit = difference ? 'Minute' : 'Minutes';
+    }
+
+    value = `${difference} ${timeUnit}`;
+    sunnyText = aboveThreshold ? 'Sunny in' : 'Sunny for';
+  } else {
+    value = timeFormatter.format(
+      forecastData.forecast_values[index].datetime_utc
+    );
+    sunnyText = aboveThreshold ? 'Sunny at' : 'Sunny until';
   }
 
-  const sunnyText = aboveThreshold ? 'Sunny in' : 'Sunny for';
-
   return (
-    <NumberDisplay title={sunnyText} value={`${difference} ${timeUnit}`} />
+    <NumberDisplay
+      title={sunnyText}
+      value={value}
+      onClick={() => setIsRelativeTime(!isRelativeTime)}
+    />
   );
 };
 

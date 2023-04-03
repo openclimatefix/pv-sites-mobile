@@ -29,7 +29,7 @@ const RecommendationDisplay: FC<Props> = ({ src, alt, description }) => {
         <Image src={src} alt={alt} layout="fill" />
       </div>
       <div className="text-ocf-gray ml-3 self-center font-normal text-left flex-1 md:flex-initial md:max-w-[75%] md:ml-0">
-        <p className="m-0 text-[10px] mb-1 md:font-medium md:text-lg md:text-center">
+        <p className="m-0 text-[10px] mb-1 font-medium md:text-lg md:text-center">
           {description}
         </p>
       </div>
