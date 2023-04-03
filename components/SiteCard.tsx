@@ -44,33 +44,42 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
         }`}
         tabIndex={isEditMode ? -1 : 1}
       >
-        <div className="flex flex-col flex-1 p-4 pl-5">
-          <h2 className="text-amber text-xl font-semibold">
-            {isLoading ? 'Loading...' : client_site_name ?? 'My Site'}
-          </h2>
-          <div className="flex flex-col mt-2 gap-1">
-            <p className="text-ocf-gray-500 text-xs font-medium">
-              {`Current output: ${
-                currentOutput != undefined
-                  ? currentOutput.toFixed(2) + ' kW'
-                  : 'loading...'
-              }`}
-            </p>
-            {installed_capacity_kw && (
-              <p className="text-ocf-gray-500 font-medium text-xs">
-                Max. capacity: {installed_capacity_kw.toFixed(2)} kW
+        {!isLoading && currentOutput != undefined ? (
+          <div className="flex flex-col flex-1 p-4 pl-5">
+            <h2 className="text-amber text-xl font-semibold">
+              {isLoading ? 'Loading...' : client_site_name ?? 'My Site'}
+            </h2>
+            <div className="flex flex-col mt-2 gap-1">
+              <p className="text-ocf-gray-500 text-xs font-medium">
+                {`Current output: ${
+                  currentOutput != undefined
+                    ? currentOutput.toFixed(2) + ' kW'
+                    : 'loading...'
+                }`}
               </p>
-            )}
-            <p className="text-ocf-gray-500 font-medium text-xs">
-              {`Current yield:
+              {installed_capacity_kw && (
+                <p className="text-ocf-gray-500 font-medium text-xs">
+                  Max. capacity: {installed_capacity_kw.toFixed(2)} kW
+                </p>
+              )}
+              <p className="text-ocf-gray-500 font-medium text-xs">
+                {`Current yield:
             ${
               installed_capacity_kw && currentOutput != undefined
                 ? (currentOutput / installed_capacity_kw).toFixed(2) + '%'
                 : 'loading...'
             }`}
-            </p>
+              </p>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-col flex-1 p-4 pl-4">
+            <div className="bg-ocf-gray-1000 mb-2 h-8 w-20 rounded-2xl animate-pulse"></div>
+            <div className="bg-ocf-gray-1000 mb-1 h-4 w-36 rounded-2xl animate-pulse"></div>
+            <div className="bg-ocf-gray-1000 mb-1 h-4 w-36 rounded-2xl animate-pulse"></div>
+            <div className="bg-ocf-gray-1000 mb-1 h-4 w-32 rounded-2xl animate-pulse"></div>
+          </div>
+        )}
 
         <div
           className={`justify-center self-center mr-5 transition-all overflow-hidden max-w-[250px] ${
