@@ -21,16 +21,51 @@ import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useTime from '~/lib/hooks/useTime';
 import { GenerationDataPoint } from '~/lib/types';
 
-function getGraphStartDate(currentTime: number) {
+function getGraphStartDate(currentTime: number, totalHours: number) {
   const currentDate = new Date(currentTime);
   return new Date(
     Date.UTC(
       currentDate.getUTCFullYear(),
       currentDate.getUTCMonth(),
       currentDate.getUTCDate(),
-      currentDate.getUTCHours() - 5
+      totalHours > 1
+        ? currentDate.getUTCHours() - totalHours / 8 //ensures Now indicator is ~1/8 of the way through the graph for 1D and 2D
+        : currentDate.getUTCHours(),
+      totalHours > 1 ? 0 : currentDate.getUTCMinutes() - 15 //ensures Now indicator is ~1/8 of the way through the graph for 1H
     )
   );
+}
+
+function getGraphEndDate(currentTime: number, totalHours: number) {
+  const currentDate = new Date(currentTime);
+  return new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate(),
+    totalHours > 1
+      ? currentDate.getHours() + (7 * totalHours) / 8 //ensures end time is 1D or 2D after start time
+      : currentDate.getHours(),
+    totalHours > 1 ? 0 : currentDate.getMinutes() + 45 //ensures end time is 1H after start time
+  );
+}
+
+function getXTickValues(times: number[], numTicks: number) {
+  const tickValues: any[] = [];
+  const dataLength = times.length;
+
+  if (dataLength === 0) {
+    return tickValues;
+  }
+
+  const tickStep = Math.floor(dataLength / (numTicks - 1));
+
+  for (let i = 0; i < numTicks; i++) {
+    const index = Math.min(i * tickStep, dataLength - 1);
+    const tickValue = times[index];
+    tickValues.push(tickValue);
+  }
+
+  return tickValues;
 }
 
 const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
@@ -40,6 +75,13 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
+
+  const [timeRange, setTimeRange] = useState(24);
+  const handleChange = (event: any) => {
+    setTimeEnabled(false);
+    setTimeRange(event.target.value);
+  };
+
   const { weekdayFormatter } = useDateFormatter(siteUUID);
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
@@ -50,8 +92,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       addTimePoint(
         generationDataOverDateRange(
           forecastData.forecast_values,
-          getGraphStartDate(currentTime),
-          endDate
+          getGraphStartDate(currentTime, timeRange),
+          getGraphEndDate(currentTime, timeRange)
         ),
         new Date(currentTime)
       )
@@ -63,8 +105,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       addTimePoint(
         generationDataOverDateRange(
           clearskyData?.clearsky_estimate,
-          getGraphStartDate(currentTime),
-          endDate
+          getGraphStartDate(currentTime, timeRange),
+          getGraphEndDate(currentTime, timeRange)
         ),
         new Date(currentTime)
       )
@@ -103,8 +145,59 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
   };
 
+  const xTickArray =
+    clearSkyEstimateTrimmed &&
+    getXTickValues(
+      clearSkyEstimateTrimmed.map((item) => item.datetime_utc),
+      5
+    );
+
   return (
     <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-4">
+      <div className="mt-3 ml-1">
+        <label className="mx-2">
+          <input
+            className="hidden peer"
+            type="radio"
+            name="1H"
+            id="1H"
+            value={1}
+            checked={timeRange == 1}
+            onChange={handleChange}
+          />
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+            1H
+          </span>
+        </label>
+        <label className="mx-2">
+          <input
+            className="hidden peer"
+            type="radio"
+            name="1D"
+            id="1D"
+            value={24}
+            checked={timeRange == 24}
+            onChange={handleChange}
+          />
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+            1D
+          </span>
+        </label>
+        <label className="mx-2">
+          <input
+            className="hidden peer"
+            type="radio"
+            name="2D"
+            id="2D"
+            value={36}
+            checked={timeRange == 36}
+            onChange={handleChange}
+          />
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+            2D
+          </span>
+        </label>
+      </div>
       <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
         <div className="flex">
           <LegendLineGraphIcon className="text-ocf-yellow-500" />
@@ -115,7 +208,6 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           <p className="text-white ml-[5px] mt-[2px]">Clear Sky</p>
         </div>
       </div>
-
       {!isLoading && (
         <ResponsiveContainer className="mt-[20px]" width="100%" height={200}>
           <LineChart
@@ -134,6 +226,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <XAxis
               scale="time"
               domain={['auto', 'auto']}
+              tickCount={5}
+              ticks={xTickArray}
               fontSize="9px"
               dataKey="datetime_utc"
               allowDuplicatedCategory={false}
