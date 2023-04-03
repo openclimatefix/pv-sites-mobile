@@ -121,7 +121,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         '/account?' +
         new URLSearchParams({ linkSuccess: linkSuccess.toString() });
       res.redirect(307, redirectURL);
-      return;
     } else if (mockApiRoute === 'enode/clear-users') {
       await clearUsers([testClientID]);
       res.redirect(307, '/account');

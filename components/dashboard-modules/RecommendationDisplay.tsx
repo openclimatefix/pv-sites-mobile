@@ -16,14 +16,22 @@ const RecommendationDisplay: FC<Props> = ({ src, alt, description }) => {
           p-4
           text-center
           justify-center
-          align-center
+          items-center
           bg-ocf-black-500
           rounded-2xl
-          h-[100%]"
+          h-[100%]
+          md:flex-col
+          md:items-center
+          md:justify-center
+          md:gap-5"
     >
-      <Image src={src} alt={alt} width={34.5} height={28.75} />
-      <div className="text-ocf-gray ml-3 self-center font-normal text-left flex-1 max-w-max">
-        <p className="m-0 text-[10px] mb-1">{description}</p>
+      <div className="relative h-[70%] aspect-square md:h-[unset] md:w-full md:max-w-[90px]">
+        <Image src={src} alt={alt} layout="fill" />
+      </div>
+      <div className="text-ocf-gray ml-3 self-center font-normal text-left flex-1 md:flex-initial md:max-w-[75%] md:ml-0">
+        <p className="m-0 text-[10px] mb-1 md:font-medium md:text-lg md:text-center">
+          {description}
+        </p>
       </div>
     </div>
   );
