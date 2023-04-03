@@ -26,9 +26,9 @@ function getGraphStartDate(currentTime: number, totalHours: number) {
     currentDate.getMonth(),
     currentDate.getDate(),
     totalHours > 1
-      ? currentDate.getHours() - totalHours / 8
+      ? currentDate.getHours() - totalHours / 8 //ensures Now indicator is ~1/8 of the way through the graph for 1D and 2D
       : currentDate.getHours(),
-    totalHours > 1 ? 0 : currentDate.getMinutes() - 15
+    totalHours > 1 ? 0 : currentDate.getMinutes() - 15 //ensures Now indicator is ~1/8 of the way through the graph for 1H
   );
 }
 
@@ -39,9 +39,9 @@ function getGraphEndDate(currentTime: number, totalHours: number) {
     currentDate.getMonth(),
     currentDate.getDate(),
     totalHours > 1
-      ? currentDate.getHours() + (7 * totalHours) / 8
+      ? currentDate.getHours() + (7 * totalHours) / 8 //ensures end time is 1D or 2D after start time
       : currentDate.getHours(),
-    totalHours > 1 ? 0 : currentDate.getMinutes() + 45
+    totalHours > 1 ? 0 : currentDate.getMinutes() + 45 //ensures end time is 1H after start time
   );
 }
 
@@ -72,7 +72,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     updateEnabled: timeEnabled,
   });
 
-  const [timeRange, setTimeRange] = useState('24');
+  const [timeRange, setTimeRange] = useState(24);
   const handleChange = (event: any) => {
     setTimeRange(event.target.value);
   };
@@ -83,15 +83,15 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     forecastData &&
     outputDataOverDateRange(
       forecastData.forecast_values,
-      getGraphStartDate(currentTime, parseInt(timeRange)),
-      getGraphEndDate(currentTime, parseInt(timeRange))
+      getGraphStartDate(currentTime, timeRange),
+      getGraphEndDate(currentTime, timeRange)
     );
 
   const clearSkyEstimateTrimmed = clearskyData
     ? outputDataOverDateRange(
         clearskyData?.clearsky_estimate,
-        getGraphStartDate(currentTime, parseInt(timeRange)),
-        getGraphEndDate(currentTime, parseInt(timeRange))
+        getGraphStartDate(currentTime, timeRange),
+        getGraphEndDate(currentTime, timeRange)
       )
     : undefined;
 
@@ -143,11 +143,11 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             type="radio"
             name="1H"
             id="1H"
-            value="1"
-            checked={timeRange === '1'}
+            value={1}
+            checked={timeRange == 1}
             onChange={handleChange}
           />
-          <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
             1H
           </span>
         </label>
@@ -157,11 +157,11 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             type="radio"
             name="1D"
             id="1D"
-            value="24"
-            checked={timeRange === '24'}
+            value={24}
+            checked={timeRange == 24}
             onChange={handleChange}
           />
-          <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
             1D
           </span>
         </label>
@@ -171,11 +171,11 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             type="radio"
             name="2D"
             id="2D"
-            value="36"
-            checked={timeRange === '36'}
+            value={36}
+            checked={timeRange == 36}
             onChange={handleChange}
           />
-          <span className="peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
             2D
           </span>
         </label>
