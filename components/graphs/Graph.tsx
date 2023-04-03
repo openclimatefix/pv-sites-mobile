@@ -153,8 +153,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
 
   return (
-    <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-4">
-      <div className="mt-3 ml-1">
+    <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-3">
+      <div className="ml-1">
         <label className="mx-2">
           <input
             className="hidden peer"
