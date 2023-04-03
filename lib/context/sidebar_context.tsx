@@ -1,38 +1,34 @@
-import React, { useState, useContext, FC, ReactNode } from 'react';
+import React, { useState, useContext, FC, PropsWithChildren } from 'react';
 
-interface Sidebar {
-  isSidebarOpen: boolean;
-  openSidebar: () => void;
-  closeSidebar: () => void;
+interface SideBar {
+  isSideBarOpen: boolean;
+  openSideBar: () => void;
+  closeSideBar: () => void;
 }
 
-interface SidebarProviderProps {
-  children: ReactNode | ReactNode[];
-}
+const SideBarContext = React.createContext<SideBar | null>(null);
 
-const SidebarContext = React.createContext<Sidebar | null>(null);
+const SideBarProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
-const SidebarProvider: FC<SidebarProviderProps> = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const openSidebar = () => {
-    setIsSidebarOpen(true);
+  const openSideBar = () => {
+    setIsSideBarOpen(true);
   };
 
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
+  const closeSideBar = () => {
+    setIsSideBarOpen(false);
   };
   return (
-    <SidebarContext.Provider
-      value={{ isSidebarOpen, openSidebar, closeSidebar }}
+    <SideBarContext.Provider
+      value={{ isSideBarOpen, openSideBar, closeSideBar }}
     >
       {children}
-    </SidebarContext.Provider>
+    </SideBarContext.Provider>
   );
 };
 
-export const useSidebarContext = () => {
-  const context = useContext(SidebarContext);
+export const useSideBarContext = () => {
+  const context = useContext(SideBarContext);
 
   if (context === null) {
     throw new Error('Component is not in provider.');
@@ -41,4 +37,4 @@ export const useSidebarContext = () => {
   return context;
 };
 
-export { SidebarContext, SidebarProvider };
+export { SideBarContext, SideBarProvider };

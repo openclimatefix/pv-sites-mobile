@@ -24,7 +24,7 @@ const Input: FC<InputProps> = ({
   return (
     <>
       <label
-        className="font-[600] text-lg dark:text-ocf-gray pb-3 block mt-8"
+        className="font-[600] text-lg dark:text-ocf-gray pb-3 block short:mt-2 mt-8"
         htmlFor={id}
       >
         {label}

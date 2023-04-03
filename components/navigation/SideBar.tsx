@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
-import { useSidebarContext } from '~/lib/context/sidebar_context';
+import { useSideBarContext } from '~/lib/context/sidebar_context';
 import Link from 'next/link';
 
 import {
@@ -8,11 +8,11 @@ import {
   LogoutIcon,
   SiteListIcon,
   SearchIcon,
-} from './icons';
+} from '../icons';
 
 import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
-import { useClickedOutside } from '../lib/hooks';
+import { useClickedOutside } from '../../lib/hooks';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
@@ -45,34 +45,34 @@ const MenuLink: React.FC<MenuLinkProps> = ({
   );
 };
 
-const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useSidebarContext();
+const SideBar = () => {
+  const { isSideBarOpen, closeSideBar } = useSideBarContext();
   const router = useRouter();
-  useEffect(() => router.events.on('routeChangeComplete', closeSidebar));
+  useEffect(() => router.events.on('routeChangeComplete', closeSideBar));
   const wrapperRef = useRef(null);
 
-  const clickOutsideSidebarHandler = () => {
-    if (isSidebarOpen) {
-      closeSidebar();
+  const clickOutsideSideBarHandler = () => {
+    if (isSideBarOpen) {
+      closeSideBar();
     }
   };
 
-  useClickedOutside(wrapperRef, clickOutsideSidebarHandler);
+  useClickedOutside(wrapperRef, clickOutsideSideBarHandler);
 
   return (
     <div
       className={`z-50 transition-all duration-500 h-full fixed top-0 ${
-        isSidebarOpen
+        isSideBarOpen
           ? 'translate-x-0 shadow-lg shadow-ocf-black'
           : '-translate-x-64'
       }`}
       // @ts-ignore
-      inert={!isSidebarOpen ? '' : null}
+      inert={!isSideBarOpen ? '' : null}
       ref={wrapperRef}
     >
       <div className="flex h-full overflow-y-auto flex-col bg-ocf-black-500 w-64 px-4 py-8 relative">
         <button
-          onClick={closeSidebar}
+          onClick={closeSideBar}
           className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center ml-6"
         >
           <ExitIcon />
@@ -114,4 +114,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideBar;

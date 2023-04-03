@@ -2,7 +2,6 @@ import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
 import {
   outputDataOverDateRange,
   getCurrentTimeForecastIndex,
-  weekdayFormatter,
 } from 'lib/graphs';
 import { useSiteData } from 'lib/hooks';
 import { FC, useState } from 'react';
@@ -16,6 +15,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useTime from '~/lib/hooks/useTime';
 import { ClearSkyDataPoint, ForecastDataPoint } from '~/lib/types';
 
@@ -77,6 +77,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     setTimeRange(event.target.value);
   };
 
+  const { weekdayFormatter } = useDateFormatter(siteUUID);
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
   const forecastDataTrimmed =

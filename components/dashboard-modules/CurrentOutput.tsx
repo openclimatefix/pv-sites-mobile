@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import useSWR from 'swr';
 import { useSiteData } from '~/lib/hooks';
 import { getCurrentTimeForecast } from '~/lib/utils';
 import NumberDisplay from './NumberDisplay';

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { DashboardIcon, SearchIcon, SiteListIcon } from './icons';
+import { DashboardIcon, SearchIcon, SiteListIcon } from '../icons';
 
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
