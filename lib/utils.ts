@@ -124,7 +124,7 @@ export const originalLng = 0.1276;
 type WithSitesOptions = {
   getServerSideProps?: (
     ctx: GetServerSidePropsContext & { siteList: SiteList }
-  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
+  ) => Promise<GetServerSidePropsResult<any>>;
 };
 export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   return withPageAuthRequired({
