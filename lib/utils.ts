@@ -6,6 +6,7 @@ import {
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getCurrentTimeGenerationIndex } from './graphs';
 import { GenerationDataPoint, SiteList } from './types';
+import { start } from 'repl';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -20,7 +21,7 @@ export function camelCaseID(id: string) {
 }
 
 interface MinMaxInterface {
-  type: 'min' | 'max';
+  type: 'min' | 'max' | 'constant';
   index: number;
 }
 
@@ -51,13 +52,19 @@ export const getArrayMaxOrMinAfterIndex = (
   startIndex += 1;
 
   while (startIndex < array.length - 1) {
-    const current = array[startIndex].generation_kw;
-    const next = array[startIndex + 1].generation_kw;
+    const prev = array[startIndex - 1].generation_kw;
+    const curr = array[startIndex].generation_kw;
 
-    const currentDifference = next - current;
+    const currentDifference = curr - prev;
     const currentSlopeSign = Math.sign(currentDifference);
 
     if (firstSlopeSign !== currentSlopeSign && currentSlopeSign !== 0) {
+      // Slope was constant until current index
+      if (firstSlopeSign === 0) {
+        return { type: 'constant', index: startIndex };
+      }
+
+      // Slope was negative or positive until current index
       return {
         type: firstSlopeSign < currentSlopeSign ? 'min' : 'max',
         index: startIndex,
