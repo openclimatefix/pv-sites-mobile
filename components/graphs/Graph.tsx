@@ -155,7 +155,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   return (
     <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-3">
       <div className="ml-1 flex gap-2">
-        <label className="block focus-within:ring">
+        <label className="block">
           <input
             className="sr-only peer"
             type="radio"
@@ -165,11 +165,11 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             checked={timeRange == 1}
             onChange={handleChange}
           />
-          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
             1H
           </span>
         </label>
-        <label className="block focus-within:ring">
+        <label className="block">
           <input
             className="sr-only peer"
             type="radio"
@@ -179,11 +179,11 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             checked={timeRange == 24}
             onChange={handleChange}
           />
-          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
             1D
           </span>
         </label>
-        <label className="block focus-within:ring">
+        <label className="block">
           <input
             className="sr-only peer"
             type="radio"
@@ -193,7 +193,7 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             checked={timeRange == 36}
             onChange={handleChange}
           />
-          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative">
+          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
             2D
           </span>
         </label>
