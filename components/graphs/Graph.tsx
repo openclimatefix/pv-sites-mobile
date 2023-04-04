@@ -154,10 +154,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   return (
     <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-3">
-      <div className="ml-1">
-        <label className="mx-2">
+      <div className="ml-1 flex gap-2">
+        <label className="block focus-within:ring">
           <input
-            className="hidden peer"
+            className="sr-only peer"
             type="radio"
             name="1H"
             id="1H"
@@ -169,9 +169,9 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             1H
           </span>
         </label>
-        <label className="mx-2">
+        <label className="block focus-within:ring">
           <input
-            className="hidden peer"
+            className="sr-only peer"
             type="radio"
             name="1D"
             id="1D"
@@ -183,9 +183,9 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             1D
           </span>
         </label>
-        <label className="mx-2">
+        <label className="block focus-within:ring">
           <input
-            className="hidden peer"
+            className="sr-only peer"
             type="radio"
             name="2D"
             id="2D"
