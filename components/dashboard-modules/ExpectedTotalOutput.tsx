@@ -31,7 +31,7 @@ const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       value={
         forecastData
           ? getTotalExpectedOutput(forecastData.forecast_values)
-          : 'Loading'
+          : 'Loading...'
       }
     />
   );

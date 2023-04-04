@@ -74,10 +74,10 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
           </div>
         ) : (
           <div className="flex flex-col flex-1 p-4 pl-4">
-            <div className="bg-ocf-gray-1000 mb-2 h-8 w-20 rounded-2xl animate-pulse"></div>
-            <div className="bg-ocf-gray-1000 mb-1 h-4 w-36 rounded-2xl animate-pulse"></div>
-            <div className="bg-ocf-gray-1000 mb-1 h-4 w-36 rounded-2xl animate-pulse"></div>
-            <div className="bg-ocf-gray-1000 mb-1 h-4 w-32 rounded-2xl animate-pulse"></div>
+            <div className="bg-ocf-gray-1000 mb-1.5 h-8 w-52 rounded-[0.9rem] animate-pulse"></div>
+            <div className="bg-ocf-gray-1000 mb-1 h-3.5 w-40 rounded-2xl animate-pulse"></div>
+            <div className="bg-ocf-gray-1000 mb-1 h-3.5 w-40 rounded-2xl animate-pulse"></div>
+            <div className="bg-ocf-gray-1000 mb-1 h-3.5 w-36 rounded-2xl animate-pulse"></div>
           </div>
         )}
 

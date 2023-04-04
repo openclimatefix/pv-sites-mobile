@@ -28,7 +28,7 @@ const getBestRecommendationIndex = (currentOutput: number) => {
 };
 
 const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude } = useSiteData(siteUUID);
+  const { forecastData, latitude, longitude, isLoading } = useSiteData(siteUUID);
   const currentOutput = forecastData
     ? getCurrentTimeForecast(forecastData.forecast_values)
     : undefined;
@@ -37,7 +37,25 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     ? getBestRecommendationIndex(currentOutput)
     : null;
   const { isDayTime } = useTime(latitude, longitude);
-  if (!isDayTime && currentOutput === 0) {
+  if (isLoading) {
+    return (
+    <div
+    className="
+        flex-1
+        flex
+        p-4
+        text-center
+        justify-center
+        align-center
+        bg-ocf-black-500
+        rounded-2xl
+        h-[100%]"
+  >
+    <div className="bg-ocf-gray-1000 self-center mb-2 h-12 w-64 rounded-3xl animate-pulse"></div>
+    </div>
+    )
+  }
+  else if (!isDayTime && currentOutput === 0) {
     return (
       <RecommendationDisplay
         src="/nighttime.svg"
