@@ -1,20 +1,5 @@
 import { FC } from 'react';
 
-export const FutureThresholdLegendIcon: FC = ({}) => (
-  <div className="flex flex-col gap-1 justify-start">
-    <div className="flex gap-2 items-center justify-end">
-      <p className="text-[10px] text-white text-right leading-none">Forecast</p>
-      <div className="not-sr-only w-[27px] h-[2px] border-b-2 border-dotted border-white"></div>
-    </div>
-    <div className="flex gap-2 items-center justify-end">
-      <p className="text-[10px] text-ocf-yellow text-right leading-none">
-        Threshold
-      </p>
-      <div className="not-sr-only w-[27px] h-[2px] border-b-2 border-dotted border-ocf-yellow"></div>
-    </div>
-  </div>
-);
-
 export const UpArrowIcon: FC = ({}) => (
   <svg
     width="16"
