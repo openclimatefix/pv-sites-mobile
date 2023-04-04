@@ -1,14 +1,19 @@
-import { addMilliseconds, getDate } from 'date-fns';
+import { addMilliseconds, subDays } from 'date-fns';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
   getInverters,
-  getLinkedVendors,
   getLinkRedirectURL,
+  getLinkedVendors,
   testClientID,
 } from '~/lib/enode';
 import { parseNowcastingDatetime } from '~/lib/hooks/utils';
-import { UnparsedForecastData } from '~/lib/types';
+import {
+  UnparsedActualData,
+  UnparsedClearSkyData,
+  UnparsedForecastData,
+} from '~/lib/types';
+import clearskyJson from '../../data/clearsky.json';
 import pvActualMultipleJson from '../../data/pv-actual-multiple.json';
 import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
@@ -59,13 +64,28 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (
       mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_actual'
     ) {
-      const pvActualJsonFake = fakeDates(pvActualJson as any);
-      res.status(200).json(pvActualJsonFake);
+      const pvActual = pvActualJson as UnparsedActualData;
+      res.status(200).json({
+        ...pvActual,
+        pv_actual_values: fakeDates(pvActual.pv_actual_values, 'datetime_utc'),
+      });
     } else if (
       mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_forecast'
     ) {
-      const pvForecastJSONFake = fakeDates(pvForecastJson as any);
-      res.status(200).json(pvForecastJSONFake);
+      const pvForecast = pvForecastJson as UnparsedForecastData;
+      res.status(200).json({
+        ...pvForecast,
+        forecast_values: fakeDates(pvForecast.forecast_values),
+      });
+    } else if (
+      mockApiRoute ===
+      'sites/725a8670-d012-474d-b901-1179f43e7182/clearsky_estimate'
+    ) {
+      const clearSky = clearskyJson as UnparsedClearSkyData;
+      res.status(200).json({
+        ...clearSky,
+        clearsky_estimate: fakeDates(clearSky.clearsky_estimate),
+      });
     } else if (
       mockApiRoute ===
       'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,9570f807-fc9e-47e9-b5e3-5915ddddef3d'
@@ -101,7 +121,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         '/account?' +
         new URLSearchParams({ linkSuccess: linkSuccess.toString() });
       res.redirect(307, redirectURL);
-      return;
     } else if (mockApiRoute === 'enode/clear-users') {
       await clearUsers([testClientID]);
       res.redirect(307, '/account');
@@ -111,27 +130,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-function fakeDates(forecastData: UnparsedForecastData) {
-  const today = new Date();
-  const oldStart = new Date(
-    parseNowcastingDatetime(forecastData.forecast_values[0].target_datetime_utc)
-  );
-  const newStart = new Date(oldStart);
-  newStart.setUTCDate(today.getDate());
+function fakeDates(forecastData: any[], key = 'target_datetime_utc') {
+  const oldStart = new Date(parseNowcastingDatetime(forecastData[0][key]));
+  let newStart = new Date();
+  newStart.setUTCHours(oldStart.getUTCHours());
+  newStart.setUTCMinutes(oldStart.getUTCMinutes());
+  newStart.setUTCSeconds(0);
+  newStart.setUTCMilliseconds(0);
+  newStart = subDays(newStart, 1);
   const difference = newStart.getTime() - oldStart.getTime();
-  const forecast_values = forecastData.forecast_values.map((value) => {
-    const date = new Date(parseNowcastingDatetime(value.target_datetime_utc));
+
+  return forecastData.map((value) => {
+    const date = new Date(parseNowcastingDatetime(value[key]));
     return {
       ...value,
-      target_datetime_utc: addMilliseconds(date, difference).toISOString(),
+      [key]: addMilliseconds(date, difference).toISOString(),
     };
   });
-
-  return {
-    ...forecastData,
-    forecast_creation_datetime: newStart.toISOString(),
-    forecast_values,
-  } as UnparsedForecastData;
 }
 
 export default handler;

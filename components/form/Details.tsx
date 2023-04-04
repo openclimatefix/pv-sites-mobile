@@ -4,7 +4,7 @@ import Spinner from '~/components/Spinner';
 import Input from '~/components/Input';
 import Modal from 'components/Modal';
 
-import { useFormContext } from '~/lib/context/form_context';
+import { useFormContext } from '~/lib/context/form';
 import BackButton from 'components/BackButton';
 import LocationInput from '../LocationInput';
 import { zoomLevelThreshold } from '../../lib/utils';
@@ -44,14 +44,11 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-[max(var(--bottom-nav-margin),20px)] gap-10">
       <BackButton onClick={lastPageCallback} />
-      <div className="flex flex-col justify-end h-10"></div>
-
       <div className="flex flex-row w-full md:w-9/12 self-center">
         <div className="flex-1 hidden md:block px-8">
-          {' '}
-          <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray mb-5">
+          <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray">
             Your site&apos;s details
           </h1>
           <div className="w-full h-full" onClick={lastPageCallback}>
@@ -73,8 +70,8 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
             Back
           </button>
         </div>
-        <form className="flex-1" onSubmit={onSubmit}>
-          <div className="h-10" />
+        <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
+          <div className="hidden md:block md:h-10" />
           <Input
             id="site-name"
             label="Site name"
@@ -173,19 +170,18 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
             Finish
             {didSubmit && <div className="w-5 mx-4" />}
           </button>
-          <div className="md:hidden h-20 w-full" />
-          <Modal show={showModal} setShow={setShowModal} />
-          <div className="hidden absolute md:flex md:flex-row md:justify-between bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-14">
-            <Button disabled={false} onClick={lastPageCallback}>
-              Back
-            </Button>
-            <Button disabled={didSubmit}>
-              {didSubmit && <Spinner width={5} height={5} margin={2} />}
-              Finish
-              {didSubmit && <div className="w-5 mx-2" />}
-            </Button>
-          </div>
         </form>
+      </div>
+      <Modal show={showModal} setShow={setShowModal} />
+      <div className="hidden md:flex md:flex-row md:justify-between w-10/12 mx-auto mt-auto">
+        <Button disabled={false} onClick={lastPageCallback}>
+          Back
+        </Button>
+        <Button form="panel-form" disabled={didSubmit}>
+          {didSubmit && <Spinner width={5} height={5} margin={2} />}
+          Finish
+          {didSubmit && <div className="w-5 mx-2" />}
+        </Button>
       </div>
     </div>
   );

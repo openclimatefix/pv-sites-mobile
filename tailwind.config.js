@@ -21,6 +21,10 @@ module.exports = {
     'bg-ocf-yellow/100',
   ],
   theme: {
+    screens: {
+      ...defaultTheme.screens,
+      short: { raw: '(max-height: 800px)' },
+    },
     container: {
       center: true,
       padding: {

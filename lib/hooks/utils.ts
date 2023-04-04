@@ -1,17 +1,22 @@
 import { Fetcher } from 'swr';
-import { ForecastData, UnparsedForecastData } from '../types';
+import {
+  ClearSkyData,
+  ForecastData,
+  UnparsedClearSkyData,
+  UnparsedForecastData,
+} from '../types';
 
 /**
  * Parses a datetime string from the Nowcasting API, assumed to be in UTC.
  * The datetime string may or may not include a timezone indicator.
  * @param datetime The nowcasting datetime string
- * @returns The datetime's UNIX timestamp
+ * @returns The date object for the date
  */
 export function parseNowcastingDatetime(datetime: string) {
   if (!datetime.endsWith('Z')) {
     datetime += 'Z';
   }
-  return Date.parse(datetime);
+  return new Date(datetime);
 }
 
 function parseForecastData(
@@ -21,16 +26,15 @@ function parseForecastData(
     unparsedForecastData.forecast_creation_datetime
   );
 
-  const forecast_values = unparsedForecastData.forecast_values.map(
-    (forecastValue) => {
+  const forecast_values: ForecastData['forecast_values'] =
+    unparsedForecastData.forecast_values.map((forecastValue) => {
       return {
-        ...forecastValue,
-        target_datetime_utc: parseNowcastingDatetime(
+        generation_kw: forecastValue.expected_generation_kw,
+        datetime_utc: parseNowcastingDatetime(
           forecastValue.target_datetime_utc
         ),
       };
-    }
-  );
+    });
 
   return {
     ...unparsedForecastData,
@@ -40,11 +44,11 @@ function parseForecastData(
 }
 
 export const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
-  const tempData: UnparsedForecastData = await fetch(url).then((res) =>
+  const unparsedData: UnparsedForecastData = await fetch(url).then((res) =>
     res.json()
   );
 
-  return parseForecastData(tempData);
+  return parseForecastData(unparsedData);
 };
 
 export const manyForecastDataFetcher: Fetcher<Array<ForecastData>> = async (
@@ -57,4 +61,31 @@ export const manyForecastDataFetcher: Fetcher<Array<ForecastData>> = async (
   return allUnparsedForecasts.map((unparsedForecast) =>
     parseForecastData(unparsedForecast)
   );
+};
+
+function parseClearSkyData(
+  unparsedClearSkyData: UnparsedClearSkyData
+): ClearSkyData {
+  const clearsky_estimate: ClearSkyData['clearsky_estimate'] =
+    unparsedClearSkyData.clearsky_estimate.map((clearsky_estimate) => {
+      return {
+        generation_kw: clearsky_estimate.clearsky_generation_kw,
+        datetime_utc: parseNowcastingDatetime(
+          clearsky_estimate.target_datetime_utc
+        ),
+      };
+    });
+
+  return {
+    ...unparsedClearSkyData,
+    clearsky_estimate,
+  };
+}
+
+export const clearSkyFetcher: Fetcher<ClearSkyData> = async (url: string) => {
+  const unparsedData: UnparsedClearSkyData = await fetch(url).then((res) =>
+    res.json()
+  );
+
+  return parseClearSkyData(unparsedData);
 };
