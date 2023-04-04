@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useSiteData } from '~/lib/hooks';
-import { getCurrentTimeForecast } from '~/lib/utils';
+import { getCurrentTimeGeneration } from '~/lib/utils';
 import NumberDisplay from './NumberDisplay';
 
 const CurrentCapacity: FC<{ siteUUID: string }> = ({ siteUUID }) => {
@@ -8,12 +8,12 @@ const CurrentCapacity: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     useSiteData(siteUUID);
 
   let currentOutput = forecastData
-    ? getCurrentTimeForecast(forecastData.forecast_values)
+    ? getCurrentTimeGeneration(forecastData.forecast_values)
     : null;
 
   return (
     <NumberDisplay
-      title="Current Capacity"
+      title="Percent Yield"
       value={`${
         isLoading
           ? 'Loading...'

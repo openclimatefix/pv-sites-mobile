@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { manyForecastDataFetcher } from './utils';
-import { ForecastDataPoint, SiteList } from '../types';
+import { GenerationDataPoint, SiteList } from '../types';
 
 /**
  * Sums the capacity and forecasts of multiple solar sites across
@@ -38,7 +38,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
       )
     : undefined;
 
-  let totalExpectedGeneration: ForecastDataPoint[] | undefined = undefined;
+  let totalExpectedGeneration: GenerationDataPoint[] | undefined = undefined;
 
   // Sum the expected generation for each date returned in all of the site forecasts
   if (manyForecastData) {
@@ -52,15 +52,14 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
         forecastIdx < siteForecastValues.length;
         forecastIdx++
       ) {
-        const { target_datetime_utc, expected_generation_kw } =
-          siteForecastValues[forecastIdx];
+        const { datetime_utc, generation_kw } = siteForecastValues[forecastIdx];
 
         const currentAggregatedGeneration =
-          forecastMap.get(target_datetime_utc) ?? 0;
+          forecastMap.get(datetime_utc.getTime()) ?? 0;
 
         forecastMap.set(
-          target_datetime_utc,
-          currentAggregatedGeneration + expected_generation_kw
+          datetime_utc.getTime(),
+          currentAggregatedGeneration + generation_kw
         );
       }
     }
@@ -68,14 +67,11 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     // Sort the aggregated forecasts based on datetime
     totalExpectedGeneration = Array.from(
       forecastMap,
-      ([target_datetime_utc, expected_generation_kw]) => ({
-        target_datetime_utc,
-        expected_generation_kw,
+      ([datetime_utc, generation_kw]) => ({
+        datetime_utc: new Date(datetime_utc),
+        generation_kw,
       })
-    ).sort(
-      (forecastA, forecastB) =>
-        forecastA.target_datetime_utc - forecastB.target_datetime_utc
-    );
+    ).sort((a, b) => a.datetime_utc.getTime() - b.datetime_utc.getTime());
   }
 
   return {
