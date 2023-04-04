@@ -28,10 +28,10 @@ const useTime = (
    * @returns 12:00 AM GMT-05 of the next day
    */
   const getNextDay = () => {
-    const now = new Date();
-    now.setDate(now.getDate() + 1);
-    now.setHours(0, 0, 0, 0);
-    return now;
+    const nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() + 1);
+    nextDay.setHours(0, 0, 0, 0);
+    return nextDay;
   };
 
   const times = useMemo(() => {

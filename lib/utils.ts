@@ -20,9 +20,9 @@ export function camelCaseID(id: string) {
   return [first, ...rest.map(capitalize)].join('');
 }
 
-interface MinMaxInterface {
-  type: 'min' | 'max' | 'constant';
-  index: number;
+interface SlopeInterface {
+  type: 'increasing' | 'decreasing' | 'constant';
+  endIndex: number;
 }
 
 /**
@@ -35,11 +35,11 @@ interface MinMaxInterface {
 export const getArrayMaxOrMinAfterIndex = (
   array: GenerationDataPoint[],
   startIndex: number
-): MinMaxInterface | null => {
+): SlopeInterface | null => {
   if (startIndex === array.length - 1) {
     return {
-      type: 'min',
-      index: startIndex,
+      type: 'constant',
+      endIndex: startIndex,
     };
   }
 
@@ -61,13 +61,13 @@ export const getArrayMaxOrMinAfterIndex = (
     if (firstSlopeSign !== currentSlopeSign && currentSlopeSign !== 0) {
       // Slope was constant until current index
       if (firstSlopeSign === 0) {
-        return { type: 'constant', index: startIndex };
+        return { type: 'constant', endIndex: startIndex };
       }
 
       // Slope was negative or positive until current index
       return {
-        type: firstSlopeSign < currentSlopeSign ? 'min' : 'max',
-        index: startIndex,
+        type: firstSlopeSign < currentSlopeSign ? 'decreasing' : 'increasing',
+        endIndex: startIndex,
       };
     }
 
@@ -75,8 +75,8 @@ export const getArrayMaxOrMinAfterIndex = (
   }
 
   return {
-    type: firstSlopeSign < 0 ? 'min' : 'max',
-    index: startIndex,
+    type: firstSlopeSign < 0 ? 'decreasing' : 'increasing',
+    endIndex: startIndex,
   };
 };
 

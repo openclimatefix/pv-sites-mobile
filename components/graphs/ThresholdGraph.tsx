@@ -205,21 +205,21 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (!graphData) return null;
 
     const currIndex = getCurrentTimeGenerationIndex(graphData);
-    const minMax = getArrayMaxOrMinAfterIndex(graphData, currIndex);
+    const slope = getArrayMaxOrMinAfterIndex(graphData, currIndex);
 
-    if (minMax) {
-      const { type, index } = minMax;
-      const minMaxForecastDate = timeFormatter.format(
-        new Date(graphData[index].datetime_utc)
+    if (slope) {
+      const { type, endIndex } = slope;
+      const slopeForecastDate = timeFormatter.format(
+        new Date(graphData[endIndex].datetime_utc)
       );
 
       switch (type) {
-        case 'max':
-          return solarIncreasingText(minMaxForecastDate);
-        case 'min':
-          return solarDecreasingText(minMaxForecastDate);
+        case 'increasing':
+          return solarIncreasingText(slopeForecastDate);
+        case 'decreasing':
+          return solarDecreasingText(slopeForecastDate);
         case 'constant':
-          return solarConstantText(minMaxForecastDate);
+          return solarConstantText(slopeForecastDate);
         default:
           return '';
       }
