@@ -24,6 +24,7 @@ const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
 
 const ExpectedTotalOutput: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   const { totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
+  console.log(totalExpectedGeneration);
   return (
     <NumberDisplay
       title="Today's Expected Output"

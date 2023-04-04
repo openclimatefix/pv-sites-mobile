@@ -88,12 +88,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     } else if (
       mockApiRoute ===
-      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,9570f807-fc9e-47e9-b5e3-5915ddddef3d'
+      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
     ) {
       res.status(200).json(pvActualMultipleJson);
     } else if (
       mockApiRoute ===
-      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,9570f807-fc9e-47e9-b5e3-5915ddddef3d'
+      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
     ) {
       res.status(200).json(pvForecastMultipleJson);
     } else if (mockApiRoute === 'sites') {

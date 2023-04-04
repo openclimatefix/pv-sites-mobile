@@ -28,26 +28,29 @@ import { getArrayMaxOrMinAfterIndex } from 'lib/utils';
 import { useSiteData } from 'lib/hooks';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useTime from '~/lib/hooks/useTime';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 
-const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude, isLoading } =
-    useSiteData(siteUUID);
-  const [timeEnabled, setTimeEnabled] = useState(forecastData !== undefined);
+const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  const { latitude, longitude, isLoading } = useSiteData(siteUUIDs[0]);
+  const { totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
+  const [timeEnabled, setTimeEnabled] = useState(
+    totalExpectedGeneration !== undefined
+  );
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
-  const { timeFormatter } = useDateFormatter(siteUUID);
+  const { timeFormatter } = useDateFormatter(siteUUIDs[0]);
 
   const graphData = useMemo(() => {
-    if (forecastData && dawnTime && duskTime) {
+    if (totalExpectedGeneration && dawnTime && duskTime) {
       return generationDataOverDateRange(
-        forecastData.forecast_values,
+        totalExpectedGeneration,
         dawnTime,
         duskTime
       );
     }
     return null;
-  }, [forecastData, dawnTime, duskTime]);
+  }, [totalExpectedGeneration, dawnTime, duskTime]);
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.generation_kw))
@@ -128,7 +131,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (numForecastValues <= 0) {
       return null;
     }
-
+    console.log(graphData[0].datetime_utc);
     const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
     const endTime = timeFormatter.format(
       new Date(graphData[numForecastValues - 1].datetime_utc)
@@ -169,20 +172,18 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (!forecastData) return null;
+    if (!totalExpectedGeneration) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(
-      forecastData.forecast_values
-    );
+    const currIndex = getCurrentTimeGenerationIndex(totalExpectedGeneration);
     const minMax = getArrayMaxOrMinAfterIndex(
-      forecastData.forecast_values,
+      totalExpectedGeneration,
       currIndex
     );
 
     if (minMax) {
       const { type, index } = minMax;
       const minMaxForecastDate = timeFormatter.format(
-        new Date(forecastData.forecast_values[index].datetime_utc)
+        new Date(totalExpectedGeneration[index].datetime_utc)
       );
       return type === 'max'
         ? solarIncreasingText(minMaxForecastDate)

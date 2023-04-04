@@ -12,7 +12,7 @@ interface AggregateDashboardProps {
 const AggregateDashboard: FC<AggregateDashboardProps> = ({ siteList }) => {
   // const testUUID = '725a8670-d012-474d-b901-1179f43e7182';
 
-  return <Dashboard siteUUIDs={siteList as string[]} />;
+  return <Dashboard siteUUIDs={siteList} />;
 };
 
 export default AggregateDashboard;

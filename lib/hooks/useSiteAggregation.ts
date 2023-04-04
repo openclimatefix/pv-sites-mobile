@@ -22,7 +22,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
   } = useSWR(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL_GET
-    }/pv_forecast?site_uuids=${allSiteUUID.join(',')}`,
+    }/sites/pv_forecast?site_uuids=${allSiteUUID.join(',')}`,
     manyForecastDataFetcher
   );
 
@@ -39,9 +39,10 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     : undefined;
 
   let totalExpectedGeneration: GenerationDataPoint[] | undefined = undefined;
-
+  console.log(manyForecastData);
   // Sum the expected generation for each date returned in all of the site forecasts
   if (manyForecastData) {
+    console.log('entered');
     const forecastMap = new Map<number, number>();
 
     for (let siteIdx = 0; siteIdx < manyForecastData.length; siteIdx++) {

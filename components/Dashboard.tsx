@@ -26,7 +26,7 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
             Solar Activity
           </h2>
         </div>
-        {isAggregate && (
+        {!isAggregate && (
           <div className="grid-in-Sunny">
             <SunnyTimeframe siteUUID={sites[0]} />
           </div>
@@ -35,7 +35,7 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
           <EnergyRecommendation siteUUIDs={sites} />
         </div>
         <div className="grid-in-Site-Graph">
-          <ThresholdGraph siteUUID={sites[0]} />
+          <ThresholdGraph siteUUIDs={sites} />
         </div>
         <div className="grid-in-Heading2 block md:hidden md:grid-in-Sunny">
           <h2 className="text-ocf-gray text-base font-semibold leading-none mt-2">
@@ -44,7 +44,7 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
         </div>
 
         <div className="grid-in-Expected">
-          <ExpectedTotalOutput siteUUID={sites[0]} />
+          <ExpectedTotalOutput siteUUIDs={sites} />
         </div>
         <div className="grid-in-Yield">
           <CurrentCapacity siteUUID={sites[0]} />
