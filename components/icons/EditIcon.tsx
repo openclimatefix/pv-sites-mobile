@@ -11,6 +11,7 @@ const EditIcon: React.FC<Props> = ({ color }) => (
     fill="none"
     strokeWidth={1.5}
   >
+    <title>Edit</title>
     <path
       strokeLinecap="round"
       strokeLinejoin="round"

@@ -2,7 +2,7 @@ import { useState, FC } from 'react';
 import Button from '~/components/Button';
 import LocationInput from '~/components/LocationInput';
 
-import { useFormContext } from '~/lib/context/form_context';
+import { useFormContext } from '~/lib/context/form';
 import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
 
 interface Props {
