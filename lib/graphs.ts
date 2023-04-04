@@ -87,7 +87,15 @@ export function addTimePoint(
     ...data,
   }));
 
-  const forecastValuePeriod = 15;
+  if (generationData.length < 2) {
+    return generationDataInterpolated;
+  }
+
+  const forecastValuePeriod = millisecondsToMinutes(
+    generationData[1].datetime_utc.getTime() -
+      generationData[0].datetime_utc.getTime()
+  );
+
   let forecastValueIndex = getClosestForecastIndex(generationData, date);
   let closestTime = generationData[forecastValueIndex].datetime_utc;
   if (closestTime.getTime() === date.getTime()) {
