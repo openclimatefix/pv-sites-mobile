@@ -7,6 +7,7 @@ import CurrentOutput from './dashboard-modules/CurrentOutput';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
+import WeatherCard from './WeatherCard';
 
 interface DashboardProps {
   siteUUID: string;
@@ -25,7 +26,7 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
           <SunnyTimeframe siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Recommendation">
-          <EnergyRecommendation siteUUID={siteUUID} />
+          <WeatherCard siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Site-Graph">
           <ThresholdGraph siteUUID={siteUUID} />

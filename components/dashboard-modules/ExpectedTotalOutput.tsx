@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
 import { useSiteData } from 'lib/hooks';
-import { getTotalExpectedOutput } from '~/lib/utils';
+import { getTotalExpectedForecastOutput } from '~/lib/utils';
 
 const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData } = useSiteData(siteUUID);
@@ -10,7 +10,7 @@ const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       title="Today's Expected Output"
       value={
         forecastData
-          ? getTotalExpectedOutput(forecastData.forecast_values)
+          ? getTotalExpectedForecastOutput(forecastData.forecast_values)
               .toFixed(2)
               .toString() + ' kWh'
           : 'Loading'
