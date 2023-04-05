@@ -31,7 +31,7 @@ interface SlopeInterface {
  * @param startIndex The index to start the search at
  * @returns The index of the next minimum or maximum value
  */
-export const getArrayMaxOrMinAfterIndex = (
+export const getTrendAfterIndex = (
   array: GenerationDataPoint[],
   startIndex: number
 ): SlopeInterface | null => {
