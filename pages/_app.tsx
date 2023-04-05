@@ -8,6 +8,7 @@ import { SideBarProvider } from '~/lib/context/sidebar';
 import { fetcher } from '~/lib/swr';
 import { SiteList } from '~/lib/types';
 import '~/styles/globals.css';
+import '~/styles/transition.css';
 
 type AppProps = { siteList?: SiteList; user?: UserProfile };
 
