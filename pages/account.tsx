@@ -7,7 +7,7 @@ import { Inverter } from '~/lib/enode';
 import { withSites } from '~/lib/utils';
 
 type Props = {
-  inverters: Inverter[] | null;
+  inverters?: Inverter[] | null;
 };
 
 const AccountInfo: FC<Props> = ({ inverters }) => {
