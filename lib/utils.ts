@@ -6,7 +6,6 @@ import {
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getCurrentTimeGenerationIndex } from './graphs';
 import { GenerationDataPoint, SiteList } from './types';
-import { start } from 'repl';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
