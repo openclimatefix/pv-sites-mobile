@@ -10,7 +10,7 @@ assignees: ''
 
 ## Todos
 
-These points are a rough guideline. **Please** feel free to discuss with others on the team about the best way to design this component!
+These points are rough guidelines. **Please** feel free to discuss the best way to design this component with others on the team!
 
 - [ ] Todo
 

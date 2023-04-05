@@ -1,7 +1,7 @@
 // THIS FILE WILL BE REMOVED, all functions will be implemented in the pv-site-api repo
 import { redis } from './redis';
 
-const enodeBaseURL = 'https://enode-api.sandbox.enode.io';
+const enodeBaseURL = process.env.ENODE_BASE_URL;
 
 export const testClientID = 'few434g3';
 
@@ -20,6 +20,11 @@ export async function clearUsers(userIDs: string[]) {
 export type Inverter = {
   id: string;
   vendor: string;
+  chargingLocationId: string | null;
+  lastSeen: string;
+  isReachable: boolean;
+  information: {};
+  location: {};
   productionState: {
     productionRate: number;
   };
@@ -33,7 +38,7 @@ export async function getInverters(userID: string) {
   }).then((res) => res.json())) as string[];
 
   if (!inverterIDs.length) {
-    return [];
+    return null;
   }
 
   const inverters = await Promise.all(
@@ -126,7 +131,7 @@ async function refreshAccessToken() {
   return accessToken;
 }
 
-const enodeAccessTokenURL = 'https://oauth.sandbox.enode.io/oauth2/token';
+const enodeAccessTokenURL = process.env.ENODE_ACCESS_TOKEN_URL;
 async function fetchAccessToken() {
   const { access_token } = (await fetch(enodeAccessTokenURL, {
     method: 'POST',

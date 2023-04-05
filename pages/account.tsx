@@ -1,22 +1,32 @@
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { getInverters, Inverter, testClientID } from '~/lib/enode';
+import useSWR from 'swr';
+import { Inverter } from '~/lib/enode';
+import { withSites } from '~/lib/utils';
 
 type Props = {
-  inverters?: Inverter[];
+  inverters: Inverter[] | null;
 };
 
 const AccountInfo: FC<Props> = ({ inverters }) => {
+  if (!inverters) {
+    return (
+      <Link href="/api/enode/link">
+        <a className="text-white">Link account</a>
+      </Link>
+    );
+  }
+
   return (
     <>
       <h2 className="text-white">Info</h2>
-      {inverters?.map((inverter, i) => (
+      {inverters.map((inverter, i) => (
         <p key={i} className="text-white">
           Inverter ID: {inverter.id}, rate:{' '}
           {inverter.productionState.productionRate}
+          {JSON.stringify(inverter)}
         </p>
       ))}
       <Link href="/api/enode/clear-users">
@@ -26,7 +36,7 @@ const AccountInfo: FC<Props> = ({ inverters }) => {
   );
 };
 
-const Account: NextPage<Props> = ({ inverters }) => {
+const Account: NextPage<Props> = () => {
   const { query, replace } = useRouter();
 
   // To add later after this is a toast...
@@ -36,6 +46,13 @@ const Account: NextPage<Props> = ({ inverters }) => {
   //     }
   //   }, []);
 
+  const { data: inverters, isLoading } = useSWR<Inverter[] | null>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/inverters`,
+    {
+      revalidateIfStale: true,
+    }
+  );
+
   return (
     <>
       <h1 className="text-white">Account</h1>
@@ -44,27 +61,15 @@ const Account: NextPage<Props> = ({ inverters }) => {
           Linking status success: {query.linkSuccess}
         </p>
       )}
-      {inverters?.length ? (
-        <AccountInfo inverters={inverters} />
+      {isLoading ? (
+        <p className="text-white">Loading...</p>
       ) : (
-        <Link href="/api/enode/link">
-          <a className="text-white">Link account</a>
-        </Link>
+        <AccountInfo inverters={inverters} />
       )}
     </>
   );
 };
 
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps() {
-    const inverters = await getInverters(testClientID);
-
-    return {
-      props: {
-        inverters,
-      },
-    };
-  },
-});
+export const getServerSideProps = withSites();
 
 export default Account;

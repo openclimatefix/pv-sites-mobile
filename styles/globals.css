@@ -3,17 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --nav-height: 80px;
+  --nav-height: 60px;
+  --map-text-height: 75px;
+  --form-header-padding: 32px;
+  --bottom-nav-height: 75px;
+  --bottom-nav-margin: calc(20px + var(--bottom-nav-height));
+}
+
+@media (min-width: 768px) {
+  :root {
+    --bottom-nav-height: 0;
+    --bottom-nav-margin: 10px;
+  }
 }
 
 /* Define the .geocoder class */
-.mapboxgl-ctrl-geocoder {
-  @apply bg-ocf-black rounded-none text-white !important;
+.mapboxgl-ctrl-geocoder--input {
+  @apply bg-ocf-black-500 rounded-lg text-white w-full h-full !important;
 }
 
 /* Apply additional styles to .mapboxgl-ctrl-geocoder */
 .mapboxgl-ctrl-geocoder {
-  min-width: 100%;
+  @apply min-w-full bg-ocf-black h-14 my-3 md:my-5;
 }
 
 /* Apply styles to #map */
@@ -23,12 +34,22 @@
 
 /* Apply styles to the input text  */
 .mapboxgl-ctrl-geocoder--input {
-  @apply text-white !important;
+  @apply text-white text-lg !important;
+  @apply border-ocf-yellow-500;
+  @apply border-2;
 }
 
 /* Apply styles to the geocoder button */
 .mapboxgl-ctrl-geocoder--button {
-  @apply bg-mapbox-black z-10 !important;
+  @apply bg-ocf-black-500 z-10 top-[11px] !important;
+}
+
+.mapboxgl-ctrl-geocoder--icon {
+  @apply top-[17px];
+}
+
+.mapboxgl-ctrl-geocoder--icon-close {
+  @apply mt-[10px];
 }
 
 .mapboxgl-ctrl {
@@ -42,14 +63,42 @@
   @apply z-[11] !important;
 }
 
-.suggestions {
-  @apply bg-mapbox-black-700 !important;
+.mapboxgl-ctrl-geocoder--powered-by {
+  @apply hidden !important;
 }
 
-.suggestions.active {
-  @apply bg-mapbox-black-700 !important;
+.mapboxgl-ctrl-geocoder .suggestions > .active > a {
+  @apply bg-ocf-black-500 hover:bg-ocf-black-300;
 }
 
-.suggestions > li:not(.active) .mapboxgl-ctrl-geocoder--suggestion {
-  @apply text-white !important;
+.mapboxgl-ctrl-geocoder .suggestions > li > a {
+  @apply py-0 bg-ocf-black-500 hover:bg-ocf-black-300;
+}
+
+.mapboxgl-ctrl-geocoder--suggestion {
+  @apply py-[6px] text-white;
+}
+
+.mapbox-gl-geocoder--no-results {
+  @apply bg-ocf-black-500 hover:bg-ocf-black-300 text-white p-5;
+}
+
+.hidden-suggestion {
+  @apply hidden !important;
+}
+
+/* change popup to be black */
+.site-map .mapboxgl-popup-content {
+  @apply bg-ocf-black;
+  color: white;
+  border-radius: 10px;
+  padding: 8px 18px 8px 10px;
+}
+
+.site-map .mapboxgl-popup-close-button {
+  margin-right: 6px;
+}
+
+.site-map .mapboxgl-popup-tip {
+  display: none;
 }

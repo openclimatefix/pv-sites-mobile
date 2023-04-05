@@ -1,17 +1,18 @@
-import React, { ReactNode, useEffect } from 'react';
-import { useSidebarContext } from '~/lib/context/sidebar_context';
+import React, { ReactNode, useEffect, useRef } from 'react';
+import { useSideBarContext } from '~/lib/context/sidebar';
 import Link from 'next/link';
 
 import {
   ExitIcon,
   DashboardIcon,
-  LocationIcon,
-  EditIcon,
   LogoutIcon,
-} from './icons';
+  SiteListIcon,
+  SearchIcon,
+} from '../icons';
 
 import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
+import { useClickedOutside } from '../../lib/hooks';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
@@ -34,7 +35,7 @@ const MenuLink: React.FC<MenuLinkProps> = ({
         <div
           className={`px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform`}
         >
-          <g className={textColor}>{svg}</g>
+          <div className={textColor}>{svg}</div>
           <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
             {label}
           </span>
@@ -44,48 +45,60 @@ const MenuLink: React.FC<MenuLinkProps> = ({
   );
 };
 
-const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useSidebarContext();
+const SideBar = () => {
+  const { isSideBarOpen, closeSideBar } = useSideBarContext();
   const router = useRouter();
-  useEffect(() => router.events.on('routeChangeComplete', closeSidebar));
+  useEffect(() => router.events.on('routeChangeComplete', closeSideBar));
+  const wrapperRef = useRef(null);
+
+  const clickOutsideSideBarHandler = () => {
+    if (isSideBarOpen) {
+      closeSideBar();
+    }
+  };
+
+  useClickedOutside(wrapperRef, clickOutsideSideBarHandler);
 
   return (
     <div
       className={`z-50 transition-all duration-500 h-full fixed top-0 ${
-        isSidebarOpen
+        isSideBarOpen
           ? 'translate-x-0 shadow-lg shadow-ocf-black'
           : '-translate-x-64'
       }`}
       // @ts-ignore
-      inert={!isSidebarOpen ? '' : null}
+      inert={!isSideBarOpen ? '' : null}
+      ref={wrapperRef}
     >
-      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black w-64 px-4 py-8 relative">
+      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black-500 w-64 px-4 py-8 relative">
         <button
-          onClick={closeSidebar}
+          onClick={closeSideBar}
           className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center ml-6"
         >
           <ExitIcon />
         </button>
-        <div className="text-xs	flex flex-col mt-6 justify-between flex-1 text-ocf-yellow">
-          <MenuLink
-            linkProps={{ href: '/dashboard' }}
-            label="Dashboard"
-            svg={<DashboardIcon />}
-            currentPath={router.asPath}
-          />
-          <div className="text-xs flex flex-col gap-3">
+        <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
+          <div className="flex flex-col gap-3">
             <MenuLink
-              linkProps={{ href: '/form/location' }}
-              label="Add a Location"
-              svg={<LocationIcon />}
+              linkProps={{ href: '/dashboard' }}
+              label="Dashboard"
+              svg={<DashboardIcon />}
               currentPath={router.asPath}
             />
             <MenuLink
-              linkProps={{ href: '/form/details' }}
-              label="Edit Site Details"
-              svg={<EditIcon />}
+              linkProps={{ href: '/sites' }}
+              label="My Sites"
+              svg={<SiteListIcon color={'white'} />}
               currentPath={router.asPath}
             />
+            <MenuLink
+              linkProps={{ href: '/more-info' }}
+              label="More Info"
+              svg={<SearchIcon color={'white'} />}
+              currentPath={router.asPath}
+            />
+          </div>
+          <div className="flex flex-col gap-3">
             <MenuLink
               linkProps={{
                 href: `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`,
@@ -101,4 +114,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideBar;

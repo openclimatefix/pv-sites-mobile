@@ -1,120 +1,81 @@
-import { useState, useEffect } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import {
+  Area,
+  AreaChart,
+  Label,
+  LabelList,
+  ReferenceLine,
   ResponsiveContainer,
   YAxis,
-  AreaChart,
-  LabelList,
-  Area,
-  ReferenceLine,
 } from 'recharts';
 
 import {
-  FutureThresholdLegendIcon,
-  UpArrowIcon,
   DownArrowIcon,
   LineCircle,
+  UpArrowIcon,
 } from '../icons/future_threshold';
 
 import {
-  formatter,
-  useFutureGraphData,
-  getArrayMaxOrMinAfterIndex,
-  Value,
-} from 'lib/utils';
+  generationDataOverDateRange,
+  getCurrentTimeGenerationIndex,
+  graphThreshold,
+  makeGraphable,
+} from 'lib/graphs';
 
-/* Represents the threshold for the graph */
-const graphThreshold = 0.7;
+import { getArrayMaxOrMinAfterIndex } from 'lib/utils';
 
-const ThresholdGraph = () => {
-  const { data, isLoading } = useFutureGraphData();
-  const [currentTime, setCurrentTime] = useState(formatter.format(Date.now()));
+import { useSiteData } from 'lib/hooks';
+import useDateFormatter from '~/lib/hooks/useDateFormatter';
+import useTime from '~/lib/hooks/useTime';
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(formatter.format(Date.now()));
-    }, 1000);
-
-    // clear interval on re-render to avoid memory leaks
-    return () => clearInterval(intervalId);
+const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
+  const { forecastData, latitude, longitude, isLoading } =
+    useSiteData(siteUUID);
+  const [timeEnabled, setTimeEnabled] = useState(forecastData !== undefined);
+  const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
+    updateEnabled: timeEnabled,
   });
+  const { timeFormatter } = useDateFormatter(siteUUID);
 
-  /**
-   * @returns the index of the forecasted date that is closest to the current time
-   */
-  const getCurrentTimeForecastIndex = () => {
-    if (data) {
-      const currentDate = new Date();
-
-      const closestDateIndex = data.forecast_values
-        .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-        .map((forecast_values) => ({
-          ...forecast_values,
-          difference: Math.abs(
-            currentDate.getTime() -
-              new Date(forecast_values.target_datetime_utc).getTime()
-          ),
-        }))
-        .reduce((prev, curr) =>
-          prev.difference < curr.difference ? prev : curr
-        ).index;
-
-      return closestDateIndex;
+  const graphData = useMemo(() => {
+    if (forecastData && dawnTime && duskTime) {
+      return generationDataOverDateRange(
+        forecastData.forecast_values,
+        dawnTime,
+        duskTime
+      );
     }
-    return 0;
-  };
-
-  /**
-   * Renders a text label for the threshold
-   * @param props data about the point, such as x and y position on the graph
-   * @returns SVG element
-   */
-  const renderThresholdLabel = ({ x, index }: any) => {
-    if (data && data.forecast_values.length > 0) {
-      if (index === 0) {
-        return (
-          <g>
-            <text
-              fill="#FFD053"
-              x={x - 25}
-              y={-78.95 * graphThreshold + 80.84}
-              className="text-xs"
-            >
-              {graphThreshold}
-            </text>
-            <text
-              fill="#FFD053"
-              x={x - 25}
-              y={-78.95 * graphThreshold + 94.84}
-              className="text-xs"
-            >
-              kw
-            </text>
-          </g>
-        );
-      }
-    }
-
     return null;
-  };
+  }, [forecastData, dawnTime, duskTime]);
 
-  /**
-   * Renders a marker representing the current time
-   * @param props data about the point, such as x and y position on the graph
-   * @returns SVG element
-   */
+  const maxGeneration = graphData
+    ? Math.max(...graphData.map((value) => value.generation_kw))
+    : 0;
+
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
-    if (data && data.forecast_values.length > 0) {
-      if (index === getCurrentTimeForecastIndex()) {
-        return (
-          <g>
-            <LineCircle x={x} y={y} />
-          </g>
-        );
-      }
+    if (!graphData) return null;
+
+    /* 
+      Return null if this index doesn't correspond to the current time
+      or if the current time is past the start/end dates of the graph
+    */
+    const currentTimeIndex = getCurrentTimeGenerationIndex(graphData);
+    if (
+      index !== currentTimeIndex ||
+      (currentTimeIndex === 0 &&
+        Date.now() < graphData[index].datetime_utc.getTime()) ||
+      (currentTimeIndex === graphData.length - 1 &&
+        Date.now() > graphData[index].datetime_utc.getTime())
+    ) {
+      return null;
     }
 
-    return null;
+    return (
+      <g>
+        <LineCircle x={x} y={y} />
+      </g>
+    );
   };
 
   /**
@@ -122,39 +83,36 @@ const ThresholdGraph = () => {
    * @returns SVG gradient
    */
   const generateGraphGradient = () => {
-    if (!isLoading && data) {
-      const aboveThreshold = data.forecast_values.some(
-        (forecast) => forecast.expected_generation_kw > graphThreshold
+    if (!graphData) return null;
+
+    const aboveThreshold = graphData.some(
+      (forecast) => forecast.generation_kw > graphThreshold
+    );
+
+    if (aboveThreshold) {
+      const maxExpectedGenerationKW = Math.max.apply(
+        null,
+        graphData.map(({ generation_kw }) => generation_kw)
       );
 
-      if (aboveThreshold) {
-        const maxExpectedGenerationKW = Math.max.apply(
-          null,
-          data.forecast_values.map(
-            ({ expected_generation_kw }) => expected_generation_kw
-          )
-        );
+      let gradientPercentage =
+        100 - (graphThreshold / maxExpectedGenerationKW) * 100;
 
-        let gradientPercentage =
-          100 - (graphThreshold / maxExpectedGenerationKW) * 100;
-
-        if (gradientPercentage < 0) {
-          gradientPercentage = 0;
-        }
-
-        return (
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="1%" stopColor="#444444" stopOpacity={0} />
-            <stop
-              offset={`${gradientPercentage}%`}
-              stopColor="#FFD053"
-              stopOpacity={0.4}
-            />
-            <stop offset="0%" stopColor="#FFD053" stopOpacity={0} />
-          </linearGradient>
-        );
+      if (gradientPercentage < 0) {
+        gradientPercentage = 0;
       }
-      return null;
+
+      return (
+        <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="1%" stopColor="#444444" stopOpacity={0} />
+          <stop
+            offset={`${gradientPercentage}%`}
+            stopColor="#FFD053"
+            stopOpacity={0.4}
+          />
+          <stop offset="0%" stopColor="#FFD053" stopOpacity={0} />
+        </linearGradient>
+      );
     }
     return null;
   };
@@ -163,29 +121,25 @@ const ThresholdGraph = () => {
    * @returns the start and end time label on the graph's x-axis
    */
   const renderStartAndEndTime = () => {
-    if (!isLoading && data) {
-      const numForecastValues = data.forecast_values.length;
+    if (!graphData) return null;
 
-      if (numForecastValues > 0) {
-        const startTime = formatter.format(
-          new Date(data.forecast_values[0].target_datetime_utc)
-        );
-        const endTime = formatter.format(
-          new Date(
-            data.forecast_values[numForecastValues - 1].target_datetime_utc
-          )
-        );
+    const numForecastValues = graphData.length;
 
-        return (
-          <div className="flex flex-row justify-between">
-            <p className="text-white text-xs font-medium ml-6">{startTime}</p>
-            <p className="text-white text-xs font-medium mr-6">{endTime}</p>
-          </div>
-        );
-      }
+    if (numForecastValues <= 0) {
+      return null;
     }
 
-    return null;
+    const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
+    const endTime = timeFormatter.format(
+      new Date(graphData[numForecastValues - 1].datetime_utc)
+    );
+
+    return (
+      <div className="flex flex-row justify-between">
+        <p className="text-white text-xs font-medium ml-6">{startTime}</p>
+        <p className="text-white text-xs font-medium mr-6">{endTime}</p>
+      </div>
+    );
   };
 
   const solarIncreasingText = (formattedDate: string) => {
@@ -215,23 +169,24 @@ const ThresholdGraph = () => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (data) {
-      const currIndex = getCurrentTimeForecastIndex();
-      const minMax = getArrayMaxOrMinAfterIndex(
-        data.forecast_values,
-        'expected_generation_kw',
-        currIndex
-      );
+    if (!forecastData) return null;
 
-      if (minMax) {
-        const { type, index } = minMax;
-        const minMaxForecastDate = formatter.format(
-          new Date(data.forecast_values[index].target_datetime_utc)
-        );
-        return type === Value.Max
-          ? solarIncreasingText(minMaxForecastDate)
-          : solarDecreasingText(minMaxForecastDate);
-      }
+    const currIndex = getCurrentTimeGenerationIndex(
+      forecastData.forecast_values
+    );
+    const minMax = getArrayMaxOrMinAfterIndex(
+      forecastData.forecast_values,
+      currIndex
+    );
+
+    if (minMax) {
+      const { type, index } = minMax;
+      const minMaxForecastDate = timeFormatter.format(
+        new Date(forecastData.forecast_values[index].datetime_utc)
+      );
+      return type === 'max'
+        ? solarIncreasingText(minMaxForecastDate)
+        : solarDecreasingText(minMaxForecastDate);
     }
 
     return '';
@@ -243,61 +198,80 @@ const ThresholdGraph = () => {
         suppressHydrationWarning
         className="text-white text-base font-semibold"
       >
-        {currentTime}
+        {timeFormatter.format(currentTime)}
       </p>
     );
   };
 
   return (
-    <div className="relative my-2 w-full h-[260px] bg-ocf-gray-1000 rounded-2xl content-center">
+    <div className="relative w-full h-[260px] bg-ocf-black-500 rounded-2xl content-center">
       <div className="flex flex-col w-full justify-start">
         <div className="flex justify-end mt-[20px] mr-10 text-sm">
-          <FutureThresholdLegendIcon />
+          <div className="flex flex-col gap-1 justify-start">
+            <div className="flex gap-2 items-center justify-end">
+              <p className="text-[10px] text-white text-right leading-none">
+                Forecast
+              </p>
+              <div className="not-sr-only w-[27px] h-[2px] border-b-2 border-dotted border-white"></div>
+            </div>
+            <div className="flex gap-2 items-center justify-end">
+              <p className="text-[10px] text-ocf-yellow text-right leading-none">
+                Threshold
+              </p>
+              <div className="not-sr-only w-[27px] h-[2px] border-b-2 border-dotted border-ocf-yellow"></div>
+            </div>
+          </div>
         </div>
-        <ResponsiveContainer className="mt-[15px] " width="100%" height={100}>
-          <AreaChart
-            data={data?.forecast_values}
-            margin={{
-              top: 0,
-              right: 40,
-              left: 0,
-              bottom: 10,
-            }}
-          >
-            <defs>{generateGraphGradient()}</defs>
-            <YAxis
-              type="number"
-              domain={[0, 1.1]}
-              axisLine={false}
-              tick={false}
-            />
-            <Area
-              type="monotone"
-              dataKey="expected_generation_kw"
-              strokeWidth={2}
-              stroke="white"
-              strokeDasharray="2"
-              fill="url(#colorUv)"
+
+        {!isLoading && graphData !== null && (
+          <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
+            <AreaChart
+              data={makeGraphable(graphData)}
+              margin={{
+                top: 0,
+                right: 40,
+                left: 0,
+                bottom: 10,
+              }}
             >
-              <LabelList
-                dataKey="expected_generation_kw"
-                content={renderThresholdLabel}
+              <defs>{generateGraphGradient()}</defs>
+              <YAxis
+                type="number"
+                domain={[0, maxGeneration + 0.25]}
+                axisLine={false}
+                tick={false}
               />
-              <LabelList
-                dataKey="expected_generation_kw"
-                content={renderCurrentTimeMarker}
-              />
-            </Area>
-            <ReferenceLine
-              y={graphThreshold}
-              strokeWidth={2}
-              stroke="#FFD053"
-              strokeDasharray="2"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+              <Area
+                type="monotone"
+                dataKey="generation_kw"
+                strokeWidth={2}
+                stroke="white"
+                strokeDasharray="2"
+                fill="url(#colorUv)"
+                onAnimationEnd={() => setTimeEnabled(true)}
+              >
+                <LabelList
+                  dataKey="generation_kw"
+                  content={renderCurrentTimeMarker}
+                />
+              </Area>
+              <ReferenceLine
+                y={graphThreshold}
+                strokeWidth={2}
+                stroke="#FFD053"
+                strokeDasharray="2"
+              >
+                <Label
+                  value={graphThreshold + ' kW'}
+                  position="left"
+                  className="text-xs fill-ocf-yellow"
+                />
+              </ReferenceLine>
+            </AreaChart>
+          </ResponsiveContainer>
+        )}
       </div>
-      <div className="flex flex-col justify-center content-center absolute bottom-8 inset-x-0 text-center">
+      <div className="flex flex-col justify-center content-center bottom-8 inset-x-0 text-center">
         {renderStartAndEndTime()}
         {renderCurrentTime()}
         {getSolarActivityText()}

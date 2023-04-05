@@ -1,5 +1,11 @@
-import { start } from 'repl';
-import useSWR, { Fetcher } from 'swr';
+import {
+  getAccessToken,
+  GetAccessTokenResult,
+  withPageAuthRequired,
+} from '@auth0/nextjs-auth0';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { getCurrentTimeGenerationIndex } from './graphs';
+import { GenerationDataPoint, SiteList } from './types';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -13,139 +19,156 @@ export function camelCaseID(id: string) {
   return [first, ...rest.map(capitalize)].join('');
 }
 
-/**
- * Converts Date object into Hour-Minute format based on device region
- */
-export const formatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-  hour: 'numeric',
-  minute: 'numeric',
-});
-
-interface ForecastDataPoint {
-  target_datetime_utc: number;
-  expected_generation_kw: number;
-}
-
-interface ForecastData {
-  forecast_uuid: string;
-  site_uuid: string;
-  forecast_creation_datetime: number;
-  forecast_version: string;
-  forecast_values: ForecastDataPoint[];
-}
-
-interface UnparsedForecastDataPoint {
-  target_datetime_utc: string | number;
-  expected_generation_kw: number;
-}
-
-interface UnparsedForecastData {
-  forecast_uuid: string;
-  site_uuid: string;
-  forecast_creation_datetime: string | number;
-  forecast_version: string;
-  forecast_values: UnparsedForecastDataPoint[];
-}
-
-const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
-  const tempData: UnparsedForecastData = await fetch(url).then((res) =>
-    res.json()
-  );
-
-  if (typeof tempData.forecast_creation_datetime === 'string') {
-    tempData.forecast_creation_datetime = Date.parse(
-      tempData.forecast_creation_datetime
-    );
-  } else {
-    throw new Error('Data contains values with incompatible types');
-  }
-
-  tempData.forecast_values.map(({ target_datetime_utc }) => {
-    if (typeof target_datetime_utc === 'string') {
-      target_datetime_utc = Date.parse(target_datetime_utc);
-    } else {
-      throw new Error('Data contains values with incompatible types');
-    }
-  });
-  return tempData as ForecastData;
-};
-
-const siteUUID = 'b97f68cd-50e0-49bb-a850-108d4a9f7b7e';
-
-export const useFutureGraphData = () =>
-  useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sites/pv_forecast/${siteUUID}`,
-    forecastFetcher
-  );
-
-export enum Value {
-  Min = 'Minimum',
-  Max = 'Maximum',
-}
 interface MinMaxInterface {
-  type: Value;
+  type: 'min' | 'max';
   index: number;
 }
 
 /**
- * Determines the next local minimum or maximum value in an array given a start index
+ * Determines the next local minimum or maximum value in a generation array
  * @param array Array to search for a local minimum or maximum value
  * @param key The key that represents the values being compared in array
  * @param startIndex The index to start the search at
  * @returns The index of the next minimum or maximum value
  */
 export const getArrayMaxOrMinAfterIndex = (
-  array: Record<string, any>,
-  key: string,
+  array: GenerationDataPoint[],
   startIndex: number
 ): MinMaxInterface | null => {
   if (startIndex === array.length - 1) {
     return {
-      type: Value.Min,
+      type: 'min',
       index: startIndex,
     };
   }
 
+  const first = array[startIndex].generation_kw;
+  const second = array[startIndex + 1].generation_kw;
+
+  const firstDifference = second - first;
+  const firstSlopeSign = Math.sign(firstDifference);
+
   startIndex += 1;
 
-  while (startIndex < array.length) {
-    const currentExpectedGenerationKW = array[startIndex][key];
-    const previousExpectedGenerationKW = array[startIndex - 1][key];
+  while (startIndex < array.length - 1) {
+    const current = array[startIndex].generation_kw;
+    const next = array[startIndex + 1].generation_kw;
 
-    if (startIndex === array.length - 1) {
-      if (currentExpectedGenerationKW > previousExpectedGenerationKW) {
-        return {
-          type: Value.Max,
-          index: startIndex,
-        };
-      } else if (currentExpectedGenerationKW < previousExpectedGenerationKW) {
-        return {
-          type: Value.Min,
-          index: startIndex,
-        };
-      }
-    } else {
-      const nextExpectedGenerationKW = array[startIndex + 1][key];
+    const currentDifference = next - current;
+    const currentSlopeSign = Math.sign(currentDifference);
 
-      if (
-        currentExpectedGenerationKW > previousExpectedGenerationKW &&
-        currentExpectedGenerationKW > nextExpectedGenerationKW
-      ) {
-        return {
-          type: Value.Max,
-          index: startIndex,
-        };
-      } else if (
-        currentExpectedGenerationKW < previousExpectedGenerationKW &&
-        currentExpectedGenerationKW < nextExpectedGenerationKW
-      ) {
-        return {
-          type: Value.Min,
-          index: startIndex,
-        };
-      }
+    if (firstSlopeSign !== currentSlopeSign && currentSlopeSign !== 0) {
+      return {
+        type: firstSlopeSign < currentSlopeSign ? 'min' : 'max',
+        index: startIndex,
+      };
     }
+
     startIndex += 1;
   }
+
+  return {
+    type: firstSlopeSign < 0 ? 'min' : 'max',
+    index: startIndex,
+  };
+};
+
+export const getCurrentTimeGeneration = (
+  generationData: GenerationDataPoint[]
+) =>
+  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
+
+interface NextThreshold {
+  aboveThreshold: boolean;
+  index: number;
+}
+
+/**
+ * Determines the hour difference between the current time and the next time we are above or below
+ * the sunny threshold
+ * @param generationData expected generation data (kilowatts) at specific times
+ * @param threshold sunny threshold in kilowatts
+ * @returns Object containing hour difference between the next date and
+ * if this date is above or below the threshold
+ */
+export const getNextThresholdIndex = (
+  generationData: GenerationDataPoint[],
+  threshold: number
+): NextThreshold | null => {
+  const startIndex = getCurrentTimeGenerationIndex(generationData);
+
+  const currentAboveThreshold =
+    generationData[startIndex].generation_kw >= threshold;
+
+  for (let i = startIndex; i < generationData.length; i++) {
+    const futureAboveThreshold = generationData[i].generation_kw >= threshold;
+    // If this future point's "aboveThreshold" state is different than current
+    if (futureAboveThreshold !== currentAboveThreshold) {
+      return {
+        aboveThreshold: futureAboveThreshold,
+        index: i,
+      };
+    }
+  }
+
   return null;
 };
+
+/* Represents the threshold for the graph */
+export const graphThreshold = 0.7;
+
+/* Latitude/longitude for London, England */
+export const originalLat = 51.5072;
+export const originalLng = 0.1276;
+
+type WithSitesOptions = {
+  getServerSideProps?: (
+    ctx: GetServerSidePropsContext & { siteList: SiteList }
+  ) => Promise<GetServerSidePropsResult<any>>;
+};
+export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
+  return withPageAuthRequired({
+    async getServerSideProps(ctx) {
+      let accessToken: GetAccessTokenResult;
+      try {
+        accessToken = await getAccessToken(ctx.req, ctx.res);
+      } catch {
+        return {
+          redirect: {
+            destination: '/api/auth/login',
+          },
+        };
+      }
+
+      const siteList = (await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`,
+          },
+        }
+      ).then((res) => res.json())) as SiteList;
+
+      const otherProps: any = await getServerSideProps?.({
+        ...ctx,
+        siteList,
+      });
+      if (otherProps?.props instanceof Promise) {
+        return {
+          ...otherProps,
+          props: otherProps.props.then((props: any) => ({
+            ...props,
+            siteList,
+          })),
+        };
+      }
+      return { ...otherProps, props: { ...otherProps?.props, siteList } };
+    },
+  });
+}
+
+/*
+  Represents the zoom threshold for the Site map. 
+  We will track solar sites when the map is zoomed in less than this value.
+*/
+export const zoomLevelThreshold = 14;

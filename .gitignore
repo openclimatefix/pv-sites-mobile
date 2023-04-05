@@ -39,3 +39,5 @@ next-env.d.ts
 # SW files
 public/*.js
 public/*.map
+
+.vscode

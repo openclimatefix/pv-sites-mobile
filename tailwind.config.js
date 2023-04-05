@@ -21,6 +21,10 @@ module.exports = {
     'bg-ocf-yellow/100',
   ],
   theme: {
+    screens: {
+      ...defaultTheme.screens,
+      short: { raw: '(max-height: 800px)' },
+    },
     container: {
       center: true,
       padding: {
@@ -45,6 +49,30 @@ module.exports = {
       black: 900,
     },
     extend: {
+      gridTemplateAreas: {
+        'dashboard-desktop': [
+          'Expected Sunny   Yield',
+          'Site-Graph   Site-Graph   Recommendation',
+          'Graph   Graph     Graph',
+        ],
+        'dashboard-mobile': [
+          'Heading1 Heading1',
+          'Sunny Recommendation',
+          'Site-Graph   Site-Graph',
+          'Heading2 Heading2',
+          'Expected Yield',
+          'Graph Graph',
+        ],
+      },
+      gridTemplateColumns: {
+        'desktop-columns': '1fr 1fr 1fr',
+        'mobile-columns': '1fr 1fr',
+      },
+      gridTemplateRows: {
+        'desktop-rows': 'auto auto auto',
+        'mobile-rows': 'auto auto auto auto auto auto',
+      },
+
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],
@@ -108,7 +136,7 @@ module.exports = {
           DEFAULT: '#E4E4E4',
           50: '#FFFFFF',
           100: '#FFFFFF',
-          200: '#FFFFFF',
+          200: '#D9D9D9',
           300: '#DDDDDD',
           400: '#F8F8F8',
           500: '#E4E4E4',
@@ -132,8 +160,8 @@ module.exports = {
           200: '#5C5340',
           300: '#443D30',
           400: '#2C281F',
-          500: '#14120E',
-          600: '#000000',
+          500: '#2B2B2B',
+          600: '#14120E',
           700: '#000000',
           800: '#000000',
           900: '#000000',
@@ -182,4 +210,5 @@ module.exports = {
   },
   darkMode: 'class',
   // plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")]
+  plugins: [require('@savvywombat/tailwindcss-grid-areas')],
 };
