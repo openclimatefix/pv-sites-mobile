@@ -42,7 +42,7 @@ const Transition: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <div className="effect-1">
+    <div className="page-transition">
       <AnimatePresence initial={false} mode="popLayout">
         <motion.div
           initial="in"
