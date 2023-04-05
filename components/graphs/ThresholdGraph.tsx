@@ -23,7 +23,7 @@ import {
   makeGraphable,
 } from 'lib/graphs';
 
-import { getArrayMaxOrMinAfterIndex } from 'lib/utils';
+import { getTrendAfterIndex } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
@@ -205,7 +205,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (!graphData) return null;
 
     const currIndex = getCurrentTimeGenerationIndex(graphData);
-    const slope = getArrayMaxOrMinAfterIndex(graphData, currIndex);
+    const slope = getTrendAfterIndex(graphData, currIndex);
 
     if (slope) {
       const { type, endIndex } = slope;
