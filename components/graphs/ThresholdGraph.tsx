@@ -224,7 +224,11 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         </div>
 
         {!isLoading && graphData !== null && (
-          <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
+          <ResponsiveContainer
+            className="mt-[15px] touch-pinch-zoom touch-pan-y"
+            width="100%"
+            height={100}
+          >
             <AreaChart
               data={makeGraphable(graphData)}
               margin={{
