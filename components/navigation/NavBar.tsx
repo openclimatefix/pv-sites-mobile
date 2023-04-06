@@ -1,9 +1,8 @@
 import { useUser } from '@auth0/nextjs-auth0';
 import { FC } from 'react';
 import useSWR from 'swr';
-import { useSideBarContext } from '~/lib/context/sidebar_context';
+import { useSideBarContext } from '~/lib/context/sidebar';
 import { SiteList } from '~/lib/types';
-
 import { MenuLogo, NowcastingLogo } from '../icons/navbar_icons';
 
 const NavBar: FC = () => {

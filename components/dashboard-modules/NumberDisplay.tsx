@@ -3,27 +3,37 @@ import { FC } from 'react';
 interface Props {
   title: string;
   value: string;
+  onClick?: () => void;
 }
 
-const NumberDisplay: FC<Props> = ({ title, value }) => {
+const skeleton = `md:my-1.5 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none md:leading-none`;
+
+const NumberDisplay: FC<Props> = ({ title, value, onClick }) => {
+  const Element = onClick ? 'button' : 'div';
   return (
-    <div className="flex-1 p-4 text-center md:text-left bg-ocf-black-500 rounded-2xl h-[100%]">
-      {value !== 'Loading...' ? (
-        <div>
-          <div className="mb-2 text-xs md:text-lg text-ocf-gray font-semibold">
-            {title}
-          </div>
-          <div className="mb-1 text-2xl text-ocf-yellow font-semibold">
-            {value}
-          </div>
+    <Element
+      className={`flex-1 w-full p-3 text-center md:text-left bg-ocf-black-500 rounded-2xl h-[100%] ${
+        onClick ? 'cursor-pointer transition-all active:scale-95' : ''
+      }`}
+      onClick={onClick}
+    >
+      <div>
+        <div
+          className={`mb-2 text-xs md:text-lg text-ocf-gray font-semibold md:font-medium ${
+            value == 'Loading...' ? skeleton : ``
+          }`}
+        >
+          {title}
         </div>
-      ) : (
-        <div>
-          <div className="bg-ocf-gray-1000 mt-[0.5px] mb-2.5 h-6 w-44 rounded-2xl animate-pulse"></div>
-          <div className="bg-ocf-gray-1000 mb-[5.5px] h-8 w-32 rounded-2xl animate-pulse"></div>
+        <div
+          className={`text-2xl text-ocf-yellow font-semibold leading-none ${
+            value == 'Loading...' ? skeleton : ``
+          }`}
+        >
+          {value}
         </div>
-      )}
-    </div>
+      </div>
+    </Element>
   );
 };
 
