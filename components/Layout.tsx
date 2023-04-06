@@ -12,9 +12,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      {user && <NavBar />}
-      <SideBar />
       <PageTransitionWrapper>
+        {user && <NavBar />}
+        <SideBar />
         <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start w-full">
           {children}
         </main>

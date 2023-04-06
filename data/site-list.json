@@ -12,7 +12,7 @@
       "tilt": null,
       "latitude": 51.5072,
       "longitude": -0.1276,
-      "installed_capacity_kw": 1,
+      "installed_capacity_kw": 4,
       "created_utc": "2023-02-16T01:14:29.397421+00:00",
       "updated_utc": "2023-02-16T01:14:29.397436+00:00"
     },
@@ -28,7 +28,7 @@
       "tilt": null,
       "latitude": 50.0,
       "longitude": 50.0,
-      "installed_capacity_kw": 1,
+      "installed_capacity_kw": 4,
       "created_utc": "2023-02-16T01:14:29.397421+00:00",
       "updated_utc": "2023-02-16T01:14:29.397436+00:00"
     },
@@ -44,7 +44,7 @@
       "tilt": null,
       "latitude": 50.0,
       "longitude": 50.0,
-      "installed_capacity_kw": 1,
+      "installed_capacity_kw": 4,
       "created_utc": "2023-02-16T01:14:29.397421+00:00",
       "updated_utc": "2023-02-16T01:14:29.397436+00:00"
     },
@@ -60,7 +60,7 @@
       "tilt": null,
       "latitude": 50.0,
       "longitude": 50.0,
-      "installed_capacity_kw": 1,
+      "installed_capacity_kw": 4,
       "created_utc": "2023-02-16T01:14:29.397421+00:00",
       "updated_utc": "2023-02-16T01:14:29.397436+00:00"
     }

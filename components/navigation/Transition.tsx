@@ -16,7 +16,7 @@ const Transition: FC<PropsWithChildren> = ({ children }) => {
   const mobile = useMediaQuery('(max-width: 768px)');
   const animationKey = isSitePage ? asPath : undefined;
 
-  const duration = 0.4;
+  const duration = 0.2;
   const variants: Variants = {
     popRight: {
       x: '100%',
@@ -27,9 +27,9 @@ const Transition: FC<PropsWithChildren> = ({ children }) => {
       },
     },
     popLeft: {
-      x: '-75%',
+      x: '-25%',
       zIndex: 15,
-      opacity: 0.8,
+      opacity: 0.5,
       transition: {
         duration,
       },
