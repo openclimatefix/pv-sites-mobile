@@ -1,23 +1,45 @@
 import { FC } from 'react';
-import {
-  getTotalExpectedForecastOutput,
-  getTotalExpectedClearSkyOutput,
-} from '~/lib/utils';
 import { useSiteData } from '~/lib/hooks';
 import useTime from '~/lib/hooks/useTime';
-import {
-  outputDataOverDateRange,
-  getGraphStartDate,
-  getGraphEndDate,
-} from '~/lib/graphs';
 
 import CloudyIcon from './icons/CloudyIcon';
 import SunnyIcon from './icons/SunnyIcon';
 import PartlyCloudyIcon from './icons/PartlyCloudyIcon';
-import { ClearSkyDataPoint, ForecastDataPoint } from '~/lib/types';
+import { getTotalExpectedOutput } from './dashboard-modules/ExpectedTotalOutput';
+import { generationDataOverDateRange } from '~/lib/graphs';
+import { GenerationDataPoint } from '~/lib/types';
 
 type WeatherProps = {
   siteUUID: string;
+};
+
+const GetExpectedOutputOverDay = (
+  duskTime: Date,
+  dawnTime: Date,
+  offset: number,
+  forecastValues: GenerationDataPoint[],
+  clearSkyEstimate: GenerationDataPoint[]
+) => {
+  const dates = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+  // 
+  const newDuskTime = new Date(duskTime.getTime() + offset * 3600000);
+  const newDawnTime = new Date(dawnTime.getTime() + offset * 3600000);
+  const forecastData = generationDataOverDateRange(
+    forecastValues,
+    newDawnTime,
+    newDuskTime
+  );
+  const clearSkyData = generationDataOverDateRange(
+    clearSkyEstimate,
+    newDawnTime,
+    newDuskTime
+  );
+
+  return [
+    getTotalExpectedOutput(forecastData).toFixed(2),
+    getTotalExpectedOutput(forecastData) / getTotalExpectedOutput(clearSkyData),
+    dates[newDuskTime.getDay() - 1],
+  ];
 };
 
 export const cloudyThreshold = 0.3;
@@ -26,67 +48,86 @@ export const sunnyThreshold = 0.7;
 const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
   const { forecastData, clearskyData, latitude, longitude } =
     useSiteData(siteUUID);
-  const { currentTime } = useTime(latitude, longitude);
-  if (forecastData && clearskyData) {
-    const totalClearSkyOutput = getTotalExpectedClearSkyOutput(
+  const { duskTime, dawnTime } = useTime(latitude, longitude);
+  if (forecastData && clearskyData && latitude && longitude) {
+    const [total1, diff1] = GetExpectedOutputOverDay(
+      duskTime,
+      dawnTime,
+      0,
+      forecastData.forecast_values,
       clearskyData.clearsky_estimate
     );
-    const day1 = new Date();
-    day1.setHours(getGraphStartDate(currentTime).getHours() + 24);
-    const day1GraphData = outputDataOverDateRange<ForecastDataPoint>(
-      JSON.parse(JSON.stringify(forecastData.forecast_values)),
-      day1,
-      day1
-    );
-    const diff1 =
-      getTotalExpectedForecastOutput(day1GraphData) / totalClearSkyOutput;
 
-    const day2 = new Date();
-    day2.setHours(getGraphStartDate(currentTime).getHours() + 24);
-    const day2GraphData = outputDataOverDateRange<ForecastDataPoint>(
-      JSON.parse(JSON.stringify(forecastData.forecast_values)),
-      day2,
-      day2
+    const [total2, diff2, date2] = GetExpectedOutputOverDay(
+      duskTime,
+      dawnTime,
+      24,
+      forecastData.forecast_values,
+      clearskyData.clearsky_estimate
     );
-    const diff2 =
-      getTotalExpectedForecastOutput(day2GraphData) / totalClearSkyOutput;
 
-    const day3 = new Date();
-    day3.setHours(getGraphStartDate(currentTime).getHours() + 48);
-    const day3GraphData = outputDataOverDateRange<ForecastDataPoint>(
-      JSON.parse(JSON.stringify(forecastData.forecast_values)),
-      day3,
-      day3
+    const [total3, diff3, date3] = GetExpectedOutputOverDay(
+      duskTime,
+      dawnTime,
+      48,
+      forecastData.forecast_values,
+      clearskyData.clearsky_estimate
     );
-    const diff3 =
-      getTotalExpectedForecastOutput(day3GraphData) / totalClearSkyOutput;
 
-    const day4 = new Date();
-    day2.setHours(getGraphStartDate(currentTime).getHours() + 72);
-    const day4GraphData = outputDataOverDateRange<ForecastDataPoint>(
-      JSON.parse(JSON.stringify(forecastData.forecast_values)),
-      day2,
-      day2
-    );
-    const diff4 =
-      getTotalExpectedForecastOutput(day2GraphData) / totalClearSkyOutput;
+    // const diff4 = GetExpectedOutputOverDay(
+    //   longitude,
+    //   latitude,
+    //   72,
+    //   forecastData.forecast_values,
+    //   clearskyData.clearsky_estimate
+    // );
 
     return (
-      <div className="bg-ocf-black-500 rounded-lg">
-        <div className="w-full pt-3 pb-8 flex justify-center align-middle gap-4">
-          {diff1 < cloudyThreshold ? (
-            <div>
-              <CloudyIcon />
+      <div className="bg-ocf-black-500 flex flex-row rounded-2xl px-5">
+        <div className="flex-1 flex-col">
+          <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
+            <p className="flex-1 text-xs text-ocf-yellow-50">Today</p>
+            <div className="flex-1 self-center margin-0">
+              {diff1 < cloudyThreshold ? (
+                <CloudyIcon />
+              ) : diff1 > sunnyThreshold ? (
+                <SunnyIcon />
+              ) : (
+                <PartlyCloudyIcon />
+              )}
             </div>
-          ) : diff1 > sunnyThreshold ? (
-            <div>
-              <SunnyIcon />
+            <p className="flex-1 text-xs text-ocf-yellow-500">{total1} kWh</p>
+          </div>
+        </div>
+        <div className="flex-1 flex-col">
+          <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
+            <p className="flex-1 text-xs text-ocf-yellow-50">{date2}</p>
+            <div className="flex-1 self-center margin-0">
+              {diff2 < cloudyThreshold ? (
+                <CloudyIcon />
+              ) : diff2 > sunnyThreshold ? (
+                <SunnyIcon />
+              ) : (
+                <PartlyCloudyIcon />
+              )}
             </div>
-          ) : (
-            <div>
-              <PartlyCloudyIcon />
+            <p className="flex-1 text-xs text-ocf-yellow-500">{total2} kWh</p>
+          </div>
+        </div>
+        <div className="flex-1 flex-col">
+          <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
+            <p className="flex-1 text-xs text-ocf-yellow-50">{date3}</p>
+            <div className="flex-1 self-center margin-0">
+              {diff3 < cloudyThreshold ? (
+                <CloudyIcon />
+              ) : diff3 > sunnyThreshold ? (
+                <SunnyIcon />
+              ) : (
+                <PartlyCloudyIcon />
+              )}
             </div>
-          )}
+            <p className="flex-1 text-xs text-ocf-yellow-500">{total3} kWh</p>
+          </div>
         </div>
       </div>
     );

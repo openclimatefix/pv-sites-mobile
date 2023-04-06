@@ -1,95 +1,134 @@
-import { ClearSkyDataPoint } from './types';
-
-/**
- * Converts Date object into Hour-Minute format based on device region
- */
-export const timeFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-  hour: 'numeric',
-  minute: 'numeric',
-});
-
-export const weekdayFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
-  weekday: 'short',
-  hour: 'numeric',
-  minute: 'numeric',
-});
-
-interface ForecastDataPoint {
-  target_datetime_utc: number;
-  expected_generation_kw: number;
-}
+import { addMinutes, millisecondsToMinutes } from 'date-fns';
+import { GenerationDataPoint } from './types';
 
 /**
  * @returns the index of the forecasted date that is closest to the target time
  */
-export const getClosestForecastIndex = (
-  forecastData: Pick<ForecastDataPoint, 'target_datetime_utc'>[],
+export function getClosestForecastIndex(
+  generationData: GenerationDataPoint[],
   targetDate: Date
-) => {
-  if (forecastData) {
-    const closestDateIndex = forecastData
-      .map((forecast_values, index) => ({ ...forecast_values, index: index }))
-      .map((forecast_values) => ({
-        ...forecast_values,
-        difference: Math.abs(
-          targetDate.getTime() - forecast_values.target_datetime_utc
-        ),
-      }))
-      .reduce((prev, curr) =>
-        prev.difference < curr.difference ? prev : curr
-      ).index;
+) {
+  let closest = 0;
 
-    return closestDateIndex;
+  for (let i = 0; i < generationData.length; i++) {
+    const difference = Math.abs(
+      targetDate.getTime() - generationData[i].datetime_utc.getTime()
+    );
+    const closestDifference = Math.abs(
+      targetDate.getTime() - generationData[closest].datetime_utc.getTime()
+    );
+    if (difference < closestDifference) {
+      closest = i;
+    }
   }
-  return 0;
-};
 
-export const outputDataOverDateRange = <
-  T extends Pick<ForecastDataPoint, 'target_datetime_utc'>
->(
-  forecastData: T[],
-  start_date: Date,
-  end_date: Date
+  return closest;
+}
+
+export const generationDataOverDateRange = (
+  generationData: GenerationDataPoint[],
+  startDate: Date,
+  endDate: Date
 ) => {
-  const start_index = getClosestForecastIndex(forecastData, start_date);
-  const end_index = getClosestForecastIndex(forecastData, end_date);
-  if (forecastData)
-    forecastData = forecastData.slice(start_index, end_index + 1);
-  return forecastData;
+  const startIndex = getClosestForecastIndex(generationData, startDate);
+  const endIndex = getClosestForecastIndex(generationData, endDate);
+  return generationData.slice(startIndex, endIndex + 1);
 };
 
 export const getGraphStartDate = (currentTime: number) => {
   const currentDate = new Date(currentTime);
   return new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getHours() > 20
-      ? currentDate.getDate() + 1
-      : currentDate.getDate(),
-    8
+    Date.UTC(
+      currentDate.getUTCFullYear(),
+      currentDate.getUTCMonth(),
+      currentDate.getUTCHours() > 20
+        ? currentDate.getUTCDate() + 1
+        : currentDate.getUTCDate(),
+      8
+    )
   );
 };
 
 export const getGraphEndDate = (currentTime: number) => {
   const currentDate = new Date(currentTime);
   return new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getHours() > 20
-      ? currentDate.getDate() + 1
-      : currentDate.getDate(),
-    20
+    Date.UTC(
+      currentDate.getUTCFullYear(),
+      currentDate.getUTCMonth(),
+      currentDate.getUTCHours() > 20
+        ? currentDate.getUTCDate() + 1
+        : currentDate.getUTCDate(),
+      20
+    )
   );
 };
 
 /**
  * @returns the index of the forecasted date that is closest to the current time
  */
-export const getCurrentTimeForecastIndex = (
-  forecast_values: ForecastDataPoint[]
-) => {
-  return getClosestForecastIndex(forecast_values, new Date());
-};
+export function getCurrentTimeGenerationIndex(
+  generationData: GenerationDataPoint[]
+) {
+  return getClosestForecastIndex(generationData, new Date());
+}
 
-/* Represents the threshold for the graph */
+export function makeGraphable(generationData: GenerationDataPoint[]) {
+  return generationData.map((point) => ({
+    ...point,
+    datetime_utc: point.datetime_utc.getTime(),
+  }));
+}
+
+export function addTimePoint(
+  generationData: GenerationDataPoint[],
+  date: Date
+) {
+  const generationDataInterpolated = generationData.map((data) => ({
+    ...data,
+  }));
+
+  if (generationData.length < 2) {
+    return generationDataInterpolated;
+  }
+
+  const forecastValuePeriod = millisecondsToMinutes(
+    generationData[1].datetime_utc.getTime() -
+      generationData[0].datetime_utc.getTime()
+  );
+
+  let forecastValueIndex = getClosestForecastIndex(generationData, date);
+  let closestTime = generationData[forecastValueIndex].datetime_utc;
+  if (closestTime.getTime() === date.getTime()) {
+    return generationDataInterpolated;
+  }
+
+  if (closestTime.getTime() > date.getTime()) {
+    forecastValueIndex--;
+    closestTime = generationData[forecastValueIndex].datetime_utc;
+  }
+
+  const i = millisecondsToMinutes(date.getTime() - closestTime.getTime());
+
+  const slope =
+    generationData[forecastValueIndex + 1].generation_kw -
+    generationData[forecastValueIndex].generation_kw;
+
+  const interpolatedValue =
+    slope * (i / forecastValuePeriod) +
+    generationData[forecastValueIndex].generation_kw;
+
+  const interpolatedTime = addMinutes(
+    generationData[forecastValueIndex].datetime_utc,
+    i
+  );
+
+  generationDataInterpolated.splice(forecastValueIndex + 1, 0, {
+    generation_kw: interpolatedValue,
+    datetime_utc: interpolatedTime,
+  });
+
+  return generationDataInterpolated;
+}
+
+/* Represents the threshold for the threshold graph, in kW  */
 export const graphThreshold = 0.7;

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import {
   Area,
@@ -12,50 +12,64 @@ import {
 
 import {
   DownArrowIcon,
-  FutureThresholdLegendIcon,
   LineCircle,
   UpArrowIcon,
 } from '../icons/future_threshold';
 
 import {
-  outputDataOverDateRange,
-  timeFormatter,
-  getCurrentTimeForecastIndex,
-  getGraphEndDate,
-  getGraphStartDate,
+  generationDataOverDateRange,
+  getCurrentTimeGenerationIndex,
   graphThreshold,
+  makeGraphable,
 } from 'lib/graphs';
 
-import { getArrayMaxOrMinAfterIndex, Value } from 'lib/utils';
+import { getArrayMaxOrMinAfterIndex } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
+import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useTime from '~/lib/hooks/useTime';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
     useSiteData(siteUUID);
-  const [timeEnabled, setTimeEnabled] = useState(false);
-  const { currentTime } = useTime(latitude, longitude, {
+  const [timeEnabled, setTimeEnabled] = useState(forecastData !== undefined);
+  const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
+  const { timeFormatter } = useDateFormatter(siteUUID);
 
-  const graphData =
-    forecastData &&
-    outputDataOverDateRange(
-      forecastData.forecast_values,
-      getGraphStartDate(currentTime),
-      getGraphEndDate(currentTime)
-    );
+  const graphData = useMemo(() => {
+    if (forecastData && dawnTime && duskTime) {
+      return generationDataOverDateRange(
+        forecastData.forecast_values,
+        dawnTime,
+        duskTime
+      );
+    }
+    return null;
+  }, [forecastData, dawnTime, duskTime]);
 
   const maxGeneration = graphData
-    ? Math.max(...graphData.map((value) => value.expected_generation_kw))
+    ? Math.max(...graphData.map((value) => value.generation_kw))
     : 0;
 
   const renderCurrentTimeMarker = ({ x, y, index }: any) => {
     if (!graphData) return null;
 
-    const currentTimeIndex = getCurrentTimeForecastIndex(graphData);
-    if (index !== currentTimeIndex) return null;
+    /* 
+      Return null if this index doesn't correspond to the current time
+      or if the current time is past the start/end dates of the graph
+    */
+    const currentTimeIndex = getCurrentTimeGenerationIndex(graphData);
+    if (
+      index !== currentTimeIndex ||
+      (currentTimeIndex === 0 &&
+        Date.now() < graphData[index].datetime_utc.getTime()) ||
+      (currentTimeIndex === graphData.length - 1 &&
+        Date.now() > graphData[index].datetime_utc.getTime())
+    ) {
+      return null;
+    }
 
     return (
       <g>
@@ -72,13 +86,13 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (!graphData) return null;
 
     const aboveThreshold = graphData.some(
-      (forecast) => forecast.expected_generation_kw > graphThreshold
+      (forecast) => forecast.generation_kw > graphThreshold
     );
 
     if (aboveThreshold) {
       const maxExpectedGenerationKW = Math.max.apply(
         null,
-        graphData.map(({ expected_generation_kw }) => expected_generation_kw)
+        graphData.map(({ generation_kw }) => generation_kw)
       );
 
       let gradientPercentage =
@@ -115,11 +129,9 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       return null;
     }
 
-    const startTime = timeFormatter.format(
-      new Date(graphData[0].target_datetime_utc)
-    );
+    const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
     const endTime = timeFormatter.format(
-      new Date(graphData[numForecastValues - 1].target_datetime_utc)
+      new Date(graphData[numForecastValues - 1].datetime_utc)
     );
 
     return (
@@ -157,21 +169,22 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (!graphData) return null;
+    if (!forecastData) return null;
 
-    const currIndex = getCurrentTimeForecastIndex(graphData);
+    const currIndex = getCurrentTimeGenerationIndex(
+      forecastData.forecast_values
+    );
     const minMax = getArrayMaxOrMinAfterIndex(
-      graphData,
-      'expected_generation_kw',
+      forecastData.forecast_values,
       currIndex
     );
 
     if (minMax) {
-      const { type, number: index } = minMax;
+      const { type, index } = minMax;
       const minMaxForecastDate = timeFormatter.format(
-        new Date(graphData[index].target_datetime_utc)
+        new Date(forecastData.forecast_values[index].datetime_utc)
       );
-      return type === Value.Max
+      return type === 'max'
         ? solarIncreasingText(minMaxForecastDate)
         : solarDecreasingText(minMaxForecastDate);
     }
@@ -194,13 +207,26 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     <div className="relative w-full h-[260px] bg-ocf-black-500 rounded-2xl content-center">
       <div className="flex flex-col w-full justify-start">
         <div className="flex justify-end mt-[20px] mr-10 text-sm">
-          <FutureThresholdLegendIcon />
+          <div className="flex flex-col gap-1 justify-start">
+            <div className="flex gap-2 items-center justify-end">
+              <p className="text-[10px] text-white text-right leading-none">
+                Forecast
+              </p>
+              <div className="not-sr-only w-[27px] h-[2px] border-b-2 border-dotted border-white"></div>
+            </div>
+            <div className="flex gap-2 items-center justify-end">
+              <p className="text-[10px] text-ocf-yellow text-right leading-none">
+                Threshold
+              </p>
+              <div className="not-sr-only w-[27px] h-[2px] border-b-2 border-dotted border-ocf-yellow"></div>
+            </div>
+          </div>
         </div>
 
-        {!isLoading && (
+        {!isLoading && graphData !== null && (
           <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
             <AreaChart
-              data={graphData}
+              data={makeGraphable(graphData)}
               margin={{
                 top: 0,
                 right: 40,
@@ -217,7 +243,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               />
               <Area
                 type="monotone"
-                dataKey="expected_generation_kw"
+                dataKey="generation_kw"
                 strokeWidth={2}
                 stroke="white"
                 strokeDasharray="2"
@@ -225,7 +251,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 onAnimationEnd={() => setTimeEnabled(true)}
               >
                 <LabelList
-                  dataKey="expected_generation_kw"
+                  dataKey="generation_kw"
                   content={renderCurrentTimeMarker}
                 />
               </Area>
@@ -245,7 +271,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           </ResponsiveContainer>
         )}
       </div>
-      <div className="flex flex-col justify-center content-center absolute bottom-8 inset-x-0 text-center">
+      <div className="flex flex-col justify-center content-center bottom-8 inset-x-0 text-center">
         {renderStartAndEndTime()}
         {renderCurrentTime()}
         {getSolarActivityText()}
