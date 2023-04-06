@@ -57,6 +57,7 @@ const Transition: FC<PropsWithChildren> = ({ children }) => {
           exit={animationKey ? 'popRight' : 'popLeft'}
           variants={mobile && !shouldReduceMotion ? variants : {}}
           key={animationKey}
+          className="w-screen"
         >
           {children}
         </motion.div>
