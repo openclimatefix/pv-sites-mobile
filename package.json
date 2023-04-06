@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.8.0",
+    "@heroicons/react": "^2.0.17",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "@openclimatefix/nowcasting-ui.icons.icons": "^0.0.3",
     "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",

@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
 import { DashboardIcon, SearchIcon, SiteListIcon } from '../icons';
-
+import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import useSites from '~/lib/hooks/useSites';
+import { useIsSitePage } from '~/lib/hooks/useIsSitePage';
 
-const icons = [
+const defaultIcons = [
   {
     title: 'Dashboard',
     icon: DashboardIcon,
@@ -23,9 +24,21 @@ const icons = [
   },
 ];
 
+const sitePageIcons = [
+  {
+    title: 'Back',
+    icon: ChevronLeftIcon,
+    link: '/sites',
+  },
+];
+
 const BottomNavBar = () => {
   const { asPath } = useRouter();
   const { sites } = useSites();
+  const isSitePage = useIsSitePage();
+
+  const icons = isSitePage ? sitePageIcons : defaultIcons;
+
   return (
     <div
       className={`${
@@ -44,7 +57,7 @@ const BottomNavBar = () => {
                   asPath == val.link ? 'text-ocf-yellow' : 'text-white'
                 }`}
               >
-                <val.icon key={i} color="white"></val.icon>
+                <val.icon key={i} color="white" width="24" height="24" />
                 <p className="mt-[5px]">{val.title}</p>
               </a>
             </Link>
