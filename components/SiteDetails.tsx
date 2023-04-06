@@ -9,13 +9,13 @@ enum Page {
 }
 
 interface SiteDetailsProps {
-  uuid: string | undefined;
+  uuid?: string | undefined;
 }
 
 const SiteDetails: FC<SiteDetailsProps> = ({ uuid }) => {
   const [page, setPage] = useState<Page>(Page.Location);
   const router = useRouter();
-
+  console.log(uuid);
   const generateFormPage = () => {
     switch (page) {
       case Page.Details:
