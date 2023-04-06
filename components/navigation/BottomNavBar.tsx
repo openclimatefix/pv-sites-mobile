@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { DashboardIcon, SearchIcon, SiteListIcon } from '../icons';
 
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import useSites from '~/lib/hooks/useSites';
 
 const icons = [
@@ -27,11 +26,10 @@ const icons = [
 const BottomNavBar = () => {
   const { asPath } = useRouter();
   const { sites } = useSites();
-
   return (
     <div
       className={`${
-        sites?.length ?? 0 === 0
+        (sites?.length ?? 0) === 0
           ? 'opacity-0 pointer-events-none hidden'
           : 'opacity-100'
       }

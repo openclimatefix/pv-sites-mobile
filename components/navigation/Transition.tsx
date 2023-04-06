@@ -51,6 +51,7 @@ const Transition: FC<PropsWithChildren> = ({ children }) => {
     <div className="page-transition">
       <AnimatePresence initial={false} mode="popLayout">
         <motion.div
+          suppressHydrationWarning
           initial={animationKey ? 'popRight' : 'popLeft'}
           animate={animationKey ? 'center' : 'center'}
           exit={animationKey ? 'popRight' : 'popLeft'}
