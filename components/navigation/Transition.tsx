@@ -9,7 +9,11 @@ import { FC, PropsWithChildren } from 'react';
 import { useIsSitePage } from '~/lib/hooks/useIsSitePage';
 import useMediaQuery from '~/lib/hooks/useMediaQuery';
 
-const Transition: FC<PropsWithChildren> = ({ children }) => {
+interface Props {
+  className?: string;
+}
+
+const Transition: FC<PropsWithChildren<Props>> = ({ children, className }) => {
   const { asPath } = useRouter();
   const isSitePage = useIsSitePage();
   const shouldReduceMotion = useReducedMotion();
@@ -48,7 +52,7 @@ const Transition: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <div className="page-transition">
+    <div className={`page-transiton ${className}`}>
       <AnimatePresence initial={false} mode="popLayout">
         <motion.div
           suppressHydrationWarning

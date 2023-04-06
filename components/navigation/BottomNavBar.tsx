@@ -5,6 +5,7 @@ import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import useSites from '~/lib/hooks/useSites';
 import { useIsSitePage } from '~/lib/hooks/useIsSitePage';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const defaultIcons = [
   {
@@ -39,6 +40,8 @@ const BottomNavBar = () => {
 
   const icons = isSitePage ? sitePageIcons : defaultIcons;
 
+  const transition = { duration: 0.1 };
+
   return (
     <div
       className={`${
@@ -46,23 +49,35 @@ const BottomNavBar = () => {
           ? 'opacity-0 pointer-events-none hidden'
           : 'opacity-100'
       }
-    bg-ocf-gray-1000 w-screen h-[var(--bottom-nav-height)] bottom-0 fixed visible md:invisible pb-2 z-50`}
+    bg-ocf-gray-1000 w-screen h-[var(--bottom-nav-height)] visible md:invisible relative z-50`}
     >
       <div className="flex justify-evenly items-center h-full">
-        {icons.map((val, i) => {
-          return (
-            <Link key={i} href={val.link}>
-              <a
-                className={`text-xs items-center flex flex-col justify-evenly ${
-                  asPath == val.link ? 'text-ocf-yellow' : 'text-white'
-                }`}
-              >
-                <val.icon key={i} color="white" width="24" height="24" />
-                <p className="mt-[5px]">{val.title}</p>
-              </a>
-            </Link>
-          );
-        })}
+        <AnimatePresence mode="wait">
+          {icons.map((val, i) => {
+            return (
+              <Link key={val.title} href={val.link} legacyBehavior passHref>
+                <motion.a
+                  className={`text-xs items-center flex flex-col justify-evenly ${
+                    asPath == val.link ? 'text-ocf-yellow' : 'text-white'
+                  } ${isSitePage ? 'mr-auto ml-10' : ''}`}
+                  initial={{
+                    opacity: 0,
+                    x: isSitePage ? '50%' : '-50%',
+                  }}
+                  animate={{ opacity: 1, x: 0, transition }}
+                  exit={{
+                    opacity: 0,
+                    x: isSitePage ? '50%' : '-50%',
+                    transition,
+                  }}
+                >
+                  <val.icon key={i} color="white" width="24" height="24" />
+                  <p className="mt-0.5">{val.title}</p>
+                </motion.a>
+              </Link>
+            );
+          })}
+        </AnimatePresence>
       </div>
     </div>
   );

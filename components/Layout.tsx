@@ -11,8 +11,8 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
   const PageTransitionWrapper = user ? Transition : 'div';
 
   return (
-    <>
-      <PageTransitionWrapper>
+    <div className="flex flex-col h-screen overflow-hidden relative">
+      <PageTransitionWrapper className="overflow-x-clip overflow-y-auto flex-1">
         {user && <NavBar />}
         <SideBar />
         <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start w-full">
@@ -20,7 +20,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         </main>
       </PageTransitionWrapper>
       {user && <BottomNavBar />}
-    </>
+    </div>
   );
 };
 
