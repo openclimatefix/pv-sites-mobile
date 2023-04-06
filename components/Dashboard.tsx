@@ -28,7 +28,7 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
           <SunnyTimeframe siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Recommendation">
-          <WeatherCard siteUUID={siteUUID} />
+          <EnergyRecommendation siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Site-Graph">
           <ThresholdGraph siteUUID={siteUUID} />
@@ -43,7 +43,7 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
           <ExpectedTotalOutput siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Yield">
-          <CurrentCapacity siteUUID={siteUUID} />
+          <WeatherCard siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Graph">
           <Graph siteUUID={siteUUID} />

@@ -20,7 +20,6 @@ const GetExpectedOutputOverDay = (
   forecastValues: GenerationDataPoint[],
   clearSkyEstimate: GenerationDataPoint[]
 ) => {
-  const dates = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
   const newDuskTime = new Date(duskTime.getTime() + offset * 3600000);
   const newDawnTime = new Date(dawnTime.getTime() + offset * 3600000);
   const forecastData = generationDataOverDateRange(
@@ -35,10 +34,33 @@ const GetExpectedOutputOverDay = (
   );
 
   return [
-    getTotalExpectedOutput(forecastData).toFixed(2),
+    getTotalExpectedOutput(forecastData),
     getTotalExpectedOutput(forecastData) / getTotalExpectedOutput(clearSkyData),
-    dates[newDuskTime.getDay() - 1],
+    newDuskTime.getDay(),
   ];
+};
+
+const getWeatherDisplay = (diff: number, total: number, day: number) => {
+  const dates = ['Today', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+  return (
+    <div className="flex-1 flex-col">
+      <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
+        <p className="flex-1 text-xs text-ocf-yellow-50">{dates[day]}</p>
+        <div className="flex-1 self-center margin-0">
+          {diff < cloudyThreshold ? (
+            <CloudyIcon />
+          ) : diff > sunnyThreshold ? (
+            <SunnyIcon />
+          ) : (
+            <PartlyCloudyIcon />
+          )}
+        </div>
+        <p className="flex-1 text-xs text-ocf-yellow-500">
+          {total.toFixed(2)} kWh
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export const cloudyThreshold = 0.3;
@@ -49,7 +71,7 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
     useSiteData(siteUUID);
   const { duskTime, dawnTime } = useTime(latitude, longitude);
   if (forecastData && clearskyData && latitude && longitude) {
-    const [total1, diff1] = GetExpectedOutputOverDay(
+    const [firstTotal, firstDiff] = GetExpectedOutputOverDay(
       duskTime,
       dawnTime,
       0,
@@ -57,7 +79,7 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
       clearskyData.clearsky_estimate
     );
 
-    const [total2, diff2, date2] = GetExpectedOutputOverDay(
+    const [secondTotal, secondDiff, secondDate] = GetExpectedOutputOverDay(
       duskTime,
       dawnTime,
       24,
@@ -65,7 +87,7 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
       clearskyData.clearsky_estimate
     );
 
-    const [total3, diff3, date3] = GetExpectedOutputOverDay(
+    const [thirdTotal, thirdDiff, thirdDate] = GetExpectedOutputOverDay(
       duskTime,
       dawnTime,
       48,
@@ -73,61 +95,11 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
       clearskyData.clearsky_estimate
     );
 
-    // const diff4 = GetExpectedOutputOverDay(
-    //   longitude,
-    //   latitude,
-    //   72,
-    //   forecastData.forecast_values,
-    //   clearskyData.clearsky_estimate
-    // );
-
     return (
       <div className="bg-ocf-black-500 flex flex-row rounded-2xl px-5">
-        <div className="flex-1 flex-col">
-          <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
-            <p className="flex-1 text-xs text-ocf-yellow-50">Today</p>
-            <div className="flex-1 self-center margin-0">
-              {diff1 < cloudyThreshold ? (
-                <CloudyIcon />
-              ) : diff1 > sunnyThreshold ? (
-                <SunnyIcon />
-              ) : (
-                <PartlyCloudyIcon />
-              )}
-            </div>
-            <p className="flex-1 text-xs text-ocf-yellow-500">{total1} kWh</p>
-          </div>
-        </div>
-        <div className="flex-1 flex-col">
-          <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
-            <p className="flex-1 text-xs text-ocf-yellow-50">{date2}</p>
-            <div className="flex-1 self-center margin-0">
-              {diff2 < cloudyThreshold ? (
-                <CloudyIcon />
-              ) : diff2 > sunnyThreshold ? (
-                <SunnyIcon />
-              ) : (
-                <PartlyCloudyIcon />
-              )}
-            </div>
-            <p className="flex-1 text-xs text-ocf-yellow-500">{total2} kWh</p>
-          </div>
-        </div>
-        <div className="flex-1 flex-col">
-          <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
-            <p className="flex-1 text-xs text-ocf-yellow-50">{date3}</p>
-            <div className="flex-1 self-center margin-0">
-              {diff3 < cloudyThreshold ? (
-                <CloudyIcon />
-              ) : diff3 > sunnyThreshold ? (
-                <SunnyIcon />
-              ) : (
-                <PartlyCloudyIcon />
-              )}
-            </div>
-            <p className="flex-1 text-xs text-ocf-yellow-500">{total3} kWh</p>
-          </div>
-        </div>
+        {getWeatherDisplay(firstDiff, firstTotal, 0)}
+        {getWeatherDisplay(secondDiff, secondTotal, secondDate)}
+        {getWeatherDisplay(thirdDiff, thirdTotal, thirdDate)}
       </div>
     );
   }
