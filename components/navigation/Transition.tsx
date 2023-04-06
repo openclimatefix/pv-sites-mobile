@@ -7,36 +7,45 @@ import {
 } from 'framer-motion';
 import { useRouter } from 'next/router';
 import useMediaQuery from '~/lib/hooks/useMediaQuery';
+import useSites from '~/lib/hooks/useSites';
 
 const Transition: FC<PropsWithChildren> = ({ children }) => {
+  const { sites } = useSites();
   const { asPath } = useRouter();
   const shouldReduceMotion = useReducedMotion();
   const mobile = useMediaQuery('(max-width: 768px)');
+  const animationKey =
+    (sites?.site_list.length ?? 0 > 0) && asPath.match(/\/dashboard\/.+/)
+      ? asPath
+      : undefined;
 
+  const duration = 0.4;
   const variants: Variants = {
-    out: {
-      y: '-50%',
-      opacity: 0,
+    popRight: {
+      x: '100%',
+      zIndex: 25,
+      boxShadow: '-3px 0 6px 2px rgba(0, 0, 0, 0.4)',
       transition: {
-        duration: 0.4,
+        duration,
       },
     },
-    in: {
-      y: '100%',
-      scale: 0.8,
-      boxShadow: '10px 10px 0 rgba(0, 0, 0, 0.2)',
+    popLeft: {
+      x: '-75%',
+      zIndex: 15,
+      opacity: 0.8,
       transition: {
-        duration: 0.4,
+        duration,
       },
     },
     center: {
-      y: 0,
-      scale: 1,
+      x: 0,
+      zIndex: 21,
+      opacity: 1,
       transformOrigin: 'top',
-      boxShadow: '',
+      position: 'relative',
+      boxShadow: '-3px 0 6px 2px rgba(0, 0, 0, 0.4)',
       transition: {
-        duration: 0.4,
-        ease: 'easeOut',
+        duration,
       },
     },
   };
@@ -45,11 +54,11 @@ const Transition: FC<PropsWithChildren> = ({ children }) => {
     <div className="page-transition">
       <AnimatePresence initial={false} mode="popLayout">
         <motion.div
-          initial="in"
-          animate={['center']}
-          exit={['out']}
+          initial={animationKey ? 'popRight' : 'popLeft'}
+          animate={animationKey ? 'center' : 'center'}
+          exit={animationKey ? 'popRight' : 'popLeft'}
           variants={mobile && !shouldReduceMotion ? variants : {}}
-          key={asPath}
+          key={animationKey}
         >
           {children}
         </motion.div>

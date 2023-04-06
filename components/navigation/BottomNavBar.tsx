@@ -37,7 +37,7 @@ const BottomNavBar = () => {
           ? 'opacity-0 pointer-events-none hidden'
           : 'opacity-100'
       }
-    bg-ocf-gray-1000 w-screen h-[var(--bottom-nav-height)] bottom-0 fixed visible md:invisible pb-2`}
+    bg-ocf-gray-1000 w-screen h-[var(--bottom-nav-height)] bottom-0 fixed visible md:invisible pb-2 z-50`}
     >
       <div className="flex justify-evenly items-center h-full">
         {icons.map((val, i) => {
