@@ -1,3 +1,4 @@
 .page-transition {
+  position: relative;
   overflow: hidden;
 }

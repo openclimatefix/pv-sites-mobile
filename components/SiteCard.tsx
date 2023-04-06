@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSiteData } from '~/lib/hooks';
 import { getCurrentTimeGeneration } from '~/lib/utils';
 import SiteGraph from './graphs/SiteGraph';
 import { DeleteIcon, EditIcon } from './icons';
+import useNoScroll from '~/lib/hooks/useNoScroll';
 
 interface SiteCardProps {
   href?: string;
@@ -117,8 +118,10 @@ interface SiteCardLinkProps {
 }
 
 const SiteCardLink: FC<SiteCardLinkProps> = ({ isEditMode, siteUUID }) => {
+  useNoScroll();
+
   return (
-    <Link href={`/dashboard/${siteUUID}`} passHref>
+    <Link href={`/dashboard/${siteUUID}`} passHref scroll={false}>
       <SiteCard siteUUID={siteUUID} isEditMode={isEditMode} />
     </Link>
   );

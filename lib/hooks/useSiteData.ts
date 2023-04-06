@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { ClearSkyData, Site } from '../types';
+import { ClearSkyData } from '../types';
 import useSites from './useSites';
 import { clearSkyFetcher, forecastFetcher } from './utils';
 

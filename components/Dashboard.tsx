@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
+import { useSiteData } from '~/lib/hooks';
 import CurrentCapacity from './dashboard-modules/CurrentCapacity';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
-import { useSiteData } from '~/lib/hooks';
 
 interface DashboardProps {
   siteUUID: string;
