@@ -21,7 +21,6 @@ const GetExpectedOutputOverDay = (
   clearSkyEstimate: GenerationDataPoint[]
 ) => {
   const dates = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
-  // 
   const newDuskTime = new Date(duskTime.getTime() + offset * 3600000);
   const newDawnTime = new Date(dawnTime.getTime() + offset * 3600000);
   const forecastData = generationDataOverDateRange(
