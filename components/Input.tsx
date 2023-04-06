@@ -24,7 +24,7 @@ const Input: FC<InputProps> = ({
   return (
     <>
       <label
-        className="font-[600] text-lg dark:text-ocf-gray pb-3 block mt-8"
+        className="font-[600] text-lg dark:text-ocf-gray pb-1 block short:mt-4 mt-8"
         htmlFor={id}
       >
         {label}
@@ -40,7 +40,7 @@ const Input: FC<InputProps> = ({
         value={value}
         onChange={onChange}
         {...inputProps}
-        className="text-lg text-center border bg-ocf-gray-50 text-ocf-gray-700 rounded-lg block h-14 p-2.5 outline-none focus:ring-1 ring-ocf-yellow dark:bg-ocf-black-500 dark:border-ocf-black-500  dark:placeholder-ocf-gray-800 dark:text-ocf-gray-600 w-full peer placeholder-shown:invalid:ring-ocf-yellow invalid:ring-ocf-orange-800"
+        className="text-lg text-center md:text-left border bg-ocf-gray-50 text-ocf-gray-700 rounded-lg block h-14 p-2.5 outline-none focus:ring-1 ring-ocf-yellow dark:bg-ocf-black-500 dark:border-ocf-black-500  dark:placeholder-ocf-gray-800 dark:text-ocf-gray-600 w-full peer placeholder-shown:invalid:ring-ocf-yellow invalid:ring-ocf-orange-800"
       />
       {help && (
         <button

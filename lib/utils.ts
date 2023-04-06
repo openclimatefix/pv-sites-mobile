@@ -3,13 +3,9 @@ import {
   GetAccessTokenResult,
   withPageAuthRequired,
 } from '@auth0/nextjs-auth0';
-import {
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-  GetServerSideProps,
-} from 'next';
-import { ForecastDataPoint, SiteList } from './types';
-import { getCurrentTimeForecastIndex } from './graphs';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { getCurrentTimeGenerationIndex } from './graphs';
+import { GenerationDataPoint, SiteList } from './types';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -23,136 +19,105 @@ export function camelCaseID(id: string) {
   return [first, ...rest.map(capitalize)].join('');
 }
 
-export enum Value {
-  Min = 'Minimum',
-  Max = 'Maximum',
-}
-interface MinMaxInterface {
-  type: Value;
-  number: number;
+interface SlopeInterface {
+  type: 'increasing' | 'decreasing' | 'constant';
+  endIndex: number;
 }
 
 /**
- * Determines the next local minimum or maximum value in an array given a start index
+ * Determines the next local minimum or maximum value in a generation array
  * @param array Array to search for a local minimum or maximum value
  * @param key The key that represents the values being compared in array
  * @param startIndex The index to start the search at
  * @returns The index of the next minimum or maximum value
  */
-export const getArrayMaxOrMinAfterIndex = (
-  array: Record<string, any>,
-  key: string,
+export const getTrendAfterIndex = (
+  array: GenerationDataPoint[],
   startIndex: number
-): MinMaxInterface | null => {
+): SlopeInterface | null => {
   if (startIndex === array.length - 1) {
     return {
-      type: Value.Min,
-      number: startIndex,
+      type: 'constant',
+      endIndex: startIndex,
     };
   }
 
+  const first = array[startIndex].generation_kw;
+  const second = array[startIndex + 1].generation_kw;
+
+  const firstDifference = second - first;
+  const firstSlopeSign = Math.sign(firstDifference);
+
   startIndex += 1;
 
-  while (startIndex < array.length) {
-    const currentExpectedGenerationKW = array[startIndex][key];
-    const previousExpectedGenerationKW = array[startIndex - 1][key];
+  while (startIndex < array.length - 1) {
+    const prev = array[startIndex - 1].generation_kw;
+    const curr = array[startIndex].generation_kw;
 
-    if (startIndex === array.length - 1) {
-      if (currentExpectedGenerationKW > previousExpectedGenerationKW) {
-        return {
-          type: Value.Max,
-          number: startIndex,
-        };
-      } else if (currentExpectedGenerationKW < previousExpectedGenerationKW) {
-        return {
-          type: Value.Min,
-          number: startIndex,
-        };
-      }
-    } else {
-      const nextExpectedGenerationKW = array[startIndex + 1][key];
+    const currentDifference = curr - prev;
+    const currentSlopeSign = Math.sign(currentDifference);
 
-      if (
-        currentExpectedGenerationKW > previousExpectedGenerationKW &&
-        currentExpectedGenerationKW > nextExpectedGenerationKW
-      ) {
-        return {
-          type: Value.Max,
-          number: startIndex,
-        };
-      } else if (
-        currentExpectedGenerationKW < previousExpectedGenerationKW &&
-        currentExpectedGenerationKW < nextExpectedGenerationKW
-      ) {
-        return {
-          type: Value.Min,
-          number: startIndex,
-        };
+    if (firstSlopeSign !== currentSlopeSign && currentSlopeSign !== 0) {
+      // Slope was constant until current index
+      if (firstSlopeSign === 0) {
+        return { type: 'constant', endIndex: startIndex };
       }
+
+      // Slope was negative or positive until current index
+      return {
+        type: firstSlopeSign < currentSlopeSign ? 'decreasing' : 'increasing',
+        endIndex: startIndex,
+      };
     }
+
     startIndex += 1;
   }
-  return null;
+
+  return {
+    type: firstSlopeSign < 0 ? 'decreasing' : 'increasing',
+    endIndex: startIndex,
+  };
 };
 
-export const getCurrentTimeForecast = (forecast_values: ForecastDataPoint[]) =>
-  forecast_values[getCurrentTimeForecastIndex(forecast_values)]
-    .expected_generation_kw;
+export const getCurrentTimeGeneration = (
+  generationData: GenerationDataPoint[]
+) =>
+  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
 
-/** Returns the difference in hours between two epoch times */
-const findHourDifference = (date1: number, date2: number): number =>
-  Math.abs(new Date(date1).getTime() - new Date(date2).getTime()) / 36e5;
-
-interface NextThresholdInterface {
+interface NextThreshold {
   aboveThreshold: boolean;
-  number: number;
+  index: number;
 }
 
 /**
  * Determines the hour difference between the current time and the next time we are above or below
  * the sunny threshold
- * @param forecast_values expected generated forecast values (kilowatts) at specific times
+ * @param generationData expected generation data (kilowatts) at specific times
  * @param threshold sunny threshold in kilowatts
  * @returns Object containing hour difference between the next date and
  * if this date is above or below the threshold
  */
 export const getNextThresholdIndex = (
-  forecast_values: ForecastDataPoint[],
+  generationData: GenerationDataPoint[],
   threshold: number
-): NextThresholdInterface => {
-  let startIndex = getCurrentTimeForecastIndex(forecast_values);
-  let currentIndex =
-    startIndex + 1 < forecast_values.length ? startIndex + 1 : startIndex;
+): NextThreshold | null => {
+  const startIndex = getCurrentTimeGenerationIndex(generationData);
 
-  const operator =
-    forecast_values[currentIndex].expected_generation_kw >= threshold ? -1 : 1;
+  const currentAboveThreshold =
+    generationData[startIndex].generation_kw >= threshold;
 
-  const aboveThreshold =
-    forecast_values[currentIndex].expected_generation_kw < threshold
-      ? true
-      : false;
-
-  while (currentIndex < forecast_values.length) {
-    const thresholdDifference =
-      forecast_values[currentIndex].expected_generation_kw - threshold;
-    if (operator * thresholdDifference > 0) {
+  for (let i = startIndex; i < generationData.length; i++) {
+    const futureAboveThreshold = generationData[i].generation_kw >= threshold;
+    // If this future point's "aboveThreshold" state is different than current
+    if (futureAboveThreshold !== currentAboveThreshold) {
       return {
-        aboveThreshold,
-        number: findHourDifference(
-          forecast_values[currentIndex].target_datetime_utc,
-          forecast_values[startIndex].target_datetime_utc
-        ),
+        aboveThreshold: futureAboveThreshold,
+        index: i,
       };
     }
-    currentIndex += 1;
   }
-  return {
-    aboveThreshold,
-    number: findHourDifference(
-      forecast_values[currentIndex - 1].target_datetime_utc,
-      forecast_values[startIndex].target_datetime_utc
-    ),
-  };
+
+  return null;
 };
 
 /* Represents the threshold for the graph */
@@ -165,7 +130,7 @@ export const originalLng = 0.1276;
 type WithSitesOptions = {
   getServerSideProps?: (
     ctx: GetServerSidePropsContext & { siteList: SiteList }
-  ) => Promise<GetServerSidePropsResult<{ siteList: SiteList }>>;
+  ) => Promise<GetServerSidePropsResult<any>>;
 };
 export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   return withPageAuthRequired({
@@ -175,15 +140,20 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
         accessToken = await getAccessToken(ctx.req, ctx.res);
       } catch {
         return {
-          redirect: '/api/auth/login',
+          redirect: {
+            destination: '/api/auth/login',
+          },
         };
       }
 
-      const siteList = (await fetch(`${process.env.AUTH0_BASE_URL}/api/sites`, {
-        headers: {
-          Authorization: `Bearer ${accessToken.accessToken}`,
-        },
-      }).then((res) => res.json())) as SiteList;
+      const siteList = (await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`,
+          },
+        }
+      ).then((res) => res.json())) as SiteList;
 
       const otherProps: any = await getServerSideProps?.({
         ...ctx,
