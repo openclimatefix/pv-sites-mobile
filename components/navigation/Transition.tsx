@@ -1,23 +1,20 @@
-import { FC, PropsWithChildren } from 'react';
 import {
   AnimatePresence,
+  Variants,
   motion,
   useReducedMotion,
-  Variants,
 } from 'framer-motion';
 import { useRouter } from 'next/router';
+import { FC, PropsWithChildren } from 'react';
+import { useIsSitePage } from '~/lib/hooks/useIsSitePage';
 import useMediaQuery from '~/lib/hooks/useMediaQuery';
-import useSites from '~/lib/hooks/useSites';
 
 const Transition: FC<PropsWithChildren> = ({ children }) => {
-  const { sites } = useSites();
   const { asPath } = useRouter();
+  const isSitePage = useIsSitePage();
   const shouldReduceMotion = useReducedMotion();
   const mobile = useMediaQuery('(max-width: 768px)');
-  const animationKey =
-    (sites?.site_list.length ?? 0 > 0) && asPath.match(/\/dashboard\/.+/)
-      ? asPath
-      : undefined;
+  const animationKey = isSitePage ? asPath : undefined;
 
   const duration = 0.4;
   const variants: Variants = {

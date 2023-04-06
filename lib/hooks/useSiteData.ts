@@ -24,9 +24,7 @@ const useSiteData = (siteUUID: string) => {
   const error = AggregateError([forecastError, siteListError, clearskyError]);
   const isLoading = !siteListData || !forecastData || !clearskyData;
 
-  const siteData: Site | undefined = siteListData
-    ? siteListData.site_list.find((site) => site.site_uuid === siteUUID)
-    : undefined;
+  const siteData = siteListData?.find((site) => site.site_uuid === siteUUID);
 
   return { forecastData, clearskyData, ...siteData, error, isLoading };
 };

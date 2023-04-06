@@ -8,15 +8,17 @@ import Transition from './navigation/Transition';
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useUser();
 
+  const PageTransitionWrapper = user ? Transition : 'div';
+
   return (
     <>
       {user && <NavBar />}
       <SideBar />
-      <Transition>
+      <PageTransitionWrapper>
         <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start w-full">
           {children}
         </main>
-      </Transition>
+      </PageTransitionWrapper>
       {user && <BottomNavBar />}
     </>
   );

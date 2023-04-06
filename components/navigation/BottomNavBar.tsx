@@ -4,6 +4,7 @@ import { DashboardIcon, SearchIcon, SiteListIcon } from '../icons';
 
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import useSites from '~/lib/hooks/useSites';
 
 const icons = [
   {
@@ -25,15 +26,12 @@ const icons = [
 
 const BottomNavBar = () => {
   const { asPath } = useRouter();
-
-  const { data, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
-  );
+  const { sites } = useSites();
 
   return (
     <div
       className={`${
-        data?.site_list.length === 0
+        sites?.length ?? 0 === 0
           ? 'opacity-0 pointer-events-none hidden'
           : 'opacity-100'
       }
