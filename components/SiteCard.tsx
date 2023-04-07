@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { useSiteData } from '~/lib/hooks';
-import { getCurrentTimeGeneration } from '~/lib/utils';
+import { getCurrentTimeGeneration, skeleton } from '~/lib/utils';
 import SiteGraph from './graphs/SiteGraph';
 import { DeleteIcon, EditIcon } from './icons';
 
@@ -22,7 +22,6 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
       error,
     } = useSiteData(siteUUID);
 
-    const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;
     const noError = error.errors.every((error) => error === undefined);
 
     const currentOutput = forecastData
