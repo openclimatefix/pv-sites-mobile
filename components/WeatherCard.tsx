@@ -8,6 +8,7 @@ import PartlyCloudyIcon from './icons/PartlyCloudyIcon';
 import { getTotalExpectedOutput } from './dashboard-modules/ExpectedTotalOutput';
 import { generationDataOverDateRange } from '~/lib/graphs';
 import { GenerationDataPoint } from '~/lib/types';
+import NumberDisplay from './dashboard-modules/NumberDisplay';
 
 type WeatherProps = {
   siteUUID: string;
@@ -102,7 +103,7 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
     );
   }
 
-  return null;
+  return <NumberDisplay title="" value="Loading..." />;
 };
 
 export default WeatherCard;
