@@ -16,7 +16,9 @@ const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { timeFormatter } = useDateFormatter(siteUUID);
 
   if (!forecastData) {
-    return <NumberDisplay title="Loading" value="Loading..." isLoading={isLoading}/>;
+    return (
+      <NumberDisplay title="Loading" value="Loading..." isLoading={isLoading} />
+    );
   }
 
   const nextThreshold = getNextThresholdIndex(

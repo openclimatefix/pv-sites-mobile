@@ -74,7 +74,13 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       />
     );
   } else {
-    return <NumberDisplay title="Recommendations" value="N/A" isLoading={isLoading}/>;
+    return (
+      <NumberDisplay
+        title="Recommendations"
+        value="N/A"
+        isLoading={isLoading}
+      />
+    );
   }
 };
 
