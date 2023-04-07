@@ -52,7 +52,6 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     return null;
   }, [totalExpectedGeneration, dawnTime, duskTime]);
 
-  console.log(graphData);
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.generation_kw))
     : 0;

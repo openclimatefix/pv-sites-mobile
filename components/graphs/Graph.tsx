@@ -85,7 +85,7 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     setTimeRange(event.target.value);
   };
 
-  const { weekdayFormatter } = useDateFormatter(siteUUID);
+  const { weekdayFormatter } = useDateFormatter(siteUUIDs[0]);
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
 
