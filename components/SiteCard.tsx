@@ -14,10 +14,15 @@ interface SiteCardProps {
 
 const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
   ({ href, siteUUID, onClick, isEditMode }, ref) => {
-    const { forecastData, client_site_name, installed_capacity_kw, isLoading, error} =
-      useSiteData(siteUUID);
+    const {
+      forecastData,
+      client_site_name,
+      installed_capacity_kw,
+      isLoading,
+      error,
+    } = useSiteData(siteUUID);
 
-      const noError = error.errors.every((error) => error === undefined)
+    const noError = error.errors.every((error) => error === undefined);
 
     const currentOutput = forecastData
       ? getCurrentTimeGeneration(forecastData.forecast_values)
@@ -82,12 +87,11 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             {isLoading || !noError == undefined ? (
               <div className="h-[100px]"></div>
             ) : (
-            <div className="relative -left-7">
-              <SiteGraph siteUUID={siteUUID} hidden={isEditMode} />
-            </div>
-                      )}
+              <div className="relative -left-7">
+                <SiteGraph siteUUID={siteUUID} hidden={isEditMode} />
+              </div>
+            )}
           </div>
-
         </a>
         <div
           // @ts-ignore

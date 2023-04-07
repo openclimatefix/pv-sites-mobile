@@ -1,13 +1,14 @@
 import { FC } from 'react';
-import { skeleton } from '../../lib/utils'
+import { skeleton } from '../../lib/utils';
 
 interface Props {
   title: string;
   value: string;
   onClick?: () => void;
+  isLoading: boolean;
 }
 
-const NumberDisplay: FC<Props> = ({ title, value, onClick }) => {
+const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
   const Element = onClick ? 'button' : 'div';
   return (
     <Element
@@ -19,14 +20,14 @@ const NumberDisplay: FC<Props> = ({ title, value, onClick }) => {
       <div>
         <div
           className={`mb-2 text-xs md:text-lg text-ocf-gray font-semibold transition-all md:font-medium md:leading-none ${
-            value == 'Loading...' ? `${skeleton} md:leading-none` : ``
+            isLoading ? `${skeleton} md:leading-none` : ``
           }`}
         >
           {title}
         </div>
         <div
           className={`text-2xl text-ocf-yellow font-semibold leading-none transition-all md:leading-none ${
-            value == 'Loading...' ? `${skeleton} md:leading-none` : ``
+            isLoading ? `${skeleton} md:leading-none` : ``
           }`}
         >
           {value}

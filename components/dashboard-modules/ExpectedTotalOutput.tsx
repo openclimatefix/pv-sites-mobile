@@ -22,7 +22,7 @@ const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
 };
 
 const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData } = useSiteData(siteUUID);
+  const { forecastData, isLoading } = useSiteData(siteUUID);
   return (
     <NumberDisplay
       title="Today's Expected Output"
@@ -31,6 +31,7 @@ const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           ? getTotalExpectedOutput(forecastData.forecast_values)
           : 'Loading...'
       }
+      isLoading={isLoading}
     />
   );
 };
