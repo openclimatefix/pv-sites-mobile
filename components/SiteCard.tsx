@@ -12,8 +12,6 @@ interface SiteCardProps {
   isEditMode: boolean;
 }
 
-//const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;
-
 const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
   ({ href, siteUUID, onClick, isEditMode }, ref) => {
     const { forecastData, client_site_name, installed_capacity_kw, isLoading, error} =
@@ -37,7 +35,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
         >
           <div className="flex flex-col flex-1 w-[60%] p-4 pl-5">
             <h2
-              className={`text-amber text-xl font-semibold ${
+              className={`text-amber text-xl font-semibold transition-all ${
                 isLoading || !noError ? skeleton : ``
               }`}
             >
@@ -45,7 +43,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             </h2>
             <div className="flex flex-col mt-2 gap-1">
               <p
-                className={`text-ocf-gray-500 text-xs font-medium ${
+                className={`text-ocf-gray-500 text-xs font-medium transition-all ${
                   isLoading || !noError ? skeleton : ``
                 }`}
               >
@@ -57,7 +55,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               </p>
               {installed_capacity_kw && (
                 <p
-                  className={`text-ocf-gray-500 font-medium text-xs ${
+                  className={`text-ocf-gray-500 font-medium text-xs transition-all ${
                     isLoading || !noError ? skeleton : ``
                   }`}
                 >
@@ -65,7 +63,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                 </p>
               )}
               <p
-                className={`text-ocf-gray-500 font-medium text-xs ${
+                className={`text-ocf-gray-500 font-medium text-xs transition-all ${
                   isLoading || !noError ? skeleton : ``
                 }`}
               >

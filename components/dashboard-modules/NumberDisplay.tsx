@@ -18,14 +18,14 @@ const NumberDisplay: FC<Props> = ({ title, value, onClick }) => {
     >
       <div>
         <div
-          className={`mb-2 text-xs md:text-lg text-ocf-gray font-semibold md:font-medium md:leading-none ${
+          className={`mb-2 text-xs md:text-lg text-ocf-gray font-semibold transition-all md:font-medium md:leading-none ${
             value == 'Loading...' ? `${skeleton} md:leading-none` : ``
           }`}
         >
           {title}
         </div>
         <div
-          className={`text-2xl text-ocf-yellow font-semibold leading-none md:leading-none ${
+          className={`text-2xl text-ocf-yellow font-semibold leading-none transition-all md:leading-none ${
             value == 'Loading...' ? `${skeleton} md:leading-none` : ``
           }`}
         >
