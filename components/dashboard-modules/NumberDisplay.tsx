@@ -9,7 +9,6 @@ interface Props {
 }
 
 const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
-
   const Element = onClick ? 'button' : 'div';
   return (
     <Element
