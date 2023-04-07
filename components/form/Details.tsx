@@ -37,14 +37,20 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
 
   const siteData = uuid ? useSiteData(uuid) : undefined;
   console.log(siteData);
-  const {
-    installed_capacity_kw,
-    client_site_name,
-    longitude,
-    latitude,
-    orientation,
-    tilt,
-  } = siteData || {};
+  const { installed_capacity_kw, client_site_name, orientation, tilt } =
+    siteData || {};
+
+  // If it is an existing site, prefill the form with the existing data
+  panelDetails.siteName = client_site_name
+    ? client_site_name
+    : panelDetails.siteName;
+  panelDetails.direction = orientation
+    ? orientation.toString()
+    : panelDetails.direction;
+  panelDetails.tilt = tilt ? tilt.toString() : panelDetails.tilt;
+  panelDetails.capacity = installed_capacity_kw
+    ? installed_capacity_kw.toString()
+    : panelDetails.capacity;
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

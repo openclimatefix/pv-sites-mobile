@@ -11,9 +11,13 @@ interface Props {
   latitude?: number;
 }
 
-const Location: FC<Props> = ({ nextPageCallback }) => {
+const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
   const { siteCoordinates, setSiteCoordinates } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
+
+  // If the site is being edited, show the original coordinates
+  siteCoordinates.longitude = longitude || siteCoordinates.longitude;
+  siteCoordinates.latitude = latitude || siteCoordinates.latitude;
 
   const onClick = () => {
     nextPageCallback();

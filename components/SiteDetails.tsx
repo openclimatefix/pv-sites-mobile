@@ -18,6 +18,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ uuid }) => {
   const [page, setPage] = useState<Page>(Page.Location);
   const siteData = uuid ? useSiteData(uuid) : undefined;
   const { longitude, latitude } = siteData || {};
+  console.log(siteData);
 
   const router = useRouter();
   console.log(uuid);
