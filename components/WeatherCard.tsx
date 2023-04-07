@@ -97,7 +97,7 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
       <div className="bg-ocf-black-500 flex flex-row rounded-2xl px-5">
         {getWeatherDisplay(firstDiff, firstTotal, 0)}
         {getWeatherDisplay(secondDiff, secondTotal, secondDate)}
-        {getWeatherDisplay(thirdDiff, thirdTotal, thirdDate)}
+        {thirdTotal != 0 && getWeatherDisplay(thirdDiff, thirdTotal, thirdDate)}
       </div>
     );
   }
