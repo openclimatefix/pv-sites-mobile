@@ -44,11 +44,13 @@ const getWeatherDisplay = (
   total: number,
   day: number
 ) => {
-  const dates = ['Today', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+  const dates = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
   return (
     <div className="flex-1 flex-col">
       <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
-        <p className="flex-1 text-xs text-amber-50">{dates[day]}</p>
+        <p className="flex-1 text-xs text-amber-50">
+          {day == -1 ? 'Today' : dates[day]}
+        </p>
         <div className="flex-1 self-center margin-0">
           {clearskyCapacity < cloudyThreshold ? (
             <CloudyIcon />
@@ -100,7 +102,7 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
 
     return (
       <div className="bg-ocf-black-500 flex flex-row rounded-2xl px-5">
-        {getWeatherDisplay(firstClearskyCapacity, firstTotal, 0)}
+        {getWeatherDisplay(firstClearskyCapacity, firstTotal, -1)}
         {getWeatherDisplay(secondClearskyCapacity, secondTotal, secondDate)}
         {thirdTotal != 0 &&
           getWeatherDisplay(thirdClearskyCapacity, thirdTotal, thirdDate)}
