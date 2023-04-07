@@ -39,6 +39,12 @@ const useDateFormatter = (siteUUID: string) => {
     timeZone: timezone,
   });
 
+  const dayFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+    month: 'short',
+    day: 'numeric',
+    timeZone: timezone,
+  });
+
   const weekdayFormatter = new Intl.DateTimeFormat(['en-US', 'en-GB'], {
     weekday: 'short',
     hour: 'numeric',
@@ -46,7 +52,7 @@ const useDateFormatter = (siteUUID: string) => {
     timeZone: timezone,
   });
 
-  return { timezone, timeFormatter, weekdayFormatter };
+  return { timezone, dayFormatter, timeFormatter, weekdayFormatter };
 };
 
 export default useDateFormatter;
