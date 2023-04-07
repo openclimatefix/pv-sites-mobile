@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import Location from '~/components/form/Location';
 import Details from './form/Details';
+import { Site } from '~/lib/types';
+import { useSiteData } from '~/lib/hooks';
 
 enum Page {
   Details = 'Details',
@@ -9,11 +11,14 @@ enum Page {
 }
 
 interface SiteDetailsProps {
-  uuid?: string | undefined;
+  uuid?: string;
 }
 
 const SiteDetails: FC<SiteDetailsProps> = ({ uuid }) => {
   const [page, setPage] = useState<Page>(Page.Location);
+  const siteData = uuid ? useSiteData(uuid) : undefined;
+  const { longitude, latitude } = siteData || {};
+
   const router = useRouter();
   console.log(uuid);
   const generateFormPage = () => {
@@ -23,10 +28,17 @@ const SiteDetails: FC<SiteDetailsProps> = ({ uuid }) => {
           <Details
             lastPageCallback={() => setPage(Page.Location)}
             nextPageCallback={() => router.push('sites')}
+            uuid={uuid}
           />
         );
       case Page.Location:
-        return <Location nextPageCallback={() => setPage(Page.Details)} />;
+        return (
+          <Location
+            nextPageCallback={() => setPage(Page.Details)}
+            longitude={longitude}
+            latitude={latitude}
+          />
+        );
       default:
         return null;
     }

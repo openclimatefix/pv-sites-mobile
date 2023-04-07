@@ -7,6 +7,8 @@ import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
 
 interface Props {
   nextPageCallback: () => void;
+  longitude?: number;
+  latitude?: number;
 }
 
 const Location: FC<Props> = ({ nextPageCallback }) => {

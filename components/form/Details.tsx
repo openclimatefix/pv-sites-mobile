@@ -9,6 +9,8 @@ import BackButton from 'components/BackButton';
 import LocationInput from '../LocationInput';
 import { zoomLevelThreshold } from '../../lib/utils';
 import Button from '~/components/Button';
+import { Site } from '~/lib/types';
+import { useSiteData } from '~/lib/hooks';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -24,13 +26,25 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: () => void;
+  uuid?: string;
 }
 
-const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
+const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
   const { siteCoordinates, setFormData, panelDetails, postPanelData } =
     useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
+
+  const siteData = uuid ? useSiteData(uuid) : undefined;
+  console.log(siteData);
+  const {
+    installed_capacity_kw,
+    client_site_name,
+    longitude,
+    latitude,
+    orientation,
+    tilt,
+  } = siteData || {};
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
