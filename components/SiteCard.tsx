@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
 import { useSiteData } from '~/lib/hooks';
-import { getCurrentTimeGeneration } from '~/lib/utils';
+import { getCurrentTimeGeneration, skeleton } from '~/lib/utils';
 import SiteGraph from './graphs/SiteGraph';
 import { DeleteIcon, EditIcon } from './icons';
 
@@ -12,12 +12,14 @@ interface SiteCardProps {
   isEditMode: boolean;
 }
 
-const skeleton = `text-transparent bg-ocf-gray-1000 w-[50%] rounded-2xl animate-pulse select-none md:leading-none`;
+//const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;
 
 const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
   ({ href, siteUUID, onClick, isEditMode }, ref) => {
-    const { forecastData, client_site_name, installed_capacity_kw, isLoading } =
+    const { forecastData, client_site_name, installed_capacity_kw, isLoading, error} =
       useSiteData(siteUUID);
+
+      const noError = error.errors.every((error) => error === undefined)
 
     const currentOutput = forecastData
       ? getCurrentTimeGeneration(forecastData.forecast_values)
@@ -34,62 +36,60 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
           }`}
         >
           <div className="flex flex-col flex-1 w-[60%] p-4 pl-5">
-            <div className="flex flex-col flex-1 p-4 pl-5">
-              <h2
-                className={`text-amber text-xl font-semibold ${
-                  isLoading || currentOutput == undefined ? skeleton : ``
+            <h2
+              className={`text-amber text-xl font-semibold ${
+                isLoading || !noError ? skeleton : ``
+              }`}
+            >
+              {isLoading ? 'Loading...' : client_site_name ?? 'My Site'}
+            </h2>
+            <div className="flex flex-col mt-2 gap-1">
+              <p
+                className={`text-ocf-gray-500 text-xs font-medium ${
+                  isLoading || !noError ? skeleton : ``
                 }`}
               >
-                {isLoading ? 'Loading...' : client_site_name ?? 'My Site'}
-              </h2>
-              <div className="flex flex-col mt-2 gap-1">
-                <p
-                  className={`text-ocf-gray-500 text-xs font-medium ${
-                    isLoading || currentOutput == undefined ? skeleton : ``
-                  }`}
-                >
-                  {`Current output: ${
-                    currentOutput != undefined
-                      ? currentOutput.toFixed(2) + ' kW'
-                      : 'loading...'
-                  }`}
-                </p>
-                {installed_capacity_kw && (
-                  <p
-                    className={`text-ocf-gray-500 font-medium text-xs ${
-                      isLoading || currentOutput == undefined ? skeleton : ``
-                    }`}
-                  >
-                    Max. capacity: {installed_capacity_kw.toFixed(2)} kW
-                  </p>
-                )}
+                {`Current output: ${
+                  currentOutput != undefined
+                    ? currentOutput.toFixed(2) + ' kW'
+                    : 'loading...'
+                }`}
+              </p>
+              {installed_capacity_kw && (
                 <p
                   className={`text-ocf-gray-500 font-medium text-xs ${
-                    isLoading || currentOutput == undefined ? skeleton : ``
+                    isLoading || !noError ? skeleton : ``
                   }`}
                 >
-                  {`Current yield:
+                  Max. capacity: {installed_capacity_kw.toFixed(2)} kW
+                </p>
+              )}
+              <p
+                className={`text-ocf-gray-500 font-medium text-xs ${
+                  isLoading || !noError ? skeleton : ``
+                }`}
+              >
+                {`Current yield:
             ${
               installed_capacity_kw && currentOutput != undefined
                 ? (currentOutput / installed_capacity_kw).toFixed(2) + '%'
                 : 'loading...'
             }`}
-                </p>
-                {isLoading || currentOutput == undefined ? (
-                  <div className={`${skeleton} mt-[10px] h-[90px]`}></div>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-            </div>
-
-            <div className={`mr-5 w-[40%] pointer-events-none`}>
-              {/* TODO: find out why this left is necessary */}
-              <div className="relative -left-7">
-                <SiteGraph siteUUID={siteUUID} hidden={isEditMode} />
-              </div>
+              </p>
             </div>
           </div>
+
+          <div className={`mr-5 w-[40%] pointer-events-none`}>
+            {/* TODO: find out why this left is necessary */}
+            {isLoading || !noError == undefined ? (
+              <div className="h-[100px]"></div>
+            ) : (
+            <div className="relative -left-7">
+              <SiteGraph siteUUID={siteUUID} hidden={isEditMode} />
+            </div>
+                      )}
+          </div>
+
         </a>
         <div
           // @ts-ignore
