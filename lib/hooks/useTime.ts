@@ -24,21 +24,32 @@ const useTime = (
 ) => {
   const [currentTime, setCurrentTime] = useState(Date.now());
 
-  const times = useMemo(() => {
-    // TODO: Maybe make this depend on `currentTime` to have it update.
-    // At a slower interval though...
-    const calculatedTimes =
-      latitude && longitude
-        ? SunCalc.getTimes(new Date(), latitude, longitude)
-        : null;
+  /**
+   * @returns 12:00 AM GMT-05 of the next day
+   */
+  const getNextDay = () => {
+    const nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() + 1);
+    nextDay.setHours(0, 0, 0, 0);
+    return nextDay;
+  };
 
-    if (calculatedTimes !== null) {
-      return {
-        duskTime: calculatedTimes.dusk,
-        dawnTime: calculatedTimes.dawn,
-      };
+  const times = useMemo(() => {
+    if (!(latitude && longitude)) {
+      return null;
     }
-    return null;
+
+    let calculatedTimes = SunCalc.getTimes(new Date(), latitude, longitude);
+
+    // If we are past dusk, then set the dusk and dawn time to the next day
+    if (Date.now() >= calculatedTimes.dusk) {
+      calculatedTimes = SunCalc.getTimes(getNextDay(), latitude, longitude);
+    }
+
+    return {
+      duskTime: calculatedTimes.dusk,
+      dawnTime: calculatedTimes.dawn,
+    };
   }, [latitude, longitude]);
 
   const isDayTime = useMemo(
