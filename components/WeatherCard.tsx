@@ -19,8 +19,9 @@ const GetExpectedOutputOverDay = (
   forecastValues: GenerationDataPoint[],
   clearSkyEstimate: GenerationDataPoint[]
 ) => {
-  const newDuskTime = new Date(duskTime.getTime() + offset * 3600000);
-  const newDawnTime = new Date(dawnTime.getTime() + offset * 3600000);
+  const millisInDay = 86400000;
+  const newDuskTime = new Date(duskTime.getTime() + offset * millisInDay);
+  const newDawnTime = new Date(dawnTime.getTime() + offset * millisInDay);
   const forecastData = generationDataOverDateRange(
     forecastValues,
     newDawnTime,
@@ -42,14 +43,14 @@ const GetExpectedOutputOverDay = (
 const getWeatherDisplay = (
   clearskyCapacity: number,
   total: number,
-  day: number
+  day: number | 'Today'
 ) => {
   const dates = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
   return (
     <div className="flex-1 flex-col">
       <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
         <p className="flex-1 text-xs text-amber-50">
-          {day == -1 ? 'Today' : dates[day]}
+          {day === 'Today' ? day : dates[day]}
         </p>
         <div className="flex-1 self-center margin-0">
           {clearskyCapacity < cloudyThreshold ? (
@@ -74,19 +75,20 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
     useSiteData(siteUUID);
   const { duskTime, dawnTime } = useTime(latitude, longitude);
   if (forecastData && clearskyData && latitude && longitude) {
-    const [firstTotal, firstClearskyCapacity] = GetExpectedOutputOverDay(
-      duskTime,
-      dawnTime,
-      0,
-      forecastData.forecast_values,
-      clearskyData.clearsky_estimate
-    );
+    const [firstTotal, firstClearskyCapacity, firstDate] =
+      GetExpectedOutputOverDay(
+        duskTime,
+        dawnTime,
+        0,
+        forecastData.forecast_values,
+        clearskyData.clearsky_estimate
+      );
 
     const [secondTotal, secondClearskyCapacity, secondDate] =
       GetExpectedOutputOverDay(
         duskTime,
         dawnTime,
-        24,
+        1,
         forecastData.forecast_values,
         clearskyData.clearsky_estimate
       );
@@ -95,14 +97,14 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
       GetExpectedOutputOverDay(
         duskTime,
         dawnTime,
-        48,
+        2,
         forecastData.forecast_values,
         clearskyData.clearsky_estimate
       );
 
     return (
       <div className="bg-ocf-black-500 flex flex-row rounded-2xl px-5">
-        {getWeatherDisplay(firstClearskyCapacity, firstTotal, -1)}
+        {getWeatherDisplay(firstClearskyCapacity, firstTotal, 'Today')}
         {getWeatherDisplay(secondClearskyCapacity, secondTotal, secondDate)}
         {thirdTotal != 0 &&
           getWeatherDisplay(thirdClearskyCapacity, thirdTotal, thirdDate)}
