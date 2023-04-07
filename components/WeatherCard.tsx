@@ -45,7 +45,7 @@ const getWeatherDisplay = (diff: number, total: number, day: number) => {
   return (
     <div className="flex-1 flex-col">
       <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
-        <p className="flex-1 text-xs text-ocf-yellow-50">{dates[day]}</p>
+        <p className="flex-1 text-xs text-amber-50">{dates[day]}</p>
         <div className="flex-1 self-center margin-0">
           {diff < cloudyThreshold ? (
             <CloudyIcon />
@@ -55,9 +55,7 @@ const getWeatherDisplay = (diff: number, total: number, day: number) => {
             <PartlyCloudyIcon />
           )}
         </div>
-        <p className="flex-1 text-xs text-ocf-yellow-500">
-          {total.toFixed(2)} kWh
-        </p>
+        <p className="flex-1 text-xs text-amber">{total.toFixed(2)} kWh</p>
       </div>
     </div>
   );
