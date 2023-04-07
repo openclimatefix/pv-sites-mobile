@@ -1,4 +1,5 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
+import { clear } from 'console';
 import { setMilliseconds, setSeconds } from 'date-fns';
 import {
   addTimePoint,
@@ -20,6 +21,7 @@ import {
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 import useTime from '~/lib/hooks/useTime';
+import { manyClearskyDataFetcher } from '~/lib/hooks/utils';
 import { GenerationDataPoint } from '~/lib/types';
 
 function getGraphStartDate(currentTime: number, totalHours: number) {
@@ -71,9 +73,10 @@ function getXTickValues(times: number[], numTicks: number) {
 
 const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   // TODO: we want a aggregate form of the clearskyData variable
-  const { latitude, longitude, clearskyData } = useSiteData(siteUUIDs[0]);
+  const { latitude, longitude } = useSiteData(siteUUIDs[0]);
 
-  const { totalExpectedGeneration, isLoading } = useSiteAggregation(siteUUIDs);
+  const { totalExpectedGeneration, isLoading, totalClearskyData } =
+    useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
@@ -103,18 +106,17 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     );
 
   const clearSkyEstimateTrimmed =
-    clearskyData &&
+    totalClearskyData &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          clearskyData?.clearsky_estimate,
+          totalClearskyData,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
         new Date(currentTime)
       )
     );
-
   const maxGeneration = clearSkyEstimateTrimmed
     ? Math.max(...clearSkyEstimateTrimmed.map((value) => value.generation_kw))
     : 0;
