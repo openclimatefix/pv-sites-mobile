@@ -25,5 +25,5 @@ export {
   SearchIcon,
   CloudyIcon,
   PartlyCloudyIcon,
-  SunnyIcon
+  SunnyIcon,
 };
