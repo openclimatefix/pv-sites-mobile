@@ -47,10 +47,10 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
           <ExpectedTotalOutput siteUUIDs={sites} />
         </div>
         <div className="grid-in-Yield">
-          <CurrentCapacity siteUUID={sites[0]} />
+          <CurrentCapacity siteUUIDs={sites} />
         </div>
         <div className="grid-in-Graph">
-          <Graph siteUUID={sites[0]} />
+          <Graph siteUUIDs={sites} />
         </div>
       </div>
     </div>

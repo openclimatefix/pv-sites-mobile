@@ -52,6 +52,7 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     return null;
   }, [totalExpectedGeneration, dawnTime, duskTime]);
 
+  console.log(graphData);
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.generation_kw))
     : 0;
@@ -127,11 +128,9 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     if (!graphData) return null;
 
     const numForecastValues = graphData.length;
-
     if (numForecastValues <= 0) {
       return null;
     }
-    console.log(graphData[0].datetime_utc);
     const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
     const endTime = timeFormatter.format(
       new Date(graphData[numForecastValues - 1].datetime_utc)

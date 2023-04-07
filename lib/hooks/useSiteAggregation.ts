@@ -39,10 +39,9 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     : undefined;
 
   let totalExpectedGeneration: GenerationDataPoint[] | undefined = undefined;
-  console.log(manyForecastData);
+
   // Sum the expected generation for each date returned in all of the site forecasts
   if (manyForecastData) {
-    console.log('entered');
     const forecastMap = new Map<number, number>();
 
     for (let siteIdx = 0; siteIdx < manyForecastData.length; siteIdx++) {
@@ -68,10 +67,12 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     // Sort the aggregated forecasts based on datetime
     totalExpectedGeneration = Array.from(
       forecastMap,
-      ([datetime_utc, generation_kw]) => ({
-        datetime_utc: new Date(datetime_utc),
-        generation_kw,
-      })
+      ([datetime_utc, generation_kw]) => {
+        return {
+          datetime_utc: new Date(datetime_utc),
+          generation_kw,
+        };
+      }
     ).sort((a, b) => a.datetime_utc.getTime() - b.datetime_utc.getTime());
   }
 
