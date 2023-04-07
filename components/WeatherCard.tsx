@@ -2,9 +2,7 @@ import { FC } from 'react';
 import { useSiteData } from '~/lib/hooks';
 import useTime from '~/lib/hooks/useTime';
 
-import CloudyIcon from './icons/CloudyIcon';
-import SunnyIcon from './icons/SunnyIcon';
-import PartlyCloudyIcon from './icons/PartlyCloudyIcon';
+import { CloudyIcon, PartlyCloudyIcon, SunnyIcon } from './icons';
 import { getTotalExpectedOutput } from './dashboard-modules/ExpectedTotalOutput';
 import { generationDataOverDateRange } from '~/lib/graphs';
 import { GenerationDataPoint } from '~/lib/types';
