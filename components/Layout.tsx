@@ -11,7 +11,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
   const PageTransitionWrapper = user ? Transition : 'div';
 
   return (
-    <div className="grid grid-areas-layout grid-cols-layout grid-rows-layout">
+    <>
       <PageTransitionWrapper className="overflow-x-clip overflow-y-auto flex-1 grid-in-content relative">
         {user && <NavBar />}
         <SideBar />
@@ -20,7 +20,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         </main>
       </PageTransitionWrapper>
       {user && <BottomNavBar />}
-    </div>
+    </>
   );
 };
 

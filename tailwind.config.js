@@ -63,17 +63,14 @@ module.exports = {
           'Expected Yield',
           'Graph Graph',
         ],
-        layout: ['content'],
       },
       gridTemplateColumns: {
         'desktop-columns': '1fr 1fr 1fr',
         'mobile-columns': '1fr 1fr',
-        layout: '100%',
       },
       gridTemplateRows: {
         'desktop-rows': 'auto auto auto',
         'mobile-rows': 'auto auto auto auto auto auto',
-        layout: '100%',
       },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
