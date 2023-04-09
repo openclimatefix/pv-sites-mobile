@@ -23,7 +23,7 @@ import {
   makeGraphable,
 } from 'lib/graphs';
 
-import { getArrayMaxOrMinAfterIndex } from 'lib/utils';
+import { getTrendAfterIndex } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
@@ -36,7 +36,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
-  const { timeFormatter } = useDateFormatter(siteUUID);
+  const { timeFormatter, dayFormatter } = useDateFormatter(siteUUID);
 
   const graphData = useMemo(() => {
     if (forecastData && dawnTime && duskTime) {
@@ -118,9 +118,9 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   };
 
   /**
-   * @returns the start and end time label on the graph's x-axis
+   * @returns the time text below the threshold graph
    */
-  const renderStartAndEndTime = () => {
+  const renderTime = () => {
     if (!graphData) return null;
 
     const numForecastValues = graphData.length;
@@ -130,14 +130,37 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     }
 
     const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
+    const startDay = dayFormatter.format(new Date(graphData[0].datetime_utc));
+
     const endTime = timeFormatter.format(
+      new Date(graphData[numForecastValues - 1].datetime_utc)
+    );
+    const endDay = dayFormatter.format(
       new Date(graphData[numForecastValues - 1].datetime_utc)
     );
 
     return (
       <div className="flex flex-row justify-between">
-        <p className="text-white text-xs font-medium ml-6">{startTime}</p>
-        <p className="text-white text-xs font-medium mr-6">{endTime}</p>
+        <div>
+          <p className="text-white text-xs sm:text-base font-semibold sm:font-medium ml-3 sm:ml-6">
+            {startTime}
+          </p>
+          <p className="text-white text-xs sm:text-base font-normal ml-3 sm:ml-6">
+            {startDay}
+          </p>
+        </div>
+        <div className="w-9/12 sm:w-4/6">
+          {renderCurrentTime()}
+          {getSolarActivityText()}
+        </div>
+        <div>
+          <p className="text-white text-xs sm:text-base font-semibold sm:font-medium mr-3 sm:mr-6">
+            {endTime}
+          </p>
+          <p className="text-white text-xs sm:text-base font-normal mr-3 sm:mr-6">
+            {endDay}
+          </p>
+        </div>
       </div>
     );
   };
@@ -146,7 +169,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     return (
       <div className="flex flex-row justify-center mt-2">
         <UpArrowIcon />
-        <p className="text-white text-sm font-normal ml-2">
+        <p className="text-white text-sm font-normal ml-1 sm:ml-2">
           Solar activity is increasing until {formattedDate}
         </p>
       </div>
@@ -157,8 +180,18 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     return (
       <div className="flex flex-row justify-center mt-2">
         <DownArrowIcon />
-        <p className="text-white text-sm font-normal ml-2">
+        <p className="text-white text-sm font-normal ml-1 sm:ml-2">
           Solar activity is decreasing until {formattedDate}
+        </p>
+      </div>
+    );
+  };
+
+  const solarConstantText = (formattedDate: string) => {
+    return (
+      <div className="flex flex-row justify-center mt-2">
+        <p className="text-white text-sm font-normal ml-2">
+          Solar activity is constant until {formattedDate}
         </p>
       </div>
     );
@@ -169,35 +202,52 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (!forecastData) return null;
+    if (!graphData) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(
-      forecastData.forecast_values
-    );
-    const minMax = getArrayMaxOrMinAfterIndex(
-      forecastData.forecast_values,
-      currIndex
-    );
+    const currIndex = getCurrentTimeGenerationIndex(graphData);
+    const slope = getTrendAfterIndex(graphData, currIndex);
 
-    if (minMax) {
-      const { type, index } = minMax;
-      const minMaxForecastDate = timeFormatter.format(
-        new Date(forecastData.forecast_values[index].datetime_utc)
+    if (slope) {
+      const { type, endIndex } = slope;
+      const slopeForecastDate = timeFormatter.format(
+        new Date(graphData[endIndex].datetime_utc)
       );
-      return type === 'max'
-        ? solarIncreasingText(minMaxForecastDate)
-        : solarDecreasingText(minMaxForecastDate);
+
+      switch (type) {
+        case 'increasing':
+          return solarIncreasingText(slopeForecastDate);
+        case 'decreasing':
+          return solarDecreasingText(slopeForecastDate);
+        case 'constant':
+          return solarConstantText(slopeForecastDate);
+        default:
+          return '';
+      }
     }
 
     return '';
   };
 
   const renderCurrentTime = () => {
+    if (!graphData) {
+      return null;
+    }
+
+    const numForecastValues = graphData.length;
+
+    if (
+      Date.now() < graphData[0].datetime_utc.getTime() ||
+      Date.now() > graphData[numForecastValues - 1].datetime_utc.getTime()
+    ) {
+      return (
+        <p className="text-white text-base font-medium">
+          Tomorrow&apos;s Forecast
+        </p>
+      );
+    }
+
     return (
-      <p
-        suppressHydrationWarning
-        className="text-white text-base font-semibold"
-      >
+      <p suppressHydrationWarning className="text-white text-base font-medium">
         {timeFormatter.format(currentTime)}
       </p>
     );
@@ -276,10 +326,8 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           </ResponsiveContainer>
         )}
       </div>
-      <div className="flex flex-col justify-center content-center bottom-8 inset-x-0 text-center">
-        {renderStartAndEndTime()}
-        {renderCurrentTime()}
-        {getSolarActivityText()}
+      <div className="flex flex-col justify-center content-center inset-x-0 text-center">
+        {renderTime()}
       </div>
     </div>
   );
