@@ -49,7 +49,7 @@ const BottomNavBar = () => {
           ? 'opacity-0 pointer-events-none hidden'
           : 'opacity-100'
       }
-    bg-ocf-gray-1000 w-screen h-[var(--bottom-nav-height)] visible md:invisible relative z-50`}
+    bg-ocf-gray-1000 w-full flex flex-col grid-in-content sticky top-[calc(100%-var(--bottom-nav-height))] z-50 h-[var(--bottom-nav-height)] visible md:invisible`}
     >
       <div className="flex justify-evenly items-center h-full">
         <AnimatePresence mode="wait">
