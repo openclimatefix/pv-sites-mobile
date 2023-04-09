@@ -7,6 +7,8 @@ import {
   LabelList,
   ReferenceLine,
   ResponsiveContainer,
+  Tooltip,
+  XAxis,
   YAxis,
 } from 'recharts';
 
@@ -28,6 +30,7 @@ import { getTrendAfterIndex } from 'lib/utils';
 import { useSiteData } from 'lib/hooks';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useTime from '~/lib/hooks/useTime';
+import { GenerationDataPoint } from '~/lib/types';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { forecastData, latitude, longitude, isLoading } =
@@ -36,7 +39,8 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
-  const { timeFormatter, dayFormatter } = useDateFormatter(siteUUID);
+  const { timeFormatter, dayFormatter, weekdayFormatter } =
+    useDateFormatter(siteUUID);
 
   const graphData = useMemo(() => {
     if (forecastData && dawnTime && duskTime) {
@@ -252,6 +256,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       </p>
     );
   };
+  const graphableData = graphData ? makeGraphable(graphData) : undefined;
 
   return (
     <div className="relative w-full h-[260px] bg-ocf-black-500 rounded-2xl content-center">
@@ -274,9 +279,13 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         </div>
 
         {!isLoading && graphData !== null && (
-          <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
+          <ResponsiveContainer
+            className="mt-[15px] touch-pan-y touch-pinch-zoom"
+            width="100%"
+            height={100}
+          >
             <AreaChart
-              data={makeGraphable(graphData)}
+              data={graphableData}
               margin={{
                 top: 0,
                 right: 40,
@@ -285,11 +294,30 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               }}
             >
               <defs>{generateGraphGradient()}</defs>
+              <XAxis
+                hide
+                scale="time"
+                domain={['auto', 'auto']}
+                dataKey="datetime_utc"
+                type="number"
+              />
               <YAxis
                 type="number"
                 domain={[0, maxGeneration + 0.25]}
                 axisLine={false}
                 tick={false}
+              />
+              <Tooltip
+                wrapperStyle={{ outline: 'none' }}
+                contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
+                labelStyle={{ color: 'white' }}
+                formatter={(value: GenerationDataPoint['generation_kw']) => [
+                  parseFloat(value.toFixed(5)),
+                  'kW',
+                ]}
+                labelFormatter={(point: GenerationDataPoint['datetime_utc']) =>
+                  weekdayFormatter.format(point)
+                }
               />
               <Area
                 type="monotone"
