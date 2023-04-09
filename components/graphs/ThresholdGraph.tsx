@@ -39,8 +39,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
-  const { timeFormatter } = useDateFormatter(siteUUID);
-  const { weekdayFormatter } = useDateFormatter(siteUUID);
+  const { timeFormatter, weekdayFormatter } = useDateFormatter(siteUUID);
 
   const graphData = useMemo(() => {
     if (forecastData && dawnTime && duskTime) {
@@ -229,7 +228,11 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         </div>
 
         {!isLoading && graphData !== null && (
-          <ResponsiveContainer className="mt-[15px]" width="100%" height={100}>
+          <ResponsiveContainer
+            className="mt-[15px] touch-pan-y touch-pinch-zoom"
+            width="100%"
+            height={100}
+          >
             <AreaChart
               data={graphableData}
               margin={{
@@ -269,7 +272,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 type="monotone"
                 dataKey="generation_kw"
                 strokeWidth={2}
-                stroke="#FFD053"
+                stroke="white"
                 strokeDasharray="2"
                 fill="url(#colorUv)"
                 onAnimationEnd={() => setTimeEnabled(true)}
@@ -282,7 +285,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               <ReferenceLine
                 y={graphThreshold}
                 strokeWidth={2}
-                stroke="white"
+                stroke="#FFD053"
                 strokeDasharray="2"
               >
                 <Label
