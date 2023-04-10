@@ -11,12 +11,19 @@ import { hoursToMinutes, millisecondsToHours } from 'date-fns';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 
 const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData } = useSiteData(siteUUID);
+  const { forecastData, isLoading } = useSiteData(siteUUID);
   const [isRelativeTime, setIsRelativeTime] = useState(false);
   const { timeFormatter } = useDateFormatter(siteUUID);
 
   if (!forecastData) {
-    return <NumberDisplay title="Loading" value="..." />;
+    return (
+      <NumberDisplay
+        title="Loading"
+        value="Loading..."
+        isLoading={isLoading}
+        onClick={() => {}}
+      />
+    );
   }
 
   const nextThreshold = getNextThresholdIndex(
@@ -60,6 +67,7 @@ const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       title={sunnyText}
       value={value}
       onClick={() => setIsRelativeTime(!isRelativeTime)}
+      isLoading={isLoading}
     />
   );
 };

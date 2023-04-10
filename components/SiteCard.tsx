@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { FC, useEffect } from 'react';
 import { useSiteData } from '~/lib/hooks';
-import { getCurrentTimeGeneration } from '~/lib/utils';
+import { getCurrentTimeGeneration, skeleton } from '~/lib/utils';
 import SiteGraph from './graphs/SiteGraph';
 import { DeleteIcon, EditIcon } from './icons';
 import useNoScroll from '~/lib/hooks/useNoScroll';
@@ -15,8 +15,15 @@ interface SiteCardProps {
 
 const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
   ({ href, siteUUID, onClick, isEditMode }, ref) => {
-    const { forecastData, client_site_name, installed_capacity_kw, isLoading } =
-      useSiteData(siteUUID);
+    const {
+      forecastData,
+      client_site_name,
+      installed_capacity_kw,
+      isLoading,
+      error,
+    } = useSiteData(siteUUID);
+
+    const noError = error.errors.every((error) => error === undefined);
 
     const currentOutput = forecastData
       ? getCurrentTimeGeneration(forecastData.forecast_values)
@@ -33,11 +40,19 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
           }`}
         >
           <div className="flex flex-col flex-1 w-[60%] p-4 pl-5">
-            <h2 className="text-amber text-xl font-semibold">
+            <h2
+              className={`text-amber text-xl font-semibold transition-all ${
+                isLoading || !noError ? skeleton : ``
+              }`}
+            >
               {isLoading ? 'Loading...' : client_site_name ?? 'My Site'}
             </h2>
             <div className="flex flex-col mt-2 gap-1">
-              <p className="text-ocf-gray-500 text-xs font-medium">
+              <p
+                className={`text-ocf-gray-500 text-xs font-medium transition-all ${
+                  isLoading || !noError ? skeleton : ``
+                }`}
+              >
                 {`Current output: ${
                   currentOutput != undefined
                     ? currentOutput.toFixed(2) + ' kW'
@@ -45,11 +60,19 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                 }`}
               </p>
               {installed_capacity_kw && (
-                <p className="text-ocf-gray-500 font-medium text-xs">
+                <p
+                  className={`text-ocf-gray-500 font-medium text-xs transition-all ${
+                    isLoading || !noError ? skeleton : ``
+                  }`}
+                >
                   Max. capacity: {installed_capacity_kw.toFixed(2)} kW
                 </p>
               )}
-              <p className="text-ocf-gray-500 font-medium text-xs">
+              <p
+                className={`text-ocf-gray-500 font-medium text-xs transition-all ${
+                  isLoading || !noError ? skeleton : ``
+                }`}
+              >
                 {`Current yield:
             ${
               installed_capacity_kw && currentOutput != undefined
@@ -62,9 +85,13 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
 
           <div className={`mr-5 w-[40%] pointer-events-none`}>
             {/* TODO: find out why this left is necessary */}
-            <div className="relative -left-7">
-              <SiteGraph siteUUID={siteUUID} hidden={isEditMode} />
-            </div>
+            {isLoading || !noError == undefined ? (
+              <div className="h-[100px]"></div>
+            ) : (
+              <div className="relative -left-7">
+                <SiteGraph siteUUID={siteUUID} hidden={isEditMode} />
+              </div>
+            )}
           </div>
         </a>
         <div
