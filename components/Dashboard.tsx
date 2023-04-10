@@ -13,7 +13,7 @@ interface DashboardProps {
 const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
   const { client_site_name } = useSiteData(siteUUID);
   return (
-    <div className="bg-ocf-black max-w-screen-lg w-screen min-h-screen px-4 mb-[var(--bottom-nav-margin)]">
+    <div className="bg-ocf-black max-w-screen-xl w-screen min-h-screen px-4 mb-[var(--bottom-nav-margin)]">
       <h1 className="mt-4 mb-4 text-ocf-gray text-3xl font-bold">
         {client_site_name}
       </h1>

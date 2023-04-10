@@ -16,7 +16,7 @@ import {
   DownArrowIcon,
   LineCircle,
   UpArrowIcon,
-} from '../icons/future_threshold';
+} from '../icons/FutureThreshold';
 
 import {
   generationDataOverDateRange,
@@ -144,27 +144,21 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
 
     return (
-      <div className="flex flex-row justify-between">
-        <div>
-          <p className="text-white text-xs sm:text-base font-semibold sm:font-medium ml-3 sm:ml-6">
-            {startTime}
-          </p>
-          <p className="text-white text-xs sm:text-base font-normal ml-3 sm:ml-6">
-            {startDay}
-          </p>
+      <div className="flex flex-col">
+        <div className="flex flex-row justify-between">
+          <div>
+            <p className="text-white text-xs sm:text-base font-semibold sm:font-medium ml-3 sm:ml-6">
+              {startTime}
+            </p>
+          </div>
+          <div className="w-9/12 sm:w-4/6">{renderCurrentTime()}</div>
+          <div>
+            <p className="text-white text-xs sm:text-base font-semibold sm:font-medium mr-3 sm:mr-6">
+              {endTime}
+            </p>
+          </div>
         </div>
-        <div className="w-9/12 sm:w-4/6">
-          {renderCurrentTime()}
-          {getSolarActivityText()}
-        </div>
-        <div>
-          <p className="text-white text-xs sm:text-base font-semibold sm:font-medium mr-3 sm:mr-6">
-            {endTime}
-          </p>
-          <p className="text-white text-xs sm:text-base font-normal mr-3 sm:mr-6">
-            {endDay}
-          </p>
-        </div>
+        {getSolarActivityText()}
       </div>
     );
   };
@@ -259,7 +253,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const graphableData = graphData ? makeGraphable(graphData) : undefined;
 
   return (
-    <div className="relative w-full h-[260px] bg-ocf-black-500 rounded-2xl content-center">
+    <div className="relative w-full h-[240px] bg-ocf-black-500 rounded-2xl content-center">
       <div className="flex flex-col w-full justify-start">
         <div className="flex justify-end mt-[20px] mr-10 text-sm">
           <div className="flex flex-col gap-1 justify-start">

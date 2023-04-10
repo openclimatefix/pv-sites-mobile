@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
-import { NowcastingLogo } from '~/components/icons/nowcasting-logo';
+import { NowcastingLogo } from '~/components/icons/NowcastingLogo';
 import Link from 'next/link';
 
 const Logout = () => {
