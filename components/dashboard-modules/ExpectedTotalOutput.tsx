@@ -3,7 +3,7 @@ import NumberDisplay from './NumberDisplay';
 import { useSiteData } from 'lib/hooks';
 import { GenerationDataPoint } from '~/lib/types';
 
-const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
+export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
   let approxArea = 0;
   const millisInHour = 3.6e6;
 
@@ -18,19 +18,22 @@ const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
     approxArea += avgHeight * timeDiffHours;
   }
 
-  return approxArea.toFixed(2).toString() + ' kWh';
+  return approxArea;
 };
 
 const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData } = useSiteData(siteUUID);
+  const { forecastData, isLoading } = useSiteData(siteUUID);
   return (
     <NumberDisplay
       title="Today's Expected Output"
       value={
         forecastData
           ? getTotalExpectedOutput(forecastData.forecast_values)
-          : 'Loading'
+              .toFixed(2)
+              .toString() + ' kWh'
+          : 'Loading...'
       }
+      isLoading={isLoading}
     />
   );
 };
