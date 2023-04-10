@@ -8,6 +8,7 @@ import { SideBarProvider } from '~/lib/context/sidebar';
 import { fetcher } from '~/lib/swr';
 import { SiteList } from '~/lib/types';
 import '~/styles/globals.css';
+import '~/styles/transition.css';
 
 type AppProps = { siteList?: SiteList; user?: UserProfile };
 
@@ -26,6 +27,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           fetcher,
           fallback: swrFallback,
           refreshInterval: 1000 * 60, // Every minute
+          keepPreviousData: true, // Enabled to support page transitions where a key changes
         }}
       >
         <FormProvider>

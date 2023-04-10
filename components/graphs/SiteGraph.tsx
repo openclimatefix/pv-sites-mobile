@@ -47,9 +47,9 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
       >
         <AreaChart data={makeGraphable(graphData)}>
           <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="siteGraphArea" x1="0" y1="0" x2="0" y2="1">
               <stop offset={'0%'} stopColor="#FFD053" stopOpacity={0.4} />
-              <stop offset={'100%'} stopColor="#FFD053" stopOpacity={0} />
+              <stop offset={'100%'} stopColor="#FFD053" stopOpacity={0.01} />
             </linearGradient>
           </defs>
           <YAxis
@@ -63,7 +63,8 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
             dataKey="generation_kw"
             strokeWidth={1}
             stroke="#FFD053"
-            fill="url(#colorUv)"
+            fillOpacity={1}
+            fill="url(#siteGraphArea)"
             onAnimationEnd={() => setTimeEnabled(true)}
           />
         </AreaChart>

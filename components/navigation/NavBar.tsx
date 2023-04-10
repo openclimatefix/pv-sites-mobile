@@ -1,5 +1,5 @@
 import { useUser } from '@auth0/nextjs-auth0';
-import { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import useSWR from 'swr';
 import { useSideBarContext } from '~/lib/context/sidebar';
 import { SiteList } from '~/lib/types';
@@ -12,6 +12,11 @@ const NavBar: FC = () => {
   );
   const { user } = useUser();
 
+  const handleOpenSidebar: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    openSideBar();
+  };
+
   return (
     <div
       className={`bg-ocf-black w-full pt-2 pb-2 h-[var(--nav-height)] flex ${
@@ -20,7 +25,7 @@ const NavBar: FC = () => {
     >
       {user && (
         <button
-          onClick={openSideBar}
+          onClick={handleOpenSidebar}
           className={`${
             isSideBarOpen || data?.site_list.length === 0
               ? 'opacity-0 pointer-events-none'
