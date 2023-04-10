@@ -2,10 +2,11 @@ import { FC } from 'react';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
 import { useSiteData } from '~/lib/hooks';
-import WeatherCard from './WeatherCard';
+import WeatherCard from './dashboard-modules/WeatherCard';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
+import CurrentOutput from './dashboard-modules/CurrentOutput';
 
 interface DashboardProps {
   siteUUID: string;
@@ -38,10 +39,13 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
           </h2>
         </div>
 
-        <div className="grid-in-Expected">
+        <div className="grid-in-Expected-Total-Output">
           <ExpectedTotalOutput siteUUID={siteUUID} />
         </div>
-        <div className="grid-in-Yield">
+        <div className="grid-in-Current-Output md:hidden">
+          <CurrentOutput siteUUID={siteUUID} />
+        </div>
+        <div className="grid-in-Weather-Icons">
           <WeatherCard siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Graph">

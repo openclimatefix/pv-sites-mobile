@@ -180,3 +180,22 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
 export const zoomLevelThreshold = 14;
 
 export const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;
+
+/**
+ * Converts a day string to a number
+ *
+ * @method dayOfWeekAsInteger
+ * @param {String} day
+ * @return {Number} Returns day as number
+ */
+export const dayOfWeekAsInteger = (day: string) => {
+  return [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ].indexOf(day);
+};
