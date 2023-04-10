@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { skeleton } from '../../lib/utils';
+import { skeleton } from '~/lib/utils';
 
 interface Props {
   title: string;
@@ -9,6 +9,7 @@ interface Props {
 }
 
 const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
+  //isLoading = !isLoading;
   const Element = onClick ? 'button' : 'div';
   return (
     <Element

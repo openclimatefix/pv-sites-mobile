@@ -6,6 +6,7 @@ import { CloudyIcon, PartlyCloudyIcon, SunnyIcon } from './icons';
 import { getTotalExpectedOutput } from './dashboard-modules/ExpectedTotalOutput';
 import { generationDataOverDateRange } from '~/lib/graphs';
 import { GenerationDataPoint } from '~/lib/types';
+import { skeleton } from '~/lib/utils';
 import NumberDisplay from './dashboard-modules/NumberDisplay';
 
 type WeatherProps = {
@@ -112,7 +113,19 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
     );
   }
 
-  return <NumberDisplay title="" value="Loading..." isLoading={true} />;
+  return (
+    <div className="bg-ocf-black-500 flex flex-row rounded-2xl px-5">
+      <div className="flex-1 flex-col">
+        <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
+          <p className={`text-xs ${skeleton}`}>Loading...</p>
+          <div className={`${skeleton}`}>
+            <div className="h-[35px]"></div>
+          </div>
+          <p className={`text-xs ${skeleton}`}>Loading...</p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default WeatherCard;

@@ -4,7 +4,7 @@ import useTime from '~/lib/hooks/useTime';
 import content from '../../content/power-card-content.json';
 import NumberDisplay from './NumberDisplay';
 import RecommendationDisplay from './RecommendationDisplay';
-import { getCurrentTimeGeneration } from '~/lib/utils';
+import { getCurrentTimeGeneration, skeleton } from '~/lib/utils';
 
 /**
  * Determines the appliance with the greatest energy required that is less than or equal to the current output
@@ -53,7 +53,7 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         rounded-2xl
         h-[100%]"
       >
-        <div className="bg-ocf-gray-1000 w-[100%] rounded-3xl animate-pulse"></div>
+        <div className={skeleton}></div>
       </div>
     );
   } else if (!isDayTime && currentOutput === 0) {
