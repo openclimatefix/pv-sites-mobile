@@ -33,14 +33,23 @@ import useTime from '~/lib/hooks/useTime';
 import { GenerationDataPoint } from '~/lib/types';
 
 const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude, isLoading } =
-    useSiteData(siteUUID);
+  const {
+    forecastData,
+    latitude,
+    longitude,
+    installed_capacity_kw,
+    isLoading,
+  } = useSiteData(siteUUID);
   const [timeEnabled, setTimeEnabled] = useState(forecastData !== undefined);
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
   const { timeFormatter, dayFormatter, weekdayFormatter } =
     useDateFormatter(siteUUID);
+
+  const thresholdCapacityKW = installed_capacity_kw
+    ? installed_capacity_kw * graphThreshold
+    : 1.5960000038146973;
 
   const graphData = useMemo(() => {
     if (forecastData && dawnTime && duskTime) {
@@ -90,7 +99,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (!graphData) return null;
 
     const aboveThreshold = graphData.some(
-      (forecast) => forecast.generation_kw > graphThreshold
+      (forecast) => forecast.generation_kw > thresholdCapacityKW
     );
 
     if (aboveThreshold) {
@@ -100,7 +109,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       );
 
       let gradientPercentage =
-        100 - (graphThreshold / maxExpectedGenerationKW) * 100;
+        100 - (thresholdCapacityKW / maxExpectedGenerationKW) * 100;
 
       if (gradientPercentage < 0) {
         gradientPercentage = 0;
@@ -134,12 +143,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     }
 
     const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
-    const startDay = dayFormatter.format(new Date(graphData[0].datetime_utc));
-
     const endTime = timeFormatter.format(
-      new Date(graphData[numForecastValues - 1].datetime_utc)
-    );
-    const endDay = dayFormatter.format(
       new Date(graphData[numForecastValues - 1].datetime_utc)
     );
 
@@ -329,13 +333,13 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 />
               </Area>
               <ReferenceLine
-                y={graphThreshold}
+                y={thresholdCapacityKW}
                 strokeWidth={2}
                 stroke="#FFD053"
                 strokeDasharray="2"
               >
                 <Label
-                  value={graphThreshold + ' kW'}
+                  value={thresholdCapacityKW.toFixed(1) + ' kW'}
                   position="left"
                   className="text-xs fill-ocf-yellow"
                 />

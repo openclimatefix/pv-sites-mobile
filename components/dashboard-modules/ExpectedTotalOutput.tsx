@@ -29,7 +29,7 @@ const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       value={
         forecastData
           ? getTotalExpectedOutput(forecastData.forecast_values)
-              .toFixed(2)
+              .toFixed(0)
               .toString() + ' kWh'
           : 'Loading...'
       }
