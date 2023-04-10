@@ -334,6 +334,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               </Area>
               <ReferenceLine
                 y={thresholdCapacityKW}
+                ifOverflow="extendDomain"
                 strokeWidth={2}
                 stroke="#FFD053"
                 strokeDasharray="2"
