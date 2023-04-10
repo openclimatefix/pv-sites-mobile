@@ -112,7 +112,7 @@ const WeatherCard: FC<WeatherProps> = ({ siteUUID }) => {
     );
   }
 
-  return <NumberDisplay title="" value="Loading..." />;
+  return <NumberDisplay title="" value="Loading..." isLoading={true} />;
 };
 
 export default WeatherCard;
