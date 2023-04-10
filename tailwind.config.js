@@ -72,7 +72,6 @@ module.exports = {
         'desktop-rows': 'auto auto auto',
         'mobile-rows': 'auto auto auto auto auto auto',
       },
-
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],

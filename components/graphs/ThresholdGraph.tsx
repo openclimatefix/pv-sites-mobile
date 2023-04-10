@@ -107,7 +107,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       }
 
       return (
-        <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="thresholdGraphArea" x1="0" y1="0" x2="0" y2="1">
           <stop offset="1%" stopColor="#444444" stopOpacity={0} />
           <stop
             offset={`${gradientPercentage}%`}
@@ -323,9 +323,10 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 type="monotone"
                 dataKey="generation_kw"
                 strokeWidth={2}
+                fillOpacity={1}
                 stroke="white"
                 strokeDasharray="2"
-                fill="url(#colorUv)"
+                fill="url(#thresholdGraphArea)"
                 onAnimationEnd={() => setTimeEnabled(true)}
               >
                 <LabelList
