@@ -17,7 +17,12 @@ const SunnyTimeframe: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
   if (!forecastData) {
     return (
-      <NumberDisplay title="Loading" value="Loading..." isLoading={isLoading} />
+      <NumberDisplay
+        title="Loading"
+        value="Loading..."
+        isLoading={isLoading}
+        onClick={() => {}}
+      />
     );
   }
 
