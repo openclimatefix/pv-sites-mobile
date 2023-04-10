@@ -4,7 +4,7 @@ import useTime from '~/lib/hooks/useTime';
 import content from '../../content/power-card-content.json';
 import NumberDisplay from './NumberDisplay';
 import RecommendationDisplay from './RecommendationDisplay';
-import { getCurrentTimeGeneration } from '~/lib/utils';
+import { getCurrentTimeGeneration, skeleton } from '~/lib/utils';
 
 /**
  * Determines the appliance with the greatest energy required that is less than or equal to the current output
@@ -28,7 +28,8 @@ const getBestRecommendationIndex = (currentOutput: number) => {
 };
 
 const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude } = useSiteData(siteUUID);
+  const { forecastData, latitude, longitude, isLoading } =
+    useSiteData(siteUUID);
   const currentOutput = forecastData
     ? getCurrentTimeGeneration(forecastData.forecast_values)
     : undefined;
@@ -38,7 +39,24 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     : null;
 
   const { isDayTime } = useTime(latitude, longitude);
-  if (!isDayTime && currentOutput === 0) {
+  if (isLoading) {
+    return (
+      <div
+        className="
+        flex-1
+        flex
+        p-4
+        text-center
+        justify-center
+        align-center
+        bg-ocf-black-500
+        rounded-2xl
+        h-[100%]"
+      >
+        <div className={skeleton}></div>
+      </div>
+    );
+  } else if (!isDayTime && currentOutput === 0) {
     return (
       <RecommendationDisplay
         src="/nighttime.svg"
@@ -56,7 +74,13 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       />
     );
   } else {
-    return <NumberDisplay title="Recommendations" value="N/A" />;
+    return (
+      <NumberDisplay
+        title="Recommendations"
+        value="N/A"
+        isLoading={isLoading}
+      />
+    );
   }
 };
 

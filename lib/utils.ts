@@ -178,3 +178,5 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   We will track solar sites when the map is zoomed in less than this value.
 */
 export const zoomLevelThreshold = 14;
+
+export const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;

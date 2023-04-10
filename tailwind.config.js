@@ -5,6 +5,7 @@ module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    './lib/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
     'bg-ocf-yellow',
@@ -72,7 +73,6 @@ module.exports = {
         'desktop-rows': 'auto auto auto',
         'mobile-rows': 'auto auto auto auto auto auto',
       },
-
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],

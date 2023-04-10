@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
 import { useSideBarContext } from '~/lib/context/sidebar';
 import Link from 'next/link';
 
@@ -48,7 +48,10 @@ const MenuLink: React.FC<MenuLinkProps> = ({
 const SideBar = () => {
   const { isSideBarOpen, closeSideBar } = useSideBarContext();
   const router = useRouter();
-  useEffect(() => router.events.on('routeChangeComplete', closeSideBar));
+  useEffect(() => {
+    router.events.on('routeChangeComplete', closeSideBar);
+    return () => router.events.off('routeChangeComplete', closeSideBar);
+  }, [closeSideBar, router]);
   const wrapperRef = useRef(null);
 
   const clickOutsideSideBarHandler = () => {
