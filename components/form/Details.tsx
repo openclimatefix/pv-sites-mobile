@@ -35,8 +35,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
 
-  const siteData = uuid ? useSiteData(uuid) : undefined;
-  console.log(siteData);
+  const siteData = useSiteData(uuid!);
   const { installed_capacity_kw, client_site_name, orientation, tilt } =
     siteData || {};
 
