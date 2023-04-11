@@ -1,19 +1,25 @@
-import Details from '~/components/form/Details';
-import Location from '~/components/form/Location';
 import { useRouter } from 'next/router';
-
 import { FC, useState } from 'react';
-import { withSites } from '../lib/utils';
+import Location from '~/components/form/Location';
+import Details from './form/Details';
+import { Site } from '~/lib/types';
+import { useSiteData } from '~/lib/hooks';
 
 enum Page {
   Details = 'Details',
   Location = 'Location',
 }
 
-const SiteDetails: FC = () => {
-  const [page, setPage] = useState<Page>(Page.Location);
-  const router = useRouter();
+interface SiteDetailsProps {
+  uuid?: string;
+}
 
+const SiteDetails: FC<SiteDetailsProps> = ({ uuid }) => {
+  const [page, setPage] = useState<Page>(Page.Location);
+  const siteData = useSiteData(uuid!);
+  const { longitude, latitude } = siteData || {};
+
+  const router = useRouter();
   const generateFormPage = () => {
     switch (page) {
       case Page.Details:
@@ -21,10 +27,17 @@ const SiteDetails: FC = () => {
           <Details
             lastPageCallback={() => setPage(Page.Location)}
             nextPageCallback={() => router.push('sites')}
+            uuid={uuid}
           />
         );
       case Page.Location:
-        return <Location nextPageCallback={() => setPage(Page.Details)} />;
+        return (
+          <Location
+            nextPageCallback={() => setPage(Page.Details)}
+            longitude={longitude}
+            latitude={latitude}
+          />
+        );
       default:
         return null;
     }
@@ -38,4 +51,3 @@ const SiteDetails: FC = () => {
 };
 
 export default SiteDetails;
-export const getServerSideProps = withSites();
