@@ -17,7 +17,7 @@ const SiteDashboard = () => {
   }, [query.uuid]);
 
   useNoScroll();
-  
+
   const { siteData } = useSiteData(persistedUUID as string);
   const siteUUIDs = { site_list: [siteData as Site] };
 

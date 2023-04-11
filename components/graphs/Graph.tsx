@@ -1,5 +1,4 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
-import { clear } from 'console';
 import { setMilliseconds, setSeconds } from 'date-fns';
 import {
   addTimePoint,
