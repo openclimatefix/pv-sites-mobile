@@ -214,7 +214,11 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
         </div>
       </div>
       {!isLoading && (
-        <ResponsiveContainer className="mt-[20px]" width="100%" height={150}>
+        <ResponsiveContainer
+          className="mt-[20px] touch-pinch-zoom touch-pan-y"
+          width="100%"
+          height={150}
+        >
           <LineChart
             margin={{
               top: 0,
@@ -257,7 +261,10 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
             />
             <Tooltip
               wrapperStyle={{ outline: 'none' }}
-              contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
+              contentStyle={{
+                backgroundColor: '#2B2B2B90',
+                opacity: 1,
+              }}
               labelStyle={{ color: 'white' }}
               formatter={(value: GenerationDataPoint['generation_kw']) => [
                 parseFloat(value.toFixed(5)),

@@ -24,6 +24,7 @@ const CurrentCapacity: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
           ? ((100 * currentOutput) / totalInstalledCapacityKw).toFixed(2) + '%'
           : 'N/A'
       }`}
+      isLoading={isLoading}
     />
   );
 };

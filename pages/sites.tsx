@@ -38,7 +38,7 @@ const Sites = () => {
         <h1 className="flex-1 font-bold text-3xl text-ocf-gray">My Sites</h1>
         <button onClick={() => setEditMode(!editMode)}>
           {editMode ? (
-            <p className="text-amber text-md font-semibold">Done</p>
+            <p className="text-amber text-base font-semibold">Done</p>
           ) : (
             <EditIcon color="#E4E4E4" />
           )}

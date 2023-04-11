@@ -28,6 +28,7 @@ const getBestRecommendationIndex = (currentOutput: number) => {
   return maxIndex;
 };
 
+
 const EnergyRecommendation: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   const { totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
   const { latitude, longitude } = useSiteData(siteUUIDs[0]);
@@ -40,7 +41,24 @@ const EnergyRecommendation: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     : null;
 
   const { isDayTime } = useTime(latitude, longitude);
-  if (!isDayTime && currentOutput === 0) {
+  if (isLoading) {
+    return (
+      <div
+        className="
+        flex-1
+        flex
+        p-4
+        text-center
+        justify-center
+        align-center
+        bg-ocf-black-500
+        rounded-2xl
+        h-[100%]"
+      >
+        <div className={skeleton}></div>
+      </div>
+    );
+  } else if (!isDayTime && currentOutput === 0) {
     return (
       <RecommendationDisplay
         src="/nighttime.svg"
@@ -58,7 +76,13 @@ const EnergyRecommendation: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
       />
     );
   } else {
-    return <NumberDisplay title="Recommendations" value="N/A" />;
+    return (
+      <NumberDisplay
+        title="Recommendations"
+        value="N/A"
+        isLoading={isLoading}
+      />
+    );
   }
 };
 

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 type NowcastingLogoProps = {
-  width: string;
-  height: string;
+  width: number;
+  height: number;
 };
 
 export const NowcastingLogo: React.FC<NowcastingLogoProps> = ({

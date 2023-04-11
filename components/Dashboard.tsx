@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
-import CurrentCapacity from './dashboard-modules/CurrentCapacity';
+import { useSiteData } from '~/lib/hooks';
+import WeatherCard from './WeatherCard';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
@@ -47,7 +48,7 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
           <ExpectedTotalOutput siteUUIDs={sites} />
         </div>
         <div className="grid-in-Yield">
-          <CurrentCapacity siteUUIDs={sites} />
+          <WeatherCard siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Graph">
           <Graph siteUUIDs={sites} />

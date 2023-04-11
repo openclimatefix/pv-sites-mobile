@@ -6,7 +6,7 @@
   --nav-height: 60px;
   --map-text-height: 75px;
   --form-header-padding: 32px;
-  --bottom-nav-height: 75px;
+  --bottom-nav-height: 50px;
   --bottom-nav-margin: calc(20px + var(--bottom-nav-height));
 }
 
