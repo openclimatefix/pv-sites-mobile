@@ -2,10 +2,11 @@ import { FC } from 'react';
 import EnergyRecommendation from '~/components/dashboard-modules/EnergyRecommendation';
 import ThresholdGraph from '~/components/graphs/ThresholdGraph';
 import { useSiteData } from '~/lib/hooks';
-import WeatherCard from './WeatherCard';
+import WeatherCard from './dashboard-modules/WeatherCard';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
+import CurrentOutput from './dashboard-modules/CurrentOutput';
 
 interface DashboardProps {
   siteUUID: string;
@@ -13,7 +14,7 @@ interface DashboardProps {
 const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
   const { client_site_name } = useSiteData(siteUUID);
   return (
-    <div className="bg-ocf-black max-w-screen-lg w-screen min-h-screen px-4 mb-[var(--bottom-nav-margin)]">
+    <div className="bg-ocf-black max-w-screen-xl w-screen min-h-screen px-4 mb-[var(--bottom-nav-margin)]">
       <h1 className="mt-4 mb-4 text-ocf-gray text-3xl font-bold">
         {client_site_name}
       </h1>
@@ -38,10 +39,13 @@ const Dashboard: FC<DashboardProps> = ({ siteUUID }) => {
           </h2>
         </div>
 
-        <div className="grid-in-Expected">
+        <div className="grid-in-Expected-Total-Output">
           <ExpectedTotalOutput siteUUID={siteUUID} />
         </div>
-        <div className="grid-in-Yield">
+        <div className="grid-in-Current-Output md:hidden">
+          <CurrentOutput siteUUID={siteUUID} />
+        </div>
+        <div className="grid-in-Weather-Icons">
           <WeatherCard siteUUID={siteUUID} />
         </div>
         <div className="grid-in-Graph">

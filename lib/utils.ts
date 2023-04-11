@@ -120,9 +120,6 @@ export const getNextThresholdIndex = (
   return null;
 };
 
-/* Represents the threshold for the graph */
-export const graphThreshold = 0.7;
-
 /* Latitude/longitude for London, England */
 export const originalLat = 51.5072;
 export const originalLng = 0.1276;
@@ -180,3 +177,22 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
 export const zoomLevelThreshold = 14;
 
 export const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;
+
+/**
+ * Converts a day string to a number
+ *
+ * @method dayOfWeekAsInteger
+ * @param {String} day
+ * @return {Number} Returns day as number
+ */
+export const dayOfWeekAsInteger = (day: string) => {
+  return [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ].indexOf(day);
+};

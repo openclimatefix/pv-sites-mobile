@@ -28,9 +28,9 @@ const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       title="Today's Expected Output"
       value={
         forecastData
-          ? getTotalExpectedOutput(forecastData.forecast_values)
-              .toFixed(2)
-              .toString() + ' kWh'
+          ? Math.round(
+              getTotalExpectedOutput(forecastData.forecast_values)
+            ).toString() + ' kWh'
           : 'Loading...'
       }
       isLoading={isLoading}

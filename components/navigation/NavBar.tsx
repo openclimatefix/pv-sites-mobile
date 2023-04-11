@@ -3,7 +3,7 @@ import { FC, MouseEventHandler } from 'react';
 import useSWR from 'swr';
 import { useSideBarContext } from '~/lib/context/sidebar';
 import { SiteList } from '~/lib/types';
-import { MenuLogo, NowcastingLogo } from '../icons/navbar_icons';
+import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
 
 const NavBar: FC = () => {
   const { isSideBarOpen, openSideBar } = useSideBarContext();
