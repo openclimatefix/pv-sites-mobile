@@ -23,13 +23,15 @@ export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
 };
 
 const ExpectedTotalOutput: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
-  const { totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
+  const { isLoading, totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
   return (
     <NumberDisplay
       title="Today's Expected Output"
       value={
         totalExpectedGeneration
           ? getTotalExpectedOutput(totalExpectedGeneration)
+              .toFixed(2)
+              .toString() + ' kWh'
           : 'Loading'
       }
       isLoading={isLoading}

@@ -4,7 +4,7 @@ import useTime from '~/lib/hooks/useTime';
 import content from '../../content/power-card-content.json';
 import NumberDisplay from './NumberDisplay';
 import RecommendationDisplay from './RecommendationDisplay';
-import { getCurrentTimeGeneration } from '~/lib/utils';
+import { getCurrentTimeGeneration, skeleton } from '~/lib/utils';
 import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 
 /**
@@ -28,9 +28,8 @@ const getBestRecommendationIndex = (currentOutput: number) => {
   return maxIndex;
 };
 
-
 const EnergyRecommendation: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
-  const { totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
+  const { isLoading, totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
   const { latitude, longitude } = useSiteData(siteUUIDs[0]);
   const currentOutput = totalExpectedGeneration
     ? getCurrentTimeGeneration(totalExpectedGeneration)

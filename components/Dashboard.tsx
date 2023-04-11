@@ -6,7 +6,6 @@ import WeatherCard from './WeatherCard';
 import ExpectedTotalOutput from './dashboard-modules/ExpectedTotalOutput';
 import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
-import { useSiteData } from '~/lib/hooks';
 import { SiteList } from '~/lib/types';
 
 interface DashboardProps {
@@ -47,9 +46,11 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
         <div className="grid-in-Expected">
           <ExpectedTotalOutput siteUUIDs={sites} />
         </div>
-        <div className="grid-in-Yield">
-          <WeatherCard siteUUID={siteUUID} />
-        </div>
+        {!isAggregate && (
+          <div className="grid-in-Yield">
+            <WeatherCard siteUUID={sites[0]} />
+          </div>
+        )}
         <div className="grid-in-Graph">
           <Graph siteUUIDs={sites} />
         </div>

@@ -42,7 +42,9 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
-  const { timeFormatter } = useDateFormatter(siteUUIDs[0]);
+  const { timeFormatter, dayFormatter, weekdayFormatter } = useDateFormatter(
+    siteUUIDs[0]
+  );
 
   const graphData = useMemo(() => {
     if (totalExpectedGeneration && dawnTime && duskTime) {
@@ -209,15 +211,12 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     if (!totalExpectedGeneration) return null;
 
     const currIndex = getCurrentTimeGenerationIndex(totalExpectedGeneration);
-    const minMax = getArrayMaxOrMinAfterIndex(
-      totalExpectedGeneration,
-      currIndex
-    );
+    const minMax = getTrendAfterIndex(totalExpectedGeneration, currIndex);
 
     if (minMax) {
-      const { type, index } = minMax;
-      const minMaxForecastDate = timeFormatter.format(
-        new Date(totalExpectedGeneration[index].datetime_utc)
+      const { type, endIndex } = minMax;
+      const slopeForecastDate = timeFormatter.format(
+        new Date(totalExpectedGeneration[endIndex].datetime_utc)
       );
 
       switch (type) {
