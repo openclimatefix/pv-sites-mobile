@@ -8,7 +8,6 @@ enum Page {
 }
 
 const NewSiteDetails: FC = () => {
-  console.log('NewSiteDetails');
   return <SiteDetails />;
 };
 
