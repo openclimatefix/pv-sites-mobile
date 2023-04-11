@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 const NewSiteDetails: FC = () => {
   const router = useRouter();
   const { uuid } = router.query;
-  console.log(uuid);
   return <SiteDetails uuid={uuid as string} />;
 };
 
