@@ -8,5 +8,5 @@ export default function useSites() {
     isLoading,
   } = useSWR<SiteList>(`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`);
 
-  return { sites: sites?.site_list, error, isLoading };
+  return { sites: sites?.site_list ?? [], error, isLoading };
 }

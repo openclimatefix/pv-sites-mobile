@@ -6,7 +6,7 @@ export function useIsSitePage() {
   const { sites } = useSites();
 
   const isSitePage =
-    (sites?.length ?? 0) > 0 && asPath.match(/\/dashboard\/.+/);
+    (sites?.length ?? 0) > 1 && asPath.match(/\/dashboard\/.+/);
 
   return isSitePage;
 }

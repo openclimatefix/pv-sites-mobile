@@ -26,7 +26,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ uuid }) => {
         return (
           <Details
             lastPageCallback={() => setPage(Page.Location)}
-            nextPageCallback={() => router.push('sites')}
+            nextPageCallback={() => router.push('/sites')}
             uuid={uuid}
           />
         );

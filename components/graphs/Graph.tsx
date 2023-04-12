@@ -159,14 +159,14 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           <input
             className="sr-only peer"
             type="radio"
-            name="1H"
-            id="1H"
-            value={1}
-            checked={timeRange == 1}
+            name="6H"
+            id="6H"
+            value={6}
+            checked={timeRange == 6}
             onChange={handleChange}
           />
           <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
-            1H
+            6H
           </span>
         </label>
         <label className="block">
