@@ -5,7 +5,17 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Image from 'next/image';
 import { withSites } from '~/lib/utils';
 
+const parseAppliance = (appliance: (typeof content.appliances)[number]) => {
+  return {
+    ...appliance,
+    kW: Number(appliance.kW),
+    duration: Number(appliance.duration),
+  };
+};
+
 const MoreInfo = () => {
+  const appliances = content.appliances.map(parseAppliance);
+
   return (
     <div className="bg-ocf-black w-screen min-h-screen max-w-screen-lg px-4">
       <h1 className="my-2 mt-4 text-ocf-gray text-3xl font-bold">More Info</h1>
@@ -60,13 +70,8 @@ const MoreInfo = () => {
             );
           }}
         >
-          {content.appliances.map((element) => (
-            <PowerInfoCard
-              key={element.name}
-              src={element.icon}
-              appliance={element.name}
-              kW={element.kW}
-            />
+          {appliances.map((element) => (
+            <PowerInfoCard key={element.name} {...element} />
           ))}
         </Carousel>
       </div>

@@ -2,21 +2,45 @@
   "appliances": [
     {
       "name": "Car",
-      "icon": "/car.svg",
-      "kW": "100",
-      "description": "You have enough power to charge your car"
+      "icon": "car.svg",
+      "kW": "3.6",
+      "duration": "4.0",
+      "action": "charge"
     },
     {
-      "name": "Washer/Dryer",
-      "icon": "/washerdryer.svg",
-      "kW": "3.8",
-      "description": "You have enough power to use your washer"
+      "name": "Washing Machine",
+      "icon": "washing-machine.svg",
+      "kW": "2.1",
+      "duration": "1.0",
+      "action": "use"
+    },
+    {
+      "name": "Dryer",
+      "icon": "washing-machine.svg",
+      "kW": "4.5",
+      "duration": "1.0",
+      "action": "use"
     },
     {
       "name": "Air Conditioning",
-      "icon": "/airconditioning.svg",
-      "kW": "4.85",
-      "description": "You have enough power to use your A.C."
+      "icon": "air-conditioning.svg",
+      "kW": "4.9",
+      "duration": "-1",
+      "action": "use"
+    },
+    {
+      "name": "Dish Washer",
+      "icon": "dishwasher.svg",
+      "kW": "1.2",
+      "duration": "1.5",
+      "action": "use"
+    },
+    {
+      "name": "Toaster",
+      "icon": "toaster.svg",
+      "kW": "1",
+      "duration": "0.17",
+      "action": "use"
     }
   ]
 }
