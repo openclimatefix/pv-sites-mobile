@@ -68,9 +68,9 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     const appliance = content.appliances[recommendationIdx];
     return (
       <RecommendationDisplay
-        src={appliance.icon}
-        alt=""
-        description={appliance.description}
+        src={`/appliances/icons/${appliance.icon}`}
+        alt={appliance.name}
+        description={`You have enough power to ${appliance.action} your ${appliance.name}`}
       />
     );
   } else {
