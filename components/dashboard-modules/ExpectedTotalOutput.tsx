@@ -2,6 +2,8 @@ import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
 import { useSiteData } from 'lib/hooks';
 import { GenerationDataPoint } from '~/lib/types';
+import useTime from '~/lib/hooks/useTime';
+import { generationDataOverDateRange } from '~/lib/graphs';
 
 export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
   let approxArea = 0;
@@ -22,14 +24,22 @@ export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
 };
 
 const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, isLoading } = useSiteData(siteUUID);
+  const { forecastData, isLoading, latitude, longitude } =
+    useSiteData(siteUUID);
+  const { dawnTime, duskTime } = useTime(latitude, longitude);
   return (
     <NumberDisplay
       title="Today's Expected Output"
       value={
         forecastData
           ? Math.round(
-              getTotalExpectedOutput(forecastData.forecast_values)
+              getTotalExpectedOutput(
+                generationDataOverDateRange(
+                  forecastData.forecast_values,
+                  dawnTime,
+                  duskTime
+                )
+              )
             ).toString() + ' kWh'
           : 'Loading...'
       }
