@@ -243,12 +243,12 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     ) {
       const relativeDay =
         new Date().getUTCDate() !== graphData[0].datetime_utc.getUTCDate()
-          ? "Tomorrow's"
-          : "Today's";
+          ? 'Tomorrow'
+          : 'Today';
 
       return (
         <p className="text-white text-base font-medium">
-          {relativeDay} Forecast
+          {relativeDay}&apos;s Forecast
         </p>
       );
     }
