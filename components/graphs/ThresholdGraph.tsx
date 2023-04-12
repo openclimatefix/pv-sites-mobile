@@ -25,7 +25,7 @@ import {
   makeGraphable,
 } from 'lib/graphs';
 
-import { getTrendAfterIndex } from 'lib/utils';
+import { dayOfWeekAsInteger, getTrendAfterIndex } from 'lib/utils';
 
 import { useSiteData } from 'lib/hooks';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
@@ -44,7 +44,7 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
-  const { timeFormatter, dayFormatter, weekdayFormatter } =
+  const { timeFormatter, dayFormatter, weekdayFormatter, timezone } =
     useDateFormatter(siteUUID);
 
   const thresholdCapacityKW = installed_capacity_kw
@@ -241,10 +241,19 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       Date.now() < graphData[0].datetime_utc.getTime() ||
       Date.now() > graphData[numForecastValues - 1].datetime_utc.getTime()
     ) {
-      const relativeDay =
-        new Date().getUTCDate() !== graphData[0].datetime_utc.getUTCDate()
-          ? 'Tomorrow'
-          : 'Today';
+      const currentDay = dayOfWeekAsInteger(
+        new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+          weekday: 'long',
+          timeZone: timezone,
+        }).format(currentTime)
+      );
+      const firstDay = dayOfWeekAsInteger(
+        new Intl.DateTimeFormat(['en-US', 'en-GB'], {
+          weekday: 'long',
+          timeZone: timezone,
+        }).format(graphData[0].datetime_utc)
+      );
+      const relativeDay = currentDay !== firstDay ? 'Tomorrow' : 'Today';
 
       return (
         <p className="text-white text-base font-medium">
