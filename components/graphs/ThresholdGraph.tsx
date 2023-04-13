@@ -35,7 +35,8 @@ import { GenerationDataPoint } from '~/lib/types';
 
 const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   const { latitude, longitude, isLoading } = useSiteData(siteUUIDs[0]);
-  const { totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
+  const { totalExpectedGeneration, totalInstalledCapacityKw } =
+    useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(
     totalExpectedGeneration !== undefined
   );
@@ -46,8 +47,8 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     siteUUIDs[0]
   );
 
-  const thresholdCapacityKW = installed_capacity_kw
-    ? installed_capacity_kw * graphThreshold
+  const thresholdCapacityKW = totalInstalledCapacityKw
+    ? totalInstalledCapacityKw * graphThreshold
     : 1.5960000038146973;
 
   const graphData = useMemo(() => {

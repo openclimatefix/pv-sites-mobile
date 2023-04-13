@@ -45,8 +45,9 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
         </div>
         <div className="grid-in-Expected-Total-Output">
           <ExpectedTotalOutput siteUUIDs={sites} />
+        </div>
         <div className="grid-in-Current-Output md:hidden">
-          <CurrentOutput siteUUID={siteUUID} />
+          <CurrentOutput siteUUID={sites[0]} />
         </div>
         {!isAggregate && (
           <div className="grid-in-Weather-Icons">
