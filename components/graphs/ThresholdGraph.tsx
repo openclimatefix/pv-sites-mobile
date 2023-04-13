@@ -205,10 +205,10 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     if (!totalExpectedGeneration) return null;
 
     const currIndex = getCurrentTimeGenerationIndex(totalExpectedGeneration);
-    const minMax = getTrendAfterIndex(totalExpectedGeneration, currIndex);
+    const slope = getTrendAfterIndex(totalExpectedGeneration, currIndex);
 
-    if (minMax) {
-      const { type, endIndex } = minMax;
+    if (slope) {
+      const { type, endIndex } = slope;
       const slopeForecastDate = timeFormatter.format(
         new Date(totalExpectedGeneration[endIndex].datetime_utc)
       );
