@@ -99,7 +99,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
           inert={!isEditMode ? '' : null}
           className={'absolute left-[100%] top-0 flex h-full w-full'}
         >
-          <Link href={'/site-details'} passHref>
+          <Link href={`/site-details/${siteUUID}`} passHref>
             <a
               className={`flex h-full bg-amber w-[15%] min-w-[70px] flex-end justify-center ease-in-out transition duration-[700ms] pointer-events-auto ${
                 isEditMode ? '-translate-x-[200%]' : 'duration-[500ms]'

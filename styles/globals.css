@@ -7,7 +7,7 @@
   --map-text-height: 75px;
   --form-header-padding: 32px;
   --bottom-nav-height: 50px;
-  --bottom-nav-margin: 20px;
+  --bottom-nav-margin: calc(20px + var(--bottom-nav-height));
 }
 
 @media (min-width: 768px) {
