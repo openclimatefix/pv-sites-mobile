@@ -12,7 +12,7 @@ const defaultUseTimeOptions = {
  * Creates a hook more accessesing specific values like the current time, whether it is daytime
  * @param latitude, the latitude float value that is passed in
  * @param longitude, the longitude number value that is passed in
- * @returns currentTimes, version of the current time (right now) that a user can format
+ * @returns currentTime, version of the current time (right now) that a user can format
  * @returns isDayTime, boolean value indicating whether it is daytime or not based on current time zone.
  * @returns duskTime, date representing the dusk time at latitude, longitude
  * @returns dawnTime, date representing the dawn time at latitude, longitude

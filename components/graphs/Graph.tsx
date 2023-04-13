@@ -81,7 +81,7 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     updateEnabled: timeEnabled,
   });
 
-  const [timeRange, setTimeRange] = useState(24);
+  const [timeRange, setTimeRange] = useState(48);
   const handleChange = (event: any) => {
     setTimeEnabled(false);
     setTimeRange(event.target.value);
@@ -193,8 +193,8 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
             type="radio"
             name="2D"
             id="2D"
-            value={36}
-            checked={timeRange == 36}
+            value={48}
+            checked={timeRange == 48}
             onChange={handleChange}
           />
           <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">

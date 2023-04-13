@@ -9,6 +9,8 @@ import BackButton from 'components/BackButton';
 import LocationInput from '../LocationInput';
 import { zoomLevelThreshold } from '../../lib/utils';
 import Button from '~/components/Button';
+import { Site } from '~/lib/types';
+import { useSiteData } from '~/lib/hooks';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -24,13 +26,30 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: () => void;
+  uuid?: string;
 }
 
-const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
+const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
   const { siteCoordinates, setFormData, panelDetails, postPanelData } =
     useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
+
+  const siteData = useSiteData(uuid!);
+  const { installed_capacity_kw, client_site_name, orientation, tilt } =
+    siteData || {};
+
+  // If it is an existing site, prefill the form with the existing data
+  panelDetails.siteName = client_site_name
+    ? client_site_name
+    : panelDetails.siteName;
+  panelDetails.direction = orientation
+    ? orientation.toString()
+    : panelDetails.direction;
+  panelDetails.tilt = tilt ? tilt.toString() : panelDetails.tilt;
+  panelDetails.capacity = installed_capacity_kw
+    ? installed_capacity_kw.toString()
+    : panelDetails.capacity;
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
