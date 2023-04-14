@@ -1,11 +1,14 @@
+import { FC } from 'react';
 import Dashboard from '~/components/Dashboard';
+import { SiteList } from '~/lib/types';
 import { withSites } from '~/lib/utils';
 
-// This will be temporary, just a temporary solution for now
+interface AggregateDashboardProps {
+  siteList: SiteList;
+}
 
-const AggregateDashboard = () => {
-  const testUUID = '725a8670-d012-474d-b901-1179f43e7182';
-  return <Dashboard siteUUID={testUUID} />;
+const AggregateDashboard: FC<AggregateDashboardProps> = ({ siteList }) => {
+  return <Dashboard siteUUIDs={siteList} />;
 };
 
 export default AggregateDashboard;

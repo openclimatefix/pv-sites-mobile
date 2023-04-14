@@ -82,6 +82,18 @@ function parseClearSkyData(
   };
 }
 
+export const manyClearskyDataFetcher: Fetcher<Array<ClearSkyData>> = async (
+  url: string
+) => {
+  const allUnparsedClearsSky: Array<UnparsedClearSkyData> = await fetch(
+    url
+  ).then((res) => res.json());
+
+  return allUnparsedClearsSky.map((unparsedClearSkyData) =>
+    parseClearSkyData(unparsedClearSkyData)
+  );
+};
+
 export const clearSkyFetcher: Fetcher<ClearSkyData> = async (url: string) => {
   const unparsedData: UnparsedClearSkyData = await fetch(url).then((res) =>
     res.json()
