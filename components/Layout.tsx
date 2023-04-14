@@ -12,8 +12,6 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
 
   const PageTransitionWrapper = user ? Transition : 'div';
   const showNav = !!user && path != '/site-details';
-  console.log(showNav);
-  console.log(path);
 
   return (
     <>
