@@ -89,7 +89,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          <div className="hidden md:block md:h-10" />
+          <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
             label="Site name"
