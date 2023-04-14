@@ -21,7 +21,7 @@ const NavBar: FC = () => {
     <div
       className={`bg-ocf-black w-full pt-2 pb-2 h-[var(--nav-height)] flex ${
         user ? 'justify-between' : 'justify-center'
-      } px-5`}
+      } px-5 content-center`}
     >
       {user && (
         <button
