@@ -4,6 +4,7 @@ import NavBar from './navigation/NavBar';
 import BottomNavBar from './navigation/BottomNavBar';
 import { useUser } from '@auth0/nextjs-auth0';
 import Transition from './navigation/Transition';
+import ContactButton from './ContactButton';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useUser();
@@ -14,6 +15,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     <>
       <PageTransitionWrapper className="overflow-x-clip overflow-y-auto flex-1 grid-in-content relative">
         {user && <NavBar />}
+        <ContactButton></ContactButton>
         <SideBar />
         <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start w-full">
           {children}
