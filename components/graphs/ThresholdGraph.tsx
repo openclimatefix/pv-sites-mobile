@@ -40,27 +40,29 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   const [timeEnabled, setTimeEnabled] = useState(
     totalExpectedGeneration !== undefined
   );
-  const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
-    updateEnabled: timeEnabled,
-  });
-  const { timeFormatter, dayFormatter, weekdayFormatter } = useDateFormatter(
-    siteUUIDs[0]
+  const { currentTime, sunriseTime, sunsetTime } = useTime(
+    latitude,
+    longitude,
+    {
+      updateEnabled: timeEnabled,
+    }
   );
+  const { timeFormatter, weekdayFormatter } = useDateFormatter(siteUUIDs[0]);
 
   const thresholdCapacityKW = totalInstalledCapacityKw
     ? totalInstalledCapacityKw * graphThreshold
     : 1.5960000038146973;
 
   const graphData = useMemo(() => {
-    if (totalExpectedGeneration && dawnTime && duskTime) {
+    if (totalExpectedGeneration && sunriseTime && sunsetTime) {
       return generationDataOverDateRange(
         totalExpectedGeneration,
-        dawnTime,
-        duskTime
+        sunriseTime,
+        sunsetTime
       );
     }
     return null;
-  }, [totalExpectedGeneration, dawnTime, duskTime]);
+  }, [totalExpectedGeneration, sunriseTime, sunsetTime]);
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.generation_kw))
