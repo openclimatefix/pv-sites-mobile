@@ -89,6 +89,28 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     } else if (
       mockApiRoute ===
+      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182'
+    ) {
+      const forecastMultiple = [pvForecastJson] as UnparsedForecastData[];
+      res.status(200).json([
+        ...forecastMultiple.map((forecast) => ({
+          ...forecast,
+          forecast_values: fakeDates(forecast.forecast_values),
+        })),
+      ]);
+    } else if (
+      mockApiRoute ===
+      'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182'
+    ) {
+      const clearskyMultiple = [clearskyJson] as UnparsedClearSkyData[];
+      res.status(200).json([
+        ...clearskyMultiple.map((forecast) => ({
+          ...forecast,
+          clearsky_estimate: fakeDates(forecast.clearsky_estimate),
+        })),
+      ]);
+    } else if (
+      mockApiRoute ===
       'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
     ) {
       res.status(200).json(pvActualMultipleJson);

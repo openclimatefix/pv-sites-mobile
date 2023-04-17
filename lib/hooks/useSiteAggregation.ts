@@ -104,6 +104,10 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
     isLoading: isSiteListLoading,
   } = useSWR<SiteList>(`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`);
 
+  const sites = siteListData?.site_list?.filter((site) =>
+    siteUUIDs.includes(site.site_uuid)
+  );
+
   const {
     data: manyForecastData,
     error: manyForecastError,
@@ -122,7 +126,7 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
   } = useSWR(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL_GET
-    }/sites/pv_clearsky?site_uuids=${siteUUIDs.join(',')}`,
+    }/sites/clearsky_estimate?site_uuids=${siteUUIDs.join(',')}`,
     manyClearskyDataFetcher
   );
 
@@ -135,14 +139,12 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
     isSiteListLoading || isManyForecastLoading || isManyClearskyLoading;
 
   // Sum the installed capacity at all of the sites
-  const totalInstalledCapacityKw = siteListData
-    ? siteListData.site_list
-        .filter((site) => siteUUIDs.includes(site.site_uuid))
-        .reduce(
-          (prevTotalSiteCapacity, newSite) =>
-            prevTotalSiteCapacity + newSite.installed_capacity_kw,
-          0
-        )
+  const totalInstalledCapacityKw = sites
+    ? sites.reduce(
+        (prevTotalSiteCapacity, newSite) =>
+          prevTotalSiteCapacity + newSite.installed_capacity_kw,
+        0
+      )
     : undefined;
 
   let totalExpectedGeneration = expectedGenerationSum(manyForecastData);
@@ -156,4 +158,5 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
     isLoading,
   };
 };
+
 export default useSiteAggregation;
