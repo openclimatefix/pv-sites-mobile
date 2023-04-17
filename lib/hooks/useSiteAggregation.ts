@@ -126,7 +126,7 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
     manyClearskyDataFetcher
   );
 
-  const errorForecast = AggregateError([
+  const aggregateError = AggregateError([
     manyForecastError,
     siteListError,
     manyClearskyError,
@@ -152,7 +152,7 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
     totalInstalledCapacityKw,
     totalExpectedGeneration,
     totalClearskyData,
-    error: errorForecast,
+    error: aggregateError,
     isLoading,
   };
 };
