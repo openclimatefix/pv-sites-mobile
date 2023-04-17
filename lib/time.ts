@@ -49,7 +49,26 @@ export const useSiteTime = (
     [currentTime, times]
   );
 
-  return { currentTime, isDayTime, timezone, ...times };
+  function timeFormat(date: dayjs.Dayjs | Date) {
+    return dayjs(date).tz(timezone).format('h:mm A');
+  }
+
+  function dayFormat(date: dayjs.Dayjs | Date) {
+    return dayjs(date).tz(timezone).format('M/DD');
+  }
+
+  function weekdayFormat(date: dayjs.Dayjs | Date) {
+    return dayjs(date).tz(timezone).format('ddd h:mm A');
+  }
+
+  return {
+    currentTime,
+    isDayTime,
+    timeFormat,
+    dayFormat,
+    weekdayFormat,
+    ...times,
+  };
 };
 
 /**

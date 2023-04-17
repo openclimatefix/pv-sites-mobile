@@ -4,13 +4,12 @@ import { getNextThresholdIndex, graphThreshold } from 'lib/graphs';
 import dayjs from 'dayjs';
 import { useSiteData } from '~/lib/sites';
 import { Site } from '~/lib/types';
-import { timeFormat } from '~/lib/format';
 import { useSiteTime } from '~/lib/time';
 
 const SunnyTimeframe: FC<{ site: Site }> = ({ site }) => {
   const { forecastData, isLoading } = useSiteData(site.site_uuid);
   const [isRelativeTime, setIsRelativeTime] = useState(false);
-  const { timezone } = useSiteTime(site);
+  const { timeFormat } = useSiteTime(site);
 
   const thresholdCapacityKW = site.installed_capacity_kw * graphThreshold;
 
@@ -48,16 +47,14 @@ const SunnyTimeframe: FC<{ site: Site }> = ({ site }) => {
 
     // If we are under an hour, round to minutes
     if (difference < 1) {
-      difference = dayjs.duration(difference, 'hours').asMinutes();
+      difference = Math.round(dayjs.duration(difference, 'hours').asMinutes());
       timeUnit = difference ? 'Minute' : 'Minutes';
     }
 
     value = `${difference} ${timeUnit}`;
     sunnyText = aboveThreshold ? 'Sunny in' : 'Sunny for';
   } else {
-    value = timeFormat(
-      dayjs(forecastData.forecast_values[index].datetime_utc).tz(timezone)
-    );
+    value = timeFormat(forecastData.forecast_values[index].datetime_utc);
     sunnyText = aboveThreshold ? 'Sunny at' : 'Sunny until';
   }
 
