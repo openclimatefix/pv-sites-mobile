@@ -5,10 +5,12 @@ import dayjs from 'dayjs';
 import { useSiteData } from '~/lib/sites';
 import { Site } from '~/lib/types';
 import { timeFormat } from '~/lib/format';
+import { useSiteTime } from '~/lib/time';
 
 const SunnyTimeframe: FC<{ site: Site }> = ({ site }) => {
   const { forecastData, isLoading } = useSiteData(site.site_uuid);
   const [isRelativeTime, setIsRelativeTime] = useState(false);
+  const { timezone } = useSiteTime(site);
 
   const thresholdCapacityKW = site.installed_capacity_kw * graphThreshold;
 
@@ -53,7 +55,9 @@ const SunnyTimeframe: FC<{ site: Site }> = ({ site }) => {
     value = `${difference} ${timeUnit}`;
     sunnyText = aboveThreshold ? 'Sunny in' : 'Sunny for';
   } else {
-    value = timeFormat(forecastData.forecast_values[index].datetime_utc);
+    value = timeFormat(
+      dayjs(forecastData.forecast_values[index].datetime_utc).tz(timezone)
+    );
     sunnyText = aboveThreshold ? 'Sunny at' : 'Sunny until';
   }
 

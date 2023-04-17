@@ -1,4 +1,5 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
+import dayjs from 'dayjs';
 import { addTimePoint, makeGraphable } from 'lib/graphs';
 import { ChangeEventHandler, FC, useState } from 'react';
 import {
@@ -72,7 +73,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   const { totalExpectedGeneration, isLoading, totalClearskyData } =
     useSiteAggregation(sites);
   const [timeEnabled, setTimeEnabled] = useState(false);
-  const { currentTime } = useSiteTime(representativeSite, {
+  const { currentTime, timezone } = useSiteTime(representativeSite, {
     updateEnabled: timeEnabled,
   });
 
@@ -237,7 +238,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
               stroke="white"
               axisLine={false}
               tickFormatter={(point: GenerationDataPoint['datetime_utc']) =>
-                weekdayFormat(point)
+                weekdayFormat(dayjs(point).tz(timezone))
               }
               type="number"
             />
@@ -265,7 +266,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
                 'kW',
               ]}
               labelFormatter={(point: GenerationDataPoint['datetime_utc']) =>
-                weekdayFormat(point)
+                weekdayFormat(dayjs(point).tz(timezone))
               }
             />
             <Line

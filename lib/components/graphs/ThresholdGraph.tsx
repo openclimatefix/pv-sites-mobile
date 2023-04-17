@@ -28,6 +28,7 @@ import {
   getCurrentTimeGenerationIndex,
 } from '~/lib/generation';
 import { timeFormat, weekdayFormat } from '~/lib/format';
+import dayjs from 'dayjs';
 
 interface ThresholdGraphProps {
   sites: Site[];
@@ -40,9 +41,12 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const [timeEnabled, setTimeEnabled] = useState(
     totalExpectedGeneration !== undefined
   );
-  const { currentTime, sunrise, sunset } = useSiteTime(representativeSite, {
-    updateEnabled: timeEnabled,
-  });
+  const { currentTime, sunrise, sunset, timezone } = useSiteTime(
+    representativeSite,
+    {
+      updateEnabled: timeEnabled,
+    }
+  );
 
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
@@ -135,9 +139,9 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     if (numForecastValues <= 0) {
       return null;
     }
-    const startTime = timeFormat(new Date(graphData[0].datetime_utc));
+    const startTime = timeFormat(dayjs(graphData[0].datetime_utc).tz(timezone));
     const endTime = timeFormat(
-      new Date(graphData[numForecastValues - 1].datetime_utc)
+      dayjs(graphData[numForecastValues - 1].datetime_utc).tz(timezone)
     );
 
     return (
@@ -205,7 +209,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     if (slope) {
       const { type, endIndex } = slope;
       const slopeForecastDate = timeFormat(
-        new Date(totalExpectedGeneration[endIndex].datetime_utc)
+        dayjs(totalExpectedGeneration[endIndex].datetime_utc).tz(timezone)
       );
 
       switch (type) {
@@ -307,7 +311,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
                   'kW',
                 ]}
                 labelFormatter={(point: GenerationDataPoint['datetime_utc']) =>
-                  weekdayFormat(point)
+                  weekdayFormat(dayjs(point).tz(timezone))
                 }
               />
               <Area
