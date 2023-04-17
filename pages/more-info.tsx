@@ -1,9 +1,9 @@
 import content from '../content/power-card-content.json';
 import { Carousel } from 'react-responsive-carousel';
-import PowerInfoCard from '~/components/PowerInfoCard';
+import PowerInfoCard from '~/lib/components/PowerInfoCard';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Image from 'next/image';
-import { withSites } from '~/lib/utils';
+import { withSites } from '~/lib/sites';
 
 const MoreInfo = () => {
   return (

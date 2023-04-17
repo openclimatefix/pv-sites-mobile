@@ -1,15 +1,14 @@
 import { useRouter } from 'next/router';
-import { withSites } from '~/lib/utils';
-import Dashboard from '~/components/Dashboard';
-import { useSiteData } from '~/lib/hooks';
-import { Site } from '~/lib/types';
-import useNoScroll from '~/lib/hooks/useNoScroll';
 import { useEffect, useState } from 'react';
+import Dashboard from '~/lib/components/Dashboard';
+import { useSiteData, withSites } from '~/lib/sites';
+import { useNoScroll } from '~/lib/utils';
 
 const SiteDashboard = () => {
   const { query } = useRouter();
   const [persistedUUID, setPersistedUUID] = useState(query.uuid);
 
+  // Handles this page's transition effect
   useEffect(() => {
     if (query.uuid) {
       setPersistedUUID(query.uuid);
@@ -18,11 +17,19 @@ const SiteDashboard = () => {
 
   useNoScroll();
 
-  const { siteData } = useSiteData(persistedUUID as string);
-  const siteUUIDs = { site_list: [siteData as Site] };
-
-  return <Dashboard siteUUIDs={siteUUIDs} />;
+  const { site } = useSiteData(persistedUUID as string);
+  return <Dashboard sites={[site!]} />;
 };
 
+export const getServerSideProps = withSites({
+  async getServerSideProps(ctx) {
+    const { sites, query } = ctx;
+    if (!sites.map((site) => site.site_uuid).includes(query.uuid as string)) {
+      return {
+        notFound: true,
+      };
+    }
+  },
+});
+
 export default SiteDashboard;
-export const getServerSideProps = withSites();

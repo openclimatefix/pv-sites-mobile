@@ -1,4 +1,3 @@
-import { addMilliseconds, subDays } from 'date-fns';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
@@ -7,7 +6,6 @@ import {
   getLinkedVendors,
   testClientID,
 } from '~/lib/enode';
-import { parseNowcastingDatetime } from '~/lib/hooks/utils';
 import {
   UnparsedActualData,
   UnparsedClearSkyData,
@@ -20,6 +18,8 @@ import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
+import { parseNowcastingDatetime } from '~/lib/api';
+import dayjs from 'dayjs';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids } = req.query;
@@ -127,7 +127,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/pv_clearsky?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
+      'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
     ) {
       const clearskyMultiple = pvClearskyMultipleJson as UnparsedClearSkyData[];
       res.status(200).json([
@@ -177,14 +177,14 @@ function fakeDates(forecastData: any[], key = 'target_datetime_utc') {
   newStart.setUTCMinutes(oldStart.getUTCMinutes());
   newStart.setUTCSeconds(0);
   newStart.setUTCMilliseconds(0);
-  newStart = subDays(newStart, 1);
+  newStart = dayjs(newStart).subtract(1, 'days').toDate();
   const difference = newStart.getTime() - oldStart.getTime();
 
   return forecastData.map((value) => {
     const date = new Date(parseNowcastingDatetime(value[key]));
     return {
       ...value,
-      [key]: addMilliseconds(date, difference).toISOString(),
+      [key]: dayjs(date).add(difference).toISOString(),
     };
   });
 }

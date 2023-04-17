@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
-import { NowcastingLogo } from '~/components/icons/NowcastingLogo';
 import Link from 'next/link';
+import { withSites } from '~/lib/sites';
+import Image from 'next/image';
 
 const Logout = () => {
   const { user } = useUser();
@@ -20,7 +21,18 @@ const Logout = () => {
     <div className="h-screen w-screen bg-ocf-black">
       <div className="flex flex-col justify-between items-center h-1/2">
         <div className="flex flex-row justify-center w-screen mt-24">
-          <NowcastingLogo width={300} height={120} />
+          <a
+            href="https://www.openclimatefix.org/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Image
+              src="/nowcasting-secondary.svg"
+              alt="Nowcasting logo"
+              width={300}
+              height={120}
+            />
+          </a>
         </div>
         <h1 className="font-bold text-4xl mt-20 text-center text-ocf-gray w-[200px]">
           See you next time!
@@ -38,3 +50,5 @@ const Logout = () => {
 };
 
 export default Logout;
+
+export const getServerSideProps = withSites();

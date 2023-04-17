@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { withSites } from '../../lib/utils';
-import SiteDetails from '~/components/SiteDetails';
+import SiteDetails from '~/lib/components/SiteDetails';
+import { withSites } from '~/lib/sites';
 
 const NewSiteDetails: FC = () => {
   return <SiteDetails />;

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { FC } from 'react';
 import useSWR from 'swr';
 import { Inverter } from '~/lib/enode';
-import { withSites } from '~/lib/utils';
+import { withSites } from '~/lib/sites';
 
 type Props = {
   inverters: Inverter[] | null;
