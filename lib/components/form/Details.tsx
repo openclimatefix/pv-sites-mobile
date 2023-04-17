@@ -6,10 +6,9 @@ import Spinner from '~/lib/components/Spinner';
 
 import Button from '~/lib/components/Button';
 import { useFormContext } from '~/lib/form/context';
+import { Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from '../LocationInput';
-import { useSiteData } from '~/lib/sites';
-import { Site } from '~/lib/types';
 
 /**
  * Prevent users from entering negative numbers into input fields
