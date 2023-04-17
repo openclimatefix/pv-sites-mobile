@@ -2,11 +2,9 @@ import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import Location from '~/components/form/Location';
 import Details from './form/Details';
-import { Site } from '~/lib/types';
 import { useSiteData } from '~/lib/hooks';
 import { NowcastingLogo } from './icons/NavbarIcons';
 import BackButton from './BackButton';
-import { useUser } from '@auth0/nextjs-auth0';
 import useSites from '~/lib/hooks/useSites';
 
 enum Page {
