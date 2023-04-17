@@ -94,10 +94,10 @@ const expectedClearskySum = (manyClearskyData: ClearSkyData[] | undefined) => {
 /**
  * Sums the capacity and forecasts of multiple solar sites across
  * all dates reported by the pv-sites API.
- * @param allSiteUUID A list of UUIDs corresponding to multiple solar sites
+ * @param siteUUIDs A list of UUIDs corresponding to multiple solar sites
  * @return Aggregated predictions sorted by datetime
  */
-const useSiteAggregation = (allSiteUUID: string[]) => {
+const useSiteAggregation = (siteUUIDs: string[]) => {
   const {
     data: siteListData,
     error: siteListError,
@@ -105,7 +105,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
   } = useSWR<SiteList>(`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`);
 
   const sites = siteListData?.site_list?.filter((site) =>
-    allSiteUUID.includes(site.site_uuid)
+    siteUUIDs.includes(site.site_uuid)
   );
 
   const {
@@ -115,7 +115,7 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
   } = useSWR(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL_GET
-    }/sites/pv_forecast?site_uuids=${allSiteUUID.join(',')}`,
+    }/sites/pv_forecast?site_uuids=${siteUUIDs.join(',')}`,
     manyForecastDataFetcher
   );
 
@@ -126,12 +126,17 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
   } = useSWR(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL_GET
-    }/sites/clearsky_estimate?site_uuids=${allSiteUUID.join(',')}`,
+    }/sites/clearsky_estimate?site_uuids=${siteUUIDs.join(',')}`,
     manyClearskyDataFetcher
   );
 
-  const errorForecast = AggregateError([manyForecastError, siteListError]);
-  const isLoading = isSiteListLoading || isManyForecastLoading;
+  const aggregateError = AggregateError([
+    manyForecastError,
+    siteListError,
+    manyClearskyError,
+  ]);
+  const isLoading =
+    isSiteListLoading || isManyForecastLoading || isManyClearskyLoading;
 
   // Sum the installed capacity at all of the sites
   const totalInstalledCapacityKw = sites
@@ -149,8 +154,9 @@ const useSiteAggregation = (allSiteUUID: string[]) => {
     totalInstalledCapacityKw,
     totalExpectedGeneration,
     totalClearskyData,
-    error: errorForecast,
+    error: aggregateError,
     isLoading,
   };
 };
+
 export default useSiteAggregation;
