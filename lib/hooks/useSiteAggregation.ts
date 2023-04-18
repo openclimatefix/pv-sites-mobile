@@ -1,9 +1,6 @@
 import useSWR from 'swr';
 import { manyClearskyDataFetcher, manyForecastDataFetcher } from './utils';
-import {
-  GenerationDataPoint,
-  SiteList,
-} from '../types';
+import { GenerationDataPoint, SiteList } from '../types';
 
 const sumGenerationData = (
   data: GenerationDataPoint[][] | undefined

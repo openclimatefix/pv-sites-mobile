@@ -1,7 +1,9 @@
 import { Fetcher } from 'swr';
 import {
+  ActualData,
   ClearSkyData,
   ForecastData,
+  UnparsedActualData,
   UnparsedClearSkyData,
   UnparsedForecastData,
 } from '../types';
@@ -61,6 +63,41 @@ export const manyForecastDataFetcher: Fetcher<Array<ForecastData>> = async (
   return allUnparsedForecasts.map((unparsedForecast) =>
     parseForecastData(unparsedForecast)
   );
+};
+
+function parseActualData(unparsedActualData: UnparsedActualData): ActualData {
+  const pv_actual_values: ActualData['pv_actual_values'] =
+    unparsedActualData.pv_actual_values.map((actual_datapoint) => {
+      return {
+        generation_kw: actual_datapoint.actual_generation_kw,
+        datetime_utc: parseNowcastingDatetime(actual_datapoint.datetime_utc),
+      };
+    });
+
+  return {
+    ...unparsedActualData,
+    pv_actual_values,
+  };
+}
+
+export const manyActualsFetcher: Fetcher<Array<ActualData>> = async (
+  url: string
+) => {
+  const allUnparsedActuals: Array<UnparsedActualData> = await fetch(url).then(
+    (res) => res.json()
+  );
+
+  return allUnparsedActuals.map((unparsedActualData) =>
+    parseActualData(unparsedActualData)
+  );
+};
+
+export const actualsFetcher: Fetcher<ActualData> = async (url: string) => {
+  const unparsedData: UnparsedActualData = await fetch(url).then((res) =>
+    res.json()
+  );
+
+  return parseActualData(unparsedData);
 };
 
 function parseClearSkyData(

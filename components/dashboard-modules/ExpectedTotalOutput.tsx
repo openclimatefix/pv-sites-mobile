@@ -23,7 +23,8 @@ export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
 };
 
 const ExpectedTotalOutput: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
-  const { isLoading, totalForecastedGeneration } = useSiteAggregation(siteUUIDs);
+  const { isLoading, totalForecastedGeneration } =
+    useSiteAggregation(siteUUIDs);
   return (
     <NumberDisplay
       title="Today's Expected Output"
