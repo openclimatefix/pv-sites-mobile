@@ -150,7 +150,7 @@ const SideBar = () => {
       className={`z-50 transition-all duration-500 h-full fixed top-0 ${
         isSideBarOpen
           ? 'translate-x-0 shadow-lg shadow-ocf-black'
-          : '-translate-x-84'
+          : '-translate-x-[100%]'
       }`}
       // @ts-ignore
       inert={!isSideBarOpen ? '' : null}
