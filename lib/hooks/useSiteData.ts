@@ -9,17 +9,18 @@ import { clearSkyFetcher, forecastFetcher } from './utils';
  * @returns forecasted and site data
  */
 const useSiteData = (siteUUID: string) => {
+  const { sites: siteListData, error: siteListError } = useSites();
+
   const { data: forecastData, error: forecastError } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/pv_forecast`,
     forecastFetcher
   );
 
-  const { sites: siteListData, error: siteListError } = useSites();
-
   const { data: clearskyData, error: clearskyError } = useSWR<ClearSkyData>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/clearsky_estimate`,
     clearSkyFetcher
   );
+
 
   const error = AggregateError([forecastError, siteListError, clearskyError]);
   const isLoading = !siteListData || !forecastData || !clearskyData;
