@@ -29,10 +29,10 @@ const getBestRecommendationIndex = (currentOutput: number) => {
 };
 
 const EnergyRecommendation: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
-  const { isLoading, totalExpectedGeneration } = useSiteAggregation(siteUUIDs);
+  const { isLoading, totalForecastedGeneration } = useSiteAggregation(siteUUIDs);
   const { latitude, longitude } = useSiteData(siteUUIDs[0]);
-  const currentOutput = totalExpectedGeneration
-    ? getCurrentTimeGeneration(totalExpectedGeneration)
+  const currentOutput = totalForecastedGeneration
+    ? getCurrentTimeGeneration(totalForecastedGeneration)
     : undefined;
 
   const recommendationIdx = currentOutput

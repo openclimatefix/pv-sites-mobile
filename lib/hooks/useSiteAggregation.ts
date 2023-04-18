@@ -1,8 +1,6 @@
 import useSWR from 'swr';
 import { manyClearskyDataFetcher, manyForecastDataFetcher } from './utils';
 import {
-  ClearSkyData,
-  ForecastData,
   GenerationDataPoint,
   SiteList,
 } from '../types';
@@ -10,7 +8,7 @@ import {
 const sumGenerationData = (
   data: GenerationDataPoint[][] | undefined
 ): GenerationDataPoint[] | undefined => {
-  let totalExpectedGeneration: GenerationDataPoint[] | undefined = undefined;
+  let totalForecastedGeneration: GenerationDataPoint[] | undefined = undefined;
 
   if (data) {
     const forecastMap = new Map<number, number>();
@@ -36,7 +34,7 @@ const sumGenerationData = (
     }
 
     // Sort the aggregated forecasts based on datetime
-    totalExpectedGeneration = Array.from(
+    totalForecastedGeneration = Array.from(
       forecastMap,
       ([datetime_utc, generation_kw]) => {
         return {
@@ -47,7 +45,7 @@ const sumGenerationData = (
     ).sort((a, b) => a.datetime_utc.getTime() - b.datetime_utc.getTime());
   }
 
-  return totalExpectedGeneration;
+  return totalForecastedGeneration;
 };
 
 /**
@@ -106,7 +104,7 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
       )
     : undefined;
 
-  let totalExpectedGeneration = sumGenerationData(
+  let totalForecastedGeneration = sumGenerationData(
     manyForecastData?.map((f) => f.forecast_values)
   );
   let totalClearskyData = sumGenerationData(
@@ -115,7 +113,7 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
 
   return {
     totalInstalledCapacityKw,
-    totalExpectedGeneration,
+    totalForecastedGeneration,
     totalClearskyData,
     error: aggregateError,
     isLoading,
