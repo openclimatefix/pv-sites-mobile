@@ -20,7 +20,6 @@ import {
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 import useTime from '~/lib/hooks/useTime';
-import { manyClearskyDataFetcher } from '~/lib/hooks/utils';
 import { GenerationDataPoint } from '~/lib/types';
 
 function getGraphStartDate(currentTime: number, totalHours: number) {
