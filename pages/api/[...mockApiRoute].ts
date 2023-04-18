@@ -117,7 +117,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(200).json([
         ...actualMultiple.map((actuals) => ({
           ...actuals,
-          pv_actual_values: fakeDates(actuals.pv_actual_values, "datetime_utc"),
+          pv_actual_values: fakeDates(actuals.pv_actual_values, 'datetime_utc'),
         })),
       ]);
     } else if (
@@ -128,7 +128,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(200).json([
         ...actualMultiple.map((actuals) => ({
           ...actuals,
-          pv_actual_values: fakeDates(actuals.pv_actual_values, "datetime_utc"),
+          pv_actual_values: fakeDates(actuals.pv_actual_values, 'datetime_utc'),
         })),
       ]);
     } else if (

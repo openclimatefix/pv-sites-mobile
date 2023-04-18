@@ -73,8 +73,12 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   // TODO: we want a aggregate form of the clearskyData variable
   const { latitude, longitude } = useSiteData(siteUUIDs[0]);
 
-  const { totalForecastedGeneration, isLoading, totalClearskyGeneration, totalActualGeneration } =
-    useSiteAggregation(siteUUIDs);
+  const {
+    totalForecastedGeneration,
+    isLoading,
+    totalClearskyGeneration,
+    totalActualGeneration,
+  } = useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
