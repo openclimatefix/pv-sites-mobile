@@ -4,39 +4,6 @@ import { LogoutIcon } from './icons';
 import router from 'next/router';
 import Link, { LinkProps } from 'next/link';
 
-type MenuLinkProps = {
-  linkProps: LinkProps;
-  label: string;
-  svg: ReactNode;
-  currentPath: string;
-};
-
-const MenuLink: React.FC<MenuLinkProps> = ({
-  linkProps,
-  label,
-  svg,
-  currentPath,
-}) => {
-  const textColor =
-    linkProps.href === currentPath ? 'text-amber' : 'text-white';
-  return (
-    <Link {...linkProps}>
-      <a>
-        <div
-          className={`px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform`}
-        >
-          <div className="w-[20px] h-[18px]">{svg}</div>
-          <span
-            className={`ml-[40px] font-medium flex-1 align-center ${textColor} text-[12px] mt-[6px]`}
-          >
-            {label}
-          </span>
-        </div>
-      </a>
-    </Link>
-  );
-};
-
 const ContactButton = () => {
   const { user } = useUser();
   const firstName = user && user.given_name ? user.given_name.toString() : '';
@@ -71,14 +38,24 @@ const ContactButton = () => {
           </div>
           <div className="w-full border-ocf-gray-800 border-[.5px] mt-[10px]"></div>
           <div className="flex flex-col gap-3">
-            <MenuLink
-              linkProps={{
-                href: `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`,
-              }}
-              label="Sign Out"
-              svg={<LogoutIcon />}
-              currentPath={router.asPath}
-            />
+            <Link
+              href={`/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`}
+            >
+              <a>
+                <div
+                  className={`px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform`}
+                >
+                  <div className="w-[20px] h-[18px]">
+                    <LogoutIcon />
+                  </div>
+                  <span
+                    className={`ml-[40px] font-medium flex-1 align-center text-white text-[12px] mt-[6px]`}
+                  >
+                    Sign Out
+                  </span>
+                </div>
+              </a>
+            </Link>
           </div>
         </div>
       )}
