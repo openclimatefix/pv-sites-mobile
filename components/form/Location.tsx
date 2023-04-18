@@ -7,11 +7,17 @@ import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
 
 interface Props {
   nextPageCallback: () => void;
+  longitude?: number;
+  latitude?: number;
 }
 
-const Location: FC<Props> = ({ nextPageCallback }) => {
+const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
   const { siteCoordinates, setSiteCoordinates } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
+
+  // If the site is being edited, show the original coordinates
+  siteCoordinates.longitude = longitude || siteCoordinates.longitude;
+  siteCoordinates.latitude = latitude || siteCoordinates.latitude;
 
   const onClick = () => {
     nextPageCallback();
@@ -25,7 +31,7 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
   return (
     <>
       <div
-        className="flex flex-col gap-2 relative h-[calc(100vh-var(--nav-height))] md:h-[calc(75vh)] w-screen bg-mapbox-gray-1000"
+        className="flex flex-col justify-between py-4 md:py-0 gap-2 relative h-[calc(100vh-var(--nav-height))] md:h-[calc(75vh)] w-screen bg-mapbox-gray-1000"
         id="rootDiv"
       >
         <div className="flex-col justify-end hidden md:flex h-8 short:h-0"></div>
@@ -47,13 +53,15 @@ const Location: FC<Props> = ({ nextPageCallback }) => {
             canEdit={true}
           />
         </div>
-        <div className="md:hidden flex justify-center md:justify-end md:mt-20 mt-10 self-center w-full h-14">
+        {/* next button for mobile */}
+        <div className="md:hidden flex mb-10 justify-center self-center w-full h-14">
           <Button disabled={!isSubmissionEnabled} onClick={onClick}>
             Next
           </Button>
         </div>
       </div>
-      <div className="hidden absolute md:flex md:flex-row md:justify-end -translate-x-1/2 bottom-12 left-1/2 w-3/4 h-14">
+      {/* next button for desktop */}
+      <div className="hidden absolute md:flex md:flex-row md:justify-end -translate-x-1/2 bottom-0 left-1/2 w-3/4 h-14">
         <Button disabled={!isSubmissionEnabled} onClick={nextPageCallback}>
           Next
         </Button>
