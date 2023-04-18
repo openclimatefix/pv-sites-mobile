@@ -111,9 +111,26 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
+      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182'
+    ) {
+      const actualMultiple = [pvActualJson] as UnparsedActualData[];
+      res.status(200).json([
+        ...actualMultiple.map((actuals) => ({
+          ...actuals,
+          pv_actual_values: fakeDates(actuals.pv_actual_values, 'datetime_utc'),
+        })),
+      ]);
+    } else if (
+      mockApiRoute ===
       'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
     ) {
-      res.status(200).json(pvActualMultipleJson);
+      const actualMultiple = pvActualMultipleJson as UnparsedActualData[];
+      res.status(200).json([
+        ...actualMultiple.map((actuals) => ({
+          ...actuals,
+          pv_actual_values: fakeDates(actuals.pv_actual_values, 'datetime_utc'),
+        })),
+      ]);
     } else if (
       mockApiRoute ===
       'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'

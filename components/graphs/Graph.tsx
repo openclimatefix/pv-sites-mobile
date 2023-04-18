@@ -73,8 +73,12 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   // TODO: we want a aggregate form of the clearskyData variable
   const { latitude, longitude } = useSiteData(siteUUIDs[0]);
 
-  const { totalExpectedGeneration, isLoading, totalClearskyData } =
-    useSiteAggregation(siteUUIDs);
+  const {
+    totalForecastedGeneration,
+    isLoading,
+    totalClearskyGeneration,
+    totalActualGeneration,
+  } = useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
@@ -91,11 +95,11 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   endDate.setHours(endDate.getHours() + 48);
 
   const forecastDataTrimmed =
-    totalExpectedGeneration &&
+    totalForecastedGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          totalExpectedGeneration,
+          totalForecastedGeneration,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
@@ -103,12 +107,20 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
       )
     );
 
+  const actualDataTrimmed =
+    totalActualGeneration &&
+    generationDataOverDateRange(
+      totalActualGeneration,
+      getGraphStartDate(currentTime, timeRange),
+      new Date(currentTime)
+    );
+
   const clearSkyEstimateTrimmed =
-    totalClearskyData &&
+    totalClearskyGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          totalClearskyData,
+          totalClearskyGeneration,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
@@ -280,6 +292,14 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
               dot={false}
               activeDot={{ r: 8 }}
               onAnimationEnd={() => setTimeEnabled(true)}
+            />
+            <Line
+              data={actualDataTrimmed}
+              type="monotone"
+              dataKey="generation_kw"
+              stroke="#FFFFFF"
+              dot={false}
+              activeDot={{ r: 8 }}
             />
             <Line
               data={forecastDataTrimmed}

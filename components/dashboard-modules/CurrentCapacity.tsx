@@ -5,11 +5,11 @@ import { getCurrentTimeGeneration } from '~/lib/utils';
 import NumberDisplay from './NumberDisplay';
 
 const CurrentCapacity: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
-  const { totalInstalledCapacityKw, totalExpectedGeneration, isLoading } =
+  const { totalInstalledCapacityKw, totalForecastedGeneration, isLoading } =
     useSiteAggregation(siteUUIDs);
 
-  let currentOutput = totalExpectedGeneration
-    ? getCurrentTimeGeneration(totalExpectedGeneration)
+  let currentOutput = totalForecastedGeneration
+    ? getCurrentTimeGeneration(totalForecastedGeneration)
     : null;
 
   return (
