@@ -61,7 +61,7 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       <RecommendationDisplay
         src="/nighttime.svg"
         alt="Moon and stars"
-        description="Solar output is currently 0"
+        description="Solar output is currently 0 kW"
       />
     );
   } else if (recommendationIdx) {

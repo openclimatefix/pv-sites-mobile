@@ -56,7 +56,6 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
 
     if (!didSubmit) {
       setDidSubmit(true);
-      // TODO: Add schema validation with zod
       await postPanelData();
       nextPageCallback();
     }

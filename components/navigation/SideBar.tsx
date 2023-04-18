@@ -8,7 +8,9 @@ import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '../../lib/hooks';
 
-import { useSites, useSiteAggregation } from '../../lib/hooks';
+import { useSites, useSiteData, useSiteAggregation } from '../../lib/hooks';
+import { getCurrentTimeGeneration } from '~/lib/utils';
+import { useMemo } from 'react';
 
 type MenuLinkProps = {
   linkProps: LinkProps;
@@ -45,22 +47,55 @@ const MenuLink: React.FC<MenuLinkProps> = ({
 
 type DashboardLinkProps = {
   siteName: string;
+  linkProps: LinkProps;
+  currentPath: string;
+  siteUUID?: string;
+  allSiteUUID?: string[];
 };
 
-const DashboardLink: React.FC<DashboardLinkProps> = ({ siteName }) => {
+const DashboardLink: React.FC<DashboardLinkProps> = ({
+  linkProps,
+  siteName,
+  currentPath,
+  siteUUID,
+  allSiteUUID,
+}) => {
+  const textColor =
+    linkProps.href === currentPath ? 'text-white' : 'text-ocf-gray-800';
+  const borderColor =
+    linkProps.href === currentPath ? 'border-amber' : 'border-ocf-gray-1000';
+
+  const { forecastData } = useSiteData(siteUUID || '');
+  const { totalExpectedGeneration } = useSiteAggregation(allSiteUUID || []);
+
+  const currentOutput = useMemo(() => {
+    if (allSiteUUID) {
+      return totalExpectedGeneration ? getCurrentTimeGeneration(totalExpectedGeneration) : undefined;
+    }
+    return forecastData
+      ? getCurrentTimeGeneration(forecastData.forecast_values)
+      : undefined;
+  }, [forecastData, allSiteUUID, totalExpectedGeneration]);
+
   return (
-    <div className="border-ocf-gray-1000 border-2 flex-1 p-5 flex flex-col justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-full">
+    <Link {...linkProps}>
       <div
-        className={`mb-2 text-lg text-ocf-gray font-semibold transition-all md:font-medium md:leading-none`}
+        className={`${borderColor} border flex-1 p-5 flex flex-col justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-full`}
       >
-        {siteName}
+        <div
+          className={`mb-2 text-lg ${textColor} font-semibold transition-all md:font-medium md:leading-none`}
+        >
+          {siteName}
+        </div>
+        {currentOutput !== undefined && (
+          <div
+            className={`text-md ${textColor} font-medium leading-none transition-all md:leading-none`}
+          >
+            Current output: {currentOutput} kW
+          </div>
+        )}
       </div>
-      <div
-        className={`text-md text-ocf-gray font-medium leading-none transition-all md:leading-none`}
-      >
-        Current output: 5 kW
-      </div>
-    </div>
+    </Link>
   );
 };
 
@@ -85,10 +120,18 @@ const SideBar = () => {
 
   const generateSiteLinks = () => {
     if (sites) {
-      // TODO: limit to 5 maps
-      return sites.map((site) => {
-        <DashboardLink key={site.client_site_id} siteName={site.client_site_name}/>;
-      });
+      // TODO: remove hard-coded limit of 5 solar panel sites
+      return sites
+        .filter((_, idx) => idx < 5)
+        .map((site, idx) => (
+          <DashboardLink
+            key={site.client_site_id}
+            siteName={site.client_site_name || `Site ${idx + 1}`}
+            currentPath={router.asPath}
+            linkProps={{ href: `/dashboard/${site.site_uuid}` }}
+            siteUUID={site.site_uuid}
+          />
+        ));
     }
     return null;
   };
@@ -116,7 +159,12 @@ const SideBar = () => {
         </div>
         <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
           <div className="flex flex-col gap-3">
-            {/* <DashboardLink /> */}
+          <DashboardLink
+            siteName="Aggregate"
+            currentPath={router.asPath}
+            linkProps={{ href: `/dashboard/` }}
+            allSiteUUID={sites?.map((site) => site.site_uuid)}
+          />
 
             <h1 className="text-white text-lg mt-5 font-normal">
               Site Dashboards
