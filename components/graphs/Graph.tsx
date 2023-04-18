@@ -108,7 +108,7 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     generationDataOverDateRange(
       totalActualGeneration,
       getGraphStartDate(currentTime, timeRange),
-      getGraphEndDate(currentTime, timeRange)
+      new Date(currentTime)
     );
 
   const clearSkyEstimateTrimmed =
@@ -293,7 +293,7 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
               data={actualDataTrimmed}
               type="monotone"
               dataKey="generation_kw"
-              stroke="#FFD053"
+              stroke="#FFFFFF"
               dot={false}
               activeDot={{ r: 8 }}
             />
