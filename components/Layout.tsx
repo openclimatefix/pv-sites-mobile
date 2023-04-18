@@ -8,9 +8,9 @@ import { useRouter } from 'next/router';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useUser();
-  const { asPath: path } = useRouter();
 
   const PageTransitionWrapper = user ? Transition : 'div';
+  const { asPath: path } = useRouter();
   const showNav = !!user && path != '/site-details';
 
   return (

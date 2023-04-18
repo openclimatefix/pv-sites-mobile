@@ -27,11 +27,9 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
             Solar Activity
           </h2>
         </div>
-        {!isAggregate && (
-          <div className="grid-in-Sunny">
-            <SunnyTimeframe siteUUID={sites[0]} />
-          </div>
-        )}
+        <div className="grid-in-Sunny">
+          <SunnyTimeframe siteUUID={sites[0]} />
+        </div>
         <div className="grid-in-Recommendation">
           <EnergyRecommendation siteUUIDs={sites} />
         </div>
@@ -49,11 +47,9 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
         <div className="grid-in-Current-Output md:hidden">
           <CurrentOutput siteUUID={sites[0]} />
         </div>
-        {!isAggregate && (
-          <div className="grid-in-Weather-Icons">
-            <WeatherCard siteUUID={sites[0]} />
-          </div>
-        )}
+        <div className="grid-in-Weather-Icons">
+          <WeatherCard siteUUID={sites[0]} />
+        </div>
         <div className="grid-in-Graph">
           <Graph siteUUIDs={sites} />
         </div>
