@@ -73,7 +73,7 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   // TODO: we want a aggregate form of the clearskyData variable
   const { latitude, longitude } = useSiteData(siteUUIDs[0]);
 
-  const { totalForecastedGeneration, isLoading, totalClearskyGeneration } =
+  const { totalForecastedGeneration, isLoading, totalClearskyGeneration, totalActualGeneration } =
     useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
@@ -101,6 +101,14 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
         ),
         new Date(currentTime)
       )
+    );
+
+  const actualDataTrimmed =
+    totalActualGeneration &&
+    generationDataOverDateRange(
+      totalActualGeneration,
+      getGraphStartDate(currentTime, timeRange),
+      getGraphEndDate(currentTime, timeRange)
     );
 
   const clearSkyEstimateTrimmed =
@@ -280,6 +288,14 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
               dot={false}
               activeDot={{ r: 8 }}
               onAnimationEnd={() => setTimeEnabled(true)}
+            />
+            <Line
+              data={actualDataTrimmed}
+              type="monotone"
+              dataKey="generation_kw"
+              stroke="#FFD053"
+              dot={false}
+              activeDot={{ r: 8 }}
             />
             <Line
               data={forecastDataTrimmed}
