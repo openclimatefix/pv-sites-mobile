@@ -1,5 +1,9 @@
 import useSWR from 'swr';
-import { manyClearskyDataFetcher, manyForecastDataFetcher } from './utils';
+import {
+  manyActualsFetcher,
+  manyClearskyDataFetcher,
+  manyForecastDataFetcher,
+} from './utils';
 import { GenerationDataPoint, SiteList } from '../types';
 
 const sumGenerationData = (
@@ -74,6 +78,17 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
   );
 
   const {
+    data: manyActualData,
+    error: manyActualError,
+    isLoading: isManyActualLoading,
+  } = useSWR(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    }/sites/pv_actual?site_uuids=${siteUUIDs.join(',')}`,
+    manyActualsFetcher
+  );
+
+  const {
     data: manyClearskyData,
     error: manyClearskyError,
     isLoading: isManyClearskyLoading,
@@ -86,11 +101,15 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
 
   const aggregateError = AggregateError([
     manyForecastError,
-    siteListError,
+    manyActualError,
     manyClearskyError,
+    siteListError,
   ]);
   const isLoading =
-    isSiteListLoading || isManyForecastLoading || isManyClearskyLoading;
+    isSiteListLoading ||
+    isManyForecastLoading ||
+    isManyClearskyLoading ||
+    isManyActualLoading;
 
   // Sum the installed capacity at all of the sites
   const totalInstalledCapacityKw = sites
@@ -104,14 +123,18 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
   let totalForecastedGeneration = sumGenerationData(
     manyForecastData?.map((f) => f.forecast_values)
   );
-  let totalClearskyData = sumGenerationData(
+  let totalClearskyGeneration = sumGenerationData(
     manyClearskyData?.map((c) => c.clearsky_estimate)
+  );
+  let totalActualGeneration = sumGenerationData(
+    manyActualData?.map((a) => a.pv_actual_values)
   );
 
   return {
     totalInstalledCapacityKw,
     totalForecastedGeneration,
-    totalClearskyData,
+    totalActualGeneration,
+    totalClearskyGeneration,
     error: aggregateError,
     isLoading,
   };

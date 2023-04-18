@@ -73,7 +73,7 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   // TODO: we want a aggregate form of the clearskyData variable
   const { latitude, longitude } = useSiteData(siteUUIDs[0]);
 
-  const { totalForecastedGeneration, isLoading, totalClearskyData } =
+  const { totalForecastedGeneration, isLoading, totalClearskyGeneration } =
     useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
@@ -104,11 +104,11 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     );
 
   const clearSkyEstimateTrimmed =
-    totalClearskyData &&
+    totalClearskyGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          totalClearskyData,
+          totalClearskyGeneration,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
