@@ -120,13 +120,13 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
       )
     : undefined;
 
-  let totalForecastedGeneration = sumGenerationData(
+  const totalForecastedGeneration = sumGenerationData(
     manyForecastData?.map((f) => f.forecast_values)
   );
-  let totalClearskyGeneration = sumGenerationData(
+  const totalClearskyGeneration = sumGenerationData(
     manyClearskyData?.map((c) => c.clearsky_estimate)
   );
-  let totalActualGeneration = sumGenerationData(
+  const totalActualGeneration = sumGenerationData(
     manyActualData?.map((a) => a.pv_actual_values)
   );
 
