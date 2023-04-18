@@ -30,37 +30,39 @@ import { getTrendAfterIndex } from 'lib/utils';
 import { useSiteData } from 'lib/hooks';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
 import useTime from '~/lib/hooks/useTime';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 import { GenerationDataPoint } from '~/lib/types';
 
-const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const {
-    forecastData,
+const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  const { latitude, longitude, isLoading } = useSiteData(siteUUIDs[0]);
+  const { totalExpectedGeneration, totalInstalledCapacityKw } =
+    useSiteAggregation(siteUUIDs);
+  const [timeEnabled, setTimeEnabled] = useState(
+    totalExpectedGeneration !== undefined
+  );
+  const { currentTime, sunriseTime, sunsetTime } = useTime(
     latitude,
     longitude,
-    installed_capacity_kw,
-    isLoading,
-  } = useSiteData(siteUUID);
-  const [timeEnabled, setTimeEnabled] = useState(forecastData !== undefined);
-  const { currentTime, duskTime, dawnTime } = useTime(latitude, longitude, {
-    updateEnabled: timeEnabled,
-  });
-  const { timeFormatter, dayFormatter, weekdayFormatter } =
-    useDateFormatter(siteUUID);
+    {
+      updateEnabled: timeEnabled,
+    }
+  );
+  const { timeFormatter, weekdayFormatter } = useDateFormatter(siteUUIDs[0]);
 
-  const thresholdCapacityKW = installed_capacity_kw
-    ? installed_capacity_kw * graphThreshold
+  const thresholdCapacityKW = totalInstalledCapacityKw
+    ? totalInstalledCapacityKw * graphThreshold
     : 1.5960000038146973;
 
   const graphData = useMemo(() => {
-    if (forecastData && dawnTime && duskTime) {
+    if (totalExpectedGeneration && sunriseTime && sunsetTime) {
       return generationDataOverDateRange(
-        forecastData.forecast_values,
-        dawnTime,
-        duskTime
+        totalExpectedGeneration,
+        sunriseTime,
+        sunsetTime
       );
     }
     return null;
-  }, [forecastData, dawnTime, duskTime]);
+  }, [totalExpectedGeneration, sunriseTime, sunsetTime]);
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.generation_kw))
@@ -137,11 +139,9 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     if (!graphData) return null;
 
     const numForecastValues = graphData.length;
-
     if (numForecastValues <= 0) {
       return null;
     }
-
     const startTime = timeFormatter.format(new Date(graphData[0].datetime_utc));
     const endTime = timeFormatter.format(
       new Date(graphData[numForecastValues - 1].datetime_utc)
@@ -204,15 +204,15 @@ const ThresholdGraph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (!graphData) return null;
+    if (!totalExpectedGeneration) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(graphData);
-    const slope = getTrendAfterIndex(graphData, currIndex);
+    const currIndex = getCurrentTimeGenerationIndex(totalExpectedGeneration);
+    const slope = getTrendAfterIndex(totalExpectedGeneration, currIndex);
 
     if (slope) {
       const { type, endIndex } = slope;
       const slopeForecastDate = timeFormatter.format(
-        new Date(graphData[endIndex].datetime_utc)
+        new Date(totalExpectedGeneration[endIndex].datetime_utc)
       );
 
       switch (type) {

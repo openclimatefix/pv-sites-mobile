@@ -18,6 +18,7 @@ import {
   YAxis,
 } from 'recharts';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 import useTime from '~/lib/hooks/useTime';
 import { GenerationDataPoint } from '~/lib/types';
 
@@ -68,9 +69,12 @@ function getXTickValues(times: number[], numTicks: number) {
   return tickValues;
 }
 
-const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude, isLoading, clearskyData } =
-    useSiteData(siteUUID);
+const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  // TODO: we want a aggregate form of the clearskyData variable
+  const { latitude, longitude } = useSiteData(siteUUIDs[0]);
+
+  const { totalExpectedGeneration, isLoading, totalClearskyData } =
+    useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
@@ -82,16 +86,16 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     setTimeRange(event.target.value);
   };
 
-  const { weekdayFormatter } = useDateFormatter(siteUUID);
+  const { weekdayFormatter } = useDateFormatter(siteUUIDs[0]);
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
 
   const forecastDataTrimmed =
-    forecastData &&
+    totalExpectedGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          forecastData.forecast_values,
+          totalExpectedGeneration,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
@@ -100,18 +104,17 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     );
 
   const clearSkyEstimateTrimmed =
-    clearskyData &&
+    totalClearskyData &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          clearskyData?.clearsky_estimate,
+          totalClearskyData,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
         new Date(currentTime)
       )
     );
-
   const maxGeneration = clearSkyEstimateTrimmed
     ? Math.max(...clearSkyEstimateTrimmed.map((value) => value.generation_kw))
     : 0;

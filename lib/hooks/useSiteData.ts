@@ -26,7 +26,14 @@ const useSiteData = (siteUUID: string) => {
 
   const siteData = siteListData?.find((site) => site.site_uuid === siteUUID);
 
-  return { forecastData, clearskyData, ...siteData, error, isLoading };
+  return {
+    forecastData,
+    clearskyData,
+    ...siteData,
+    siteData,
+    error,
+    isLoading,
+  };
 };
 
 export default useSiteData;

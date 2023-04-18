@@ -12,6 +12,8 @@ import { useSites, useSiteData, useSiteAggregation } from '../../lib/hooks';
 import { getCurrentTimeGeneration } from '~/lib/utils';
 import { useMemo } from 'react';
 
+import SiteGraph from '../graphs/SiteGraph';
+
 type MenuLinkProps = {
   linkProps: LinkProps;
   label: string;
@@ -65,35 +67,42 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
   const borderColor =
     linkProps.href === currentPath ? 'border-amber' : 'border-ocf-gray-1000';
 
-  const { forecastData } = useSiteData(siteUUID || '');
-  const { totalExpectedGeneration } = useSiteAggregation(allSiteUUID || []);
+  // const { forecastData } = useSiteData(siteUUID || '');
+  // const { totalExpectedGeneration } = useSiteAggregation(allSiteUUID || []);
 
-  const currentOutput = useMemo(() => {
-    if (allSiteUUID) {
-      return totalExpectedGeneration ? getCurrentTimeGeneration(totalExpectedGeneration) : undefined;
-    }
-    return forecastData
-      ? getCurrentTimeGeneration(forecastData.forecast_values)
-      : undefined;
-  }, [forecastData, allSiteUUID, totalExpectedGeneration]);
+  // const currentOutput = useMemo(() => {
+  //   if (allSiteUUID) {
+  //     return totalExpectedGeneration
+  //       ? getCurrentTimeGeneration(totalExpectedGeneration)
+  //       : undefined;
+  //   }
+  //   return forecastData
+  //     ? getCurrentTimeGeneration(forecastData.forecast_values)
+  //     : undefined;
+  // }, [forecastData, allSiteUUID, totalExpectedGeneration]);
 
   return (
     <Link {...linkProps}>
       <div
-        className={`${borderColor} border flex-1 p-5 flex flex-col justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-full`}
+        className={`${borderColor} border flex-1 p-5 flex flex-row justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-full`}
       >
-        <div
-          className={`mb-2 text-lg ${textColor} font-semibold transition-all md:font-medium md:leading-none`}
-        >
-          {siteName}
-        </div>
-        {currentOutput !== undefined && (
+        <div className="flex flex-col flex-1 justify-center">
           <div
-            className={`text-md ${textColor} font-medium leading-none transition-all md:leading-none`}
+            className={`mb-2 text-lg ${textColor} font-semibold transition-all md:font-medium md:leading-none`}
           >
-            Current output: {currentOutput} kW
+            {siteName}
           </div>
-        )}
+          {/* {currentOutput !== undefined && (
+            <div
+              className={`text-md ${textColor} font-medium leading-none transition-all md:leading-none`}
+            >
+              Current output: {currentOutput} kW
+            </div>
+          )} */}
+        </div>
+        <div className="flex-1">
+          {siteUUID && <SiteGraph siteUUID={siteUUID} hidden={false} />}
+        </div>
       </div>
     </Link>
   );
@@ -141,13 +150,13 @@ const SideBar = () => {
       className={`z-50 transition-all duration-500 h-full fixed top-0 ${
         isSideBarOpen
           ? 'translate-x-0 shadow-lg shadow-ocf-black'
-          : '-translate-x-72'
+          : '-translate-x-84'
       }`}
       // @ts-ignore
       inert={!isSideBarOpen ? '' : null}
       ref={wrapperRef}
     >
-      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black w-72 px-4 py-8 relative">
+      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black w-84 px-4 py-8 relative">
         <div className="flex mt-2 w-full flex-row justify-between content-center">
           <h1 className="text-white text-xl font-medium">Dashboards</h1>
           <button
@@ -159,38 +168,18 @@ const SideBar = () => {
         </div>
         <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
           <div className="flex flex-col gap-3">
-          <DashboardLink
-            siteName="Aggregate"
-            currentPath={router.asPath}
-            linkProps={{ href: `/dashboard/` }}
-            allSiteUUID={sites?.map((site) => site.site_uuid)}
-          />
+            <DashboardLink
+              siteName="Aggregate"
+              currentPath={router.asPath}
+              linkProps={{ href: `/dashboard` }}
+              allSiteUUID={sites?.map((site) => site.site_uuid)}
+            />
 
             <h1 className="text-white text-lg mt-5 font-normal">
               Site Dashboards
             </h1>
 
-            {/* <DashboardLink /> */}
             {generateSiteLinks()}
-
-            {/* <MenuLink
-              linkProps={{ href: '/dashboard' }}
-              label="Dashboard"
-              svg={<DashboardIcon />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/sites' }}
-              label="My Sites"
-              svg={<SiteListIcon color={'white'} />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/more-info' }}
-              label="More Info"
-              svg={<SearchIcon color={'white'} />}
-              currentPath={router.asPath}
-            /> */}
           </div>
           <div className="flex flex-col gap-3">
             <MenuLink

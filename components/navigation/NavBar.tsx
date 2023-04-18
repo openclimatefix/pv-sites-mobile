@@ -19,9 +19,9 @@ const NavBar: FC = () => {
 
   return (
     <div
-      className={`bg-ocf-black w-full pt-2 pb-2 h-[var(--nav-height)] flex ${
+      className={`bg-ocf-black w-full h-[var(--nav-height)] flex ${
         user ? 'justify-between' : 'justify-center'
-      } px-5 content-center`}
+      } px-5 md:my-2`}
     >
       {user && (
         <button
@@ -30,7 +30,7 @@ const NavBar: FC = () => {
             isSideBarOpen || data?.site_list.length === 0
               ? 'opacity-0 pointer-events-none'
               : 'opacity-100'
-          } text-gray-600 flex justify-center invisible md:visible`}
+          } text-gray-600 flex flex-col justify-center invisible md:visible`}
         >
           <MenuLogo />
         </button>

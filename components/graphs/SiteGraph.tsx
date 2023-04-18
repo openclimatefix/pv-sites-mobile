@@ -42,7 +42,7 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
     return (
       <ResponsiveContainer
         width="100%"
-        height={100}
+        height={50}
         className={`${hidden ? 'opacity-0' : 'opacity-1'} transition-opacity`}
       >
         <AreaChart data={makeGraphable(graphData)}>
