@@ -27,7 +27,7 @@ const MenuLink: React.FC<MenuLinkProps> = ({
         >
           <div className="w-[20px] h-[18px]">{svg}</div>
           <span
-            className={`ml-[30px] font-medium flex-1 align-center ${textColor} text-[12px]`}
+            className={`ml-[40px] font-medium flex-1 align-center ${textColor} text-[12px] mt-[6px]`}
           >
             {label}
           </span>
@@ -41,7 +41,6 @@ const ContactButton = () => {
   const { user } = useUser();
   const firstName = user && user.given_name ? user.given_name.toString() : '';
   const lastName = user && user.family_name ? user.family_name.toString() : '';
-  const imageURL = user && user.picture ? user.picture.toString() : '';
   const userEmail = user && user.email ? user.email.toString() : '';
 
   const [displayPopup, setDisplayPopup] = useState(false);
@@ -56,6 +55,7 @@ const ContactButton = () => {
       >
         {firstName.substring(0, 1) + lastName.substring(0, 1)}
       </button>
+
       {displayPopup && (
         <div className="w-[191px] h-[103px] absolute rounded-lg border-ocf-gray-300 border-[.5px] bg-ocf-black-900 right-0 mt-[10px]">
           <div className="flex justify-evenly">
