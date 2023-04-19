@@ -35,10 +35,10 @@ import { GenerationDataPoint } from '~/lib/types';
 
 const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
   const { latitude, longitude, isLoading } = useSiteData(siteUUIDs[0]);
-  const { totalExpectedGeneration, totalInstalledCapacityKw } =
+  const { totalForecastedGeneration, totalInstalledCapacityKw } =
     useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(
-    totalExpectedGeneration !== undefined
+    totalForecastedGeneration !== undefined
   );
   const { currentTime, sunriseTime, sunsetTime } = useTime(
     latitude,
@@ -54,15 +54,15 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
     : 1.5960000038146973;
 
   const graphData = useMemo(() => {
-    if (totalExpectedGeneration && sunriseTime && sunsetTime) {
+    if (totalForecastedGeneration && sunriseTime && sunsetTime) {
       return generationDataOverDateRange(
-        totalExpectedGeneration,
+        totalForecastedGeneration,
         sunriseTime,
         sunsetTime
       );
     }
     return null;
-  }, [totalExpectedGeneration, sunriseTime, sunsetTime]);
+  }, [totalForecastedGeneration, sunriseTime, sunsetTime]);
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.generation_kw))
@@ -204,15 +204,15 @@ const ThresholdGraph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (!totalExpectedGeneration) return null;
+    if (!totalForecastedGeneration) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(totalExpectedGeneration);
-    const slope = getTrendAfterIndex(totalExpectedGeneration, currIndex);
+    const currIndex = getCurrentTimeGenerationIndex(totalForecastedGeneration);
+    const slope = getTrendAfterIndex(totalForecastedGeneration, currIndex);
 
     if (slope) {
       const { type, endIndex } = slope;
       const slopeForecastDate = timeFormatter.format(
-        new Date(totalExpectedGeneration[endIndex].datetime_utc)
+        new Date(totalForecastedGeneration[endIndex].datetime_utc)
       );
 
       switch (type) {

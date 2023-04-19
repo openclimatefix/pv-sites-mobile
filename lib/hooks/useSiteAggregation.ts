@@ -1,29 +1,28 @@
 import useSWR from 'swr';
-import { manyClearskyDataFetcher, manyForecastDataFetcher } from './utils';
 import {
-  ClearSkyData,
-  ForecastData,
-  GenerationDataPoint,
-  SiteList,
-} from '../types';
+  manyActualsFetcher,
+  manyClearskyDataFetcher,
+  manyForecastDataFetcher,
+} from './utils';
+import { GenerationDataPoint, SiteList } from '../types';
 
-const expectedGenerationSum = (
-  manyForecastData: ForecastData[] | undefined
-) => {
-  let totalExpectedGeneration: GenerationDataPoint[] | undefined = undefined;
+const sumGenerationData = (
+  data: GenerationDataPoint[][] | undefined
+): GenerationDataPoint[] | undefined => {
+  let totalForecastedGeneration: GenerationDataPoint[] | undefined = undefined;
 
-  if (manyForecastData) {
+  if (data) {
     const forecastMap = new Map<number, number>();
 
-    for (let siteIdx = 0; siteIdx < manyForecastData.length; siteIdx++) {
-      const siteForecastValues = manyForecastData[siteIdx].forecast_values;
+    for (let siteIdx = 0; siteIdx < data.length; siteIdx++) {
+      const siteValues = data[siteIdx];
 
       for (
         let forecastIdx = 0;
-        forecastIdx < siteForecastValues.length;
+        forecastIdx < siteValues.length;
         forecastIdx++
       ) {
-        const { datetime_utc, generation_kw } = siteForecastValues[forecastIdx];
+        const { datetime_utc, generation_kw } = siteValues[forecastIdx];
 
         const currentAggregatedGeneration =
           forecastMap.get(datetime_utc.getTime()) ?? 0;
@@ -36,7 +35,7 @@ const expectedGenerationSum = (
     }
 
     // Sort the aggregated forecasts based on datetime
-    totalExpectedGeneration = Array.from(
+    totalForecastedGeneration = Array.from(
       forecastMap,
       ([datetime_utc, generation_kw]) => {
         return {
@@ -47,48 +46,7 @@ const expectedGenerationSum = (
     ).sort((a, b) => a.datetime_utc.getTime() - b.datetime_utc.getTime());
   }
 
-  return totalExpectedGeneration;
-};
-
-const expectedClearskySum = (manyClearskyData: ClearSkyData[] | undefined) => {
-  let totalExpectedGeneration: GenerationDataPoint[] | undefined = undefined;
-
-  if (manyClearskyData) {
-    const forecastMap = new Map<number, number>();
-
-    for (let siteIdx = 0; siteIdx < manyClearskyData.length; siteIdx++) {
-      const siteClearskyValues = manyClearskyData[siteIdx].clearsky_estimate;
-
-      for (
-        let forecastIdx = 0;
-        forecastIdx < siteClearskyValues.length;
-        forecastIdx++
-      ) {
-        const { datetime_utc, generation_kw } = siteClearskyValues[forecastIdx];
-
-        const currentAggregatedGeneration =
-          forecastMap.get(datetime_utc.getTime()) ?? 0;
-
-        forecastMap.set(
-          datetime_utc.getTime(),
-          currentAggregatedGeneration + generation_kw
-        );
-      }
-    }
-
-    // Sort the aggregated forecasts based on datetime
-    totalExpectedGeneration = Array.from(
-      forecastMap,
-      ([datetime_utc, generation_kw]) => {
-        return {
-          datetime_utc: new Date(datetime_utc),
-          generation_kw,
-        };
-      }
-    ).sort((a, b) => a.datetime_utc.getTime() - b.datetime_utc.getTime());
-  }
-
-  return totalExpectedGeneration;
+  return totalForecastedGeneration;
 };
 
 /**
@@ -120,6 +78,17 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
   );
 
   const {
+    data: manyActualData,
+    error: manyActualError,
+    isLoading: isManyActualLoading,
+  } = useSWR(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    }/sites/pv_actual?site_uuids=${siteUUIDs.join(',')}`,
+    manyActualsFetcher
+  );
+
+  const {
     data: manyClearskyData,
     error: manyClearskyError,
     isLoading: isManyClearskyLoading,
@@ -132,11 +101,15 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
 
   const aggregateError = AggregateError([
     manyForecastError,
-    siteListError,
+    manyActualError,
     manyClearskyError,
+    siteListError,
   ]);
   const isLoading =
-    isSiteListLoading || isManyForecastLoading || isManyClearskyLoading;
+    isSiteListLoading ||
+    isManyForecastLoading ||
+    isManyClearskyLoading ||
+    isManyActualLoading;
 
   // Sum the installed capacity at all of the sites
   const totalInstalledCapacityKw = sites
@@ -147,13 +120,21 @@ const useSiteAggregation = (siteUUIDs: string[]) => {
       )
     : undefined;
 
-  let totalExpectedGeneration = expectedGenerationSum(manyForecastData);
-  let totalClearskyData = expectedClearskySum(manyClearskyData);
+  const totalForecastedGeneration = sumGenerationData(
+    manyForecastData?.map((f) => f.forecast_values)
+  );
+  const totalClearskyGeneration = sumGenerationData(
+    manyClearskyData?.map((c) => c.clearsky_estimate)
+  );
+  const totalActualGeneration = sumGenerationData(
+    manyActualData?.map((a) => a.pv_actual_values)
+  );
 
   return {
     totalInstalledCapacityKw,
-    totalExpectedGeneration,
-    totalClearskyData,
+    totalForecastedGeneration,
+    totalActualGeneration,
+    totalClearskyGeneration,
     error: aggregateError,
     isLoading,
   };
