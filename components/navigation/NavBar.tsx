@@ -1,4 +1,4 @@
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser } from '~/lib/hooks/useUser';
 import { FC, MouseEventHandler } from 'react';
 import useSWR from 'swr';
 import { useSideBarContext } from '~/lib/context/sidebar';

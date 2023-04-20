@@ -1,8 +1,7 @@
-import { ReactNode, useState } from 'react';
-import { useUser } from '@auth0/nextjs-auth0';
+import Link from 'next/link';
+import { useState } from 'react';
 import { LogoutIcon } from './icons';
-import router from 'next/router';
-import Link, { LinkProps } from 'next/link';
+import { useUser } from '~/lib/hooks/useUser';
 
 const ContactButton = () => {
   const { user } = useUser();

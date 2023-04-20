@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from 'react';
 import SideBar from './navigation/SideBar';
 import NavBar from './navigation/NavBar';
 import BottomNavBar from './navigation/BottomNavBar';
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser } from '~/lib/hooks/useUser';
 import Transition from './navigation/Transition';
 import { useRouter } from 'next/router';
 

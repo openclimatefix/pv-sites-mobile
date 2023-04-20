@@ -1,7 +1,7 @@
 import {
   getAccessToken,
   GetAccessTokenResult,
-  withPageAuthRequired,
+  withPageAuthRequired as auth0WithPageAuthRequired,
 } from '@auth0/nextjs-auth0';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { getCurrentTimeGenerationIndex } from './graphs';
@@ -124,6 +124,16 @@ export const getNextThresholdIndex = (
 export const originalLat = 51.5072;
 export const originalLng = 0.1276;
 
+const withPageAuthRequired = process.env.NEXT_PUBLIC_AUTH0_DISABLED
+  ? ({
+      getServerSideProps,
+    }: {
+      getServerSideProps: (
+        ctx: GetServerSidePropsContext
+      ) => Promise<GetServerSidePropsResult<any>>;
+    }) => getServerSideProps
+  : auth0WithPageAuthRequired;
+
 type WithSitesOptions = {
   getServerSideProps?: (
     ctx: GetServerSidePropsContext & { siteList: SiteList }
@@ -132,22 +142,24 @@ type WithSitesOptions = {
 export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   return withPageAuthRequired({
     async getServerSideProps(ctx) {
-      let accessToken: GetAccessTokenResult;
-      try {
-        accessToken = await getAccessToken(ctx.req, ctx.res);
-      } catch {
-        return {
-          redirect: {
-            destination: '/api/auth/login',
-          },
-        };
+      let accessToken: string | undefined;
+      if (!process.env.NEXT_PUBLIC_AUTH0_DISABLED) {
+        try {
+          accessToken = (await getAccessToken(ctx.req, ctx.res)).accessToken;
+        } catch {
+          return {
+            redirect: {
+              destination: '/api/auth/login',
+            },
+          };
+        }
       }
 
       const siteList = (await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       ).then((res) => res.json())) as SiteList;
