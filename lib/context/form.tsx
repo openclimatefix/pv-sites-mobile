@@ -47,7 +47,7 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     });
   };
 
-  const postPanelData = async () => {
+  const postPanelData = () => {
     const date = new Date().toISOString();
     const capacity = parseFloat(panelDetails.capacity);
     const tilt = parseFloat(panelDetails.tilt);
@@ -67,7 +67,7 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
       orientation: orientation,
       tilt: tilt,
     };
-    await trigger(data);
+    return trigger(data);
   };
 
   return (

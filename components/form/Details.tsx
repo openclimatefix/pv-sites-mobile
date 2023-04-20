@@ -25,7 +25,7 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
 interface Props {
   lastPageCallback: () => void;
-  nextPageCallback: () => void;
+  nextPageCallback: (site?: Site) => void;
   uuid?: string;
 }
 
@@ -57,8 +57,11 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
     if (!didSubmit) {
       setDidSubmit(true);
       // TODO: Add schema validation with zod
-      await postPanelData();
-      nextPageCallback();
+      const res = await postPanelData();
+      if (res) {
+        const site = (await res.json()) as Site;
+        nextPageCallback(site);
+      }
     }
   };
 

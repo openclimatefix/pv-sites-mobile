@@ -6,6 +6,7 @@ import { useSiteData } from '~/lib/hooks';
 import { NowcastingLogo } from './icons/NavbarIcons';
 import BackButton from './BackButton';
 import useSites from '~/lib/hooks/useSites';
+import { Site } from '~/lib/types';
 
 enum Page {
   Details = 'Details',
@@ -32,9 +33,9 @@ const SiteDetails: FC<SiteDetailsProps> = ({ uuid }) => {
     }
   };
 
-  const nextPageCallback = () => {
+  const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push('sites');
+      router.push(`/dashboard/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }

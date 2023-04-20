@@ -82,7 +82,7 @@ export interface Form {
   panelDetails: PanelDetails;
   setFormData: ({ siteName, direction, tilt, capacity }: PanelDetails) => void;
   setSiteCoordinates: ({ latitude, longitude }: LatitudeLongitude) => void;
-  postPanelData: () => void;
+  postPanelData: () => Promise<Response | undefined>;
 }
 
 export interface PanelDetails {
