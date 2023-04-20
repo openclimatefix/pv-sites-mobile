@@ -13,12 +13,10 @@ import '~/styles/transition.css';
 type AppProps = { siteList?: SiteList; user?: UserProfile };
 
 const App: AppType<AppProps> = ({ Component, pageProps }) => {
-  const swrFallback = pageProps.siteList
-    ? {
-        [`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`]:
-          pageProps.siteList,
-      }
-    : undefined;
+  const swrFallback = {
+    [`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`]:
+      pageProps.siteList ?? [],
+  };
 
   return (
     <UserProvider user={pageProps.user}>

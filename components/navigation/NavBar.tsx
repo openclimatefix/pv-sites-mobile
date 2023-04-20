@@ -27,7 +27,7 @@ const NavBar: FC = () => {
         <button
           onClick={handleOpenSidebar}
           className={`${
-            isSideBarOpen || data?.site_list.length === 0
+            isSideBarOpen || data?.site_list?.length === 0
               ? 'opacity-0 pointer-events-none'
               : 'opacity-100'
           } text-gray-600 flex flex-col justify-center invisible md:visible`}
