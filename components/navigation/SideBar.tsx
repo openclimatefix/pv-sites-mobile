@@ -37,7 +37,7 @@ const MenuLink: React.FC<MenuLinkProps> = ({
         >
           <div className={textColor}>{svg}</div>
           <span
-            className={`mx-4 font-medium flex-1 align-center text-lg ${textColor}`}
+            className={`mx-4 font-medium flex-2 align-center text-lg ${textColor}`}
           >
             {label}
           </span>
