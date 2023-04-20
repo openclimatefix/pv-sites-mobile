@@ -37,7 +37,7 @@ const MenuLink: React.FC<MenuLinkProps> = ({
         >
           <div className={textColor}>{svg}</div>
           <span
-            className={`mx-4 font-medium flex-2 align-center text-lg ${textColor}`}
+            className={`mx-4 font-medium flex-1 align-center text-lg ${textColor}`}
           >
             {label}
           </span>
@@ -97,11 +97,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
       return null;
     }
 
-    return (
-      <div className="flex-1">
-        <SiteGraph siteUUID={suitUUIDToUse} hidden={false} height={50} />
-      </div>
-    );
+    return <SiteGraph siteUUID={suitUUIDToUse} hidden={false} height={50} />;
   };
 
   return (
@@ -123,7 +119,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
             </div>
           )}
         </div>
-        {generateThresholdGraph()}
+        <div className="flex-1">{generateThresholdGraph()}</div>
       </div>
     </Link>
   );
