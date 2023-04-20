@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 
-import { Area, AreaChart, ResponsiveContainer, YAxis } from 'recharts';
+import { Area, AreaChart, ResponsiveContainer, YAxis, XAxis } from 'recharts';
 
 import { useSiteData } from 'lib/hooks';
 
@@ -53,12 +53,12 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false, height = 100 }) => {
               <stop offset={'100%'} stopColor="#FFD053" stopOpacity={0.01} />
             </linearGradient>
           </defs>
-          <YAxis
+          {/* <YAxis
             type="number"
             domain={[0, installed_capacity_kw]}
             axisLine={false}
             tick={false}
-          />
+          /> */}
           <Area
             type="monotone"
             dataKey="generation_kw"

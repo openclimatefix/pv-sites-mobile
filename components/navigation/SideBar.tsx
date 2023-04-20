@@ -119,7 +119,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
             </div>
           )}
         </div>
-        <div className="flex-1">{generateThresholdGraph()}</div>
+        <div className="pl-4">{generateThresholdGraph()}</div>
       </div>
     </Link>
   );
