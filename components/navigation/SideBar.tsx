@@ -27,8 +27,9 @@ const MenuLink: React.FC<MenuLinkProps> = ({
   svg,
   currentPath,
 }) => {
-  const textColor =
-    linkProps.href === currentPath ? 'text-amber' : 'text-white';
+  const textColor = currentPath.startsWith(linkProps.href.toString())
+    ? 'text-amber'
+    : 'text-white';
   return (
     <Link {...linkProps}>
       <a>
