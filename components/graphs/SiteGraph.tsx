@@ -53,12 +53,6 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false, height = 100 }) => {
               <stop offset={'100%'} stopColor="#FFD053" stopOpacity={0.01} />
             </linearGradient>
           </defs>
-          {/* <YAxis
-            type="number"
-            domain={[0, installed_capacity_kw]}
-            axisLine={false}
-            tick={false}
-          /> */}
           <Area
             type="monotone"
             dataKey="generation_kw"

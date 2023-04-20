@@ -1,129 +1,14 @@
-import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSideBarContext } from '~/lib/context/sidebar';
-import Link from 'next/link';
 
 import { ExitIcon, CirclePlusIcon } from '../icons';
 
-import { LinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '../../lib/hooks';
 
-import { useSites, useSiteData, useSiteAggregation } from '../../lib/hooks';
-import { getCurrentTimeGeneration } from '~/lib/utils';
-import { useMemo } from 'react';
-
-import SiteGraph from '../graphs/SiteGraph';
-
-type MenuLinkProps = {
-  linkProps: LinkProps;
-  label: string;
-  svg: ReactNode;
-  currentPath: string;
-};
-
-const MenuLink: React.FC<MenuLinkProps> = ({
-  linkProps,
-  label,
-  svg,
-  currentPath,
-}) => {
-  const textColor =
-    linkProps.href === currentPath ? 'text-amber' : 'text-white';
-  return (
-    <Link {...linkProps}>
-      <a>
-        <div
-          className={`px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform`}
-        >
-          <div className={textColor}>{svg}</div>
-          <span
-            className={`mx-4 font-medium flex-1 align-center text-lg ${textColor}`}
-          >
-            {label}
-          </span>
-        </div>
-      </a>
-    </Link>
-  );
-};
-
-type DashboardLinkProps = {
-  siteName: string;
-  linkProps: LinkProps;
-  currentPath: string;
-  siteUUID?: string;
-  allSiteUUID?: string[];
-};
-
-const DashboardLink: React.FC<DashboardLinkProps> = ({
-  linkProps,
-  siteName,
-  currentPath,
-  siteUUID,
-  allSiteUUID,
-}) => {
-  const textColor =
-    linkProps.href === currentPath ? 'text-white' : 'text-ocf-gray-800';
-  const borderColor =
-    linkProps.href === currentPath ? 'border-amber' : 'border-ocf-gray-1000';
-
-  const { forecastData } = useSiteData(siteUUID || '');
-  const { totalExpectedGeneration } = useSiteAggregation(allSiteUUID || []);
-
-  const currentOutput = useMemo(() => {
-    if (allSiteUUID) {
-      let d = totalExpectedGeneration
-        ? Math.round(getCurrentTimeGeneration(totalExpectedGeneration) * 100) /
-          100
-        : undefined;
-      return d;
-    }
-    return forecastData
-      ? Math.round(
-          getCurrentTimeGeneration(forecastData.forecast_values) * 100
-        ) / 100
-      : undefined;
-  }, [forecastData, allSiteUUID, totalExpectedGeneration]);
-
-  const generateThresholdGraph = () => {
-    let suitUUIDToUse = null;
-    if (allSiteUUID !== undefined && allSiteUUID.length) {
-      suitUUIDToUse = allSiteUUID[0];
-    } else if (siteUUID !== undefined) {
-      suitUUIDToUse = siteUUID;
-    }
-
-    if (suitUUIDToUse === null) {
-      return null;
-    }
-
-    return <SiteGraph siteUUID={suitUUIDToUse} hidden={false} height={50} />;
-  };
-
-  return (
-    <Link {...linkProps}>
-      <div
-        className={`${borderColor} border flex-1 p-5 flex flex-row justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-48`}
-      >
-        <div className="flex flex-col flex-1 justify-center">
-          <div
-            className={`mb-2 text-lg ${textColor} font-semibold transition-all md:font-medium md:leading-none`}
-          >
-            {siteName}
-          </div>
-          {currentOutput !== undefined && (
-            <div
-              className={`text-md ${textColor} font-medium leading-none transition-all md:leading-none`}
-            >
-              Current output: {currentOutput} kW
-            </div>
-          )}
-        </div>
-        <div className="pl-4">{generateThresholdGraph()}</div>
-      </div>
-    </Link>
-  );
-};
+import { useSites } from '../../lib/hooks';
+import MenuLink from './MenuLink';
+import DashboardLink from './DashboardLink';
 
 const SideBar = () => {
   const { isSideBarOpen, closeSideBar } = useSideBarContext();
@@ -148,14 +33,14 @@ const SideBar = () => {
     if (sites) {
       // TODO: remove hard-coded limit of 5 solar panel sites
       return sites
-        .filter((_, idx) => idx < 10)
+        .slice(0, 5)
         .map((site, idx) => (
           <DashboardLink
             key={site.client_site_id}
             siteName={site.client_site_name || `Site ${idx + 1}`}
             currentPath={router.asPath}
             linkProps={{ href: `/dashboard/${site.site_uuid}` }}
-            siteUUID={site.site_uuid}
+            allSiteUUID={[site.site_uuid]}
           />
         ));
     }
@@ -189,7 +74,7 @@ const SideBar = () => {
               siteName="Aggregate"
               currentPath={router.asPath}
               linkProps={{ href: `/dashboard` }}
-              allSiteUUID={sites?.map((site) => site.site_uuid)}
+              allSiteUUID={sites?.map((site) => site.site_uuid) || []}
             />
 
             <h1 className="text-white text-lg mt-5 font-normal">
