@@ -41,6 +41,13 @@
       "kW": "1",
       "duration": "0.17",
       "action": "use"
+    },
+    {
+      "name": "Wifi Router",
+      "icon": "toaster.svg",
+      "kW": "0.01",
+      "duration": "-1",
+      "action": "use"
     }
   ]
 }
