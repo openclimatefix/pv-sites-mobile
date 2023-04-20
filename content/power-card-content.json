@@ -44,9 +44,16 @@
     },
     {
       "name": "Wifi Router",
-      "icon": "toaster.svg",
+      "icon": "router.svg",
       "kW": "0.01",
       "duration": "-1",
+      "action": "use"
+    },
+    {
+      "name": "Computer",
+      "icon": "computer.svg",
+      "kW": "0.1",
+      "duration": "5",
       "action": "use"
     }
   ]

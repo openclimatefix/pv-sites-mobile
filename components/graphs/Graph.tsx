@@ -107,13 +107,14 @@ const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
       )
     );
 
-  const actualDataTrimmed =
-    totalActualGeneration &&
-    generationDataOverDateRange(
-      totalActualGeneration,
-      getGraphStartDate(currentTime, timeRange),
-      new Date(currentTime)
-    );
+  const actualDataTrimmed = [] as GenerationDataPoint[];
+  // TODO: Re-enable this after user testing
+  // totalActualGeneration &&
+  // generationDataOverDateRange(
+  //   totalActualGeneration,
+  //   getGraphStartDate(currentTime, timeRange),
+  //   new Date(currentTime)
+  // );
 
   const clearSkyEstimateTrimmed =
     totalClearskyGeneration &&

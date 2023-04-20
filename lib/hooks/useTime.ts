@@ -52,8 +52,8 @@ const useTime = (
     return {
       sunriseTime: calculatedTimes.sunrise,
       sunsetTime: calculatedTimes.sunset,
-      duskTime: calculatedTimes.dusk,
       dawnTime: calculatedTimes.dawn,
+      duskTime: calculatedTimes.dusk,
     };
   }, [latitude, longitude]);
 
