@@ -64,8 +64,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
 
   return (
     <div className="flex flex-col mb-[max(var(--bottom-nav-margin),20px)] gap-10">
-      <BackButton onClick={lastPageCallback} />
-      <div className="flex flex-row w-full md:w-9/12 self-center">
+      <div className="flex flex-row w-4/5 md:w-9/12 self-center">
         <div className="flex-1 hidden md:block px-8">
           <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray">
             Your site&apos;s details
@@ -90,7 +89,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          <div className="hidden md:block md:h-10" />
+          <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
             label="Site name"

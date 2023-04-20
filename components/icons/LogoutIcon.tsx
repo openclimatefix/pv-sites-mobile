@@ -4,7 +4,7 @@ const LogoutIcon: React.FC = ({}) => (
     fill="none"
     viewBox="0 0 24 24"
     className="w-6 h-6"
-    stroke={'currentColor'}
+    stroke={'white'}
     strokeWidth={1.5}
   >
     <path

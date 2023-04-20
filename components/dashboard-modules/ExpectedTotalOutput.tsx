@@ -1,9 +1,10 @@
-import { FC } from 'react';
-import NumberDisplay from './NumberDisplay';
 import { useSiteData } from 'lib/hooks';
-import { GenerationDataPoint } from '~/lib/types';
-import useTime from '~/lib/hooks/useTime';
+import { FC } from 'react';
 import { generationDataOverDateRange } from '~/lib/graphs';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
+import useTime from '~/lib/hooks/useTime';
+import { GenerationDataPoint } from '~/lib/types';
+import NumberDisplay from './NumberDisplay';
 
 export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
   let approxArea = 0;
@@ -23,25 +24,27 @@ export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
   return approxArea;
 };
 
-const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, isLoading, latitude, longitude } =
-    useSiteData(siteUUID);
-  const { dawnTime, duskTime } = useTime(latitude, longitude);
+const ExpectedTotalOutput: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  const representativeSiteUUID = siteUUIDs[0];
+  const { isLoading, totalForecastedGeneration } =
+    useSiteAggregation(siteUUIDs);
+  const { latitude, longitude } = useSiteData(representativeSiteUUID);
+  const { sunriseTime, sunsetTime } = useTime(latitude, longitude);
   return (
     <NumberDisplay
       title="Today's Expected Output"
       value={
-        forecastData
-          ? Math.round(
-              getTotalExpectedOutput(
-                generationDataOverDateRange(
-                  forecastData.forecast_values,
-                  dawnTime,
-                  duskTime
-                )
+        totalForecastedGeneration
+          ? getTotalExpectedOutput(
+              generationDataOverDateRange(
+                totalForecastedGeneration,
+                sunriseTime,
+                sunsetTime
               )
-            ).toString() + ' kWh'
-          : 'Loading...'
+            )
+              .toFixed(2)
+              .toString() + ' kWh'
+          : 'Loading'
       }
       isLoading={isLoading}
     />
