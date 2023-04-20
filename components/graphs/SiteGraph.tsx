@@ -11,9 +11,10 @@ import { generationDataOverDateRange, makeGraphable } from 'lib/graphs';
 interface Props {
   siteUUID: string;
   hidden?: boolean;
+  height?: number;
 }
 
-const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
+const SiteGraph: FC<Props> = ({ siteUUID, hidden = false, height = 100 }) => {
   const {
     forecastData,
     latitude,
@@ -42,7 +43,7 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
     return (
       <ResponsiveContainer
         width="100%"
-        height={50}
+        height={height}
         className={`${hidden ? 'opacity-0' : 'opacity-1'} transition-opacity`}
       >
         <AreaChart data={makeGraphable(graphData)}>

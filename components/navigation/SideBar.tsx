@@ -67,24 +67,47 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
   const borderColor =
     linkProps.href === currentPath ? 'border-amber' : 'border-ocf-gray-1000';
 
-  // const { forecastData } = useSiteData(siteUUID || '');
-  // const { totalExpectedGeneration } = useSiteAggregation(allSiteUUID || []);
+  const { forecastData } = useSiteData(siteUUID || '');
+  const { totalExpectedGeneration } = useSiteAggregation(allSiteUUID || []);
 
-  // const currentOutput = useMemo(() => {
-  //   if (allSiteUUID) {
-  //     return totalExpectedGeneration
-  //       ? getCurrentTimeGeneration(totalExpectedGeneration)
-  //       : undefined;
-  //   }
-  //   return forecastData
-  //     ? getCurrentTimeGeneration(forecastData.forecast_values)
-  //     : undefined;
-  // }, [forecastData, allSiteUUID, totalExpectedGeneration]);
+  const currentOutput = useMemo(() => {
+    if (allSiteUUID) {
+      let d = totalExpectedGeneration
+        ? Math.round(getCurrentTimeGeneration(totalExpectedGeneration) * 100) /
+          100
+        : undefined;
+      return d;
+    }
+    return forecastData
+      ? Math.round(
+          getCurrentTimeGeneration(forecastData.forecast_values) * 100
+        ) / 100
+      : undefined;
+  }, [forecastData, allSiteUUID, totalExpectedGeneration]);
+
+  const generateThresholdGraph = () => {
+    let suitUUIDToUse = null;
+    if (allSiteUUID !== undefined && allSiteUUID.length) {
+      suitUUIDToUse = allSiteUUID[0];
+    } else if (siteUUID !== undefined) {
+      suitUUIDToUse = siteUUID;
+    }
+
+    if (suitUUIDToUse === null) {
+      return null;
+    }
+
+    return (
+      <div className="flex-1">
+        <SiteGraph siteUUID={suitUUIDToUse} hidden={false} height={50} />
+      </div>
+    );
+  };
 
   return (
     <Link {...linkProps}>
       <div
-        className={`${borderColor} border flex-1 p-5 flex flex-row justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-full`}
+        className={`${borderColor} border flex-1 p-5 flex flex-row justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-48`}
       >
         <div className="flex flex-col flex-1 justify-center">
           <div
@@ -92,17 +115,15 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
           >
             {siteName}
           </div>
-          {/* {currentOutput !== undefined && (
+          {currentOutput !== undefined && (
             <div
               className={`text-md ${textColor} font-medium leading-none transition-all md:leading-none`}
             >
               Current output: {currentOutput} kW
             </div>
-          )} */}
+          )}
         </div>
-        <div className="flex-1">
-          {siteUUID && <SiteGraph siteUUID={siteUUID} hidden={false} />}
-        </div>
+        {generateThresholdGraph()}
       </div>
     </Link>
   );
@@ -131,7 +152,7 @@ const SideBar = () => {
     if (sites) {
       // TODO: remove hard-coded limit of 5 solar panel sites
       return sites
-        .filter((_, idx) => idx < 5)
+        .filter((_, idx) => idx < 10)
         .map((site, idx) => (
           <DashboardLink
             key={site.client_site_id}
@@ -167,7 +188,7 @@ const SideBar = () => {
           </button>
         </div>
         <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 pb-3">
             <DashboardLink
               siteName="Aggregate"
               currentPath={router.asPath}

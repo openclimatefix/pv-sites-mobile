@@ -10,7 +10,7 @@ import SiteListIcon from './SiteListIcon';
 import CloudyIcon from './CloudyIcon';
 import PartlyCloudyIcon from './PartlyCloudyIcon';
 import SunnyIcon from './SunnyIcon';
-import CirclePlusIcon from './CirclePlusIcon'
+import CirclePlusIcon from './CirclePlusIcon';
 
 /* Used to clean up imports of icons */
 
@@ -27,5 +27,5 @@ export {
   CloudyIcon,
   PartlyCloudyIcon,
   SunnyIcon,
-  CirclePlusIcon
+  CirclePlusIcon,
 };

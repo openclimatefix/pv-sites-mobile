@@ -14,15 +14,8 @@ interface DashboardProps {
 }
 const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
   const isAggregate = siteUUIDs.site_list.length > 1;
-//   siteUUIDs.site_list.map((site) => {
-//     console.log(site);
-//     // return site.site_uuid
-// })
-
-  // const sites = siteUUIDs.site_list.map((site) => site.site_uuid);
-  const sites = [];
+  const sites = siteUUIDs.site_list.map((site) => site.site_uuid);
   const { client_site_name } = useSiteData(sites[0]);
-
   return (
     <div className="bg-ocf-black max-w-screen-xl w-screen min-h-screen px-4 mb-[var(--bottom-nav-margin)]">
       <h1 className="mt-4 mb-4 text-ocf-gray text-3xl font-bold">
