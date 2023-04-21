@@ -46,6 +46,13 @@ const NavBar: FC = () => {
     openSideBar();
   };
 
+  const getInitials = () => {
+    const initials = user?.name
+      ?.split(' ')
+      .reduce((prevInitials, name) => prevInitials + name[0], '');
+    return initials || '';
+  };
+
   return (
     <div
       className={`bg-ocf-black max-w-screen-xl w-screen h-[var(--nav-height)] mx-auto flex ${
@@ -76,6 +83,9 @@ const NavBar: FC = () => {
           currentPath={router.asPath}
           href="/more-info"
         />
+        <div className="bg-ocf-gray-800 text-white text-center text-xs w-6 h-6 leading-6 rounded-full">
+          {getInitials()}
+        </div>
       </div>
     </div>
   );
