@@ -192,10 +192,10 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
       </div>
       <Modal show={showModal} setShow={setShowModal} />
       <div className="hidden md:flex md:flex-row md:justify-between w-10/12 mx-auto mt-auto">
-        <Button disabled={false} onClick={lastPageCallback}>
+        <Button disabled={false} onClick={lastPageCallback} variant="inputForm">
           Back
         </Button>
-        <Button form="panel-form" disabled={didSubmit}>
+        <Button form="panel-form" disabled={didSubmit} variant="inputForm">
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           Finish
           {didSubmit && <div className="w-5 mx-2" />}
