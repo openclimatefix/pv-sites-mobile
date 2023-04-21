@@ -23,7 +23,7 @@ const NavbarLink: React.FC<NavbarLinkProps> = ({
   return (
     <Link href={href} passHref>
       <a
-        className={`${textColor} text-lg font-medium mr-6 ${
+        className={`${textColor} text-lg font-medium mr-6 hidden md:block  ${
           isActive && 'underline underline-offset-8 decoration-2'
         }`}
       >
