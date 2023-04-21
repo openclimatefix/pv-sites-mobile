@@ -58,7 +58,7 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
           <Button
             disabled={!isSubmissionEnabled}
             onClick={onClick}
-            variant="inputForm"
+            variant="input-form"
           >
             Next
           </Button>
@@ -69,7 +69,7 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
         <Button
           disabled={!isSubmissionEnabled}
           onClick={nextPageCallback}
-          variant="inputForm"
+          variant="input-form"
         >
           Next
         </Button>
