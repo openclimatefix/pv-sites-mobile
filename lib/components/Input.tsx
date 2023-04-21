@@ -24,12 +24,12 @@ const Input: FC<InputProps> = ({
   return (
     <>
       <label
-        className="font-[600] text-lg dark:text-ocf-gray pb-1 block short:mt-4 mt-8"
+        className="mt-8 block pb-1 text-lg font-[600] dark:text-ocf-gray short:mt-4"
         htmlFor={id}
       >
         {label}
         {description && (
-          <span className="text-ocf-gray-900 text-xs pt-1 dark:text-ocf-gray-800 font-normal block">
+          <span className="block pt-1 text-xs font-normal text-ocf-gray-900 dark:text-ocf-gray-800">
             {description}
           </span>
         )}
@@ -40,12 +40,12 @@ const Input: FC<InputProps> = ({
         value={value}
         onChange={onChange}
         {...inputProps}
-        className="text-lg text-center md:text-left border bg-ocf-gray-50 text-ocf-gray-700 rounded-lg block h-14 p-2.5 outline-none focus:ring-1 ring-ocf-yellow dark:bg-ocf-black-500 dark:border-ocf-black-500  dark:placeholder-ocf-gray-800 dark:text-ocf-gray-600 w-full peer placeholder-shown:invalid:ring-ocf-yellow invalid:ring-ocf-orange-800"
+        className="peer block h-14 w-full rounded-lg border bg-ocf-gray-50 p-2.5 text-center text-lg text-ocf-gray-700 outline-none ring-ocf-yellow invalid:ring-ocf-orange-800 placeholder-shown:invalid:ring-ocf-yellow  focus:ring-1 dark:border-ocf-black-500 dark:bg-ocf-black-500 dark:text-ocf-gray-600 dark:placeholder-ocf-gray-800 md:text-left"
       />
       {help && (
         <button
           type="button"
-          className="text-ocf-gray-800 underline underline-offset-2 ml-auto text-xs mt-1 bg-transparent block"
+          className="ml-auto mt-1 block bg-transparent text-xs text-ocf-gray-800 underline underline-offset-2"
           onClick={onHelpClick}
         >
           {help}

@@ -19,8 +19,8 @@ const Logout = () => {
 
   return (
     <div className="h-screen w-screen bg-ocf-black">
-      <div className="flex flex-col justify-between items-center h-1/2">
-        <div className="flex flex-row justify-center w-screen mt-24">
+      <div className="flex h-1/2 flex-col items-center justify-between">
+        <div className="mt-24 flex w-screen flex-row justify-center">
           <a
             href="https://www.openclimatefix.org/"
             target="_blank"
@@ -34,13 +34,13 @@ const Logout = () => {
             />
           </a>
         </div>
-        <h1 className="font-bold text-4xl mt-20 text-center text-ocf-gray w-[200px]">
+        <h1 className="mt-20 w-[200px] text-center text-4xl font-bold text-ocf-gray">
           See you next time!
         </h1>
       </div>
-      <div className="flex flex-col items-center justify-end h-1/2 w-full pb-28">
+      <div className="flex h-1/2 w-full flex-col items-center justify-end pb-28">
         <Link href="/">
-          <button className="bg-ocf-yellow dark:bg-ocf-yellow shadow h-14 w-72 text-center rounded-md font-bold text-xl">
+          <button className="h-14 w-72 rounded-md bg-ocf-yellow text-center text-xl font-bold shadow dark:bg-ocf-yellow">
             Back to login
           </button>
         </Link>

@@ -12,12 +12,12 @@ const Sites = () => {
   const sites = allSites.slice(0, 5);
 
   return (
-    <div className="h-full w-full flex flex-col gap-3 items-center px-5 mb-[var(--bottom-nav-margin)] max-w-lg">
-      <div className="flex flex-row w-full h-12 items-end mb-4">
-        <h1 className="flex-1 font-bold text-3xl text-ocf-gray">My Sites</h1>
+    <div className="mb-[var(--bottom-nav-margin)] flex h-full w-full max-w-lg flex-col items-center gap-3 px-5">
+      <div className="mb-4 flex h-12 w-full flex-row items-end">
+        <h1 className="flex-1 text-3xl font-bold text-ocf-gray">My Sites</h1>
         <button onClick={() => setEditMode(!editMode)}>
           {editMode ? (
-            <p className="text-amber text-base font-semibold">Done</p>
+            <p className="text-base font-semibold text-amber">Done</p>
           ) : (
             <PencilSquareIcon color="#E4E4E4" width="24" height="24" />
           )}

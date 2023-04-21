@@ -1,31 +1,37 @@
-import { FC, useState } from 'react';
-import NumberDisplay from './NumberDisplay';
-import { getNextThresholdIndex, graphThreshold } from 'lib/graphs';
 import dayjs from 'dayjs';
-import { useSiteData } from '~/lib/sites';
-import { Site } from '~/lib/types';
+import { getNextThresholdIndex, graphThreshold } from 'lib/graphs';
+import { FC, useState } from 'react';
+import { useSiteAggregation } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
+import { Site } from '~/lib/types';
+import NumberDisplay from './NumberDisplay';
 
-const SunnyTimeframe: FC<{ site: Site }> = ({ site }) => {
-  const { forecastData, isLoading } = useSiteData(site.site_uuid);
+interface SunnyTimeframeProps {
+  sites: Site[];
+}
+
+const SunnyTimeframe: FC<SunnyTimeframeProps> = ({ sites }) => {
+  const representativeSite = sites[0];
+  const { totalForecastedGeneration, totalInstalledCapacityKw, isLoading } =
+    useSiteAggregation(sites);
   const [isRelativeTime, setIsRelativeTime] = useState(false);
-  const { timeFormat } = useSiteTime(site);
+  const { timeFormat } = useSiteTime(representativeSite);
 
-  const thresholdCapacityKW = site.installed_capacity_kw * graphThreshold;
+  const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
-  if (!forecastData) {
+  if (!totalForecastedGeneration) {
     return (
       <NumberDisplay
         title="Loading"
         value="Loading..."
-        isLoading={isLoading}
         onClick={() => {}}
+        isLoading
       />
     );
   }
 
   const nextThreshold = getNextThresholdIndex(
-    forecastData.forecast_values,
+    totalForecastedGeneration,
     thresholdCapacityKW
   );
 
@@ -39,22 +45,24 @@ const SunnyTimeframe: FC<{ site: Site }> = ({ site }) => {
   let sunnyText = '';
 
   if (isRelativeTime) {
-    let difference = dayjs(
-      forecastData.forecast_values[index].datetime_utc
-    ).diff(dayjs(), 'hours', true);
+    let difference = dayjs(totalForecastedGeneration[index].datetime_utc).diff(
+      dayjs(),
+      'hours',
+      true
+    );
 
     let timeUnit = difference === 1 ? 'Hour' : 'Hours';
 
-    // If we are under an hour, round to minutes
+    // If we are under an hour, convert to minutes
     if (difference < 1) {
-      difference = Math.round(dayjs.duration(difference, 'hours').asMinutes());
+      difference = dayjs.duration(difference, 'hours').asMinutes();
       timeUnit = difference ? 'Minute' : 'Minutes';
     }
 
-    value = `${difference} ${timeUnit}`;
+    value = `${Math.round(difference)} ${timeUnit}`;
     sunnyText = aboveThreshold ? 'Sunny in' : 'Sunny for';
   } else {
-    value = timeFormat(forecastData.forecast_values[index].datetime_utc);
+    value = timeFormat(totalForecastedGeneration[index].datetime_utc);
     sunnyText = aboveThreshold ? 'Sunny at' : 'Sunny until';
   }
 

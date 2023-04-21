@@ -9,7 +9,7 @@ interface Props {
 const Spinner: FC<Props> = ({ width, height, margin }) => (
   <svg
     aria-hidden="true"
-    className={`w-${width} h-${height} mx-${margin} text-gray-200 animate-spin dark:text-ocf-gray-300 fill-ocf-black`}
+    className={`w-${width} h-${height} mx-${margin} animate-spin fill-ocf-black text-gray-200 dark:text-ocf-gray-300`}
     viewBox="0 0 100 101"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

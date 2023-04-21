@@ -46,6 +46,9 @@ module.exports = {
       black: 900,
     },
     extend: {
+      boxShadow: {
+        'side-bar': '0px 10px 10px rgba(0, 0, 0, 0.15)',
+      },
       gridTemplateAreas: {
         'dashboard-desktop': [
           'Expected-Total-Output Sunny Weather-Icons',

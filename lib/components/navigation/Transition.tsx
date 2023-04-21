@@ -6,7 +6,7 @@ import {
 } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { FC, PropsWithChildren } from 'react';
-import { useIsSitePage, useMediaQuery } from '~/lib/utils';
+import { useIsMobile, useIsSitePage, useMediaQuery } from '~/lib/utils';
 
 interface Props {
   className?: string;
@@ -16,7 +16,7 @@ const Transition: FC<PropsWithChildren<Props>> = ({ children, className }) => {
   const { asPath } = useRouter();
   const isSitePage = useIsSitePage();
   const shouldReduceMotion = useReducedMotion();
-  const mobile = useMediaQuery('(max-width: 768px)');
+  const mobile = useIsMobile();
   const animationKey = isSitePage ? asPath : undefined;
 
   const duration = 0.2;

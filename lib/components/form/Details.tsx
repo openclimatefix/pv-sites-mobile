@@ -46,20 +46,19 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
 
     if (!didSubmit) {
       setDidSubmit(true);
-      // TODO: Add schema validation with zod
       await postPanelData();
       nextPageCallback();
     }
   };
 
   return (
-    <div className="flex flex-col mb-[max(var(--bottom-nav-margin),20px)] gap-10">
-      <div className="flex flex-row w-4/5 md:w-9/12 self-center">
-        <div className="flex-1 hidden md:block px-8">
-          <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray">
+    <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
+      <div className="flex w-4/5 flex-row self-center md:w-9/12">
+        <div className="hidden flex-1 px-8 md:block">
+          <h1 className="mt-2 text-4xl font-semibold dark:text-ocf-gray md:text-3xl md:font-medium">
             Your site&apos;s details
           </h1>
-          <div className="w-full h-full" onClick={lastPageCallback}>
+          <div className="h-full w-full" onClick={lastPageCallback}>
             <LocationInput
               shouldZoomIntoOriginal={true}
               initialZoom={16}
@@ -73,7 +72,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           </div>
           <button
             onClick={lastPageCallback}
-            className="md:hidden mt-8 font-bold text-xl peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
             Back
           </button>
@@ -172,23 +171,23 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           />
           <button
             disabled={didSubmit}
-            className="md:hidden mt-8 font-bold text-xl w-full peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
             {didSubmit && <Spinner width={5} height={5} margin={4} />}
             Finish
-            {didSubmit && <div className="w-5 mx-4" />}
+            {didSubmit && <div className="mx-4 w-5" />}
           </button>
         </form>
       </div>
       <Modal show={showModal} setShow={setShowModal} />
-      <div className="hidden md:flex md:flex-row md:justify-between w-10/12 mx-auto mt-auto">
+      <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
         <Button disabled={false} onClick={lastPageCallback}>
           Back
         </Button>
         <Button form="panel-form" disabled={didSubmit}>
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           Finish
-          {didSubmit && <div className="w-5 mx-2" />}
+          {didSubmit && <div className="mx-2 w-5" />}
         </Button>
       </div>
     </div>

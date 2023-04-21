@@ -11,24 +11,24 @@ const RecommendationDisplay: FC<Props> = ({ src, alt, description }) => {
   return (
     <div
       className="
-          flex-1
           flex
+          h-[100%]
+          flex-1
+          items-center
+          justify-center
+          rounded-2xl
+          bg-ocf-black-500
           p-3
           text-center
-          justify-center
-          items-center
-          bg-ocf-black-500
-          rounded-2xl
-          h-[100%]
           md:flex-col
           md:justify-center
           md:gap-5"
     >
-      <div className="relative h-[70%] aspect-square md:h-[unset] md:w-full md:max-w-[90px]">
-        <Image src={src} alt={alt} layout="fill" />
+      <div className="relative aspect-square h-[70%] md:h-[unset] md:w-full md:max-w-[90px]">
+        <Image src={src} alt={alt} fill priority />
       </div>
-      <div className="text-ocf-gray ml-3 self-center font-normal text-left md:flex-initial md:max-w-[75%] md:ml-0">
-        <p className="m-0 text-[10px] mb-1 font-medium md:text-lg md:text-center">
+      <div className="ml-3 self-center text-left font-normal text-ocf-gray md:ml-0 md:max-w-[75%] md:flex-initial">
+        <p className="m-0 mb-1 text-[10px] font-medium md:text-center md:text-lg">
           {description}
         </p>
       </div>

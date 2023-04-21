@@ -27,26 +27,26 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
       : undefined;
 
     return (
-      <div className="relative overflow-hidden rounded-lg w-full">
+      <div className="relative w-full overflow-hidden rounded-lg">
         <a
           onClick={onClick}
           ref={ref}
           href={!isEditMode ? href : '#0'}
-          className={`h-fit w-full max-w-lg flex items-center bg-ocf-black-500 font-bold overflow-hidden ${
+          className={`flex h-fit w-full max-w-lg items-center overflow-hidden bg-ocf-black-500 font-bold ${
             isEditMode && 'pointer-events-none'
           }`}
         >
-          <div className="flex flex-col flex-1 w-[60%] p-4 pl-5">
+          <div className="flex w-[60%] flex-1 flex-col p-4 pl-5">
             <h2
-              className={`text-amber text-xl font-semibold transition-all ${
+              className={`text-xl font-semibold text-amber transition-all ${
                 isLoading || !noError ? skeleton : ``
               }`}
             >
               {isLoading ? 'Loading...' : site.client_site_name ?? 'My Site'}
             </h2>
-            <div className="flex flex-col mt-2 gap-1">
+            <div className="mt-2 flex flex-col gap-1">
               <p
-                className={`text-ocf-gray-500 text-xs font-medium transition-all ${
+                className={`text-xs font-medium text-ocf-gray-500 transition-all ${
                   isLoading || !noError ? skeleton : ``
                 }`}
               >
@@ -58,7 +58,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               </p>
               {site.installed_capacity_kw && (
                 <p
-                  className={`text-ocf-gray-500 font-medium text-xs transition-all ${
+                  className={`text-xs font-medium text-ocf-gray-500 transition-all ${
                     isLoading || !noError ? skeleton : ``
                   }`}
                 >
@@ -66,7 +66,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                 </p>
               )}
               <p
-                className={`text-ocf-gray-500 font-medium text-xs transition-all ${
+                className={`text-xs font-medium text-ocf-gray-500 transition-all ${
                   isLoading || !noError ? skeleton : ``
                 }`}
               >
@@ -80,7 +80,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             </div>
           </div>
 
-          <div className={`mr-5 w-[40%] pointer-events-none`}>
+          <div className={`pointer-events-none mr-5 w-[40%]`}>
             {/* TODO: find out why this left is necessary */}
             {isLoading || !noError == undefined ? (
               <div className="h-[100px]"></div>
@@ -98,15 +98,15 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
         >
           <Link href={`/site-details/${site.site_uuid}`} passHref>
             <a
-              className={`flex h-full bg-amber w-[15%] min-w-[70px] flex-end justify-center ease-in-out transition duration-[700ms] pointer-events-auto ${
+              className={`flex-end pointer-events-auto flex h-full w-[15%] min-w-[70px] justify-center bg-amber transition duration-[700ms] ease-in-out ${
                 isEditMode ? '-translate-x-[200%]' : 'duration-[500ms]'
               }`}
             >
-              <div className="flex flex-col self-center justify-center items-center">
-                <div className="flex-1 mb-2">
+              <div className="flex flex-col items-center justify-center self-center">
+                <div className="mb-2 flex-1">
                   <PencilSquareIcon color="#14120E" width="24" height="24" />
                 </div>
-                <p className="flex-1 text-[8px]	text-center px-5">
+                <p className="flex-1 px-5	text-center text-[8px]">
                   Edit site details
                 </p>
               </div>
@@ -114,15 +114,15 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
           </Link>
           <Link href={'/site-details'} passHref>
             <a
-              className={`flex h-full bg-[#D44545] flex-end w-[15%] min-w-[70px] justify-center ease-in-out transition duration-[500ms] pointer-events-auto ${
+              className={`flex-end pointer-events-auto flex h-full w-[15%] min-w-[70px] justify-center bg-[#D44545] transition duration-[500ms] ease-in-out ${
                 isEditMode ? '-translate-x-[200%]' : 'duration-[700ms]'
               }`}
             >
-              <div className="flex flex-col self-center justify-center items-center">
-                <div className="flex-1 mb-2">
+              <div className="flex flex-col items-center justify-center self-center">
+                <div className="mb-2 flex-1">
                   <DeleteIcon />
                 </div>
-                <p className="flex-1 text-[8px]	text-center px-5 text-[#E4E4E4] mb-2">
+                <p className="mb-2 flex-1	px-5 text-center text-[8px] text-[#E4E4E4]">
                   Delete site
                 </p>
               </div>

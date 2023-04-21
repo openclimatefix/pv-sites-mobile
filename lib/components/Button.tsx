@@ -17,7 +17,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
       form={form}
       onClick={onClick}
       disabled={disabled}
-      className="inline-flex items-center justify-center md:w-36 w-10/12 bg-ocf-yellow disabled:bg-ocf-gray disabled:dark:bg-ocf-gray transition-all duration-500 shadow h-14 max-w-sm text-center rounded-md md:rounded-lg md:font-semibold font-bold text-xl"
+      className="inline-flex h-14 w-10/12 max-w-sm items-center justify-center rounded-md bg-ocf-yellow text-center text-xl font-bold shadow transition-all duration-500 disabled:bg-ocf-gray disabled:dark:bg-ocf-gray md:w-36 md:rounded-lg md:font-semibold"
     >
       {children}
     </button>

@@ -1,12 +1,14 @@
 import { FC } from 'react';
 
-import { CloudyIcon, PartlyCloudyIcon, SunnyIcon } from '../icons';
-import { getTotalExpectedOutput } from './ExpectedTotalOutput';
-import { GenerationDataPoint, Site } from '~/lib/types';
-import { useSiteData } from '~/lib/sites';
-import { generationDataOverDateRange } from '~/lib/generation';
-import { useSiteTime } from '~/lib/time';
+import {
+  generationDataOverDateRange,
+  getTotalExpectedOutput,
+} from '~/lib/generation';
+import { useSiteAggregation } from '~/lib/sites';
 import { skeleton } from '~/lib/skeleton';
+import { useSiteTime } from '~/lib/time';
+import { GenerationDataPoint, Site } from '~/lib/types';
+import { CloudyIcon, PartlyCloudyIcon, SunnyIcon } from '../icons';
 
 const GetExpectedOutputOverDay = (
   duskTime: Date,
@@ -44,11 +46,11 @@ const getWeatherDisplay = (
   const dates = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
   return (
     <div className="flex-1 flex-col">
-      <div className="w-full flex flex-col justify-center align-center text-center py-2 gap-1">
+      <div className="align-center flex w-full flex-col justify-center gap-1 py-2 text-center">
         <p className="flex-1 text-xs text-amber-50">
           {day === 'Today' ? day : dates[day]}
         </p>
-        <div className="flex-1 self-center margin-0">
+        <div className="margin-0 flex-1 self-center">
           {clearskyCapacity < cloudyThreshold ? (
             <CloudyIcon />
           ) : clearskyCapacity > sunnyThreshold ? (
@@ -67,20 +69,22 @@ export const cloudyThreshold = 0.3;
 export const sunnyThreshold = 0.7;
 
 type WeatherCardProps = {
-  site: Site;
+  sites: Site[];
 };
 
-const WeatherCard: FC<WeatherCardProps> = ({ site }) => {
-  const { forecastData, clearskyData } = useSiteData(site.site_uuid);
-  const { currentTime, dusk, dawn } = useSiteTime(site);
-  if (forecastData && clearskyData) {
+const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
+  const representativeSite = sites[0];
+  const { totalForecastedGeneration, totalClearskyGeneration } =
+    useSiteAggregation(sites);
+  const { currentTime, dusk, dawn } = useSiteTime(representativeSite);
+  if (totalForecastedGeneration && totalClearskyGeneration) {
     const [firstTotal, firstClearskyCapacity, firstDay] =
       GetExpectedOutputOverDay(
         dusk,
         dawn,
         0,
-        forecastData.forecast_values,
-        clearskyData.clearsky_estimate
+        totalForecastedGeneration,
+        totalClearskyGeneration
       );
 
     const firstDayOrToday = firstDay === currentTime.day() ? 'Today' : firstDay;
@@ -90,8 +94,8 @@ const WeatherCard: FC<WeatherCardProps> = ({ site }) => {
         dusk,
         dawn,
         1,
-        forecastData.forecast_values,
-        clearskyData.clearsky_estimate
+        totalForecastedGeneration,
+        totalClearskyGeneration
       );
 
     const [thirdTotal, thirdClearskyCapacity, thirdDay] =
@@ -99,12 +103,12 @@ const WeatherCard: FC<WeatherCardProps> = ({ site }) => {
         dusk,
         dawn,
         2,
-        forecastData.forecast_values,
-        clearskyData.clearsky_estimate
+        totalForecastedGeneration,
+        totalClearskyGeneration
       );
 
     return (
-      <div className="bg-ocf-black-500 flex flex-row justify-evenly rounded-2xl">
+      <div className="flex flex-row justify-evenly rounded-2xl bg-ocf-black-500">
         {getWeatherDisplay(firstClearskyCapacity, firstTotal, firstDayOrToday)}
         {getWeatherDisplay(secondClearskyCapacity, secondTotal, secondDay)}
         {thirdTotal != 0 &&
@@ -114,16 +118,18 @@ const WeatherCard: FC<WeatherCardProps> = ({ site }) => {
   }
 
   return (
-    <div className="bg-ocf-black-500 flex flex-row rounded-2xl px-5">
-      <div className="flex-1 flex-col">
-        <div className="w-full flex flex-col justify-center align-center text-center py-5 gap-1">
-          <p className={`text-xs ${skeleton}`}>Loading...</p>
-          <div className={`${skeleton}`}>
-            <div className="h-[35px]"></div>
+    <div className="flex flex-row justify-around rounded-2xl bg-ocf-black-500 px-5">
+      {new Array(3).fill(null).map((_, i) => (
+        <div className="w-1/4 flex-col" key={i}>
+          <div className="align-center flex h-[91px] w-full flex-col justify-center gap-1 py-2 text-center">
+            <p className={`text-xs ${skeleton}`}>Loading...</p>
+            <div className={skeleton}>
+              <div className="h-[20px]"></div>
+            </div>
+            <p className={`text-xs ${skeleton}`}>Loading...</p>
           </div>
-          <p className={`text-xs ${skeleton}`}>Loading...</p>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

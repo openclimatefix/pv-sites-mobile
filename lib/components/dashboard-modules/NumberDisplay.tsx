@@ -10,16 +10,16 @@ interface Props {
 
 const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
   const renderDisplay = () => (
-    <div className="flex-1 p-4 flex flex-col justify-center text-center md:text-left bg-ocf-black-500 rounded-2xl w-full h-full">
+    <div className="flex h-full w-full flex-1 flex-col justify-center rounded-2xl bg-ocf-black-500 p-4 text-center md:text-left">
       <div
-        className={`mb-2 text-xs md:text-lg text-ocf-gray font-semibold transition-all md:font-medium md:leading-none ${
+        className={`mb-2 text-xs font-semibold text-ocf-gray transition-all md:text-lg md:font-medium md:leading-none ${
           isLoading ? skeleton : ``
         }`}
       >
         {title}
       </div>
       <div
-        className={`text-2xl text-ocf-yellow font-semibold leading-none transition-all md:leading-none ${
+        className={`text-2xl font-semibold leading-none text-ocf-yellow transition-all md:leading-none ${
           isLoading ? skeleton : ``
         }`}
       >
@@ -30,7 +30,7 @@ const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
 
   return onClick ? (
     <button
-      className="cursor-pointer transition-all active:scale-95 flex-1 h-[100%] w-[100%]"
+      className="h-[100%] w-[100%] flex-1 cursor-pointer transition-all active:scale-95"
       onClick={onClick}
     >
       {renderDisplay()}

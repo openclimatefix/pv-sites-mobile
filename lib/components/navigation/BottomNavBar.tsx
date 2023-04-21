@@ -50,20 +50,20 @@ const BottomNavBar = () => {
     <div
       className={`${
         sites.length === 0
-          ? 'opacity-0 pointer-events-none hidden'
+          ? 'pointer-events-none hidden opacity-0'
           : 'opacity-100'
       }
-      bg-ocf-gray-1000 w-screen h-[var(--bottom-nav-height)] bottom-0 fixed visible md:invisible z-50`}
+      visible fixed bottom-0 z-50 h-[var(--bottom-nav-height)] w-screen bg-ocf-gray-1000 md:invisible`}
     >
-      <div className="flex justify-evenly items-center h-full">
+      <div className="flex h-full items-center justify-evenly">
         <AnimatePresence mode="wait">
           {icons.map((val, i) => {
             return (
               <Link key={val.title} href={val.link} legacyBehavior passHref>
                 <motion.a
-                  className={`text-xs items-center flex flex-col justify-evenly ${
+                  className={`flex flex-col items-center justify-evenly text-xs ${
                     asPath == val.link ? 'text-ocf-yellow' : 'text-white'
-                  } ${isSitePage ? 'mr-auto ml-10' : ''}`}
+                  } ${isSitePage ? 'ml-10 mr-auto' : ''}`}
                   initial={{
                     opacity: 0,
                     x: isSitePage ? '50%' : '-50%',

@@ -1,48 +1,13 @@
-import Link from 'next/link';
-import React, { FC, ReactNode, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 
-import { LogoutIcon } from '../icons';
-
-import { LinkProps } from 'next/link';
+import { XMarkIcon } from '@heroicons/react/24/solid';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '~/lib/utils';
-import {
-  ChartBarIcon,
-  ListBulletIcon,
-  MagnifyingGlassIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/solid';
 
-type MenuLinkProps = {
-  linkProps: LinkProps;
-  label: string;
-  svg: ReactNode;
-  currentPath: string;
-};
-
-const MenuLink: React.FC<MenuLinkProps> = ({
-  linkProps,
-  label,
-  svg,
-  currentPath,
-}) => {
-  const textColor =
-    linkProps.href === currentPath ? 'text-amber' : 'text-white';
-  return (
-    <Link {...linkProps}>
-      <a>
-        <div
-          className={`px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 hover:bg-ocf-gray-1000 transition-colors transform`}
-        >
-          <div className={textColor}>{svg}</div>
-          <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
-            {label}
-          </span>
-        </div>
-      </a>
-    </Link>
-  );
-};
+import { useSites } from '~/lib/sites';
+import DashboardLink from './DashboardLink';
+import MenuLink from './MenuLink';
 
 interface SideBarProps {
   open: boolean;
@@ -56,6 +21,8 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
     return () => router.events.off('routeChangeComplete', onClose);
   }, [onClose, router]);
 
+  const { sites } = useSites();
+
   const wrapperRef = useRef(null);
   useClickedOutside(wrapperRef, () => {
     if (open) {
@@ -63,51 +30,67 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
     }
   });
 
+  const generateSiteLinks = () => {
+    if (sites) {
+      // TODO: remove hard-coded limit of 5 solar panel sites
+      return sites
+        .slice(0, 5)
+        .map((site, idx) => (
+          <DashboardLink
+            key={site.site_uuid}
+            siteName={site.client_site_name || `Site ${idx + 1}`}
+            href={`/dashboard/${site.site_uuid}`}
+            sites={[site]}
+          />
+        ));
+    }
+    return null;
+  };
+
   return (
     <div
-      className={`z-50 transition-all duration-500 h-full fixed top-0 ${
-        open ? 'translate-x-0 shadow-lg shadow-ocf-black' : '-translate-x-64'
+      className={`fixed top-0 z-50 h-full transition-all duration-500 ${
+        open
+          ? 'translate-x-0 shadow-side-bar shadow-ocf-black'
+          : '-translate-x-[100%]'
       }`}
       // @ts-ignore
       inert={!open ? '' : null}
       ref={wrapperRef}
     >
-      <div className="flex h-full overflow-y-auto flex-col bg-ocf-black-500 w-64 px-4 py-8 relative">
-        <button
-          onClick={onClose}
-          className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center ml-6"
-        >
-          <XMarkIcon width="24" height="24" />
-        </button>
-        <div className="text-xs	flex flex-col mt-6 justify-between flex-1">
-          <div className="flex flex-col gap-3">
-            <MenuLink
-              linkProps={{ href: '/dashboard' }}
-              label="Dashboard"
-              svg={<ChartBarIcon width="24" height="24" />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/sites' }}
-              label="My Sites"
-              svg={<ListBulletIcon width="24" height="24" />}
-              currentPath={router.asPath}
-            />
-            <MenuLink
-              linkProps={{ href: '/more-info' }}
-              label="More Info"
-              svg={<MagnifyingGlassIcon width="24" height="24" />}
-              currentPath={router.asPath}
-            />
+      <div className="w-84 relative flex h-full flex-col overflow-y-auto bg-ocf-black px-10 py-8">
+        <div className="mt-6 flex flex-1 flex-col justify-between text-xs">
+          <div className="flex flex-col">
+            {sites.length > 1 && (
+              <>
+                <div className="mb-7 flex flex-row items-center justify-between">
+                  <h2 className="text-xl font-semibold text-white">
+                    Dashboards
+                  </h2>
+                  <button onClick={onClose}>
+                    <XMarkIcon height="30" width="30" color="white" />
+                  </button>
+                </div>
+
+                <DashboardLink
+                  siteName="Aggregate"
+                  href="/dashboard"
+                  sites={sites}
+                />
+              </>
+            )}
+
+            <h2 className="mb-3 mt-8 text-sm font-medium text-white">
+              Site Dashboards
+            </h2>
+
+            <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
           </div>
           <div className="flex flex-col gap-3">
             <MenuLink
-              linkProps={{
-                href: `/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`,
-              }}
-              label="Logout"
-              svg={<LogoutIcon />}
-              currentPath={router.asPath}
+              href="/site-details"
+              label="Add a site"
+              svg={<PlusCircleIcon height="24" width="24" color="white" />}
             />
           </div>
         </div>

@@ -9,11 +9,11 @@ interface CurrentCapacityProps {
 }
 
 const CurrentCapacity: FC<CurrentCapacityProps> = ({ sites }) => {
-  const { totalInstalledCapacityKw, totalExpectedGeneration, isLoading } =
+  const { totalInstalledCapacityKw, totalForecastedGeneration, isLoading } =
     useSiteAggregation(sites);
 
-  let currentOutput = totalExpectedGeneration
-    ? getCurrentTimeGeneration(totalExpectedGeneration)
+  let currentOutput = totalForecastedGeneration
+    ? getCurrentTimeGeneration(totalForecastedGeneration)
     : null;
 
   return (

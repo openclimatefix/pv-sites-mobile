@@ -61,6 +61,37 @@ function getXTickValues(times: number[], numTicks: number) {
   return tickValues;
 }
 
+interface TimeRangeSelectorProps {
+  label: string;
+  value: number;
+  checked: boolean;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+}
+
+const TimeRangeSelector: FC<TimeRangeSelectorProps> = ({
+  label,
+  value,
+  checked,
+  onChange,
+}) => {
+  return (
+    <label className="block" htmlFor={label}>
+      <input
+        className="peer sr-only"
+        type="radio"
+        name={label}
+        id={label}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+      />
+      <span className="relative inline-block h-7 w-10 cursor-pointer rounded-md bg-ocf-gray-1000 pt-0.5 text-center text-ocf-gray-300 peer-checked:rounded-md peer-checked:bg-ocf-yellow-500 peer-checked:text-black peer-focus-visible:ring">
+        {label}
+      </span>
+    </label>
+  );
+};
+
 interface GraphProps {
   sites: Site[];
 }
@@ -68,8 +99,12 @@ interface GraphProps {
 const Graph: FC<GraphProps> = ({ sites }) => {
   const representativeSite = sites[0];
 
-  const { totalExpectedGeneration, isLoading, totalClearskyData } =
-    useSiteAggregation(sites);
+  const {
+    totalForecastedGeneration,
+    isLoading,
+    totalClearskyGeneration,
+    totalActualGeneration,
+  } = useSiteAggregation(sites);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime, weekdayFormat } = useSiteTime(representativeSite, {
     updateEnabled: timeEnabled,
@@ -81,11 +116,11 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   endDate.setHours(endDate.getHours() + 48);
 
   const forecastDataTrimmed =
-    totalExpectedGeneration &&
+    totalForecastedGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          totalExpectedGeneration,
+          totalForecastedGeneration,
           getGraphStartDate(currentTime.toDate(), timeRange),
           getGraphEndDate(currentTime.toDate(), timeRange)
         ),
@@ -93,12 +128,20 @@ const Graph: FC<GraphProps> = ({ sites }) => {
       )
     );
 
+  const actualDataTrimmed =
+    totalActualGeneration &&
+    generationDataOverDateRange(
+      totalActualGeneration,
+      getGraphStartDate(currentTime.toDate(), timeRange),
+      new Date(currentTime.toDate())
+    );
+
   const clearSkyEstimateTrimmed =
-    totalClearskyData &&
+    totalClearskyGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          totalClearskyData,
+          totalClearskyGeneration,
           getGraphStartDate(currentTime.toDate(), timeRange),
           getGraphEndDate(currentTime.toDate(), timeRange)
         ),
@@ -151,64 +194,40 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   };
 
   return (
-    <div className="w-full h-[260px] bg-ocf-black-500 rounded-2xl p-3">
+    <div className="h-[260px] w-full rounded-2xl bg-ocf-black-500 p-3">
       <div className="ml-1 flex gap-2">
-        <label className="block">
-          <input
-            className="sr-only peer"
-            type="radio"
-            name="1H"
-            id="1H"
-            value={1}
-            checked={timeRange == 1}
-            onChange={handleChange}
-          />
-          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
-            1H
-          </span>
-        </label>
-        <label className="block">
-          <input
-            className="sr-only peer"
-            type="radio"
-            name="1D"
-            id="1D"
-            value={24}
-            checked={timeRange == 24}
-            onChange={handleChange}
-          />
-          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
-            1D
-          </span>
-        </label>
-        <label className="block">
-          <input
-            className="sr-only peer"
-            type="radio"
-            name="2D"
-            id="2D"
-            value={48}
-            checked={timeRange == 48}
-            onChange={handleChange}
-          />
-          <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
-            2D
-          </span>
-        </label>
+        <TimeRangeSelector
+          label="1H"
+          value={1}
+          checked={timeRange === 1}
+          onChange={handleChange}
+        />
+        <TimeRangeSelector
+          label="1D"
+          value={24}
+          checked={timeRange === 24}
+          onChange={handleChange}
+        />
+        <TimeRangeSelector
+          label="2D"
+          value={48}
+          checked={timeRange === 48}
+          onChange={handleChange}
+        />
       </div>
-      <div className="flex ml-[9%] mt-[20px]  text-sm gap-3">
+      <div className="ml-[9%] mt-[20px] flex  gap-3 text-sm">
         <div className="flex">
           <LegendLineGraphIcon className="text-ocf-yellow-500" />
-          <p className="text-white ml-[5px] mt-[2px]">OCF Final Forecast</p>
+          <p className="ml-[5px] mt-[2px] text-white">OCF Final Forecast</p>
         </div>
         <div className="flex">
           <LegendLineGraphIcon className="text-ocf-blue" />
-          <p className="text-white ml-[5px] mt-[2px]">Clear Sky</p>
+          <p className="ml-[5px] mt-[2px] text-white">Clear Sky</p>
         </div>
       </div>
       {!isLoading && (
         <ResponsiveContainer
-          className="mt-[20px] touch-pinch-zoom touch-pan-y"
+          className="mt-[20px] touch-pan-y touch-pinch-zoom"
           width="100%"
           height={150}
         >
@@ -275,6 +294,14 @@ const Graph: FC<GraphProps> = ({ sites }) => {
               dot={false}
               activeDot={{ r: 8 }}
               onAnimationEnd={() => setTimeEnabled(true)}
+            />
+            <Line
+              data={actualDataTrimmed}
+              type="monotone"
+              dataKey="generation_kw"
+              stroke="#FFFFFF"
+              dot={false}
+              activeDot={{ r: 8 }}
             />
             <Line
               data={forecastDataTrimmed}

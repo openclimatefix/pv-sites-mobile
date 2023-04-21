@@ -1,36 +1,81 @@
 import { useUser } from '@auth0/nextjs-auth0';
-import { FC, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { FC, MouseEventHandler, useState } from 'react';
 import { useSites } from '~/lib/sites';
 import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
 import SideBar from './SideBar';
 
+type NavbarLinkProps = {
+  title: string;
+  href: string;
+  currentPath: string;
+};
+
+const NavbarLink: React.FC<NavbarLinkProps> = ({
+  title,
+  href,
+  currentPath,
+}) => {
+  const isActive = href === currentPath;
+  const textColor = isActive ? 'text-amber' : 'text-white';
+  return (
+    <Link href={href} passHref>
+      <a
+        className={`${textColor} mr-6 text-lg font-medium ${
+          isActive && 'underline decoration-2 underline-offset-8'
+        }`}
+      >
+        {title}
+      </a>
+    </Link>
+  );
+};
+
 const NavBar: FC = () => {
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const { sites } = useSites();
   const { user } = useUser();
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const router = useRouter();
+
+  const handleOpenSidebar: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    setIsSideBarOpen(true);
+  };
 
   return (
     <>
       <SideBar open={isSideBarOpen} onClose={() => setIsSideBarOpen(false)} />
       <div
-        className={`bg-ocf-black w-full h-[var(--nav-height)] flex ${
+        className={`mx-auto flex h-[var(--nav-height)] w-screen bg-ocf-black ${
           user ? 'justify-between' : 'justify-center'
         } px-5 md:my-2`}
       >
         {user && (
           <button
-            onClick={() => setIsSideBarOpen(true)}
+            onClick={handleOpenSidebar}
             className={`${
               isSideBarOpen || sites.length === 0
-                ? 'opacity-0 pointer-events-none'
+                ? 'pointer-events-none opacity-0'
                 : 'opacity-100'
-            } text-gray-600 flex flex-col justify-center invisible md:visible`}
+            } invisible flex flex-col justify-center text-gray-600 transition-all md:visible`}
           >
             <MenuLogo />
           </button>
         )}
         <NowcastingLogo />
-        <div className="w-10 h-10" />
+        <div className="flex flex-row items-center justify-center">
+          <NavbarLink
+            title="Dashboard"
+            currentPath={router.asPath}
+            href="/dashboard"
+          />
+          <NavbarLink
+            title="More Info"
+            currentPath={router.asPath}
+            href="/more-info"
+          />
+        </div>
       </div>
     </>
   );

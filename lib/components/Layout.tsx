@@ -4,19 +4,22 @@ import { FC, PropsWithChildren } from 'react';
 import BottomNavBar from './navigation/BottomNavBar';
 import NavBar from './navigation/NavBar';
 import Transition from './navigation/Transition';
+import { useIsMobile } from '../utils';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useUser();
-  const { asPath: path } = useRouter();
 
-  const PageTransitionWrapper = user ? Transition : 'div';
-  const showNav = Boolean(user) && path != '/site-details';
+  const mobile = useIsMobile();
+  const PageTransitionWrapper = mobile && user ? Transition : 'div';
+  const { asPath: path } = useRouter();
+  // TODO: Improve this
+  const showNav = Boolean(user) && path !== '/site-details';
 
   return (
     <>
-      <PageTransitionWrapper className="overflow-x-clip overflow-y-auto flex-1 grid-in-content relative">
+      <PageTransitionWrapper className="grid-in-content relative flex-1 overflow-y-auto overflow-x-clip">
         {showNav && <NavBar />}
-        <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start w-full">
+        <main className="flex w-full flex-col items-center justify-start bg-white dark:bg-ocf-black">
           {children}
         </main>
       </PageTransitionWrapper>

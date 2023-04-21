@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import SunCalc from 'suncalc';
 import { Site } from './types';
+import useSWR from 'swr';
 import dayjs from 'dayjs';
 
 type UseTimeOptions = {
@@ -16,7 +17,10 @@ export const useSiteTime = (
   { updateEnabled = false } = defaultUseTimeOptions
 ) => {
   const { latitude, longitude } = site;
-  const [timezone, setTimezone] = useState<string>('UTC');
+  const { data: timezone } = useSWR<string>(
+    latitude && longitude ? ['/timezone', longitude, latitude] : null,
+    () => fetchTimeZone(latitude, longitude)
+  );
   const [currentTime, setCurrentTime] = useState(dayjs().tz(timezone));
 
   useEffect(() => {
@@ -29,13 +33,6 @@ export const useSiteTime = (
       return () => clearInterval(interval);
     }
   }, [updateEnabled, timezone]);
-
-  useEffect(() => {
-    const updateTimezone = async () => {
-      setTimezone(await fetchTimeZone(longitude, latitude));
-    };
-    updateTimezone();
-  }, [latitude, longitude]);
 
   const times = useMemo(
     () => SunCalc.getTimes(currentTime.toDate(), latitude, longitude),

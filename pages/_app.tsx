@@ -33,6 +33,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           fetcher,
           fallback: swrFallback,
           refreshInterval: 1000 * 60, // Every minute
+          errorRetryCount: 3,
           keepPreviousData: true, // Enabled to support page transitions where a key changes
         }}
       >

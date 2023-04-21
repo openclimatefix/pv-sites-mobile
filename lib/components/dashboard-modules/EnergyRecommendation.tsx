@@ -34,12 +34,12 @@ interface EnergyRecommendationProps {
 }
 
 const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
-  const { isLoading, totalExpectedGeneration } = useSiteAggregation(sites);
+  const { isLoading, totalForecastedGeneration } = useSiteAggregation(sites);
   const representativeSite = sites[0];
 
   const currentOutput =
-    totalExpectedGeneration &&
-    getCurrentTimeGeneration(totalExpectedGeneration);
+    totalForecastedGeneration &&
+    getCurrentTimeGeneration(totalForecastedGeneration);
   const recommendationIdx = currentOutput
     ? getBestRecommendationIndex(currentOutput)
     : null;
@@ -50,15 +50,15 @@ const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
     return (
       <div
         className="
-        flex-1
-        flex
-        p-4
-        text-center
-        justify-center
         align-center
-        bg-ocf-black-500
+        flex
+        h-[100%]
+        flex-1
+        justify-center
         rounded-2xl
-        h-[100%]"
+        bg-ocf-black-500
+        p-4
+        text-center"
       >
         <div className={skeleton}></div>
       </div>
@@ -68,7 +68,7 @@ const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
       <RecommendationDisplay
         src="/nighttime.svg"
         alt="Moon and stars"
-        description="Solar output is currently 0"
+        description="Solar output is currently 0 kW"
       />
     );
   } else if (recommendationIdx) {

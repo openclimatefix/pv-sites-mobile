@@ -31,15 +31,15 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
   return (
     <>
       <div
-        className="flex flex-col justify-between py-4 md:py-0 gap-2 relative h-[calc(100vh-var(--nav-height))] md:h-[calc(75vh)] w-screen bg-mapbox-gray-1000"
+        className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 md:h-[calc(75vh)] md:py-0"
         id="rootDiv"
       >
-        <div className="flex-col justify-end hidden md:flex h-8 short:h-0"></div>
+        <div className="hidden h-8 flex-col justify-end md:flex short:h-0"></div>
         <div
-          className="self-center md:w-1/2 md:min-w-[750px] w-[95%] h-4/6 md:h-full"
+          className="h-4/6 w-[95%] self-center md:h-full md:w-1/2 md:min-w-[750px]"
           id="mapboxInputWrapper"
         >
-          <h1 className="font-medium md:text-3xl text-xl text-ocf-gray pl-3 md:pl-0">
+          <h1 className="pl-3 text-xl font-medium text-ocf-gray md:pl-0 md:text-3xl">
             Where is your solar panel located?
           </h1>
           <LocationInput
@@ -54,14 +54,14 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
           />
         </div>
         {/* next button for mobile */}
-        <div className="md:hidden flex mb-10 justify-center self-center w-full h-14">
+        <div className="mb-10 flex h-14 w-full justify-center self-center md:hidden">
           <Button disabled={!isSubmissionEnabled} onClick={onClick}>
             Next
           </Button>
         </div>
       </div>
       {/* next button for desktop */}
-      <div className="hidden absolute md:flex md:flex-row md:justify-end -translate-x-1/2 bottom-0 left-1/2 w-3/4 h-14">
+      <div className="absolute bottom-0 left-1/2 hidden h-14 w-3/4 -translate-x-1/2 md:flex md:flex-row md:justify-end">
         <Button disabled={!isSubmissionEnabled} onClick={nextPageCallback}>
           Next
         </Button>

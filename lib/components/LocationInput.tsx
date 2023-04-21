@@ -228,7 +228,7 @@ const LocationInput: FC<LocationInputProps> = ({
 
   return (
     <div
-      className={`flex flex-col h-full md:h-[calc(100%-var(--map-text-height))]`}
+      className={`flex h-full flex-col md:h-[calc(100%-var(--map-text-height))]`}
     >
       <div
         ref={geocoderContainer}
@@ -236,7 +236,7 @@ const LocationInput: FC<LocationInputProps> = ({
         id="geocoderContainer"
       />
       <div className="w-11/12 self-center bg-white" />
-      <div className="relative top-0 flex flex-col flex-1">
+      <div className="relative top-0 flex flex-1 flex-col">
         <div
           ref={mapContainer}
           className="h-full rounded-3xl"
