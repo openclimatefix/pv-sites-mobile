@@ -86,7 +86,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               <div className="h-[100px]"></div>
             ) : (
               <div className="relative -left-7">
-                <SiteGraph site={site} hidden={isEditMode} />
+                <SiteGraph sites={[site]} hidden={isEditMode} />
               </div>
             )}
           </div>

@@ -11,7 +11,7 @@ interface SiteGraphProps {
   sites: Site[];
   hidden?: boolean;
   height?: number;
-  color: string;
+  color?: string;
 }
 
 const SiteGraph: FC<SiteGraphProps> = ({
