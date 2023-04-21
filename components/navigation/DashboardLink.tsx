@@ -27,14 +27,14 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
   const textColor = isActive ? 'text-white' : 'text-ocf-gray-800';
   const borderColor = isActive ? 'border-amber' : 'border-ocf-gray-1000';
 
-  const { totalExpectedGeneration } = useSiteAggregation(allSiteUUID);
+  const { totalForecastedGeneration } = useSiteAggregation(allSiteUUID);
 
   const currentOutput = useMemo(() => {
-    return totalExpectedGeneration
-      ? Math.round(getCurrentTimeGeneration(totalExpectedGeneration) * 100) /
+    return totalForecastedGeneration
+      ? Math.round(getCurrentTimeGeneration(totalForecastedGeneration) * 100) /
           100
       : undefined;
-  }, [totalExpectedGeneration]);
+  }, [totalForecastedGeneration]);
 
   const generateThresholdGraph = () => {
     if (allSiteUUID.length === 0) {

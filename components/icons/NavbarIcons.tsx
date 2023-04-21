@@ -7,6 +7,7 @@ export const NowcastingLogo: React.FC = ({}) => (
     viewBox="0 0 124 52"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className="absolute left-1/2 -translate-x-1/2"
   >
     <path
       d="M24.3666 30.0543H22.8948L19.338 25.0116H19.2971V30.0543H17.58V22.0264H19.0927L22.6086 27.069H22.6904V22.0264H24.4075L24.3666 30.0543Z"
