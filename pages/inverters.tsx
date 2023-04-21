@@ -12,9 +12,9 @@ import LinkInverters from '~/components/form/LinkInverters';
  * @returns siteUUIDs, a string array of all the valid site UUIDs
  */
 
-const TestInverters = () => {
+const Inverters = () => {
   return <LinkInverters></LinkInverters>;
 };
 
-export default TestInverters;
+export default Inverters;
 export const getServerSideProps = withSites();

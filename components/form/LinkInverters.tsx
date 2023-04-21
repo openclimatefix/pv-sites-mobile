@@ -11,13 +11,13 @@ const LinkInverters = () => {
   const mobile = useMediaQuery('(max-width: 768px)');
 
   const mobileSkipButtonClass =
-    'w-full text-[#FFD053] underline text-[14px] mt-[5px]';
+    'w-full text-ocf-yellow nderline text-[14px] mt-[5px]';
 
   const mobileInverterLinkClass =
-    'h-[54px] w-[308px] bg-[#FFD053] rounded-md font-semibold mb-[20px]';
+    'h-[54px] w-[308px] bg-ocf-yellow rounded-md font-semibold mb-[20px]';
 
   const deslktopInverterLinkClass =
-    'h-[54px] w-[308px] text-[#FFD053] border-[#FFD053] border-[2px] rounded-md font-semibold';
+    'h-[54px] w-[308px] text-ocf-yellow border-ocf-yellow border-[2px] rounded-md font-semibold';
 
   return (
     <div className="w-[320px] h-[550px] md:w-full flex flex-col items-center md:mt-[75px]">
@@ -28,7 +28,7 @@ const LinkInverters = () => {
       </div>
       {mobile && !showDisclaimer && (
         <button
-          className="w-full text-right text-[#FFD053] underline text-[14px] mt-[5px]"
+          className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
           onClick={() => setShowDisclaimer(!showDisclaimer)}
         >
           What&apos;s this?
@@ -36,14 +36,14 @@ const LinkInverters = () => {
       )}
       {mobile ? (
         showDisclaimer && (
-          <div className="w-full text-[#DDDDDD] text-[14px] mt-[20px] md:w-[485px]">
+          <div className="w-full text-ocf-gray-300 text-[14px] mt-[20px] md:w-[485px]">
             Linking your inverter with Enode gives us access to your solar
             output data, providing you with better forecasts and more
             information available within our app.
           </div>
         )
       ) : (
-        <div className="w-full text-[#DDDDDD] text-[16px] mt-[20px] md:w-[485px]">
+        <div className="w-full text-ocf-gray-300 text-[16px] mt-[20px] md:w-[485px]">
           Linking your inverter with Enode gives us access to your solar output
           data, providing you with better forecasts and more information
           available within our app.
@@ -52,7 +52,7 @@ const LinkInverters = () => {
 
       {mobile && showDisclaimer && (
         <button
-          className="w-full text-right text-[#FFD053] underline text-[14px] mt-[5px]"
+          className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
           onClick={() => setShowDisclaimer(!showDisclaimer)}
         >
           Show less
