@@ -29,21 +29,13 @@ const LinkInverters = () => {
       {mobile && !showDisclaimer && (
         <button
           className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
-          onClick={() => setShowDisclaimer(!showDisclaimer)}
+          onClick={() => setShowDisclaimer(true)}
         >
           What&apos;s this?
         </button>
       )}
-      {mobile ? (
-        showDisclaimer && (
-          <div className="w-full text-ocf-gray-300 text-[14px] mt-[20px] md:w-[485px]">
-            Linking your inverter with Enode gives us access to your solar
-            output data, providing you with better forecasts and more
-            information available within our app.
-          </div>
-        )
-      ) : (
-        <div className="w-full text-ocf-gray-300 text-[16px] mt-[20px] md:w-[485px]">
+      {(!mobile || showDisclaimer) && (
+        <div className="w-full text-ocf-gray-300 text-[14px] mt-[20px] md:w-[485px]">
           Linking your inverter with Enode gives us access to your solar output
           data, providing you with better forecasts and more information
           available within our app.
@@ -53,7 +45,7 @@ const LinkInverters = () => {
       {mobile && showDisclaimer && (
         <button
           className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
-          onClick={() => setShowDisclaimer(!showDisclaimer)}
+          onClick={() => setShowDisclaimer(false)}
         >
           Show less
         </button>
@@ -73,7 +65,7 @@ const LinkInverters = () => {
         )}
       </div>
       <div className="hidden md:flex md:flex-row md:justify-end w-11/12 mx-auto mt-auto text-[5px]">
-        <Button disabled={false} variant="nextHoverButton">
+        <Button disabled={false} variant="next-hover-button">
           Skip this step
           <ChevronRightIcon width={20} height={20} />
         </Button>
