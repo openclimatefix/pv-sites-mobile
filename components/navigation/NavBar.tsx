@@ -65,7 +65,7 @@ const NavBar: FC = () => {
         </button>
       )}
       <NowcastingLogo />
-      <div className="flex flex-row justify-center items-center">
+      <div className="flex flex-row justify-center items-center invisible md:visible">
         <NavbarLink
           title="Dashboard"
           currentPath={router.asPath}
