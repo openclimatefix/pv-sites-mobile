@@ -130,10 +130,13 @@ const Graph: FC<GraphProps> = ({ sites }) => {
 
   const actualDataTrimmed =
     totalActualGeneration &&
-    generationDataOverDateRange(
-      totalActualGeneration,
-      getGraphStartDate(currentTime.toDate(), timeRange),
-      new Date(currentTime.toDate())
+    makeGraphable(
+      generationDataOverDateRange(
+        totalActualGeneration,
+        getGraphStartDate(currentTime.toDate(), timeRange),
+        currentTime.toDate()
+      ),
+      true
     );
 
   const clearSkyEstimateTrimmed =

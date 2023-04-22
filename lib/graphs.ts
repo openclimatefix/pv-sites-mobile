@@ -33,11 +33,18 @@ export const getGraphEndDate = (currentTime: number) => {
   );
 };
 
-export function makeGraphable(generationData: GenerationDataPoint[]) {
-  return generationData.map((point) => ({
-    ...point,
-    datetime_utc: point.datetime_utc.getTime(),
-  }));
+export function makeGraphable(
+  generationData: GenerationDataPoint[],
+  restrictPeriod = false
+) {
+  return generationData
+    .filter((point) =>
+      restrictPeriod ? point.datetime_utc.getMinutes() % 15 === 0 : true
+    )
+    .map((point) => ({
+      ...point,
+      datetime_utc: point.datetime_utc.getTime(),
+    }));
 }
 
 export function addTimePoint(
