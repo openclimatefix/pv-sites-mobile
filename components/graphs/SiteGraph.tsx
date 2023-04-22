@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 
-import { Area, AreaChart, ResponsiveContainer, YAxis } from 'recharts';
+import { Area, AreaChart, ResponsiveContainer, YAxis, XAxis } from 'recharts';
 
 import { useSiteData } from 'lib/hooks';
 
@@ -11,9 +11,10 @@ import { generationDataOverDateRange, makeGraphable } from 'lib/graphs';
 interface Props {
   siteUUID: string;
   hidden?: boolean;
+  height?: number;
 }
 
-const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
+const SiteGraph: FC<Props> = ({ siteUUID, hidden = false, height = 100 }) => {
   const {
     forecastData,
     latitude,
@@ -42,7 +43,7 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
     return (
       <ResponsiveContainer
         width="100%"
-        height={100}
+        height={height}
         className={`${hidden ? 'opacity-0' : 'opacity-1'} transition-opacity`}
       >
         <AreaChart data={makeGraphable(graphData)}>
@@ -52,12 +53,6 @@ const SiteGraph: FC<Props> = ({ siteUUID, hidden = false }) => {
               <stop offset={'100%'} stopColor="#FFD053" stopOpacity={0.01} />
             </linearGradient>
           </defs>
-          <YAxis
-            type="number"
-            domain={[0, installed_capacity_kw]}
-            axisLine={false}
-            tick={false}
-          />
           <Area
             type="monotone"
             dataKey="generation_kw"

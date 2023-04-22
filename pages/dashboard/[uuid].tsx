@@ -20,7 +20,6 @@ const SiteDashboard = () => {
 
   const { siteData } = useSiteData(persistedUUID as string);
   const siteUUIDs = { site_list: [siteData as Site] };
-
   return <Dashboard siteUUIDs={siteUUIDs} />;
 };
 

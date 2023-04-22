@@ -17,7 +17,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     <>
       <PageTransitionWrapper className="overflow-x-clip overflow-y-auto flex-1 grid-in-content relative">
         {showNav && <NavBar />}
-        <SideBar />
+        {user && <SideBar />}
         <main className="bg-white dark:bg-ocf-black flex flex-col items-center justify-start w-full">
           {children}
         </main>
