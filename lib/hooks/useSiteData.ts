@@ -1,6 +1,7 @@
 import useSWR from 'swr';
-import { ClearSkyData, Site, SiteList } from '../types';
-import { clearSkyFetcher, forecastFetcher } from './utils';
+import { ClearSkyData } from '../types';
+import useSites from './useSites';
+import { actualsFetcher, clearSkyFetcher, forecastFetcher } from './utils';
 
 /**
  * Gets forecasted and solar panel data for a single site
@@ -8,38 +9,42 @@ import { clearSkyFetcher, forecastFetcher } from './utils';
  * @returns forecasted and site data
  */
 const useSiteData = (siteUUID: string) => {
-  const {
-    data: forecastData,
-    error: forecastError,
-    isLoading: isForecastLoading,
-  } = useSWR(
+  const { sites: siteListData, error: siteListError } = useSites();
+
+  const { data: forecastData, error: forecastError } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/pv_forecast`,
     forecastFetcher
   );
 
-  const {
-    data: siteListData,
-    error: siteListError,
-    isLoading: isSiteListLoading,
-  } = useSWR<SiteList>(`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`);
-
-  const {
-    data: clearskyData,
-    error: clearskyError,
-    isLoading: isClearskyLoading,
-  } = useSWR<ClearSkyData>(
+  const { data: clearskyData, error: clearskyError } = useSWR(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/clearsky_estimate`,
     clearSkyFetcher
   );
 
-  const error = AggregateError([forecastError, siteListError, clearskyError]);
-  const isLoading = isSiteListLoading || isForecastLoading || isClearskyLoading;
+  const { data: actualData, error: actualError } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/pv_actual`,
+    actualsFetcher
+  );
 
-  const siteData: Site | undefined = siteListData
-    ? siteListData.site_list.find((site) => site.site_uuid === siteUUID)
-    : undefined;
+  const error = AggregateError([
+    forecastError,
+    siteListError,
+    clearskyError,
+    actualError,
+  ]);
+  const isLoading = !siteListData || !forecastData || !clearskyData;
 
-  return { forecastData, clearskyData, ...siteData, error, isLoading };
+  const siteData = siteListData?.find((site) => site.site_uuid === siteUUID);
+
+  return {
+    forecastData,
+    clearskyData,
+    actualData,
+    ...siteData,
+    siteData,
+    error,
+    isLoading,
+  };
 };
 
 export default useSiteData;

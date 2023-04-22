@@ -4,7 +4,8 @@ import useTime from '~/lib/hooks/useTime';
 import content from '../../content/power-card-content.json';
 import NumberDisplay from './NumberDisplay';
 import RecommendationDisplay from './RecommendationDisplay';
-import { getCurrentTimeGeneration } from '~/lib/utils';
+import { getCurrentTimeGeneration, skeleton } from '~/lib/utils';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 
 /**
  * Determines the appliance with the greatest energy required that is less than or equal to the current output
@@ -27,10 +28,12 @@ const getBestRecommendationIndex = (currentOutput: number) => {
   return maxIndex;
 };
 
-const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude } = useSiteData(siteUUID);
-  const currentOutput = forecastData
-    ? getCurrentTimeGeneration(forecastData.forecast_values)
+const EnergyRecommendation: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  const { isLoading, totalForecastedGeneration } =
+    useSiteAggregation(siteUUIDs);
+  const { latitude, longitude } = useSiteData(siteUUIDs[0]);
+  const currentOutput = totalForecastedGeneration
+    ? getCurrentTimeGeneration(totalForecastedGeneration)
     : undefined;
 
   const recommendationIdx = currentOutput
@@ -38,12 +41,29 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     : null;
 
   const { isDayTime } = useTime(latitude, longitude);
-  if (!isDayTime && currentOutput === 0) {
+  if (isLoading) {
+    return (
+      <div
+        className="
+        flex-1
+        flex
+        p-4
+        text-center
+        justify-center
+        align-center
+        bg-ocf-black-500
+        rounded-2xl
+        h-[100%]"
+      >
+        <div className={skeleton}></div>
+      </div>
+    );
+  } else if (!isDayTime && currentOutput === 0) {
     return (
       <RecommendationDisplay
         src="/nighttime.svg"
         alt="Moon and stars"
-        description="Solar output is currently 0"
+        description="Solar output is currently 0 kW"
       />
     );
   } else if (recommendationIdx) {
@@ -56,7 +76,13 @@ const EnergyRecommendation: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       />
     );
   } else {
-    return <NumberDisplay title="Recommendations" value="N/A" />;
+    return (
+      <NumberDisplay
+        title="Recommendations"
+        value="N/A"
+        isLoading={isLoading}
+      />
+    );
   }
 };
 

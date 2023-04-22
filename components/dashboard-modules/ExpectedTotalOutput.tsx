@@ -2,8 +2,9 @@ import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
 import { useSiteData } from 'lib/hooks';
 import { GenerationDataPoint } from '~/lib/types';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 
-const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
+export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
   let approxArea = 0;
   const millisInHour = 3.6e6;
 
@@ -18,19 +19,23 @@ const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
     approxArea += avgHeight * timeDiffHours;
   }
 
-  return approxArea.toFixed(2).toString() + ' kWh';
+  return approxArea;
 };
 
-const ExpectedTotalOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData } = useSiteData(siteUUID);
+const ExpectedTotalOutput: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  const { isLoading, totalForecastedGeneration } =
+    useSiteAggregation(siteUUIDs);
   return (
     <NumberDisplay
       title="Today's Expected Output"
       value={
-        forecastData
-          ? getTotalExpectedOutput(forecastData.forecast_values)
+        totalForecastedGeneration
+          ? getTotalExpectedOutput(totalForecastedGeneration)
+              .toFixed(2)
+              .toString() + ' kWh'
           : 'Loading'
       }
+      isLoading={isLoading}
     />
   );
 };

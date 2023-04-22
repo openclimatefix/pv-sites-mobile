@@ -7,6 +7,10 @@ import LocationIcon from './LocationIcon';
 import LeftChevron from './LeftChevron';
 import SearchIcon from './SearchIcon';
 import SiteListIcon from './SiteListIcon';
+import CloudyIcon from './CloudyIcon';
+import PartlyCloudyIcon from './PartlyCloudyIcon';
+import SunnyIcon from './SunnyIcon';
+import CirclePlusIcon from './CirclePlusIcon';
 
 /* Used to clean up imports of icons */
 
@@ -20,4 +24,8 @@ export {
   LeftChevron,
   EditIcon,
   SearchIcon,
+  CloudyIcon,
+  PartlyCloudyIcon,
+  SunnyIcon,
+  CirclePlusIcon,
 };

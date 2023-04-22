@@ -9,6 +9,8 @@ import BackButton from 'components/BackButton';
 import LocationInput from '../LocationInput';
 import { zoomLevelThreshold } from '../../lib/utils';
 import Button from '~/components/Button';
+import { Site } from '~/lib/types';
+import { useSiteData } from '~/lib/hooks';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -24,20 +26,36 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: () => void;
+  uuid?: string;
 }
 
-const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
+const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, uuid }) => {
   const { siteCoordinates, setFormData, panelDetails, postPanelData } =
     useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
+
+  const siteData = useSiteData(uuid!);
+  const { installed_capacity_kw, client_site_name, orientation, tilt } =
+    siteData || {};
+
+  // If it is an existing site, prefill the form with the existing data
+  panelDetails.siteName = client_site_name
+    ? client_site_name
+    : panelDetails.siteName;
+  panelDetails.direction = orientation
+    ? orientation.toString()
+    : panelDetails.direction;
+  panelDetails.tilt = tilt ? tilt.toString() : panelDetails.tilt;
+  panelDetails.capacity = installed_capacity_kw
+    ? installed_capacity_kw.toString()
+    : panelDetails.capacity;
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!didSubmit) {
       setDidSubmit(true);
-      // TODO: Add schema validation with zod
       await postPanelData();
       nextPageCallback();
     }
@@ -45,8 +63,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
 
   return (
     <div className="flex flex-col mb-[max(var(--bottom-nav-margin),20px)] gap-10">
-      <BackButton onClick={lastPageCallback} />
-      <div className="flex flex-row w-full md:w-9/12 self-center">
+      <div className="flex flex-row w-4/5 md:w-9/12 self-center">
         <div className="flex-1 hidden md:block px-8">
           <h1 className="font-semibold md:font-medium md:text-3xl text-4xl mt-2 dark:text-ocf-gray">
             Your site&apos;s details
@@ -71,7 +88,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback }) => {
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          <div className="hidden md:block md:h-10" />
+          <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
             label="Site name"

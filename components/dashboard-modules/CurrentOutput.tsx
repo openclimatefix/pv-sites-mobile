@@ -26,6 +26,7 @@ const CurrentOutput: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     <NumberDisplay
       title="Current Output"
       value={`${outputMessage(isLoading, currentOutput)}`}
+      isLoading={isLoading}
     />
   );
 };

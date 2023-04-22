@@ -19,9 +19,9 @@ export function camelCaseID(id: string) {
   return [first, ...rest.map(capitalize)].join('');
 }
 
-interface MinMaxInterface {
-  type: 'min' | 'max';
-  index: number;
+interface SlopeInterface {
+  type: 'increasing' | 'decreasing' | 'constant';
+  endIndex: number;
 }
 
 /**
@@ -31,14 +31,14 @@ interface MinMaxInterface {
  * @param startIndex The index to start the search at
  * @returns The index of the next minimum or maximum value
  */
-export const getArrayMaxOrMinAfterIndex = (
+export const getTrendAfterIndex = (
   array: GenerationDataPoint[],
   startIndex: number
-): MinMaxInterface | null => {
+): SlopeInterface | null => {
   if (startIndex === array.length - 1) {
     return {
-      type: 'min',
-      index: startIndex,
+      type: 'constant',
+      endIndex: startIndex,
     };
   }
 
@@ -51,16 +51,22 @@ export const getArrayMaxOrMinAfterIndex = (
   startIndex += 1;
 
   while (startIndex < array.length - 1) {
-    const current = array[startIndex].generation_kw;
-    const next = array[startIndex + 1].generation_kw;
+    const prev = array[startIndex - 1].generation_kw;
+    const curr = array[startIndex].generation_kw;
 
-    const currentDifference = next - current;
+    const currentDifference = curr - prev;
     const currentSlopeSign = Math.sign(currentDifference);
 
     if (firstSlopeSign !== currentSlopeSign && currentSlopeSign !== 0) {
+      // Slope was constant until current index
+      if (firstSlopeSign === 0) {
+        return { type: 'constant', endIndex: startIndex };
+      }
+
+      // Slope was negative or positive until current index
       return {
-        type: firstSlopeSign < currentSlopeSign ? 'min' : 'max',
-        index: startIndex,
+        type: firstSlopeSign < currentSlopeSign ? 'decreasing' : 'increasing',
+        endIndex: startIndex,
       };
     }
 
@@ -68,8 +74,8 @@ export const getArrayMaxOrMinAfterIndex = (
   }
 
   return {
-    type: firstSlopeSign < 0 ? 'min' : 'max',
-    index: startIndex,
+    type: firstSlopeSign < 0 ? 'decreasing' : 'increasing',
+    endIndex: startIndex,
   };
 };
 
@@ -113,9 +119,6 @@ export const getNextThresholdIndex = (
 
   return null;
 };
-
-/* Represents the threshold for the graph */
-export const graphThreshold = 0.7;
 
 /* Latitude/longitude for London, England */
 export const originalLat = 51.5072;
@@ -172,3 +175,24 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   We will track solar sites when the map is zoomed in less than this value.
 */
 export const zoomLevelThreshold = 14;
+
+export const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;
+
+/**
+ * Converts a day string to a number
+ *
+ * @method dayOfWeekAsInteger
+ * @param {String} day
+ * @return {Number} Returns day as number
+ */
+export const dayOfWeekAsInteger = (day: string) => {
+  return [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ].indexOf(day);
+};

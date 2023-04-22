@@ -1,14 +1,15 @@
 import { FC } from 'react';
 import { useSiteData } from '~/lib/hooks';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 import { getCurrentTimeGeneration } from '~/lib/utils';
 import NumberDisplay from './NumberDisplay';
 
-const CurrentCapacity: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, installed_capacity_kw, isLoading } =
-    useSiteData(siteUUID);
+const CurrentCapacity: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  const { totalInstalledCapacityKw, totalForecastedGeneration, isLoading } =
+    useSiteAggregation(siteUUIDs);
 
-  let currentOutput = forecastData
-    ? getCurrentTimeGeneration(forecastData.forecast_values)
+  let currentOutput = totalForecastedGeneration
+    ? getCurrentTimeGeneration(totalForecastedGeneration)
     : null;
 
   return (
@@ -18,11 +19,12 @@ const CurrentCapacity: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         isLoading
           ? 'Loading...'
           : currentOutput != null &&
-            installed_capacity_kw != null &&
-            installed_capacity_kw != 0
-          ? ((100 * currentOutput) / installed_capacity_kw).toFixed(2) + '%'
+            totalInstalledCapacityKw != null &&
+            totalInstalledCapacityKw != 0
+          ? ((100 * currentOutput) / totalInstalledCapacityKw).toFixed(2) + '%'
           : 'N/A'
       }`}
+      isLoading={isLoading}
     />
   );
 };

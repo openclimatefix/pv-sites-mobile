@@ -18,6 +18,7 @@ import {
   YAxis,
 } from 'recharts';
 import useDateFormatter from '~/lib/hooks/useDateFormatter';
+import useSiteAggregation from '~/lib/hooks/useSiteAggregation';
 import useTime from '~/lib/hooks/useTime';
 import { GenerationDataPoint } from '~/lib/types';
 
@@ -68,50 +69,64 @@ function getXTickValues(times: number[], numTicks: number) {
   return tickValues;
 }
 
-const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const { forecastData, latitude, longitude, isLoading, clearskyData } =
-    useSiteData(siteUUID);
+const Graph: FC<{ siteUUIDs: string[] }> = ({ siteUUIDs }) => {
+  // TODO: we want a aggregate form of the clearskyData variable
+  const { latitude, longitude } = useSiteData(siteUUIDs[0]);
+
+  const {
+    totalForecastedGeneration,
+    isLoading,
+    totalClearskyGeneration,
+    totalActualGeneration,
+  } = useSiteAggregation(siteUUIDs);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime } = useTime(latitude, longitude, {
     updateEnabled: timeEnabled,
   });
 
-  const [timeRange, setTimeRange] = useState(24);
+  const [timeRange, setTimeRange] = useState(48);
   const handleChange = (event: any) => {
     setTimeEnabled(false);
     setTimeRange(event.target.value);
   };
 
-  const { weekdayFormatter } = useDateFormatter(siteUUID);
+  const { weekdayFormatter } = useDateFormatter(siteUUIDs[0]);
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 48);
 
   const forecastDataTrimmed =
-    forecastData &&
+    totalForecastedGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          forecastData.forecast_values,
+          totalForecastedGeneration,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
         new Date(currentTime)
       )
+    );
+
+  const actualDataTrimmed =
+    totalActualGeneration &&
+    generationDataOverDateRange(
+      totalActualGeneration,
+      getGraphStartDate(currentTime, timeRange),
+      new Date(currentTime)
     );
 
   const clearSkyEstimateTrimmed =
-    clearskyData &&
+    totalClearskyGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          clearskyData?.clearsky_estimate,
+          totalClearskyGeneration,
           getGraphStartDate(currentTime, timeRange),
           getGraphEndDate(currentTime, timeRange)
         ),
         new Date(currentTime)
       )
     );
-
   const maxGeneration = clearSkyEstimateTrimmed
     ? Math.max(...clearSkyEstimateTrimmed.map((value) => value.generation_kw))
     : 0;
@@ -189,8 +204,8 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             type="radio"
             name="2D"
             id="2D"
-            value={36}
-            checked={timeRange == 36}
+            value={48}
+            checked={timeRange == 48}
             onChange={handleChange}
           />
           <span className="cursor-pointer peer-checked:bg-ocf-yellow-500 peer-checked:rounded-md peer-checked:text-black text-ocf-gray-300 w-10 h-7 pt-0.5 text-center bg-ocf-gray-1000 rounded-md inline-block relative peer-focus-visible:ring">
@@ -209,7 +224,11 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         </div>
       </div>
       {!isLoading && (
-        <ResponsiveContainer className="mt-[20px]" width="100%" height={150}>
+        <ResponsiveContainer
+          className="mt-[20px] touch-pinch-zoom touch-pan-y"
+          width="100%"
+          height={150}
+        >
           <LineChart
             margin={{
               top: 0,
@@ -252,7 +271,10 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             />
             <Tooltip
               wrapperStyle={{ outline: 'none' }}
-              contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
+              contentStyle={{
+                backgroundColor: '#2B2B2B90',
+                opacity: 1,
+              }}
               labelStyle={{ color: 'white' }}
               formatter={(value: GenerationDataPoint['generation_kw']) => [
                 parseFloat(value.toFixed(5)),
@@ -270,6 +292,14 @@ const Graph: FC<{ siteUUID: string }> = ({ siteUUID }) => {
               dot={false}
               activeDot={{ r: 8 }}
               onAnimationEnd={() => setTimeEnabled(true)}
+            />
+            <Line
+              data={actualDataTrimmed}
+              type="monotone"
+              dataKey="generation_kw"
+              stroke="#FFFFFF"
+              dot={false}
+              activeDot={{ r: 8 }}
             />
             <Line
               data={forecastDataTrimmed}

@@ -130,5 +130,5 @@ export function addTimePoint(
   return generationDataInterpolated;
 }
 
-/* Represents the threshold for the threshold graph, in kW  */
-export const graphThreshold = 0.7;
+/* Represents the threshold for the threshold graph, as a proportion of installed-capacity-kw */
+export const graphThreshold = 0.1;

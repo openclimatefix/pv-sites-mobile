@@ -5,6 +5,7 @@ module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    './lib/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [
     'bg-ocf-yellow',
@@ -51,7 +52,7 @@ module.exports = {
     extend: {
       gridTemplateAreas: {
         'dashboard-desktop': [
-          'Expected Sunny   Yield',
+          'Expected-Total-Output Sunny Weather-Icons',
           'Site-Graph   Site-Graph   Recommendation',
           'Graph   Graph     Graph',
         ],
@@ -60,7 +61,8 @@ module.exports = {
           'Sunny Recommendation',
           'Site-Graph   Site-Graph',
           'Heading2 Heading2',
-          'Expected Yield',
+          'Expected-Total-Output Current-Output',
+          'Weather-Icons Weather-Icons',
           'Graph Graph',
         ],
       },
@@ -70,9 +72,8 @@ module.exports = {
       },
       gridTemplateRows: {
         'desktop-rows': 'auto auto auto',
-        'mobile-rows': 'auto auto auto auto auto auto',
+        'mobile-rows': 'auto auto auto auto auto auto auto',
       },
-
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['ui-monospace', ...defaultTheme.fontFamily.mono],
