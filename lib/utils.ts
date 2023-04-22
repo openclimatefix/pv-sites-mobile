@@ -82,7 +82,7 @@ export const getTrendAfterIndex = (
 export const getCurrentTimeGeneration = (
   generationData: GenerationDataPoint[]
 ) =>
-  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
+  generationData[getCurrentTimeGenerationIndex(generationData)]?.generation_kw;
 
 interface NextThreshold {
   aboveThreshold: boolean;
