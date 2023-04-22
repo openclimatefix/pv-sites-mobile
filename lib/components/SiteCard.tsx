@@ -50,16 +50,15 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                   isLoading || !noError ? skeleton : ``
                 }`}
               >
-                {`Current output: ${
-                  currentOutput != undefined
-                    ? currentOutput.toFixed(2) + ' kW'
-                    : 'loading...'
-                }`}
+                Current output:{' '}
+                {currentOutput != undefined
+                  ? currentOutput.toFixed(2) + ' kW'
+                  : 'loading...'}
               </p>
-              {site.installed_capacity_kw && (
+              {site.installed_capacity_kw !== null && (
                 <p
                   className={`text-xs font-medium text-ocf-gray-500 transition-all ${
-                    isLoading || !noError ? skeleton : ``
+                    isLoading || !noError ? skeleton : ''
                   }`}
                 >
                   Max. capacity: {site.installed_capacity_kw.toFixed(2)} kW
@@ -70,12 +69,11 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                   isLoading || !noError ? skeleton : ``
                 }`}
               >
-                {`Current yield:
-            ${
-              site.installed_capacity_kw && currentOutput != undefined
-                ? (currentOutput / site.installed_capacity_kw).toFixed(2) + '%'
-                : 'loading...'
-            }`}
+                Current yield:{' '}
+                {site.installed_capacity_kw && currentOutput != undefined
+                  ? (currentOutput / site.installed_capacity_kw).toFixed(2) +
+                    '%'
+                  : 'loading...'}
               </p>
             </div>
           </div>
