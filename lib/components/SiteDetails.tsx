@@ -6,6 +6,7 @@ import { NowcastingLogo } from './icons/NavbarIcons';
 import BackButton from './BackButton';
 import { useSiteData, useSites } from '../sites';
 import { Site } from '../types';
+import { useIsMobile } from '../utils';
 
 enum Page {
   Details = 'Details',
@@ -18,7 +19,7 @@ interface SiteDetailsProps {
 
 const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
   const [page, setPage] = useState<Page>(Page.Location);
-
+  const mobile = useIsMobile();
   const router = useRouter();
   const { sites } = useSites();
 
@@ -32,7 +33,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = () => {
     if (page === Page.Details) {
-      router.push('sites');
+      router.push(mobile ? '/sites' : '/dashboard');
     } else {
       setPage(Page.Details);
     }
