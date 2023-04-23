@@ -6,6 +6,7 @@ import { SiteList } from '~/lib/types';
 import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import ContactButton from '../ContactButton';
 
 type NavbarLinkProps = {
   title: string;
@@ -23,7 +24,7 @@ const NavbarLink: React.FC<NavbarLinkProps> = ({
   return (
     <Link href={href} passHref>
       <a
-        className={`${textColor} text-lg font-medium mr-6 ${
+        className={`${textColor} text-lg font-medium mr-6 hidden md:block  ${
           isActive && 'underline underline-offset-8 decoration-2'
         }`}
       >
@@ -76,6 +77,9 @@ const NavBar: FC = () => {
           currentPath={router.asPath}
           href="/more-info"
         />
+        <div className="hidden md:block">
+          <ContactButton />
+        </div>
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ const ContactButton = () => {
       </button>
 
       {displayPopup && (
-        <div className="w-[191px] h-[103px] absolute rounded-lg border-ocf-gray-300 border-[.5px] bg-ocf-black-900 right-0 mt-[10px]">
+        <div className="w-[191px] h-[103px] absolute rounded-lg border-ocf-gray-300 border-[.5px] bg-ocf-black-900 right-0 mt-[10px] z-10">
           <div className="flex justify-evenly">
             <div className="mt-[10px] w-[31px] h-[31px] bg-ocf-gray-800  rounded-full text-white flex items-center justify-center text-[12px]">
               {firstName.substring(0, 1) + lastName.substring(0, 1)}
