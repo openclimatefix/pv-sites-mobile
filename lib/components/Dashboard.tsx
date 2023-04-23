@@ -7,6 +7,7 @@ import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
 import CurrentOutput from './dashboard-modules/CurrentOutput';
 import { Site } from '~/lib/types';
+import ContactButton from './ContactButton';
 
 interface DashboardProps {
   sites: Site[];
@@ -16,9 +17,15 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
 
   return (
     <div className="mb-[var(--bottom-nav-margin)] w-screen max-w-screen-xl bg-ocf-black px-4">
-      <h1 className="mb-4 mt-4 text-3xl font-bold text-ocf-gray">
-        {isAggregate ? 'Dashboard' : sites[0].client_site_name}
-      </h1>
+      <div className="flex flex-row justify-between items-center">
+        <h1 className="mb-4 mt-4 text-3xl font-bold text-ocf-gray">
+          {isAggregate ? 'Dashboard' : sites[0].client_site_name}
+        </h1>
+        <div className="block md:hidden">
+          <ContactButton />
+        </div>
+      </div>
+      <hr className="w-[500%] mx-[-100px] bg-ocf-black-500 border-0 h-[1px] md:hidden" />
       <div className="grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 grid-areas-dashboard-mobile md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop">
         <div className="block grid-in-Heading1 md:hidden">
           <h2 className="mt-2 text-base font-semibold leading-none text-ocf-gray">

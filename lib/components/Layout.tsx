@@ -13,7 +13,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
   const PageTransitionWrapper = mobile && user ? Transition : 'div';
   const { asPath: path } = useRouter();
   // TODO: Improve this
-  const showNav = Boolean(user) && path !== '/site-details';
+  const showNav = !!user && !path.startsWith('/site-details');
 
   return (
     <>

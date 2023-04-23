@@ -5,19 +5,16 @@ import { FC, MouseEventHandler, useState } from 'react';
 import { useSites } from '~/lib/sites';
 import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
 import SideBar from './SideBar';
+import ContactButton from '../ContactButton';
 
 type NavbarLinkProps = {
   title: string;
   href: string;
-  currentPath: string;
 };
 
-const NavbarLink: React.FC<NavbarLinkProps> = ({
-  title,
-  href,
-  currentPath,
-}) => {
-  const isActive = href === currentPath;
+const NavbarLink: React.FC<NavbarLinkProps> = ({ title, href }) => {
+  const { asPath: path } = useRouter();
+  const isActive = href === path;
   const textColor = isActive ? 'text-amber' : 'text-white';
   return (
     <Link href={href} passHref>
@@ -64,17 +61,12 @@ const NavBar: FC = () => {
           </button>
         )}
         <NowcastingLogo />
-        <div className="hidden flex-row items-center justify-center md:flex">
-          <NavbarLink
-            title="Dashboard"
-            currentPath={router.asPath}
-            href="/dashboard"
-          />
-          <NavbarLink
-            title="More Info"
-            currentPath={router.asPath}
-            href="/more-info"
-          />
+        <div className="hidden flex-row items-center justify-center md:flex  invisible md:visible">
+          <NavbarLink title="Dashboard" href="/dashboard" />
+          <NavbarLink title="More Info" href="/more-info" />
+          <div className="hidden md:block">
+            <ContactButton />
+          </div>
         </div>
       </div>
     </>

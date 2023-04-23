@@ -1,8 +1,7 @@
-import { ReactNode, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
+import Link from 'next/link';
+import { useState } from 'react';
 import { LogoutIcon } from './icons';
-import router from 'next/router';
-import Link, { LinkProps } from 'next/link';
 
 const ContactButton = () => {
   const { user } = useUser();
@@ -24,7 +23,7 @@ const ContactButton = () => {
       </button>
 
       {displayPopup && (
-        <div className="absolute right-0 mt-[10px] h-[103px] w-[191px] rounded-lg border-[.5px] border-ocf-gray-300 bg-ocf-black-900">
+        <div className="w-[191px] h-[103px] absolute rounded-lg border-ocf-gray-300 border-[.5px] bg-ocf-black-900 right-0 mt-[10px] z-10">
           <div className="flex justify-evenly">
             <div className="mt-[10px] flex h-[31px] w-[31px]  items-center justify-center rounded-full bg-ocf-gray-800 text-[12px] text-white">
               {firstName.substring(0, 1) + lastName.substring(0, 1)}

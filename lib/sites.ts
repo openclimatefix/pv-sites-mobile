@@ -218,6 +218,7 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
           headers: {
             Authorization: `Bearer ${accessToken.accessToken}`,
           },
+          credentials: 'include',
         }
       ).then((res) => res.json())) as { site_list: Site[] };
 
