@@ -17,7 +17,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
 
   return (
     <div className="mb-[var(--bottom-nav-margin)] w-screen max-w-screen-xl bg-ocf-black px-4">
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row items-center justify-between">
         <h1 className="mb-4 mt-4 text-3xl font-bold text-ocf-gray">
           {isAggregate ? 'Dashboard' : sites[0].client_site_name}
         </h1>
@@ -25,7 +25,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
           <ContactButton />
         </div>
       </div>
-      <hr className="w-[500%] mx-[-100px] bg-ocf-black-500 border-0 h-[1px] md:hidden" />
+      <hr className="mx-[-100px] h-[1px] w-[500%] border-0 bg-ocf-black-500 md:hidden" />
       <div className="grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 grid-areas-dashboard-mobile md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop">
         <div className="block grid-in-Heading1 md:hidden">
           <h2 className="mt-2 text-base font-semibold leading-none text-ocf-gray">

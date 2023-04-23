@@ -61,7 +61,7 @@ const NavBar: FC = () => {
           </button>
         )}
         <NowcastingLogo />
-        <div className="hidden flex-row items-center justify-center md:flex  invisible md:visible">
+        <div className="invisible hidden flex-row items-center justify-center  md:visible md:flex">
           <NavbarLink title="Dashboard" href="/dashboard" />
           <NavbarLink title="More Info" href="/more-info" />
           <div className="hidden md:block">
