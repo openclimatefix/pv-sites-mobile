@@ -122,7 +122,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
+      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
     ) {
       const actualMultiple = pvActualMultipleJson as UnparsedActualData[];
       res.status(200).json([
@@ -133,7 +133,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
+      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
     ) {
       const forecastMultiple = pvForecastMultipleJson as UnparsedForecastData[];
       res.status(200).json([
@@ -144,7 +144,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f,b97f68cd-50e0-49bb-a850-108d4a9f7b7g'
+      'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
     ) {
       const clearskyMultiple = pvClearskyMultipleJson as UnparsedClearSkyData[];
       res.status(200).json([
@@ -199,11 +199,6 @@ function fakeDates(forecastData: any[], key = 'target_datetime_utc') {
 
   return forecastData.map((value) => {
     const date = new Date(parseNowcastingDatetime(value[key]));
-    try {
-      dayjs(date).add(difference).toISOString();
-    } catch {
-      console.log(value[key]);
-    }
     return {
       ...value,
       [key]: dayjs(date).add(difference).toISOString(),

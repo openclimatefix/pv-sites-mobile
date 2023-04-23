@@ -59,7 +59,7 @@ const Transition: FC<PropsWithChildren<Props>> = ({ children, className }) => {
           animate={animationKey ? 'center' : 'center'}
           exit={animationKey ? 'popRight' : 'popLeft'}
           variants={mobile && !shouldReduceMotion ? variants : {}}
-          key={animationKey}
+          key={mobile ? animationKey : null}
           className="w-screen overflow-hidden"
         >
           {children}

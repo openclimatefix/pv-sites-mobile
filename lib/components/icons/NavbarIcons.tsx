@@ -1,6 +1,6 @@
-import React from 'react';
+import { FC } from 'react';
 
-export const NowcastingLogo: React.FC = ({}) => (
+export const NowcastingLogo: FC = () => (
   <svg
     width="124"
     height="52"

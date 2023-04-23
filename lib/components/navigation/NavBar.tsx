@@ -3,16 +3,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, MouseEventHandler, useState } from 'react';
 import { useSites } from '~/lib/sites';
+import ContactButton from '../ContactButton';
 import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
 import SideBar from './SideBar';
-import ContactButton from '../ContactButton';
 
 type NavbarLinkProps = {
   title: string;
   href: string;
 };
 
-const NavbarLink: React.FC<NavbarLinkProps> = ({ title, href }) => {
+const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
   const { asPath: path } = useRouter();
   const isActive = href === path;
   const textColor = isActive ? 'text-amber' : 'text-white';

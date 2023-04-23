@@ -67,7 +67,11 @@ export function addTimePoint(
     .asMinutes();
 
   let forecastValueIndex = getClosestForecastIndex(generationData, date);
-  let closestTime = generationData[forecastValueIndex].datetime_utc;
+  let closestTime = generationData[forecastValueIndex]?.datetime_utc;
+  if (!closestTime || forecastValueIndex >= generationData.length - 1) {
+    return generationDataInterpolated;
+  }
+
   if (closestTime.getTime() === date.getTime()) {
     return generationDataInterpolated;
   }

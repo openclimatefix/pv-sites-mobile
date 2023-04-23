@@ -1,5 +1,4 @@
 import { Fetcher } from 'swr';
-import { fetcher } from '../swr';
 import {
   ActualData,
   ClearSkyData,
@@ -9,6 +8,7 @@ import {
   UnparsedClearSkyData,
   UnparsedForecastData,
 } from './types';
+import { fetcher } from './swr';
 
 /**
  * Parses a datetime string from the Nowcasting API, assumed to be in UTC.

@@ -18,7 +18,12 @@ import {
   UpArrowIcon,
 } from '../icons/FutureThreshold';
 
-import { getTrendAfterIndex, graphThreshold, makeGraphable } from 'lib/graphs';
+import {
+  addTimePoint,
+  getTrendAfterIndex,
+  graphThreshold,
+  makeGraphable,
+} from 'lib/graphs';
 
 import {
   generationDataOverDateRange,
@@ -46,7 +51,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
 
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
-  const graphData = useMemo(() => {
+  const rawGraphData = useMemo(() => {
     if (totalForecastedGeneration && sunrise && sunset) {
       return generationDataOverDateRange(
         totalForecastedGeneration,
@@ -56,6 +61,8 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     }
     return null;
   }, [totalForecastedGeneration, sunrise, sunset]);
+  const graphData =
+    rawGraphData && addTimePoint(rawGraphData, currentTime.toDate());
 
   const maxGeneration = graphData
     ? Math.max(...graphData.map((value) => value.generation_kw))

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
 type MenuLinkProps = {
   href: string;
@@ -8,7 +8,7 @@ type MenuLinkProps = {
   svg: ReactNode;
 };
 
-const MenuLink: React.FC<MenuLinkProps> = ({ href, label, svg }) => {
+const MenuLink: FC<MenuLinkProps> = ({ href, label, svg }) => {
   const { asPath: path } = useRouter();
   const active = href === path;
   const textColor = active ? 'text-amber' : 'text-white';

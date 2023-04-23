@@ -58,41 +58,37 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
       inert={!open ? '' : null}
       ref={wrapperRef}
     >
-      <div className="w-84 relative flex h-full flex-col overflow-y-auto bg-ocf-black px-10 py-8">
-        <div className="mt-6 flex flex-1 flex-col justify-between text-xs">
-          <div className="flex flex-col">
-            {sites.length > 1 && (
-              <>
-                <div className="mb-7 flex flex-row items-center justify-between">
-                  <h2 className="text-xl font-semibold text-white">
-                    Dashboards
-                  </h2>
-                  <button onClick={onClose}>
-                    <XMarkIcon height="30" width="30" color="white" />
-                  </button>
-                </div>
+      <div className="w-84 relative flex h-full flex-col justify-between overflow-y-auto bg-ocf-black px-10 py-8 pt-12">
+        <div className="flex flex-col">
+          {sites.length > 1 && (
+            <>
+              <div className="mb-7 flex flex-row items-center justify-between">
+                <h2 className="text-xl font-semibold text-white">Dashboards</h2>
+                <button onClick={onClose}>
+                  <XMarkIcon height="30" width="30" color="white" />
+                </button>
+              </div>
 
-                <DashboardLink
-                  siteName="Aggregate"
-                  href="/dashboard"
-                  sites={sites}
-                />
-              </>
-            )}
+              <DashboardLink
+                siteName="Aggregate"
+                href="/dashboard"
+                sites={sites}
+              />
+            </>
+          )}
 
-            <h2 className="mb-3 mt-8 text-sm font-medium text-white">
-              Site Dashboards
-            </h2>
+          <h2 className="mb-3 mt-8 text-sm font-medium text-white">
+            Site Dashboards
+          </h2>
 
-            <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <MenuLink
-              href="/site-details"
-              label="Add a site"
-              svg={<PlusCircleIcon height="24" width="24" color="white" />}
-            />
-          </div>
+          <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
+        </div>
+        <div className="mt-auto flex flex-col gap-3">
+          <MenuLink
+            href="/site-details"
+            label="Add a site"
+            svg={<PlusCircleIcon height="24" width="24" color="white" />}
+          />
         </div>
       </div>
     </div>

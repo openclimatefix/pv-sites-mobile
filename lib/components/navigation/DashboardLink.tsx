@@ -1,16 +1,10 @@
-import React from 'react';
-
 import Link from 'next/link';
-
-import { LinkProps } from 'next/link';
-
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-
-import SiteGraph from '../graphs/SiteGraph';
 import { getCurrentTimeGeneration } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
 import { Site } from '~/lib/types';
-import { useRouter } from 'next/router';
+import SiteGraph from '../graphs/SiteGraph';
 
 type DashboardLinkProps = {
   siteName: string;
@@ -44,13 +38,13 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
       >
         <div className="flex w-8/12 flex-col justify-center">
           <div
-            className={`mb-2 text-lg ${textColor} font-semibold transition-all md:font-medium md:leading-none`}
+            className={`mb-2 text-sm ${textColor} font-semibold transition-all md:font-medium md:leading-none`}
           >
             {siteName}
           </div>
           {currentOutput !== undefined && (
             <div
-              className={`text-md ${textColor} font-medium leading-none transition-all md:leading-none`}
+              className={`text-xs ${textColor} font-medium leading-none transition-all md:leading-none`}
             >
               Current output: {currentOutput} kW
             </div>
@@ -65,7 +59,6 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
               isActive ? '#FFD053' /* ocf-yellow */ : '#909090' /*ocf-gray-800*/
             }
           />
-          ;
         </div>
       </a>
     </Link>

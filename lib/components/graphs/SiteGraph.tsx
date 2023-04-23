@@ -21,7 +21,7 @@ const SiteGraph: FC<SiteGraphProps> = ({
   color = '#FFD053',
 }) => {
   const representativeSite = sites[0];
-  const { totalForecastedGeneration, isLoading } = useSiteAggregation(sites);
+  const { totalForecastedGeneration } = useSiteAggregation(sites);
   const [timeEnabled, setTimeEnabled] = useState(
     totalForecastedGeneration !== undefined
   );
@@ -37,34 +37,35 @@ const SiteGraph: FC<SiteGraphProps> = ({
     return null;
   }, [totalForecastedGeneration, dawn, dusk]);
 
-  if (graphData) {
-    return (
-      <ResponsiveContainer
-        width="100%"
-        height={height}
-        className={`${hidden ? 'opacity-0' : 'opacity-1'} transition-opacity`}
-      >
-        <AreaChart data={makeGraphable(graphData)}>
-          <defs>
-            <linearGradient id="siteGraphArea" x1="0" y1="0" x2="0" y2="1">
-              <stop offset={'0%'} stopColor={color} stopOpacity={0.4} />
-              <stop offset={'100%'} stopColor={color} stopOpacity={0.01} />
-            </linearGradient>
-          </defs>
-          <Area
-            type="monotone"
-            dataKey="generation_kw"
-            strokeWidth={1}
-            stroke={color}
-            fillOpacity={1}
-            fill="url(#siteGraphArea)"
-            onAnimationEnd={() => setTimeEnabled(true)}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    );
-  }
-  return null;
+  if (!graphData) return null;
+
+  const gradientID = `siteGraphArea-${color}`;
+
+  return (
+    <ResponsiveContainer
+      width="100%"
+      height={height}
+      className={`${hidden ? 'opacity-0' : 'opacity-1'} transition-opacity`}
+    >
+      <AreaChart data={makeGraphable(graphData)}>
+        <defs>
+          <linearGradient id={gradientID} x1="0" y1="0" x2="0" y2="1">
+            <stop offset={'0%'} stopColor={color} stopOpacity={0.4} />
+            <stop offset={'100%'} stopColor={color} stopOpacity={0.01} />
+          </linearGradient>
+        </defs>
+        <Area
+          type="monotone"
+          dataKey="generation_kw"
+          strokeWidth={1}
+          stroke={color}
+          fillOpacity={1}
+          fill={`url(#${gradientID})`}
+          onAnimationEnd={() => setTimeEnabled(true)}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
 };
 
 export default SiteGraph;
