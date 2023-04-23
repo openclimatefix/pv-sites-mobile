@@ -77,8 +77,9 @@ const NavBar: FC = () => {
           currentPath={router.asPath}
           href="/more-info"
         />
-
-        <ContactButton/>
+        <div className="hidden md:block">
+          <ContactButton />
+        </div>
       </div>
     </div>
   );
