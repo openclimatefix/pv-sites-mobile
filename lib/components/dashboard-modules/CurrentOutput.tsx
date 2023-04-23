@@ -1,17 +1,18 @@
 import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
 import { Site } from '~/lib/types';
-import { useSiteData } from '~/lib/sites';
+import { useSiteAggregation, useSiteData } from '~/lib/sites';
 import { getCurrentTimeGeneration } from '~/lib/generation';
 
 interface CurrentOutputProps {
-  site: Site;
+  sites: Site[];
 }
 
-const CurrentOutput: FC<CurrentOutputProps> = ({ site }) => {
-  const { forecastData, isLoading } = useSiteData(site.site_uuid);
+const CurrentOutput: FC<CurrentOutputProps> = ({ sites }) => {
+  const { totalForecastedGeneration, isLoading } = useSiteAggregation(sites);
   const currentOutput =
-    forecastData && getCurrentTimeGeneration(forecastData.forecast_values);
+    totalForecastedGeneration &&
+    getCurrentTimeGeneration(totalForecastedGeneration);
 
   function outputMessage(
     isLoading: boolean,

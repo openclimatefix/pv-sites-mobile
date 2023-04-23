@@ -50,7 +50,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
           <ExpectedTotalOutput sites={sites} />
         </div>
         <div className="grid-in-Current-Output md:hidden">
-          <CurrentOutput site={sites[0]} />
+          <CurrentOutput sites={sites} />
         </div>
         <div className="grid-in-Weather-Icons">
           <WeatherCard sites={sites} />
