@@ -15,30 +15,19 @@ const Button: FC<PropsWithChildren<Props>> = ({
   variant = 'solid',
   onClick,
 }) => {
-  const mobileInverterLinkClass =
-    'h-[54px] w-[250px] text-ocf-yellow border-ocf-yellow border-[2px] rounded-md font-semibold mb-[20px]';
+  const outlinedButton =
+    'h-[54px] w-[250px] text-ocf-yellow border-ocf-yellow border-[2px] rounded-md font-semibold hover:bg-ocf-yellow hover:text-black transition-colors duration-300';
 
-  const desktopInverterLinkClass =
-    'h-[54px] w-[250px] text-ocf-yellow border-ocf-yellow border-[2px] rounded-md font-semibold hover:bg-ocf-yellow hover:text-black';
+  const solidButton =
+    'inline-flex gap-[10px] items-center justify-center md:w-[200px] w-10/12 bg-ocf-yellow text-black disabled:bg-ocf-gray disabled:text-ocf-black-600 transition-all duration-500 shadow h-14 max-w-sm text-center rounded-md md:rounded-lg md:font-semibold font-bold text-[16px]';
 
-  const mobile = useMediaQuery('(max-width: 768px)');
-
-  let className: string = '';
-
-  if (variant == 'solid') {
-    className =
-      'inline-flex gap-[10px] items-center justify-center md:w-[200px] w-10/12 text-ocf-yellow disabled:bg-ocf-gray disabled:dark:bg-ocf-gray transition-all duration-500 shadow h-14 max-w-sm text-center rounded-md md:rounded-lg md:font-semibold font-bold text-[16px]';
-  }
-  if (variant == 'outlined') {
-    className = mobile ? mobileInverterLinkClass : desktopInverterLinkClass;
-  }
   return (
     <button
       suppressHydrationWarning
       form={form}
       onClick={onClick}
       disabled={disabled}
-      className={className}
+      className={variant === 'solid' ? solidButton : outlinedButton}
     >
       {children}
     </button>
