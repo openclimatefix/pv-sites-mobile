@@ -36,7 +36,7 @@ export type Inverter = {
     installationDate: string;
   };
   location: {
-    longitute: number | null;
+    longitude: number | null;
     latitude: number | null;
   };
 };
