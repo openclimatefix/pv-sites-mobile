@@ -55,14 +55,22 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
         </div>
         {/* next button for mobile */}
         <div className="mb-10 flex h-14 w-full justify-center self-center md:hidden">
-          <Button disabled={!isSubmissionEnabled} onClick={onClick}>
+          <Button
+            disabled={!isSubmissionEnabled}
+            onClick={onClick}
+            variant="solid"
+          >
             Next
           </Button>
         </div>
       </div>
       {/* next button for desktop */}
       <div className="absolute bottom-0 left-1/2 hidden h-14 w-3/4 -translate-x-1/2 md:flex md:flex-row md:justify-end">
-        <Button disabled={!isSubmissionEnabled} onClick={nextPageCallback}>
+        <Button
+          disabled={!isSubmissionEnabled}
+          onClick={nextPageCallback}
+          variant="solid"
+        >
           Next
         </Button>
       </div>

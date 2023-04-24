@@ -72,7 +72,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           </div>
           <button
             onClick={lastPageCallback}
-            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
+            // className="md:hidden mt-8 font-bold text-xl peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
           >
             Back
           </button>
@@ -181,10 +181,10 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
       </div>
       <Modal show={showModal} setShow={setShowModal} />
       <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
-        <Button disabled={false} onClick={lastPageCallback}>
+        <Button disabled={false} onClick={lastPageCallback} variant="solid">
           Back
         </Button>
-        <Button form="panel-form" disabled={didSubmit}>
+        <Button form="panel-form" disabled={didSubmit} variant="solid">
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           Finish
           {didSubmit && <div className="mx-2 w-5" />}
