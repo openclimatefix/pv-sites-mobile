@@ -259,15 +259,12 @@ const LocationInput: FC<LocationInputProps> = ({
   }, [isInUK, isPastZoomThreshold, setIsSubmissionEnabled, isMoving]);
 
   return (
-    <div
-      className={`flex h-full flex-col md:h-[calc(100%-var(--map-text-height))]`}
-    >
+    <div className={`flex h-full flex-col`}>
       <div
         ref={geocoderContainer}
         className="z-20 bg-ocf-black"
         id="geocoderContainer"
       />
-      <div className="w-11/12 self-center bg-white" />
       <div className="relative top-0 flex flex-1 flex-col">
         <div
           ref={mapContainer}

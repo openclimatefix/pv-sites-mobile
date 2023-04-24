@@ -227,6 +227,10 @@ const Graph: FC<GraphProps> = ({ sites }) => {
           <LegendLineGraphIcon className="text-ocf-blue" />
           <p className="ml-[5px] mt-[2px] text-white">Clear Sky</p>
         </div>
+        <div className="flex">
+          <LegendLineGraphIcon className="text-white" />
+          <p className="ml-[5px] mt-[2px] text-white">Actual Output</p>
+        </div>
       </div>
       {!isLoading && (
         <ResponsiveContainer
