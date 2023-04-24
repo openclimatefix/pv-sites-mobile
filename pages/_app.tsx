@@ -20,11 +20,10 @@ dayjs.extend(duration);
 type AppProps = { sites?: Site[]; user?: UserProfile };
 
 const App: AppType<AppProps> = ({ Component, pageProps }) => {
-  const swrFallback = pageProps.sites
-    ? {
-        [`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`]: pageProps.sites,
-      }
-    : undefined;
+  const swrFallback = {
+    [`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`]:
+      pageProps.sites ?? [],
+  };
 
   return (
     <UserProvider user={pageProps.user}>

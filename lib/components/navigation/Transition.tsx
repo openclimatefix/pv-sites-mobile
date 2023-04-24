@@ -6,7 +6,7 @@ import {
 } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { FC, PropsWithChildren } from 'react';
-import { useIsMobile, useIsSitePage, useMediaQuery } from '~/lib/utils';
+import { useIsMobile, useIsSitePage } from '~/lib/utils';
 
 interface Props {
   className?: string;
