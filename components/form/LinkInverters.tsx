@@ -19,16 +19,23 @@ const LinkInverters = () => {
     'h-[54px] w-[308px] text-ocf-yellow border-ocf-yellow border-[2px] rounded-md font-semibold';
 
   return (
-    <div className="w-[320px] h-[510px] md:h-[550px] md:w-full flex flex-col items-center md:mt-[75px]">
-      <div className="mt-[40px] md:mt-[0px]">
+    <div
+      className="w-[320px] h-[520px] md:h-[550px] md:w-full flex flex-col items-center md:mt-[75px]"
+      suppressHydrationWarning
+    >
+      <div className="mt-[40px] md:mt-[0px]" suppressHydrationWarning>
         <InverterGraphicIcon />
       </div>
-      <div className="text-white mt-[30px] md:w-[485px] text-[20px] md:text-[24px]">
+      <div
+        className="text-white mt-[30px] md:w-[485px] text-[20px] md:text-[24px]"
+        suppressHydrationWarning
+      >
         Would you like to link your inverter with Enode to provide better
         forecasting?
       </div>
       {mobile && !showInfo && (
         <button
+          suppressHydrationWarning
           className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
           onClick={() => setShowInfo(true)}
         >
@@ -45,28 +52,29 @@ const LinkInverters = () => {
 
       {mobile && showInfo && (
         <button
+          suppressHydrationWarning
           className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
           onClick={() => setShowInfo(false)}
         >
           Show less
         </button>
       )}
-      <div className="flex flex-col md:justify-start justify-center md:mt-[50px] mt-auto">
+      <div
+        suppressHydrationWarning
+        className="flex flex-col md:justify-start justify-center md:mt-[75px] mt-auto"
+      >
         <Link href="https://www.google.com/">
-          <button
-            className={
-              mobile ? mobileInverterLinkClass : desktopInverterLinkClass
-            }
-          >
-            Yes, link my inverter
-          </button>
+          <Button variant="outlined">Yes, link my inverter</Button>
         </Link>
         {mobile && (
           <button className={mobileSkipButtonClass}>Skip this step</button>
         )}
       </div>
-      <div className="hidden md:flex md:flex-row md:justify-end w-11/12 mx-auto mt-auto text-[5px]">
-        <Button disabled={false} variant="next-hover-button">
+      <div
+        suppressHydrationWarning
+        className="hidden md:flex md:flex-row md:justify-end w-11/12 mx-auto mt-auto text-[5px]"
+      >
+        <Button variant="solid">
           Skip this step
           <ChevronRightIcon width={20} height={20} />
         </Button>
