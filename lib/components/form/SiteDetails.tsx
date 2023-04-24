@@ -65,16 +65,13 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   return (
     <div className="w-full md:flex-col md:justify-center">
-      <div
-        className={`flex h-[var(--nav-height)] w-full flex-row justify-between bg-ocf-black px-5 md:justify-center md:py-2`}
-      >
+      <div className="flex h-[var(--nav-height)] w-full flex-row items-center justify-between bg-ocf-black px-5 md:justify-center md:py-2">
         <div className="md:hidden">
           {!(page === Page.Location && sites.length === 0) && (
             <BackButton onClick={lastPageCallback} />
           )}
         </div>
         <NowcastingLogo />
-        {sites?.length && <div className="h-10 w-10 flex-1 md:hidden" />}
       </div>
       {generateFormPage()}
     </div>

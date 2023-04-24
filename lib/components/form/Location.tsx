@@ -38,22 +38,24 @@ const Location: FC<Props> = ({
         id="rootDiv"
       >
         <div
-          className="h-4/6 w-[95%] self-center md:h-full md:w-1/2 md:min-w-[750px]"
+          className="mb-3 flex w-[95%] flex-1 flex-col self-center md:h-full md:w-1/2 md:min-w-[750px]"
           id="mapboxInputWrapper"
         >
           <h1 className="text-xl font-semibold text-ocf-gray md:mt-7 md:text-2xl">
             Where is your solar panel located?
           </h1>
-          <LocationInput
-            shouldZoomIntoOriginal={shouldZoomIntoOriginal}
-            originalLat={siteCoordinates.latitude}
-            originalLng={siteCoordinates.longitude}
-            setIsSubmissionEnabled={setIsSubmissionEnabled}
-            setMapCoordinates={setSiteCoordinates}
-            zoomLevelThreshold={zoomLevelThreshold}
-            initialZoom={shouldZoomIntoOriginal ? 16 : 4}
-            canEdit={true}
-          />
+          <div className="flex-1">
+            <LocationInput
+              shouldZoomIntoOriginal={shouldZoomIntoOriginal}
+              originalLat={siteCoordinates.latitude}
+              originalLng={siteCoordinates.longitude}
+              setIsSubmissionEnabled={setIsSubmissionEnabled}
+              setMapCoordinates={setSiteCoordinates}
+              zoomLevelThreshold={zoomLevelThreshold}
+              initialZoom={shouldZoomIntoOriginal ? 16 : 4}
+              canEdit={true}
+            />
+          </div>
         </div>
         <div className="mb-3 mt-3 flex items-center justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-between">
           <div className="hidden md:block">
