@@ -1,7 +1,12 @@
 import useSWR from 'swr';
 import { ClearSkyData } from '../types';
 import useSites from './useSites';
-import { actualsFetcher, clearSkyFetcher, forecastFetcher, invertersFetcher } from './utils';
+import {
+  actualsFetcher,
+  clearSkyFetcher,
+  forecastFetcher,
+  invertersFetcher,
+} from './utils';
 
 /**
  * Gets forecasted and solar panel data for a single site

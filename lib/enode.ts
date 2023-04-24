@@ -43,7 +43,7 @@ export type Inverter = {
 
 export type Inverters = {
   inverters: Inverter[];
-}
+};
 
 export async function getInverters(userID: string) {
   const inverterIDs = (await enodeFetch('/inverters', {
