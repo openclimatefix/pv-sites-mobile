@@ -8,6 +8,7 @@ import {
   UnparsedClearSkyData,
   UnparsedForecastData,
 } from '../types';
+import { Inverters } from '../enode';
 
 /**
  * Parses a datetime string from the Nowcasting API, assumed to be in UTC.
@@ -90,6 +91,11 @@ export const manyActualsFetcher: Fetcher<Array<ActualData>> = async (
 export const actualsFetcher: Fetcher<ActualData> = async (url: string) => {
   const unparsedData: UnparsedActualData = await fetcher(url);
   return parseActualData(unparsedData);
+};
+
+export const invertersFetcher: Fetcher<Inverters> = async (url: string) => {
+  const inverterData: Inverters = await fetcher(url);
+  return inverterData;
 };
 
 function parseClearSkyData(

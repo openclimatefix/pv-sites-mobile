@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { ClearSkyData } from '../types';
 import useSites from './useSites';
-import { actualsFetcher, clearSkyFetcher, forecastFetcher } from './utils';
+import { actualsFetcher, clearSkyFetcher, forecastFetcher, invertersFetcher } from './utils';
 
 /**
  * Gets forecasted and solar panel data for a single site
@@ -26,6 +26,11 @@ const useSiteData = (siteUUID: string) => {
     actualsFetcher
   );
 
+  const { data: inverterData, error: inverterError } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/inverters`,
+    invertersFetcher
+  );
+
   const error = AggregateError([
     forecastError,
     siteListError,
@@ -42,6 +47,7 @@ const useSiteData = (siteUUID: string) => {
     actualData,
     ...siteData,
     siteData,
+    inverterData,
     error,
     isLoading,
   };
