@@ -2,13 +2,17 @@ import React, { useState, useContext, FC, PropsWithChildren } from 'react';
 import useSWRMutation from 'swr/mutation';
 import { originalLng, originalLat } from '../utils';
 import { LatitudeLongitude, Form, PanelDetails, FormPostData } from '../types';
+import { getAuthenticatedRequestOptions } from '../swr';
 
 async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
+  const options = await getAuthenticatedRequestOptions(url);
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg),
+    credentials: 'include',
     headers: {
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
+      ...options.headers,
     },
   });
 }

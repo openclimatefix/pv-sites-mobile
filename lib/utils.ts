@@ -82,7 +82,7 @@ export const getTrendAfterIndex = (
 export const getCurrentTimeGeneration = (
   generationData: GenerationDataPoint[]
 ) =>
-  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
+  generationData[getCurrentTimeGenerationIndex(generationData)]?.generation_kw;
 
 interface NextThreshold {
   aboveThreshold: boolean;
@@ -147,8 +147,9 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
         `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`,
+            authorization: `Bearer ${accessToken.accessToken}`,
           },
+          credentials: 'include',
         }
       ).then((res) => res.json())) as SiteList;
 

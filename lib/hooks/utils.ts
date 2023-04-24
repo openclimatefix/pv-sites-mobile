@@ -1,4 +1,5 @@
 import { Fetcher } from 'swr';
+import { fetcher } from '../swr';
 import {
   ActualData,
   ClearSkyData,
@@ -46,9 +47,7 @@ function parseForecastData(
 }
 
 export const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
-  const unparsedData: UnparsedForecastData = await fetch(url).then((res) =>
-    res.json()
-  );
+  const unparsedData: UnparsedForecastData = await fetcher(url);
 
   return parseForecastData(unparsedData);
 };
@@ -56,9 +55,7 @@ export const forecastFetcher: Fetcher<ForecastData> = async (url: string) => {
 export const manyForecastDataFetcher: Fetcher<Array<ForecastData>> = async (
   url: string
 ) => {
-  const allUnparsedForecasts: Array<UnparsedForecastData> = await fetch(
-    url
-  ).then((res) => res.json());
+  const allUnparsedForecasts: Array<UnparsedForecastData> = await fetcher(url);
 
   return allUnparsedForecasts.map((unparsedForecast) =>
     parseForecastData(unparsedForecast)
@@ -83,9 +80,7 @@ function parseActualData(unparsedActualData: UnparsedActualData): ActualData {
 export const manyActualsFetcher: Fetcher<Array<ActualData>> = async (
   url: string
 ) => {
-  const allUnparsedActuals: Array<UnparsedActualData> = await fetch(url).then(
-    (res) => res.json()
-  );
+  const allUnparsedActuals: Array<UnparsedActualData> = await fetcher(url);
 
   return allUnparsedActuals.map((unparsedActualData) =>
     parseActualData(unparsedActualData)
@@ -93,10 +88,7 @@ export const manyActualsFetcher: Fetcher<Array<ActualData>> = async (
 };
 
 export const actualsFetcher: Fetcher<ActualData> = async (url: string) => {
-  const unparsedData: UnparsedActualData = await fetch(url).then((res) =>
-    res.json()
-  );
-
+  const unparsedData: UnparsedActualData = await fetcher(url);
   return parseActualData(unparsedData);
 };
 
@@ -122,9 +114,7 @@ function parseClearSkyData(
 export const manyClearskyDataFetcher: Fetcher<Array<ClearSkyData>> = async (
   url: string
 ) => {
-  const allUnparsedClearsSky: Array<UnparsedClearSkyData> = await fetch(
-    url
-  ).then((res) => res.json());
+  const allUnparsedClearsSky: Array<UnparsedClearSkyData> = await fetcher(url);
 
   return allUnparsedClearsSky.map((unparsedClearSkyData) =>
     parseClearSkyData(unparsedClearSkyData)
@@ -132,9 +122,7 @@ export const manyClearskyDataFetcher: Fetcher<Array<ClearSkyData>> = async (
 };
 
 export const clearSkyFetcher: Fetcher<ClearSkyData> = async (url: string) => {
-  const unparsedData: UnparsedClearSkyData = await fetch(url).then((res) =>
-    res.json()
-  );
+  const unparsedData: UnparsedClearSkyData = await fetcher(url);
 
   return parseClearSkyData(unparsedData);
 };

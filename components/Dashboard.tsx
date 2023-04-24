@@ -8,6 +8,7 @@ import SunnyTimeframe from './dashboard-modules/SunnyTimeframe';
 import Graph from './graphs/Graph';
 import { SiteList } from '~/lib/types';
 import CurrentOutput from './dashboard-modules/CurrentOutput';
+import ContactButton from './ContactButton';
 
 interface DashboardProps {
   siteUUIDs: SiteList;
@@ -18,12 +19,19 @@ const Dashboard: FC<DashboardProps> = ({ siteUUIDs }) => {
   const { client_site_name } = useSiteData(sites[0]);
   return (
     <div className="bg-ocf-black max-w-screen-xl w-screen min-h-screen px-4 mb-[var(--bottom-nav-margin)]">
-      <h1 className="mt-4 mb-4 text-ocf-gray text-3xl font-bold">
-        {isAggregate ? 'Aggregate Dashboard' : client_site_name}
-      </h1>
+      <div className="flex flex-row justify-between items-center">
+        <h1 className="mt-2 mb-3 text-ocf-gray text-2xl md:text-3xl font-semibold">
+          {/* may have visual issues if client site name is too long */}
+          {isAggregate ? 'Aggregate Dashboard' : client_site_name}
+        </h1>
+        <div className="block md:hidden">
+          <ContactButton />
+        </div>
+      </div>
+      <hr className="w-[500%] mx-[-100px] bg-ocf-black-500 border-0 h-[1px] md:hidden" />
       <div className="grid grid-areas-dashboard-mobile grid-cols-mobile-columns grid-rows-mobile-rows md:grid-areas-dashboard-desktop md:grid-cols-desktop-columns md:grid-rows-desktop-rows w-full gap-4">
         <div className="grid-in-Heading1 block md:hidden">
-          <h2 className="text-ocf-gray text-base font-semibold leading-none mt-2">
+          <h2 className="text-ocf-gray text-base font-semibold leading-none mt-3">
             Solar Activity
           </h2>
         </div>
