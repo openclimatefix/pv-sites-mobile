@@ -20,14 +20,14 @@ const LinkInverters = () => {
 
   return (
     <div
-      className="w-[320px] h-[520px] md:h-[550px] md:w-full flex flex-col items-center md:mt-[75px]"
+      className="flex h-[520px] w-[320px] flex-col items-center md:mt-[75px] md:h-[550px] md:w-full"
       suppressHydrationWarning
     >
       <div className="mt-[40px] md:mt-[0px]" suppressHydrationWarning>
         <InverterGraphicIcon />
       </div>
       <div
-        className="text-white mt-[30px] md:w-[485px] text-[20px] md:text-[24px]"
+        className="mt-[30px] text-[20px] text-white md:w-[485px] md:text-[24px]"
         suppressHydrationWarning
       >
         Would you like to link your inverter with Enode to provide better
@@ -36,14 +36,14 @@ const LinkInverters = () => {
       {mobile && !showInfo && (
         <button
           suppressHydrationWarning
-          className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
+          className="mt-[5px] w-full text-right text-[14px] text-ocf-yellow underline"
           onClick={() => setShowInfo(true)}
         >
           What&apos;s this?
         </button>
       )}
       {(!mobile || showInfo) && (
-        <div className="w-full text-ocf-gray-300 text-[14px] mt-[20px] md:w-[485px]">
+        <div className="mt-[20px] w-full text-[14px] text-ocf-gray-300 md:w-[485px]">
           Linking your inverter with Enode gives us access to your solar output
           data, providing you with better forecasts and more information
           available within our app.
@@ -53,7 +53,7 @@ const LinkInverters = () => {
       {mobile && showInfo && (
         <button
           suppressHydrationWarning
-          className="w-full text-right text-ocf-yellow underline text-[14px] mt-[5px]"
+          className="mt-[5px] w-full text-right text-[14px] text-ocf-yellow underline"
           onClick={() => setShowInfo(false)}
         >
           Show less
@@ -61,7 +61,7 @@ const LinkInverters = () => {
       )}
       <div
         suppressHydrationWarning
-        className="flex flex-col md:justify-start justify-center md:mt-[75px] mt-auto"
+        className="mt-auto flex flex-col justify-center md:mt-[75px] md:justify-start"
       >
         <Link href="https://www.google.com/">
           <Button variant="outlined">Yes, link my inverter</Button>
@@ -72,7 +72,7 @@ const LinkInverters = () => {
       </div>
       <div
         suppressHydrationWarning
-        className="hidden md:flex md:flex-row md:justify-end w-11/12 mx-auto mt-auto text-[5px]"
+        className="mx-auto mt-auto hidden w-11/12 text-[5px] md:flex md:flex-row md:justify-end"
       >
         <Button variant="solid">
           Skip this step

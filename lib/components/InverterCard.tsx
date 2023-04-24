@@ -11,12 +11,12 @@ export const InverterCard: FC<InverterCardProps> = ({
   brand,
   isReachable,
 }) => (
-  <div className="flex flex-col bg-ocf-black-500 rounded-lg p-5 w-full max-w-md">
-    <h1 className="text-ocf-gray text-lg font-bold">{siteName}</h1>
-    <h1 className="mb-2 text-ocf-gray text-md ">{brand}</h1>
+  <div className="flex w-full max-w-md flex-col rounded-lg bg-ocf-black-500 p-5">
+    <h1 className="text-lg font-bold text-ocf-gray">{siteName}</h1>
+    <h1 className="text-md mb-2 text-ocf-gray ">{brand}</h1>
     <div className="flex items-center gap-1">
       <div
-        className={`w-2 h-2 rounded-full ${
+        className={`h-2 w-2 rounded-full ${
           isReachable ? 'bg-green-500' : 'bg-red-500'
         }`}
       />

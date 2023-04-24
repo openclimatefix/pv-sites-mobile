@@ -8,21 +8,21 @@ interface InverterViewProps {
 
 const InverterView: FC<InverterViewProps> = ({ siteUUID, isSelectMode }) => {
   return (
-    <div className="flex justify-center w-full">
-      <div className="flex flex-col w-full max-w-4xl p-3 pt-0">
+    <div className="flex w-full justify-center">
+      <div className="flex w-full max-w-4xl flex-col p-3 pt-0">
         {isSelectMode ? (
           <>
-            <h1 className="mt-4 text-ocf-gray text-xl">Select Inverters</h1>
-            <h1 className="mb-4 text-ocf-gray text-md">
+            <h1 className="mt-4 text-xl text-ocf-gray">Select Inverters</h1>
+            <h1 className="text-md mb-4 text-ocf-gray">
               Select the inverters that correspond to your site.
             </h1>
           </>
         ) : (
-          <h1 className="mt-4 mb-4 text-ocf-gray text-xl">
+          <h1 className="mb-4 mt-4 text-xl text-ocf-gray">
             Conencted Inverters
           </h1>
         )}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
           <InverterCard
             siteName="101 Address Road"
             brand="Enphase envoy 5"
