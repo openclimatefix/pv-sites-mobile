@@ -53,6 +53,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
         return (
           <Location
             nextPageCallback={nextPageCallback}
+            lastPageCallback={lastPageCallback}
             latitude={site?.latitude}
             longitude={site?.longitude}
           />
@@ -68,7 +69,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
         className={`flex h-[var(--nav-height)] w-full flex-row justify-between bg-ocf-black px-5 md:justify-center md:py-2`}
       >
         <div className="md:hidden">
-          {sites?.length && page !== Page.Location && (
+          {!(page === Page.Location && sites.length === 0) && (
             <BackButton onClick={lastPageCallback} />
           )}
         </div>

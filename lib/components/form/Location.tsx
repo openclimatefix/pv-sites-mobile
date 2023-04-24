@@ -1,3 +1,4 @@
+import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import { useState, FC } from 'react';
 import Button from '~/lib/components/Button';
 import LocationInput from '~/lib/components/form/LocationInput';
@@ -7,21 +8,23 @@ import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
 
 interface Props {
   nextPageCallback: () => void;
+  lastPageCallback: () => void;
   longitude?: number;
   latitude?: number;
 }
 
-const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
+const Location: FC<Props> = ({
+  nextPageCallback,
+  lastPageCallback,
+  longitude,
+  latitude,
+}) => {
   const { siteCoordinates, setSiteCoordinates } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
 
   // If the site is being edited, show the original coordinates
   siteCoordinates.longitude = longitude || siteCoordinates.longitude;
   siteCoordinates.latitude = latitude || siteCoordinates.latitude;
-
-  const onClick = () => {
-    nextPageCallback();
-  };
 
   // The map should zopm into the initial coordinates if they were entered by the user
   const shouldZoomIntoOriginal =
@@ -52,10 +55,19 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
             canEdit={true}
           />
         </div>
-        <div className="mb-3 mt-3 flex justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-end">
+        <div className="mb-3 mt-3 flex items-center justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-between">
+          <div className="hidden md:block">
+            <button
+              onClick={lastPageCallback}
+              className="flex items-center text-ocf-yellow"
+            >
+              <ChevronLeftIcon width="24" height="24" />
+              Back
+            </button>
+          </div>
           <Button
             disabled={!isSubmissionEnabled}
-            onClick={onClick}
+            onClick={nextPageCallback}
             variant="solid"
           >
             Next
