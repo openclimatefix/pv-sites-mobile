@@ -10,7 +10,7 @@ interface Props {
 const Button: FC<PropsWithChildren<Props>> = ({
   form,
   children,
-  disabled,
+  disabled = false,
   variant = 'input-form',
   onClick,
 }) => {
@@ -25,6 +25,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
   }
   return (
     <button
+      suppressHydrationWarning
       form={form}
       onClick={onClick}
       disabled={disabled}
