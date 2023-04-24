@@ -7,6 +7,7 @@ namespace NodeJS {
     AUTH0_ISSUER_BASE_URL: string;
     AUTH0_CLIENT_ID: string;
     AUTH0_CLIENT_SECRET: string;
+    AUTH0_AUDIENCE: string;
     NEXT_PUBLIC_MAPBOX_PUBLIC: string;
     NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT: string;
     NEXT_PUBLIC_API_BASE_URL_POST: string;
