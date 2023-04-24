@@ -19,12 +19,12 @@
 
 /* Define the .geocoder class */
 .mapboxgl-ctrl-geocoder--input {
-  @apply bg-ocf-black-500 rounded-lg text-white w-full h-full !important;
+  @apply h-full w-full rounded-lg bg-ocf-black-500 text-white outline-ocf-yellow focus:outline focus:outline-1 !important;
 }
 
 /* Apply additional styles to .mapboxgl-ctrl-geocoder */
 .mapboxgl-ctrl-geocoder {
-  @apply min-w-full bg-ocf-black h-14 my-3 md:my-5;
+  @apply my-3 h-14 min-w-full bg-ocf-black md:my-5;
 }
 
 /* Apply styles to #map */
@@ -34,14 +34,14 @@
 
 /* Apply styles to the input text  */
 .mapboxgl-ctrl-geocoder--input {
-  @apply text-white text-lg !important;
+  @apply text-lg text-white !important;
   @apply border-ocf-yellow-500;
   @apply border-2;
 }
 
 /* Apply styles to the geocoder button */
 .mapboxgl-ctrl-geocoder--button {
-  @apply bg-ocf-black-500 z-10 top-[11px] !important;
+  @apply top-[11px] z-10 bg-ocf-black-500 !important;
 }
 
 .mapboxgl-ctrl-geocoder--icon {
@@ -72,7 +72,7 @@
 }
 
 .mapboxgl-ctrl-geocoder .suggestions > li > a {
-  @apply py-0 bg-ocf-black-500 hover:bg-ocf-black-300;
+  @apply bg-ocf-black-500 py-0 hover:bg-ocf-black-300;
 }
 
 .mapboxgl-ctrl-geocoder--suggestion {
@@ -80,7 +80,7 @@
 }
 
 .mapbox-gl-geocoder--no-results {
-  @apply bg-ocf-black-500 hover:bg-ocf-black-300 text-white p-5;
+  @apply bg-ocf-black-500 p-5 text-white hover:bg-ocf-black-300;
 }
 
 .hidden-suggestion {

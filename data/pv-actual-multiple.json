@@ -2,203 +2,1398 @@
   {
     "site_uuid": "725a8670-d012-474d-b901-1179f43e7182",
     "pv_actual_values": [
+      { "datetime_utc": "2023-03-31T00:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T00:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T01:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T02:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T03:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T04:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T05:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T06:50:00", "actual_generation_kw": 0.0 },
       {
-        "datetime_utc": "2023-03-13T16:10:00Z",
-        "actual_generation_kw": 0.21321178182447661
+        "datetime_utc": "2023-03-31T06:55:00",
+        "actual_generation_kw": 0.003917436
       },
       {
-        "datetime_utc": "2023-03-13T17:10:00Z",
-        "actual_generation_kw": 0.04684610648167499
+        "datetime_utc": "2023-03-31T07:00:00",
+        "actual_generation_kw": 0.013254959999999998
       },
       {
-        "datetime_utc": "2023-03-13T18:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:05:00",
+        "actual_generation_kw": 0.048654359999999994
       },
       {
-        "datetime_utc": "2023-03-13T19:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:10:00",
+        "actual_generation_kw": 0.13075319999999999
       },
       {
-        "datetime_utc": "2023-03-13T20:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:15:00",
+        "actual_generation_kw": 0.17695439999999998
       },
       {
-        "datetime_utc": "2023-03-13T21:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:20:00",
+        "actual_generation_kw": 0.2879076
       },
       {
-        "datetime_utc": "2023-03-13T22:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:25:00",
+        "actual_generation_kw": 0.20435760000000003
       },
       {
-        "datetime_utc": "2023-03-13T23:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:30:00",
+        "actual_generation_kw": 0.20064119999999996
       },
       {
-        "datetime_utc": "2023-03-14T00:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:35:00",
+        "actual_generation_kw": 0.18186
       },
       {
-        "datetime_utc": "2023-03-14T01:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:40:00",
+        "actual_generation_kw": 0.12987479999999998
       },
       {
-        "datetime_utc": "2023-03-14T02:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:45:00",
+        "actual_generation_kw": 0.1824072
       },
       {
-        "datetime_utc": "2023-03-14T03:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:50:00",
+        "actual_generation_kw": 0.025829159999999997
       },
       {
-        "datetime_utc": "2023-03-14T04:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T07:55:00",
+        "actual_generation_kw": 0.054073319999999994
       },
       {
-        "datetime_utc": "2023-03-14T05:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T08:00:00",
+        "actual_generation_kw": 0.13221719999999998
       },
       {
-        "datetime_utc": "2023-03-14T06:10:00Z",
-        "actual_generation_kw": 0.0019026509541272241
+        "datetime_utc": "2023-03-31T08:05:00",
+        "actual_generation_kw": 0.15864840000000002
       },
       {
-        "datetime_utc": "2023-03-14T07:10:00Z",
-        "actual_generation_kw": 0.090423977855504
+        "datetime_utc": "2023-03-31T08:10:00",
+        "actual_generation_kw": 0.3799824
       },
       {
-        "datetime_utc": "2023-03-14T08:10:00Z",
-        "actual_generation_kw": 0.2886908691296505
+        "datetime_utc": "2023-03-31T08:15:00",
+        "actual_generation_kw": 0.42450239999999995
       },
       {
-        "datetime_utc": "2023-03-14T09:10:00Z",
-        "actual_generation_kw": 0.543577871373829
+        "datetime_utc": "2023-03-31T08:20:00",
+        "actual_generation_kw": 0.47396520000000003
       },
       {
-        "datetime_utc": "2023-03-14T10:10:00Z",
-        "actual_generation_kw": 0.786788218175523
+        "datetime_utc": "2023-03-31T08:25:00",
+        "actual_generation_kw": 0.3565692
       },
       {
-        "datetime_utc": "2023-03-14T11:10:00Z",
-        "actual_generation_kw": 0.953153893518325
+        "datetime_utc": "2023-03-31T08:30:00",
+        "actual_generation_kw": 0.28680720000000004
       },
       {
-        "datetime_utc": "2023-03-14T12:10:00Z",
-        "actual_generation_kw": 0.9980973490458729
+        "datetime_utc": "2023-03-31T08:35:00",
+        "actual_generation_kw": 0.45381960000000005
       },
       {
-        "datetime_utc": "2023-03-14T13:10:00Z",
-        "actual_generation_kw": 0.909576022144496
+        "datetime_utc": "2023-03-31T08:40:00",
+        "actual_generation_kw": 0.4849608000000001
       },
       {
-        "datetime_utc": "2023-03-14T14:10:00Z",
-        "actual_generation_kw": 0.7113091308703495
+        "datetime_utc": "2023-03-31T08:45:00",
+        "actual_generation_kw": 0.4405488
       },
       {
-        "datetime_utc": "2023-03-14T15:10:00Z",
-        "actual_generation_kw": 0.45642212862617104
-      }
-    ]
-  },
-  {
-    "site_uuid": "9570f807-fc9e-47e9-b5e3-5915ddddef3d",
-    "pv_actual_values": [
-      {
-        "datetime_utc": "2023-03-13T16:10:00Z",
-        "actual_generation_kw": 0.21321178182447661
+        "datetime_utc": "2023-03-31T08:50:00",
+        "actual_generation_kw": 0.5677283999999999
       },
       {
-        "datetime_utc": "2023-03-13T17:10:00Z",
-        "actual_generation_kw": 0.04684610648167499
+        "datetime_utc": "2023-03-31T08:55:00",
+        "actual_generation_kw": 0.4283556
       },
       {
-        "datetime_utc": "2023-03-13T18:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:00:00",
+        "actual_generation_kw": 0.42545160000000004
       },
       {
-        "datetime_utc": "2023-03-13T19:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:05:00",
+        "actual_generation_kw": 0.33240840000000005
       },
       {
-        "datetime_utc": "2023-03-13T20:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:10:00",
+        "actual_generation_kw": 0.3794244
       },
       {
-        "datetime_utc": "2023-03-13T21:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:15:00",
+        "actual_generation_kw": 0.5606688000000001
       },
       {
-        "datetime_utc": "2023-03-13T22:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:20:00",
+        "actual_generation_kw": 0.5299188
       },
       {
-        "datetime_utc": "2023-03-13T23:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:25:00",
+        "actual_generation_kw": 0.5329188
       },
       {
-        "datetime_utc": "2023-03-14T00:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:30:00",
+        "actual_generation_kw": 0.5000784
       },
       {
-        "datetime_utc": "2023-03-14T01:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:35:00",
+        "actual_generation_kw": 0.5839715999999999
       },
       {
-        "datetime_utc": "2023-03-14T02:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:40:00",
+        "actual_generation_kw": 0.870432
       },
       {
-        "datetime_utc": "2023-03-14T03:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:45:00",
+        "actual_generation_kw": 0.8162532000000001
       },
       {
-        "datetime_utc": "2023-03-14T04:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:50:00",
+        "actual_generation_kw": 0.648486
       },
       {
-        "datetime_utc": "2023-03-14T05:10:00Z",
-        "actual_generation_kw": 0.0
+        "datetime_utc": "2023-03-31T09:55:00",
+        "actual_generation_kw": 0.6232272000000001
       },
       {
-        "datetime_utc": "2023-03-14T06:10:00Z",
-        "actual_generation_kw": 0.0019026509541272241
+        "datetime_utc": "2023-03-31T10:00:00",
+        "actual_generation_kw": 0.8747184
       },
       {
-        "datetime_utc": "2023-03-14T07:10:00Z",
-        "actual_generation_kw": 0.090423977855504
+        "datetime_utc": "2023-03-31T10:05:00",
+        "actual_generation_kw": 1.278936
       },
       {
-        "datetime_utc": "2023-03-14T08:10:00Z",
-        "actual_generation_kw": 0.2886908691296505
+        "datetime_utc": "2023-03-31T10:10:00",
+        "actual_generation_kw": 1.382628
       },
       {
-        "datetime_utc": "2023-03-14T09:10:00Z",
-        "actual_generation_kw": 0.543577871373829
+        "datetime_utc": "2023-03-31T10:15:00",
+        "actual_generation_kw": 2.3026440000000004
       },
       {
-        "datetime_utc": "2023-03-14T10:10:00Z",
-        "actual_generation_kw": 0.786788218175523
+        "datetime_utc": "2023-03-31T10:20:00",
+        "actual_generation_kw": 2.430456
       },
       {
-        "datetime_utc": "2023-03-14T11:10:00Z",
-        "actual_generation_kw": 0.953153893518325
+        "datetime_utc": "2023-03-31T10:25:00",
+        "actual_generation_kw": 2.506428
       },
       {
-        "datetime_utc": "2023-03-14T12:10:00Z",
-        "actual_generation_kw": 0.9980973490458729
+        "datetime_utc": "2023-03-31T10:30:00",
+        "actual_generation_kw": 1.1199048
       },
       {
-        "datetime_utc": "2023-03-14T13:10:00Z",
-        "actual_generation_kw": 0.909576022144496
+        "datetime_utc": "2023-03-31T10:35:00",
+        "actual_generation_kw": 0.855996
       },
       {
-        "datetime_utc": "2023-03-14T14:10:00Z",
-        "actual_generation_kw": 0.7113091308703495
+        "datetime_utc": "2023-03-31T10:40:00",
+        "actual_generation_kw": 0.5540112
       },
       {
-        "datetime_utc": "2023-03-14T15:10:00Z",
-        "actual_generation_kw": 0.45642212862617104
-      }
+        "datetime_utc": "2023-03-31T10:45:00",
+        "actual_generation_kw": 1.2511320000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T10:50:00",
+        "actual_generation_kw": 1.6392840000000002
+      },
+      {
+        "datetime_utc": "2023-03-31T10:55:00",
+        "actual_generation_kw": 1.61586
+      },
+      {
+        "datetime_utc": "2023-03-31T11:00:00",
+        "actual_generation_kw": 0.8406948
+      },
+      {
+        "datetime_utc": "2023-03-31T11:05:00",
+        "actual_generation_kw": 0.7359816000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T11:10:00",
+        "actual_generation_kw": 1.863024
+      },
+      {
+        "datetime_utc": "2023-03-31T11:15:00",
+        "actual_generation_kw": 2.5271760000000003
+      },
+      {
+        "datetime_utc": "2023-03-31T11:20:00",
+        "actual_generation_kw": 2.296896
+      },
+      {
+        "datetime_utc": "2023-03-31T11:25:00",
+        "actual_generation_kw": 2.4806640000000004
+      },
+      {
+        "datetime_utc": "2023-03-31T11:30:00",
+        "actual_generation_kw": 1.858344
+      },
+      {
+        "datetime_utc": "2023-03-31T11:35:00",
+        "actual_generation_kw": 2.251632
+      },
+      {
+        "datetime_utc": "2023-03-31T11:40:00",
+        "actual_generation_kw": 2.22738
+      },
+      { "datetime_utc": "2023-03-31T11:45:00", "actual_generation_kw": 2.232 },
+      {
+        "datetime_utc": "2023-03-31T11:50:00",
+        "actual_generation_kw": 2.232696
+      },
+      {
+        "datetime_utc": "2023-03-31T11:55:00",
+        "actual_generation_kw": 1.235268
+      },
+      {
+        "datetime_utc": "2023-03-31T12:00:00",
+        "actual_generation_kw": 1.0140192
+      },
+      {
+        "datetime_utc": "2023-03-31T12:05:00",
+        "actual_generation_kw": 0.7806732
+      },
+      {
+        "datetime_utc": "2023-03-31T12:10:00",
+        "actual_generation_kw": 0.7341672
+      },
+      {
+        "datetime_utc": "2023-03-31T12:15:00",
+        "actual_generation_kw": 0.7381524
+      },
+      {
+        "datetime_utc": "2023-03-31T12:20:00",
+        "actual_generation_kw": 0.7238171999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T12:25:00",
+        "actual_generation_kw": 1.0092492
+      },
+      {
+        "datetime_utc": "2023-03-31T12:30:00",
+        "actual_generation_kw": 1.0187304
+      },
+      {
+        "datetime_utc": "2023-03-31T12:35:00",
+        "actual_generation_kw": 0.8468916
+      },
+      {
+        "datetime_utc": "2023-03-31T12:40:00",
+        "actual_generation_kw": 1.0291823999999998
+      },
+      {
+        "datetime_utc": "2023-03-31T12:45:00",
+        "actual_generation_kw": 1.39362
+      },
+      {
+        "datetime_utc": "2023-03-31T12:50:00",
+        "actual_generation_kw": 1.319664
+      },
+      {
+        "datetime_utc": "2023-03-31T12:55:00",
+        "actual_generation_kw": 1.255368
+      },
+      {
+        "datetime_utc": "2023-03-31T13:00:00",
+        "actual_generation_kw": 1.1339796000000002
+      },
+      {
+        "datetime_utc": "2023-03-31T13:05:00",
+        "actual_generation_kw": 0.943938
+      },
+      {
+        "datetime_utc": "2023-03-31T13:10:00",
+        "actual_generation_kw": 0.6098747999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T13:15:00",
+        "actual_generation_kw": 0.8215319999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T13:20:00",
+        "actual_generation_kw": 1.0563107999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T13:25:00",
+        "actual_generation_kw": 0.8243915999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T13:30:00",
+        "actual_generation_kw": 0.5897376
+      },
+      {
+        "datetime_utc": "2023-03-31T13:35:00",
+        "actual_generation_kw": 0.7515204
+      },
+      {
+        "datetime_utc": "2023-03-31T13:40:00",
+        "actual_generation_kw": 1.010478
+      },
+      {
+        "datetime_utc": "2023-03-31T13:45:00",
+        "actual_generation_kw": 1.3067039999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T13:50:00",
+        "actual_generation_kw": 0.9749712
+      },
+      {
+        "datetime_utc": "2023-03-31T13:55:00",
+        "actual_generation_kw": 0.7891692
+      },
+      {
+        "datetime_utc": "2023-03-31T14:00:00",
+        "actual_generation_kw": 0.6432059999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T14:05:00",
+        "actual_generation_kw": 0.5201712
+      },
+      {
+        "datetime_utc": "2023-03-31T14:10:00",
+        "actual_generation_kw": 0.5541936000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T14:15:00",
+        "actual_generation_kw": 0.37241640000000004
+      },
+      {
+        "datetime_utc": "2023-03-31T14:20:00",
+        "actual_generation_kw": 0.3206472
+      },
+      {
+        "datetime_utc": "2023-03-31T14:25:00",
+        "actual_generation_kw": 0.28577880000000006
+      },
+      {
+        "datetime_utc": "2023-03-31T14:30:00",
+        "actual_generation_kw": 0.2355252
+      },
+      {
+        "datetime_utc": "2023-03-31T14:35:00",
+        "actual_generation_kw": 0.5312064000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T14:40:00",
+        "actual_generation_kw": 0.5979228000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T14:45:00",
+        "actual_generation_kw": 0.5198363999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T14:50:00",
+        "actual_generation_kw": 0.5106828
+      },
+      {
+        "datetime_utc": "2023-03-31T14:55:00",
+        "actual_generation_kw": 0.4650852
+      },
+      {
+        "datetime_utc": "2023-03-31T15:00:00",
+        "actual_generation_kw": 0.3427344
+      },
+      {
+        "datetime_utc": "2023-03-31T15:05:00",
+        "actual_generation_kw": 0.5239739999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T15:10:00",
+        "actual_generation_kw": 0.6631212000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T15:15:00",
+        "actual_generation_kw": 0.5894148
+      },
+      {
+        "datetime_utc": "2023-03-31T15:20:00",
+        "actual_generation_kw": 0.8421324
+      },
+      {
+        "datetime_utc": "2023-03-31T15:25:00",
+        "actual_generation_kw": 0.974496
+      },
+      {
+        "datetime_utc": "2023-03-31T15:30:00",
+        "actual_generation_kw": 1.0280951999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T15:35:00",
+        "actual_generation_kw": 0.8639076
+      },
+      {
+        "datetime_utc": "2023-03-31T15:40:00",
+        "actual_generation_kw": 0.6703823999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T15:45:00",
+        "actual_generation_kw": 0.47382360000000007
+      },
+      {
+        "datetime_utc": "2023-03-31T15:50:00",
+        "actual_generation_kw": 0.3712428
+      },
+      {
+        "datetime_utc": "2023-03-31T15:55:00",
+        "actual_generation_kw": 0.2590884
+      },
+      {
+        "datetime_utc": "2023-03-31T16:00:00",
+        "actual_generation_kw": 0.267564
+      },
+      {
+        "datetime_utc": "2023-03-31T16:05:00",
+        "actual_generation_kw": 0.23726760000000002
+      },
+      {
+        "datetime_utc": "2023-03-31T16:10:00",
+        "actual_generation_kw": 0.2429604
+      },
+      {
+        "datetime_utc": "2023-03-31T16:15:00",
+        "actual_generation_kw": 0.23195159999999998
+      },
+      {
+        "datetime_utc": "2023-03-31T16:20:00",
+        "actual_generation_kw": 0.21220319999999998
+      },
+      {
+        "datetime_utc": "2023-03-31T16:25:00",
+        "actual_generation_kw": 0.1477248
+      },
+      {
+        "datetime_utc": "2023-03-31T16:30:00",
+        "actual_generation_kw": 0.02624856
+      },
+      {
+        "datetime_utc": "2023-03-31T16:35:00",
+        "actual_generation_kw": 0.05930832
+      },
+      {
+        "datetime_utc": "2023-03-31T16:40:00",
+        "actual_generation_kw": 0.06653808
+      },
+      {
+        "datetime_utc": "2023-03-31T16:45:00",
+        "actual_generation_kw": 0.11985924
+      },
+      {
+        "datetime_utc": "2023-03-31T16:50:00",
+        "actual_generation_kw": 0.11987904
+      },
+      {
+        "datetime_utc": "2023-03-31T16:55:00",
+        "actual_generation_kw": 0.1283388
+      },
+      {
+        "datetime_utc": "2023-03-31T17:00:00",
+        "actual_generation_kw": 0.0989136
+      },
+      {
+        "datetime_utc": "2023-03-31T17:05:00",
+        "actual_generation_kw": 0.06091115999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T17:10:00",
+        "actual_generation_kw": 0.09398208
+      },
+      {
+        "datetime_utc": "2023-03-31T17:15:00",
+        "actual_generation_kw": 0.08128956000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T17:20:00",
+        "actual_generation_kw": 0.06435972000000001
+      },
+      {
+        "datetime_utc": "2023-03-31T17:25:00",
+        "actual_generation_kw": 0.029713200000000002
+      },
+      {
+        "datetime_utc": "2023-03-31T17:30:00",
+        "actual_generation_kw": 0.039642000000000004
+      },
+      {
+        "datetime_utc": "2023-03-31T17:35:00",
+        "actual_generation_kw": 0.0116961
+      },
+      {
+        "datetime_utc": "2023-03-31T17:40:00",
+        "actual_generation_kw": 0.01318656
+      },
+      {
+        "datetime_utc": "2023-03-31T17:45:00",
+        "actual_generation_kw": 0.007636619999999999
+      },
+      {
+        "datetime_utc": "2023-03-31T17:50:00",
+        "actual_generation_kw": 0.006339336
+      },
+      {
+        "datetime_utc": "2023-03-31T17:55:00",
+        "actual_generation_kw": 0.00034134839999999997
+      },
+      {
+        "datetime_utc": "2023-03-31T18:00:00",
+        "actual_generation_kw": 4.1955839999999995e-7
+      },
+      { "datetime_utc": "2023-03-31T18:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T18:10:00", "actual_generation_kw": 0.0 },
+      {
+        "datetime_utc": "2023-03-31T18:15:00",
+        "actual_generation_kw": 3.036396e-10
+      },
+      {
+        "datetime_utc": "2023-03-31T18:20:00",
+        "actual_generation_kw": 8.004167999999999e-13
+      },
+      { "datetime_utc": "2023-03-31T18:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T18:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T18:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T18:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T18:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T18:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T18:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T19:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T20:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T21:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T22:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-03-31T23:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T00:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T01:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T02:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T03:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T04:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T05:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T06:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T06:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T06:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T06:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T06:20:00", "actual_generation_kw": 0.0 },
+      {
+        "datetime_utc": "2023-04-01T06:25:00",
+        "actual_generation_kw": 0.003853116
+      },
+      {
+        "datetime_utc": "2023-04-01T06:30:00",
+        "actual_generation_kw": 0.01510656
+      },
+      {
+        "datetime_utc": "2023-04-01T06:35:00",
+        "actual_generation_kw": 0.0226074
+      },
+      {
+        "datetime_utc": "2023-04-01T06:40:00",
+        "actual_generation_kw": 0.02516016
+      },
+      {
+        "datetime_utc": "2023-04-01T06:45:00",
+        "actual_generation_kw": 0.0285204
+      },
+      {
+        "datetime_utc": "2023-04-01T06:50:00",
+        "actual_generation_kw": 0.03635076
+      },
+      {
+        "datetime_utc": "2023-04-01T06:55:00",
+        "actual_generation_kw": 0.02928
+      },
+      {
+        "datetime_utc": "2023-04-01T07:00:00",
+        "actual_generation_kw": 0.0642948
+      },
+      {
+        "datetime_utc": "2023-04-01T07:05:00",
+        "actual_generation_kw": 0.08298348
+      },
+      {
+        "datetime_utc": "2023-04-01T07:10:00",
+        "actual_generation_kw": 0.09991584
+      },
+      {
+        "datetime_utc": "2023-04-01T07:15:00",
+        "actual_generation_kw": 0.10836192
+      },
+      {
+        "datetime_utc": "2023-04-01T07:20:00",
+        "actual_generation_kw": 0.1076646
+      },
+      {
+        "datetime_utc": "2023-04-01T07:25:00",
+        "actual_generation_kw": 0.12034560000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T07:30:00",
+        "actual_generation_kw": 0.10241388000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T07:35:00",
+        "actual_generation_kw": 0.13160159999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T07:40:00",
+        "actual_generation_kw": 0.11723124000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T07:45:00",
+        "actual_generation_kw": 0.06707952
+      },
+      {
+        "datetime_utc": "2023-04-01T07:50:00",
+        "actual_generation_kw": 0.07281204
+      },
+      {
+        "datetime_utc": "2023-04-01T07:55:00",
+        "actual_generation_kw": 0.14817239999999998
+      },
+      {
+        "datetime_utc": "2023-04-01T08:00:00",
+        "actual_generation_kw": 0.07445952
+      },
+      {
+        "datetime_utc": "2023-04-01T08:05:00",
+        "actual_generation_kw": 0.13053
+      },
+      {
+        "datetime_utc": "2023-04-01T08:10:00",
+        "actual_generation_kw": 0.169518
+      },
+      {
+        "datetime_utc": "2023-04-01T08:15:00",
+        "actual_generation_kw": 0.181974
+      },
+      {
+        "datetime_utc": "2023-04-01T08:20:00",
+        "actual_generation_kw": 0.1889016
+      },
+      {
+        "datetime_utc": "2023-04-01T08:25:00",
+        "actual_generation_kw": 0.1834752
+      },
+      {
+        "datetime_utc": "2023-04-01T08:30:00",
+        "actual_generation_kw": 0.11471759999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T08:35:00",
+        "actual_generation_kw": 0.037337159999999994
+      },
+      {
+        "datetime_utc": "2023-04-01T08:40:00",
+        "actual_generation_kw": 0.03579768
+      },
+      {
+        "datetime_utc": "2023-04-01T08:45:00",
+        "actual_generation_kw": 0.157308
+      },
+      {
+        "datetime_utc": "2023-04-01T08:50:00",
+        "actual_generation_kw": 0.253896
+      },
+      {
+        "datetime_utc": "2023-04-01T08:55:00",
+        "actual_generation_kw": 0.38845799999999997
+      },
+      {
+        "datetime_utc": "2023-04-01T09:00:00",
+        "actual_generation_kw": 0.41323560000000004
+      },
+      {
+        "datetime_utc": "2023-04-01T09:05:00",
+        "actual_generation_kw": 0.38738399999999995
+      },
+      {
+        "datetime_utc": "2023-04-01T09:10:00",
+        "actual_generation_kw": 0.38296680000000005
+      },
+      {
+        "datetime_utc": "2023-04-01T09:15:00",
+        "actual_generation_kw": 0.3897816
+      },
+      {
+        "datetime_utc": "2023-04-01T09:20:00",
+        "actual_generation_kw": 0.47741160000000005
+      },
+      {
+        "datetime_utc": "2023-04-01T09:25:00",
+        "actual_generation_kw": 0.5154552
+      },
+      {
+        "datetime_utc": "2023-04-01T09:30:00",
+        "actual_generation_kw": 0.493554
+      },
+      {
+        "datetime_utc": "2023-04-01T09:35:00",
+        "actual_generation_kw": 0.5118204
+      },
+      {
+        "datetime_utc": "2023-04-01T09:40:00",
+        "actual_generation_kw": 0.512466
+      },
+      {
+        "datetime_utc": "2023-04-01T09:45:00",
+        "actual_generation_kw": 0.5666568
+      },
+      {
+        "datetime_utc": "2023-04-01T09:50:00",
+        "actual_generation_kw": 0.4710108
+      },
+      {
+        "datetime_utc": "2023-04-01T09:55:00",
+        "actual_generation_kw": 0.39952799999999994
+      },
+      {
+        "datetime_utc": "2023-04-01T10:00:00",
+        "actual_generation_kw": 0.35278319999999996
+      },
+      {
+        "datetime_utc": "2023-04-01T10:05:00",
+        "actual_generation_kw": 0.40354319999999994
+      },
+      {
+        "datetime_utc": "2023-04-01T10:10:00",
+        "actual_generation_kw": 0.5260440000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T10:15:00",
+        "actual_generation_kw": 0.50763
+      },
+      {
+        "datetime_utc": "2023-04-01T10:20:00",
+        "actual_generation_kw": 0.6408288
+      },
+      {
+        "datetime_utc": "2023-04-01T10:25:00",
+        "actual_generation_kw": 0.7660464
+      },
+      {
+        "datetime_utc": "2023-04-01T10:30:00",
+        "actual_generation_kw": 0.46629240000000005
+      },
+      {
+        "datetime_utc": "2023-04-01T10:35:00",
+        "actual_generation_kw": 0.41898840000000004
+      },
+      {
+        "datetime_utc": "2023-04-01T10:40:00",
+        "actual_generation_kw": 0.5625936
+      },
+      {
+        "datetime_utc": "2023-04-01T10:45:00",
+        "actual_generation_kw": 0.7469436
+      },
+      {
+        "datetime_utc": "2023-04-01T10:50:00",
+        "actual_generation_kw": 0.9082331999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T10:55:00",
+        "actual_generation_kw": 0.7980036
+      },
+      {
+        "datetime_utc": "2023-04-01T11:00:00",
+        "actual_generation_kw": 0.766284
+      },
+      {
+        "datetime_utc": "2023-04-01T11:05:00",
+        "actual_generation_kw": 0.5906423999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T11:10:00",
+        "actual_generation_kw": 0.6013728000000002
+      },
+      {
+        "datetime_utc": "2023-04-01T11:15:00",
+        "actual_generation_kw": 0.7073328
+      },
+      {
+        "datetime_utc": "2023-04-01T11:20:00",
+        "actual_generation_kw": 1.7938800000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T11:25:00",
+        "actual_generation_kw": 1.665444
+      },
+      {
+        "datetime_utc": "2023-04-01T11:30:00",
+        "actual_generation_kw": 1.0464252
+      },
+      {
+        "datetime_utc": "2023-04-01T11:35:00",
+        "actual_generation_kw": 0.5027687999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T11:40:00",
+        "actual_generation_kw": 0.4253292
+      },
+      {
+        "datetime_utc": "2023-04-01T11:45:00",
+        "actual_generation_kw": 0.8689104
+      },
+      {
+        "datetime_utc": "2023-04-01T11:50:00",
+        "actual_generation_kw": 1.0828152
+      },
+      {
+        "datetime_utc": "2023-04-01T11:55:00",
+        "actual_generation_kw": 1.233048
+      },
+      {
+        "datetime_utc": "2023-04-01T12:00:00",
+        "actual_generation_kw": 1.0433208
+      },
+      {
+        "datetime_utc": "2023-04-01T12:05:00",
+        "actual_generation_kw": 0.8312508000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T12:10:00",
+        "actual_generation_kw": 0.5691828
+      },
+      {
+        "datetime_utc": "2023-04-01T12:15:00",
+        "actual_generation_kw": 0.7875647999999998
+      },
+      {
+        "datetime_utc": "2023-04-01T12:20:00",
+        "actual_generation_kw": 1.7850479999999997
+      },
+      {
+        "datetime_utc": "2023-04-01T12:25:00",
+        "actual_generation_kw": 1.522968
+      },
+      {
+        "datetime_utc": "2023-04-01T12:30:00",
+        "actual_generation_kw": 1.1526696
+      },
+      {
+        "datetime_utc": "2023-04-01T12:35:00",
+        "actual_generation_kw": 1.244532
+      },
+      {
+        "datetime_utc": "2023-04-01T12:40:00",
+        "actual_generation_kw": 1.226664
+      },
+      {
+        "datetime_utc": "2023-04-01T12:45:00",
+        "actual_generation_kw": 0.9776256000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T12:50:00",
+        "actual_generation_kw": 1.0407072000000002
+      },
+      {
+        "datetime_utc": "2023-04-01T12:55:00",
+        "actual_generation_kw": 0.7865460000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T13:00:00",
+        "actual_generation_kw": 0.6633288
+      },
+      {
+        "datetime_utc": "2023-04-01T13:05:00",
+        "actual_generation_kw": 1.563144
+      },
+      {
+        "datetime_utc": "2023-04-01T13:10:00",
+        "actual_generation_kw": 2.232048
+      },
+      {
+        "datetime_utc": "2023-04-01T13:15:00",
+        "actual_generation_kw": 1.679424
+      },
+      {
+        "datetime_utc": "2023-04-01T13:20:00",
+        "actual_generation_kw": 1.106028
+      },
+      {
+        "datetime_utc": "2023-04-01T13:25:00",
+        "actual_generation_kw": 1.3012439999999998
+      },
+      {
+        "datetime_utc": "2023-04-01T13:30:00",
+        "actual_generation_kw": 2.2306440000000003
+      },
+      {
+        "datetime_utc": "2023-04-01T13:35:00",
+        "actual_generation_kw": 1.1566007999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T13:40:00",
+        "actual_generation_kw": 1.49982
+      },
+      {
+        "datetime_utc": "2023-04-01T13:45:00",
+        "actual_generation_kw": 1.663596
+      },
+      {
+        "datetime_utc": "2023-04-01T13:50:00",
+        "actual_generation_kw": 1.780992
+      },
+      {
+        "datetime_utc": "2023-04-01T13:55:00",
+        "actual_generation_kw": 0.9207288000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T14:00:00",
+        "actual_generation_kw": 0.7668048
+      },
+      {
+        "datetime_utc": "2023-04-01T14:05:00",
+        "actual_generation_kw": 1.0681619999999998
+      },
+      {
+        "datetime_utc": "2023-04-01T14:10:00",
+        "actual_generation_kw": 1.9366799999999997
+      },
+      {
+        "datetime_utc": "2023-04-01T14:15:00",
+        "actual_generation_kw": 1.302984
+      },
+      {
+        "datetime_utc": "2023-04-01T14:20:00",
+        "actual_generation_kw": 2.0841239999999996
+      },
+      {
+        "datetime_utc": "2023-04-01T14:25:00",
+        "actual_generation_kw": 1.9960920000000002
+      },
+      {
+        "datetime_utc": "2023-04-01T14:30:00",
+        "actual_generation_kw": 3.213168
+      },
+      {
+        "datetime_utc": "2023-04-01T14:35:00",
+        "actual_generation_kw": 2.37762
+      },
+      {
+        "datetime_utc": "2023-04-01T14:40:00",
+        "actual_generation_kw": 0.7167348
+      },
+      {
+        "datetime_utc": "2023-04-01T14:45:00",
+        "actual_generation_kw": 0.5110452
+      },
+      {
+        "datetime_utc": "2023-04-01T14:50:00",
+        "actual_generation_kw": 2.414724
+      },
+      {
+        "datetime_utc": "2023-04-01T14:55:00",
+        "actual_generation_kw": 3.076032
+      },
+      {
+        "datetime_utc": "2023-04-01T15:00:00",
+        "actual_generation_kw": 1.638288
+      },
+      {
+        "datetime_utc": "2023-04-01T15:05:00",
+        "actual_generation_kw": 0.6614844000000001
+      },
+      {
+        "datetime_utc": "2023-04-01T15:10:00",
+        "actual_generation_kw": 0.45221760000000005
+      },
+      {
+        "datetime_utc": "2023-04-01T15:15:00",
+        "actual_generation_kw": 0.3614088
+      },
+      {
+        "datetime_utc": "2023-04-01T15:20:00",
+        "actual_generation_kw": 0.7038492
+      },
+      {
+        "datetime_utc": "2023-04-01T15:25:00",
+        "actual_generation_kw": 1.777176
+      },
+      {
+        "datetime_utc": "2023-04-01T15:30:00",
+        "actual_generation_kw": 2.075964
+      },
+      {
+        "datetime_utc": "2023-04-01T15:35:00",
+        "actual_generation_kw": 2.00778
+      },
+      {
+        "datetime_utc": "2023-04-01T15:40:00",
+        "actual_generation_kw": 1.1377332
+      },
+      {
+        "datetime_utc": "2023-04-01T15:45:00",
+        "actual_generation_kw": 0.64023
+      },
+      {
+        "datetime_utc": "2023-04-01T15:50:00",
+        "actual_generation_kw": 0.5910504
+      },
+      {
+        "datetime_utc": "2023-04-01T15:55:00",
+        "actual_generation_kw": 0.5075604
+      },
+      {
+        "datetime_utc": "2023-04-01T16:00:00",
+        "actual_generation_kw": 0.4493988
+      },
+      {
+        "datetime_utc": "2023-04-01T16:05:00",
+        "actual_generation_kw": 0.5159123999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T16:10:00",
+        "actual_generation_kw": 0.746154
+      },
+      {
+        "datetime_utc": "2023-04-01T16:15:00",
+        "actual_generation_kw": 0.6940512
+      },
+      {
+        "datetime_utc": "2023-04-01T16:20:00",
+        "actual_generation_kw": 0.5005788
+      },
+      {
+        "datetime_utc": "2023-04-01T16:25:00",
+        "actual_generation_kw": 0.5017764
+      },
+      {
+        "datetime_utc": "2023-04-01T16:30:00",
+        "actual_generation_kw": 1.2027480000000002
+      },
+      {
+        "datetime_utc": "2023-04-01T16:35:00",
+        "actual_generation_kw": 1.5707639999999998
+      },
+      {
+        "datetime_utc": "2023-04-01T16:40:00",
+        "actual_generation_kw": 1.402992
+      },
+      {
+        "datetime_utc": "2023-04-01T16:45:00",
+        "actual_generation_kw": 1.3458720000000002
+      },
+      {
+        "datetime_utc": "2023-04-01T16:50:00",
+        "actual_generation_kw": 1.204812
+      },
+      {
+        "datetime_utc": "2023-04-01T16:55:00",
+        "actual_generation_kw": 0.9159264
+      },
+      {
+        "datetime_utc": "2023-04-01T17:00:00",
+        "actual_generation_kw": 0.5339615999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T17:05:00",
+        "actual_generation_kw": 0.19140120000000002
+      },
+      {
+        "datetime_utc": "2023-04-01T17:10:00",
+        "actual_generation_kw": 0.5031947999999999
+      },
+      {
+        "datetime_utc": "2023-04-01T17:15:00",
+        "actual_generation_kw": 0.33532439999999997
+      },
+      {
+        "datetime_utc": "2023-04-01T17:20:00",
+        "actual_generation_kw": 0.38997000000000004
+      },
+      {
+        "datetime_utc": "2023-04-01T17:25:00",
+        "actual_generation_kw": 0.35658839999999997
+      },
+      {
+        "datetime_utc": "2023-04-01T17:30:00",
+        "actual_generation_kw": 0.2162148
+      },
+      {
+        "datetime_utc": "2023-04-01T17:35:00",
+        "actual_generation_kw": 0.1264524
+      },
+      {
+        "datetime_utc": "2023-04-01T17:40:00",
+        "actual_generation_kw": 0.09779628
+      },
+      {
+        "datetime_utc": "2023-04-01T17:45:00",
+        "actual_generation_kw": 0.1357692
+      },
+      {
+        "datetime_utc": "2023-04-01T17:50:00",
+        "actual_generation_kw": 0.02262816
+      },
+      {
+        "datetime_utc": "2023-04-01T17:55:00",
+        "actual_generation_kw": 0.05203044
+      },
+      {
+        "datetime_utc": "2023-04-01T18:00:00",
+        "actual_generation_kw": 0.075978
+      },
+      {
+        "datetime_utc": "2023-04-01T18:05:00",
+        "actual_generation_kw": 0.04761
+      },
+      {
+        "datetime_utc": "2023-04-01T18:10:00",
+        "actual_generation_kw": 0.02844732
+      },
+      {
+        "datetime_utc": "2023-04-01T18:15:00",
+        "actual_generation_kw": 0.02204148
+      },
+      {
+        "datetime_utc": "2023-04-01T18:20:00",
+        "actual_generation_kw": 0.014402280000000002
+      },
+      {
+        "datetime_utc": "2023-04-01T18:25:00",
+        "actual_generation_kw": 0.0021219360000000005
+      },
+      { "datetime_utc": "2023-04-01T18:30:00", "actual_generation_kw": 0.0 },
+      {
+        "datetime_utc": "2023-04-01T18:35:00",
+        "actual_generation_kw": 7.419492000000001e-7
+      },
+      { "datetime_utc": "2023-04-01T18:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T18:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T18:50:00", "actual_generation_kw": 0.0 },
+      {
+        "datetime_utc": "2023-04-01T18:55:00",
+        "actual_generation_kw": 1.393416e-12
+      },
+      { "datetime_utc": "2023-04-01T19:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T19:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:30:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:35:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:40:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:45:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:50:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T20:55:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T21:00:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T21:05:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T21:10:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T21:15:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T21:20:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T21:25:00", "actual_generation_kw": 0.0 },
+      { "datetime_utc": "2023-04-01T21:30:00", "actual_generation_kw": 0.0 }
     ]
   }
 ]
