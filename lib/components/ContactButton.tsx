@@ -39,7 +39,7 @@ const ContactButton = () => {
       />
 
       <div
-        className={`absolute right-0 z-10 mt-[10px] w-[191px] origin-top-right rounded-lg border-[.5px] border-ocf-gray-300 bg-ocf-black-900 transition-all ${
+        className={`absolute right-0 z-10 mt-[10px] w-[191px] origin-top-right overflow-hidden rounded-lg border-[.5px] border-ocf-gray-300 bg-ocf-black-900 transition-all ${
           displayPopup
             ? 'pointer-events-auto scale-100 opacity-100'
             : 'pointer-events-none scale-50 opacity-0'
