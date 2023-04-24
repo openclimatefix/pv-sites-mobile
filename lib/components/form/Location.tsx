@@ -31,7 +31,7 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
   return (
     <>
       <div
-        className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 md:h-[calc(75vh)] md:py-0"
+        className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 md:h-[85vh] md:py-0"
         id="rootDiv"
       >
         <div
@@ -52,7 +52,7 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
             canEdit={true}
           />
         </div>
-        <div className="mb-10 flex h-14 w-full justify-center self-center md:hidden">
+        <div className="mb-3 mt-3 flex justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-end">
           <Button
             disabled={!isSubmissionEnabled}
             onClick={onClick}

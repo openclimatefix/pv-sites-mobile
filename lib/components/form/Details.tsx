@@ -55,7 +55,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
       <div className="flex w-4/5 flex-row self-center md:w-9/12">
         <div className="hidden flex-1 px-8 md:block">
-          <h1 className="mt-2 text-4xl font-semibold dark:text-ocf-gray md:text-3xl md:font-medium">
+          <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
           <div className="h-full w-full" onClick={lastPageCallback}>
