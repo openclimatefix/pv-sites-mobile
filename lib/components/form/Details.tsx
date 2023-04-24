@@ -9,6 +9,7 @@ import { useFormContext } from '~/lib/form/context';
 import { Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
+import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -54,11 +55,11 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
   return (
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
       <div className="flex w-4/5 flex-row self-center md:w-9/12">
-        <div className="hidden flex-1 px-8 md:block">
-          <h1 className="mt-2 text-4xl font-semibold dark:text-ocf-gray md:text-3xl md:font-medium">
+        <div className="hidden flex-1 flex-col px-8 md:flex">
+          <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
-          <div className="h-full w-full" onClick={lastPageCallback}>
+          <div className="w-full flex-1" onClick={lastPageCallback}>
             <LocationInput
               shouldZoomIntoOriginal={true}
               initialZoom={16}
@@ -181,9 +182,13 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
       </div>
       <Modal show={showModal} setShow={setShowModal} />
       <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
-        <Button disabled={false} onClick={lastPageCallback} variant="solid">
+        <button
+          onClick={lastPageCallback}
+          className="flex items-center text-ocf-yellow"
+        >
+          <ChevronLeftIcon width="24" height="24" />
           Back
-        </Button>
+        </button>
         <Button form="panel-form" disabled={didSubmit} variant="solid">
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           Finish
