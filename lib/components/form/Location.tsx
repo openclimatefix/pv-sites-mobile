@@ -1,6 +1,6 @@
 import { useState, FC } from 'react';
 import Button from '~/lib/components/Button';
-import LocationInput from '~/lib/components/LocationInput';
+import LocationInput from '~/lib/components/form/LocationInput';
 
 import { useFormContext } from '~/lib/form/context';
 import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
@@ -34,12 +34,11 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
         className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 md:h-[calc(75vh)] md:py-0"
         id="rootDiv"
       >
-        <div className="hidden h-8 flex-col justify-end md:flex short:h-0"></div>
         <div
           className="h-4/6 w-[95%] self-center md:h-full md:w-1/2 md:min-w-[750px]"
           id="mapboxInputWrapper"
         >
-          <h1 className="pl-3 text-xl font-medium text-ocf-gray md:pl-0 md:text-3xl">
+          <h1 className="text-xl font-semibold text-ocf-gray md:mt-7 md:text-2xl">
             Where is your solar panel located?
           </h1>
           <LocationInput
@@ -53,7 +52,6 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
             canEdit={true}
           />
         </div>
-        {/* next button for mobile */}
         <div className="mb-10 flex h-14 w-full justify-center self-center md:hidden">
           <Button
             disabled={!isSubmissionEnabled}
@@ -63,16 +61,6 @@ const Location: FC<Props> = ({ nextPageCallback, longitude, latitude }) => {
             Next
           </Button>
         </div>
-      </div>
-      {/* next button for desktop */}
-      <div className="absolute bottom-0 left-1/2 hidden h-14 w-3/4 -translate-x-1/2 md:flex md:flex-row md:justify-end">
-        <Button
-          disabled={!isSubmissionEnabled}
-          onClick={nextPageCallback}
-          variant="solid"
-        >
-          Next
-        </Button>
       </div>
     </>
   );

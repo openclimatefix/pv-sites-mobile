@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import Input from '~/lib/components/Input';
+import Input from '~/lib/components/form/Input';
 import Modal from '~/lib/components/Modal';
 import Spinner from '~/lib/components/Spinner';
 
@@ -8,7 +8,7 @@ import Button from '~/lib/components/Button';
 import { useFormContext } from '~/lib/form/context';
 import { Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
-import LocationInput from '../LocationInput';
+import LocationInput from './LocationInput';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -72,7 +72,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           </div>
           <button
             onClick={lastPageCallback}
-            // className="md:hidden mt-8 font-bold text-xl peer-invalid:bg-ocf-gray-300 transition duration-150 bg-ocf-yellow dark:disabled:bg-ocf-gray-300 dark:bg-ocf-yellow shadow h-14 border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 rounded-md px-5 py-2.5 text-center inline-flex items-center justify-center mr-2 mb-2"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
             Back
           </button>

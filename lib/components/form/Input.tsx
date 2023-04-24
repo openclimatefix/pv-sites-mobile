@@ -40,7 +40,7 @@ const Input: FC<InputProps> = ({
         value={value}
         onChange={onChange}
         {...inputProps}
-        className="peer block h-14 w-full rounded-lg border bg-ocf-gray-50 p-2.5 text-center text-lg text-ocf-gray-700 outline-none ring-ocf-yellow invalid:ring-ocf-orange-800 placeholder-shown:invalid:ring-ocf-yellow  focus:ring-1 dark:border-ocf-black-500 dark:bg-ocf-black-500 dark:text-ocf-gray-600 dark:placeholder-ocf-gray-800 md:text-left"
+        className="peer block h-14 w-full rounded-lg border bg-ocf-gray-50 p-2.5 text-center text-lg text-ocf-gray-700 outline-none invalid:ring-1 invalid:ring-ocf-orange-800 placeholder-shown:invalid:ring-0 focus:ring-1 focus:ring-ocf-yellow placeholder-shown:focus:ring-1 dark:border-ocf-black-500 dark:bg-ocf-black-500 dark:text-ocf-gray-600 dark:placeholder-ocf-gray-800 md:text-left"
       />
       {help && (
         <button

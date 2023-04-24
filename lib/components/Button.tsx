@@ -1,5 +1,4 @@
 import { FC, PropsWithChildren } from 'react';
-import useMediaQuery from '~/lib/hooks/useMediaQuery';
 
 interface Props {
   form?: string;

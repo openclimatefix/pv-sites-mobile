@@ -169,7 +169,43 @@ const LocationInput: FC<LocationInputProps> = ({
 
           // don't display anything in suggestions
           geocoder.setRenderFunction(() => '<div class="hidden-suggestion"/>');
-          geocoder.query(`${savedLat}, ${savedLng}`);
+          (geocoder as any)
+            ._geocode(`${savedLat}, ${savedLng}`)
+            .then((response: any) => {
+              const results = response.body;
+              if (!results.features.length) return;
+              const result = results.features[0];
+              (geocoder as any)._typeahead.selected = result;
+              (geocoder as any)._inputEl.value = result.place_name;
+              const selected = (geocoder as any)._typeahead.selected;
+              if (
+                selected &&
+                JSON.stringify(selected) !== (geocoder as any).lastSelected
+              ) {
+                (geocoder as any)._hideClearButton();
+                if ((geocoder as any).options.flyTo) {
+                  (geocoder as any)._fly(selected);
+                }
+                if (
+                  (geocoder as any).options.marker &&
+                  (geocoder as any)._mapboxgl
+                ) {
+                  (geocoder as any)._handleMarker(selected);
+                }
+
+                // After selecting a feature, re-focus the textarea and set
+                // cursor at start.
+                (geocoder as any)._inputEl.scrollLeft = 0;
+                (geocoder as any).lastSelected = JSON.stringify(selected);
+                (geocoder as any)._eventEmitter.emit('result', {
+                  result: selected,
+                });
+                (geocoder as any).eventManager.select(
+                  selected,
+                  geocoder as any
+                );
+              }
+            });
 
           if (popup === null && map.current && canEdit) {
             popup = new mapboxgl.Popup({

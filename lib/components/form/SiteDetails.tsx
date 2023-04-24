@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import Location from '~/lib/components/form/Location';
-import Details from './form/Details';
-import { NowcastingLogo } from './icons/NavbarIcons';
+import { useSites } from '../../sites';
+import { Site } from '../../types';
+import { useIsMobile } from '../../utils';
+import { NowcastingLogo } from '../icons/NavbarIcons';
 import BackButton from './BackButton';
-import { useSiteData, useSites } from '../sites';
-import { Site } from '../types';
-import { useIsMobile } from '../utils';
+import Details from './Details';
 
 enum Page {
   Details = 'Details',
@@ -67,7 +67,9 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
       <div
         className={`flex h-[var(--nav-height)] w-full flex-row justify-between bg-ocf-black px-5 md:justify-center md:py-2`}
       >
-        {sites?.length && <BackButton onClick={lastPageCallback} />}
+        {sites?.length && page !== Page.Location && (
+          <BackButton onClick={lastPageCallback} />
+        )}
         <NowcastingLogo />
         {sites?.length && <div className="h-10 w-10 flex-1 md:hidden" />}
       </div>

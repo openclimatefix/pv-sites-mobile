@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import SiteDetails from '~/lib/components/SiteDetails';
+import SiteDetails from '~/lib/components/form/SiteDetails';
 import { withSites } from '~/lib/sites';
 
 const NewSiteDetails: FC = () => {

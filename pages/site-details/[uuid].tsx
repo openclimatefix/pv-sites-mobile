@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import SiteDetails from '../../lib/components/SiteDetails';
+import SiteDetails from '../../lib/components/form/SiteDetails';
 import { useRouter } from 'next/router';
 import { withSites } from '~/lib/sites';
 import { Site } from '~/lib/types';

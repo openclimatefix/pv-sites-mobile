@@ -38,37 +38,31 @@ const ContactButton = () => {
         }
       />
 
-      {displayPopup && (
-        <div className="absolute right-0 z-10 mt-[10px] h-[103px] w-[191px] rounded-lg border-[.5px] border-ocf-gray-300 bg-ocf-black-900">
-          <div className="flex items-center justify-evenly border-b-[.5px] border-ocf-gray-800 py-2">
-            <ProfilePicture user={user} />
-            <div className="flex-col justify-center gap-3">
-              <div className="text-[12px] text-white">{user?.name}</div>
-              <div className="text-[10px] text-white">{user?.email}</div>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <Link
-              href={`/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`}
-            >
-              <a>
-                <div
-                  className={`flex transform items-center rounded-md px-4 py-2 text-gray-600 transition-colors hover:bg-ocf-gray-1000 hover:text-gray-700`}
-                >
-                  <div className="h-[18px] w-[20px]">
-                    <LogoutIcon />
-                  </div>
-                  <span
-                    className={`align-center ml-[40px] mt-[6px] flex-1 text-[12px] font-medium text-white`}
-                  >
-                    Sign Out
-                  </span>
-                </div>
-              </a>
-            </Link>
+      <div
+        className={`pointer-events-none absolute right-0 z-10 mt-[10px] w-[191px] origin-top-right scale-50 rounded-lg border-[.5px] border-ocf-gray-300 bg-ocf-black-900 opacity-0 transition-all ${
+          displayPopup ? 'pointer-events-auto scale-100 opacity-100' : ''
+        }`}
+      >
+        <div className="flex items-center justify-evenly border-b-[.5px] border-ocf-gray-800 py-4">
+          <ProfilePicture user={user} />
+          <div className="flex-col justify-center gap-3">
+            <div className="text-[12px] text-white">{user?.name}</div>
+            <div className="text-[10px] text-white">{user?.email}</div>
           </div>
         </div>
-      )}
+        <Link
+          href={`/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`}
+        >
+          <a
+            className={`flex items-center justify-center gap-5 px-4 py-3 text-gray-300 transition-all hover:bg-ocf-gray-1000`}
+          >
+            <div className="h-6 w-6">
+              <LogoutIcon />
+            </div>
+            Sign Out
+          </a>
+        </Link>
+      </div>
     </div>
   );
 };
