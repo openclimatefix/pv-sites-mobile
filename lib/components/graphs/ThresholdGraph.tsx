@@ -80,6 +80,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
         graphData,
         currentTime.toDate()
       );
+
       if (
         index !== currentTimeIndex ||
         (currentTimeIndex === 0 &&
@@ -281,7 +282,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
           </div>
         </div>
 
-        {!isLoading && graphData && (
+        {!isLoading && graphableData && (
           <ResponsiveContainer
             className="mt-[15px] touch-pan-y touch-pinch-zoom"
             width="100%"
@@ -331,6 +332,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
                 strokeDasharray="2"
                 fill="url(#thresholdGraphArea)"
                 onAnimationEnd={() => setTimeEnabled(true)}
+                isAnimationActive={!timeEnabled}
               >
                 <LabelList
                   dataKey="generation_kw"
