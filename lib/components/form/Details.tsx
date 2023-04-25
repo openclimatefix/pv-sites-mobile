@@ -25,10 +25,16 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: () => void;
+  showLocationMobile: boolean;
   site?: Site;
 }
 
-const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
+const Details: FC<Props> = ({
+  lastPageCallback,
+  nextPageCallback,
+  showLocationMobile,
+  site,
+}) => {
   const { siteCoordinates, setFormData, panelDetails, postPanelData } =
     useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -41,7 +47,6 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
   panelDetails.tilt = site?.tilt?.toString() ?? panelDetails.tilt;
   panelDetails.capacity =
     site?.installed_capacity_kw?.toString() ?? panelDetails.capacity;
-
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -79,19 +84,31 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          <div className="flex flex-col md:hidden">
+          <button
+            type="button"
+            className="flex flex-col md:hidden"
+            onClick={() => lastPageCallback()}
+          >
             {/* TODO: ADD LOCATION BUTTON HERE */}
-            <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
-              {' '}
-              Location
-            </label>
-            <button
-              type="button"
-              className="block h-14 w-full rounded-lg border border-ocf-black-500 bg-ocf-black-500 p-2.5  text-center text-lg text-ocf-gray-600 focus:ring-ocf-yellow md:text-left"
-            >
-              Button Text
-            </button>
-          </div>
+            {showLocationMobile && (
+              <>
+                <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
+                  {' '}
+                  Location
+                </label>
+                <LocationInput
+                  shouldZoomIntoOriginal={true}
+                  initialZoom={16}
+                  originalLat={siteCoordinates.latitude}
+                  originalLng={siteCoordinates.longitude}
+                  setIsSubmissionEnabled={() => {}}
+                  setMapCoordinates={() => {}}
+                  zoomLevelThreshold={zoomLevelThreshold}
+                  canEdit={false}
+                />
+              </>
+            )}
+          </button>
           <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"

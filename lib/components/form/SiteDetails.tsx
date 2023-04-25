@@ -46,6 +46,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
           <Details
             lastPageCallback={lastPageCallback}
             nextPageCallback={nextPageCallback}
+            showLocationMobile={true}
             site={site}
           />
         );

@@ -86,6 +86,7 @@ export interface PanelDetails {
   direction: string;
   tilt: string;
   capacity: string;
+  address: string;
 }
 
 export type FormPostData = {
