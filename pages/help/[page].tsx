@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LinkProps } from 'next/link';
 
-const pages: any = {
+export const pages: any = {
   'add-site-location': addSiteLocation,
   'help-topic-2': helpTopic2,
   'help-topic-3': helpTopic3,
