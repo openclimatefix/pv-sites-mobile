@@ -1,13 +1,28 @@
 import { FC } from 'react';
-import { withSites } from '../../lib/utils';
-import SiteDetails from '../../components/SiteDetails';
+import SiteDetails from '../../lib/components/form/SiteDetails';
 import { useRouter } from 'next/router';
+import { withSites } from '~/lib/sites';
+import { Site } from '~/lib/types';
 
-const NewSiteDetails: FC = () => {
+interface NewSiteDetailsProps {
+  sites: Site[];
+}
+
+const NewSiteDetails: FC<NewSiteDetailsProps> = ({ sites }) => {
   const router = useRouter();
   const { uuid } = router.query;
-  return <SiteDetails uuid={uuid as string} />;
+  return <SiteDetails site={sites.find((site) => site.site_uuid === uuid)!} />;
 };
 
+export const getServerSideProps = withSites({
+  async getServerSideProps(ctx) {
+    const { sites, query } = ctx;
+    if (!sites.map((site) => site.site_uuid).includes(query.uuid as string)) {
+      return {
+        notFound: true,
+      };
+    }
+  },
+});
+
 export default NewSiteDetails;
-export const getServerSideProps = withSites();

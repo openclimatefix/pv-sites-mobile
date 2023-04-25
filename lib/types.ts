@@ -15,10 +15,6 @@ export interface Site {
   updated_utc: string;
 }
 
-export interface SiteList {
-  site_list: Site[];
-}
-
 export interface GenerationDataPoint {
   datetime_utc: Date;
   generation_kw: number;
@@ -82,7 +78,7 @@ export interface Form {
   panelDetails: PanelDetails;
   setFormData: ({ siteName, direction, tilt, capacity }: PanelDetails) => void;
   setSiteCoordinates: ({ latitude, longitude }: LatitudeLongitude) => void;
-  postPanelData: () => void;
+  postPanelData: () => Promise<void>;
 }
 
 export interface PanelDetails {

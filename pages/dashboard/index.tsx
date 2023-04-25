@@ -1,27 +1,26 @@
 import { FC } from 'react';
-import Dashboard from '~/components/Dashboard';
-import { SiteList } from '~/lib/types';
-import { withSites } from '~/lib/utils';
+import Dashboard from '~/lib/components/Dashboard';
+import { withSites } from '~/lib/sites';
+import { Site } from '~/lib/types';
 
 interface AggregateDashboardProps {
-  siteList: SiteList;
+  sites: Site[];
 }
 
-const AggregateDashboard: FC<AggregateDashboardProps> = ({ siteList }) => {
-  return <Dashboard siteUUIDs={siteList} />;
+const AggregateDashboard: FC<AggregateDashboardProps> = ({ sites }) => {
+  return <Dashboard sites={sites} />;
 };
 
 export default AggregateDashboard;
 export const getServerSideProps = withSites({
-  async getServerSideProps({ siteList }) {
-    if (siteList.site_list.length === 1) {
+  async getServerSideProps({ sites }) {
+    if (sites.length === 1) {
       return {
         redirect: {
           permanent: false,
-          destination: `/dashboard/${siteList.site_list[0].site_uuid}`,
+          destination: `/dashboard/${sites[0].site_uuid}`,
         },
       };
     }
-    return { props: { siteList } };
   },
 });

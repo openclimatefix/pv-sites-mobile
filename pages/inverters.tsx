@@ -1,5 +1,5 @@
-import { withSites } from '~/lib/utils';
-import LinkInverters from '~/components/form/LinkInverters';
+import LinkInverters from '~/lib/components/form/LinkInverters';
+import { withSites } from '~/lib/sites';
 
 const Inverters = () => {
   return <LinkInverters />;

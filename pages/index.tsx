@@ -1,13 +1,12 @@
-import { withSites } from '~/lib/utils';
+import { withSites } from '~/lib/sites';
 
 export default function Index() {
   return null;
 }
 
 export const getServerSideProps = withSites({
-  async getServerSideProps({ siteList }) {
-    const destination =
-      siteList.site_list.length === 0 ? '/form/location' : '/dashboard';
+  async getServerSideProps({ sites }) {
+    const destination = sites.length === 0 ? '/form/location' : '/dashboard';
 
     return {
       redirect: {
