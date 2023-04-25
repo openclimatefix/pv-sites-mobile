@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Inverter } from '../enode';
+import { Inverter } from '../types';
 
 interface InverterCardProps {
   inverter: Inverter;

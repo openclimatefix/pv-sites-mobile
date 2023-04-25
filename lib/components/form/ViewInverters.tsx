@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { InverterCard } from '../InverterCard';
 import useSWR from 'swr';
-import { Inverters } from '~/lib/enode';
+import { Inverters } from '~/lib/types';
 interface ViewInvertersProps {
   siteUUID: string;
   isSelectMode: boolean;
@@ -48,7 +48,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           </h1>
         )}
         <div className="grid w-full grid-cols-1 items-center justify-center gap-4 md:mt-2 md:grid-cols-2">
-          {inverters?.map((inverter) => (
+          {inverters?.inverters.map((inverter) => (
             <InverterCard
               inverter={inverter}
               selectMode={isSelectMode}
