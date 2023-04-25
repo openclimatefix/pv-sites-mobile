@@ -9,22 +9,22 @@ const Help = () => {
       <ReactMarkdown
         components={{
           h1: ({ node, ...props }) => (
-            <div
-              className="font-semibold text-2xl text-ocf-yellow"
+            <h1
+              className="font-semibold text-2xl text-ocf-yellow pb-2.5"
               {...props}
             />
           ),
           h2: ({ node, ...props }) => (
-            <div className="font-semibold text-xl text-ocf-yellow" {...props} />
+            <h2 className="font-semibold text-xl text-ocf-yellow pt-5 pb-2.5" {...props} />
           ),
           p: ({ node, ...props }) => (
-            <div className="text-xl text-white" {...props} />
+            <p className="text-xl text-white pb-1.5" {...props} />
           ),
           ul: ({ node, ...props }) => (
-            <ul className="list-disc text-xl text-white" {...props} />
+            <ul className="list-disc text-xl text-white pb-1.5" {...props} />
           ),
           ol: ({ node, ...props }) => (
-            <ul className="list-decimal text-xl text-white" {...props} />
+            <ol className="list-decimal text-xl text-white pb-1.5" {...props} />
           ),
         }}
       >

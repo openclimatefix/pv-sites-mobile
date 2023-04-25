@@ -1,4 +1,4 @@
-# Help Page: Adding a Site for Solar Energy Forecasting
+# Adding a Site for Solar Energy Forecasting
 
 Adding a site for solar energy forecasting is a crucial step in using our web app to generate accurate and relevant forecast data. However, we understand that this can sometimes be a challenging process. Here are some common issues users may encounter when adding a site, and tips for how to overcome them:
 
