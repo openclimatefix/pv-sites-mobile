@@ -56,7 +56,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
       <div className="flex w-4/5 flex-row self-center md:w-9/12">
         <div className="hidden flex-1 flex-col px-8 md:flex">
-          <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-3xl">
+          <h1 className="mt-2 text-2xl font-semibold text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
           <div className="w-full flex-1" onClick={lastPageCallback}>
@@ -73,12 +73,25 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           </div>
           <button
             onClick={lastPageCallback}
-            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:bg-ocf-gray-300 peer-invalid:bg-ocf-gray-300 md:hidden"
           >
             Back
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
+          <div className="flex flex-col md:hidden">
+            {/* TODO: ADD LOCATION BUTTON HERE */}
+            <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
+              {' '}
+              Location
+            </label>
+            <button
+              type="button"
+              className="block h-14 w-full rounded-lg border border-ocf-black-500 bg-ocf-black-500 p-2.5  text-center text-lg text-ocf-gray-600 focus:ring-ocf-yellow md:text-left"
+            >
+              Button Text
+            </button>
+          </div>
           <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
@@ -172,7 +185,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           />
           <button
             disabled={didSubmit}
-            className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:bg-ocf-gray-300 peer-invalid:bg-ocf-gray-300 md:hidden"
           >
             {didSubmit && <Spinner width={5} height={5} margin={4} />}
             Finish

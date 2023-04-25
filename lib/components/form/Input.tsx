@@ -24,12 +24,12 @@ const Input: FC<InputProps> = ({
   return (
     <>
       <label
-        className="mt-8 block pb-1 text-lg font-[600] dark:text-ocf-gray short:mt-4"
+        className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4"
         htmlFor={id}
       >
         {label}
         {description && (
-          <span className="block pt-1 text-xs font-normal text-ocf-gray-900 dark:text-ocf-gray-800">
+          <span className="block pt-1 text-xs font-normal text-ocf-gray-800">
             {description}
           </span>
         )}
@@ -40,7 +40,7 @@ const Input: FC<InputProps> = ({
         value={value}
         onChange={onChange}
         {...inputProps}
-        className="peer block h-14 w-full rounded-lg border bg-ocf-gray-50 p-2.5 text-center text-lg text-ocf-gray-700 outline-none invalid:ring-1 invalid:ring-ocf-orange-800 placeholder-shown:invalid:ring-0 focus:ring-1 focus:ring-ocf-yellow placeholder-shown:focus:ring-1 dark:border-ocf-black-500 dark:bg-ocf-black-500 dark:text-ocf-gray-600 dark:placeholder-ocf-gray-800 md:text-left"
+        className="peer block h-14 w-full rounded-lg border border-ocf-black-500 bg-ocf-black-500 p-2.5 text-center text-lg text-ocf-gray-700 placeholder-ocf-gray-800 outline-none invalid:ring-1 invalid:ring-ocf-orange-800 placeholder-shown:invalid:ring-0 focus:ring-1 focus:ring-ocf-yellow placeholder-shown:focus:ring-1 md:text-left"
       />
       {help && (
         <button
