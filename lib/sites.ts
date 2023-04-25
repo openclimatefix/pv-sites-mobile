@@ -7,7 +7,7 @@ import {
   manyClearskyDataFetcher,
   manyForecastDataFetcher,
   sitesFetcher,
-  invertersFetcher
+  invertersFetcher,
 } from './api';
 import { ClearSkyData, ForecastData, GenerationDataPoint, Site } from './types';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
@@ -93,7 +93,8 @@ export function useSiteAggregation(sites: Site[]) {
     error: manyForecastError,
     isLoading: isManyForecastLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
     }/sites/pv_forecast?site_uuids=${siteUUIDs.join(',')}`,
     manyForecastDataFetcher
   );
@@ -103,7 +104,8 @@ export function useSiteAggregation(sites: Site[]) {
     error: manyClearskyError,
     isLoading: isManyClearskyLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
     }/sites/clearsky_estimate?site_uuids=${siteUUIDs.join(',')}`,
     manyClearskyDataFetcher
   );
@@ -113,7 +115,8 @@ export function useSiteAggregation(sites: Site[]) {
     error: manyActualError,
     isLoading: isManyActualLoading,
   } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
     }/sites/pv_actual?site_uuids=${siteUUIDs.join(',')}`,
     manyActualsFetcher
   );
