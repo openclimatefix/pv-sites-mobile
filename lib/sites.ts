@@ -7,9 +7,14 @@ import {
   manyClearskyDataFetcher,
   manyForecastDataFetcher,
   sitesFetcher,
-  invertersFetcher,
 } from './api';
-import { ClearSkyData, ForecastData, GenerationDataPoint, Site } from './types';
+import {
+  ClearSkyData,
+  ForecastData,
+  GenerationDataPoint,
+  Site,
+  Inverters,
+} from './types';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import {
   GetAccessTokenResult,
@@ -53,9 +58,8 @@ export function useSiteData(siteUUID: string) {
     actualsFetcher
   );
 
-  const { data: inverterData, error: inverterError } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/inverters`,
-    invertersFetcher
+  const { data: inverterData, error: inverterError } = useSWR<Inverters>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/inverters`
   );
 
   const error = AggregateError([

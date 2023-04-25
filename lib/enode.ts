@@ -16,35 +16,6 @@ export async function clearUsers(userIDs: string[]) {
   }
 }
 
-export type Inverter = {
-  id: string;
-  vendor: string;
-  chargingLocationId: string | null;
-  lastSeen: string;
-  isReachable: boolean;
-  productionState: {
-    productionRate: number | null;
-    isProducing: boolean | null;
-    totalLifetimeProduction: number | null;
-    lastUpdated: string | null;
-  };
-  information: {
-    id: string;
-    brand: string;
-    model: string;
-    siteName: string;
-    installationDate: string;
-  };
-  location: {
-    longitude: number | null;
-    latitude: number | null;
-  };
-};
-
-export type Inverters = {
-  inverters: Inverter[];
-};
-
 export async function getInverters(userID: string) {
   const inverterIDs = (await enodeFetch('/inverters', {
     method: 'GET',
