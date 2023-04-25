@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 import {
   Area,
@@ -27,12 +27,12 @@ import {
 
 import {
   generationDataOverDateRange,
+  getClosestForecastIndex,
   getCurrentTimeGenerationIndex,
 } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
-import { getClosestForecastIndex } from '~/lib/generation';
 
 interface ThresholdGraphProps {
   sites: Site[];
