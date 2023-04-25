@@ -84,31 +84,27 @@ const Details: FC<Props> = ({
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          <button
-            type="button"
-            className="flex flex-col md:hidden"
-            onClick={() => lastPageCallback()}
-          >
-            {/* TODO: ADD LOCATION BUTTON HERE */}
-            {showLocationMobile && (
-              <>
-                <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
-                  {' '}
-                  Location
-                </label>
-                <LocationInput
-                  shouldZoomIntoOriginal={true}
-                  initialZoom={16}
-                  originalLat={siteCoordinates.latitude}
-                  originalLng={siteCoordinates.longitude}
-                  setIsSubmissionEnabled={() => {}}
-                  setMapCoordinates={() => {}}
-                  zoomLevelThreshold={zoomLevelThreshold}
-                  canEdit={false}
-                />
-              </>
-            )}
-          </button>
+          {showLocationMobile && (
+            <div
+              className="flex flex-col md:hidden"
+              onClick={() => lastPageCallback()}
+            >
+              <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
+                {' '}
+                Location
+              </label>
+              <LocationInput
+                shouldZoomIntoOriginal={true}
+                initialZoom={16}
+                originalLat={siteCoordinates.latitude}
+                originalLng={siteCoordinates.longitude}
+                setIsSubmissionEnabled={() => {}}
+                setMapCoordinates={() => {}}
+                zoomLevelThreshold={zoomLevelThreshold}
+                canEdit={false}
+              />
+            </div>
+          )}
           <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
