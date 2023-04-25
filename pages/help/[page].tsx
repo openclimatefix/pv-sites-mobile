@@ -52,6 +52,7 @@ const Help = () => {
         {Object.keys(pages).map((page) => {
           return (
             <MenuLink
+              key={page}
               linkProps={{ href: `/help/${page}` }}
               label={page
                 .split('-')
