@@ -59,6 +59,8 @@ export function addTimePoint(
     return generationDataInterpolated;
   }
 
+  console.error(generationData);
+
   const forecastValuePeriod = dayjs
     .duration(
       generationData[1].datetime_utc.getTime() -
@@ -76,8 +78,7 @@ export function addTimePoint(
     return generationDataInterpolated;
   }
 
-  if (closestTime.getTime() > date.getTime()) {
-    forecastValueIndex--;
+  if (closestTime.getTime() > date.getTime() && forecastValueIndex > 0) {
     closestTime = generationData[forecastValueIndex].datetime_utc;
   }
 

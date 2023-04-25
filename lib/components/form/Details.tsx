@@ -100,7 +100,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           />
           <Input
             id="solar-panel-direction"
-            label="Solar panel direction"
+            label="Solar array direction"
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
             value={panelDetails.direction}
             help="I don't know"
