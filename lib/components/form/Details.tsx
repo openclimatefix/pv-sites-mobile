@@ -6,10 +6,11 @@ import Spinner from '~/lib/components/Spinner';
 
 import Button from '~/lib/components/Button';
 import { useFormContext } from '~/lib/form/context';
-import { Site } from '~/lib/types';
+import { FormPostData, Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
+import { getAuthenticatedRequestOptions } from '~/lib/swr';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -22,6 +23,24 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
   }
 };
 
+async function sendRequest(
+  url: string,
+  { arg }: { arg: FormPostData },
+  method: 'POST' | 'PUT' = 'POST'
+) {
+  const options = await getAuthenticatedRequestOptions(url);
+
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(arg),
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+  });
+}
+
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: () => void;
@@ -29,8 +48,7 @@ interface Props {
 }
 
 const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
-  const { siteCoordinates, setFormData, panelDetails, postPanelData } =
-    useFormContext();
+  const { siteCoordinates, setFormData, panelDetails } = useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
 
@@ -41,6 +59,34 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
   panelDetails.tilt = site?.tilt?.toString() ?? panelDetails.tilt;
   panelDetails.capacity =
     site?.installed_capacity_kw?.toString() ?? panelDetails.capacity;
+
+  const { trigger } = useSWRMutation(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites`,
+    sendRequest
+  );
+
+  const postPanelData = async () => {
+    const date = new Date().toISOString();
+    const capacity = parseFloat(panelDetails.capacity);
+    const tilt = parseFloat(panelDetails.tilt);
+    const orientation = parseFloat(panelDetails.direction);
+
+    const sentinel = 1;
+    const data: FormPostData = {
+      site_uuid: 1,
+      client_name: 'name',
+      client_site_id: 1,
+      client_site_name: panelDetails.siteName,
+      latitude: siteCoordinates.latitude,
+      longitude: siteCoordinates.longitude,
+      installed_capacity_kw: !!capacity ? capacity : sentinel,
+      created_utc: date,
+      updated_utc: date,
+      orientation: orientation,
+      tilt: tilt,
+    };
+    await trigger(data);
+  };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -200,3 +246,6 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
 };
 
 export default Details;
+function useSWRMutation(arg0: string, sendRequest: any): { trigger: any } {
+  throw new Error('Function not implemented.');
+}
