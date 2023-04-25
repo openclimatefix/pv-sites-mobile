@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   Area,
@@ -32,6 +32,7 @@ import {
 import { useSiteAggregation } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
+import { getClosestForecastIndex } from '~/lib/generation';
 
 interface ThresholdGraphProps {
   sites: Site[];
@@ -68,30 +69,35 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     ? Math.max(...graphData.map((value) => value.generation_kw))
     : 0;
 
-  const renderCurrentTimeMarker = ({ x, y, index }: any) => {
-    if (!graphData) return null;
-
-    /* 
+  const renderCurrentTimeMarker = useCallback(
+    ({ x, y, index }: any) => {
+      if (!graphData) return;
+      /* 
     Return null if this index doesn't correspond to the current time
     or if the current time is past the start/end dates of the graph
     */
-    const currentTimeIndex = getCurrentTimeGenerationIndex(graphData);
-    if (
-      index !== currentTimeIndex ||
-      (currentTimeIndex === 0 &&
-        Date.now() < graphData[index].datetime_utc.getTime()) ||
-      (currentTimeIndex === graphData.length - 1 &&
-        Date.now() > graphData[index].datetime_utc.getTime())
-    ) {
-      return null;
-    }
+      const currentTimeIndex = getClosestForecastIndex(
+        graphData,
+        currentTime.toDate()
+      );
+      if (
+        index !== currentTimeIndex ||
+        (currentTimeIndex === 0 &&
+          Date.now() < graphData[index].datetime_utc.getTime()) ||
+        (currentTimeIndex === graphData.length - 1 &&
+          Date.now() > graphData[index].datetime_utc.getTime())
+      ) {
+        return null;
+      }
 
-    return (
-      <g>
-        <LineCircle x={x} y={y} />
-      </g>
-    );
-  };
+      return (
+        <g>
+          <LineCircle x={x} y={y} />
+        </g>
+      );
+    },
+    [graphData, currentTime]
+  );
 
   /**
    * Generates the gradient for the graph based on the threshold
