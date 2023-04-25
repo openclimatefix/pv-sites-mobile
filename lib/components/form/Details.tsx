@@ -84,12 +84,13 @@ const Details: FC<Props> = ({
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
+          <div className="hidden md:block md:h-7" />
           {showLocationMobile && (
             <div
               className="flex flex-col md:hidden"
               onClick={() => lastPageCallback()}
             >
-              <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
+              <label className="block pb-1 text-lg text-ocf-gray short:mt-4">
                 {' '}
                 Location
               </label>
@@ -105,7 +106,6 @@ const Details: FC<Props> = ({
               />
             </div>
           )}
-          <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
             label="Site name"
