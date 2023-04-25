@@ -78,6 +78,10 @@ export function addTimePoint(
 
   if (closestTime.getTime() > date.getTime()) {
     forecastValueIndex--;
+    if (forecastValueIndex < 0) {
+      return generationDataInterpolated;
+    }
+
     closestTime = generationData[forecastValueIndex].datetime_utc;
   }
 
