@@ -18,6 +18,7 @@ import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
+import invertersJson from '../../data/inverters.json';
 import { parseNowcastingDatetime } from '~/lib/api';
 import dayjs from 'dayjs';
 
@@ -155,8 +156,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (mockApiRoute === 'sites') {
       res.status(200).json(siteListJson);
-    } else if (mockApiRoute === 'inverters') {
-      res.status(200).json(await getInverters(testClientID));
+    } else if (mockApiRoute === 'enode/inverters') {
+      res.status(200).json(invertersJson);
+    } else if (
+      mockApiRoute.startsWith('sites') &&
+      mockApiRoute.endsWith('inverters')
+    ) {
+      res.status(200).json(invertersJson);
     } else if (mockApiRoute === 'enode/link') {
       const redirectURL = await getLinkRedirectURL(
         testClientID,

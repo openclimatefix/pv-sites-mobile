@@ -1,8 +1,9 @@
 import LinkInverters from '~/lib/components/form/LinkInverters';
+import ViewInverters from '~/lib/components/form/ViewInverters';
 import { withSites } from '~/lib/sites';
 
 const Inverters = () => {
-  return <LinkInverters />;
+  return <ViewInverters siteUUID="askdjfaskjldf" isSelectMode />;
 };
 
 export default Inverters;
