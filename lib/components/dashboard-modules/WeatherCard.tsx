@@ -12,6 +12,7 @@ import { CloudyIcon, PartlyCloudyIcon, SunnyIcon } from '../icons';
 
 const cloudyThreshold = 0.3;
 const sunnyThreshold = 0.7;
+const daysOfForecast = 3;
 
 type WeatherCardProps = {
   sites: Site[];
@@ -29,7 +30,7 @@ const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
     totalClearskyGeneration: GenerationDataPoint[] | undefined
   ) => {
     const days = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < daysOfForecast; i++) {
       const day = currentTime.add(i, 'days');
 
       const { sunrise, sunset } = SunCalc.getTimes(
