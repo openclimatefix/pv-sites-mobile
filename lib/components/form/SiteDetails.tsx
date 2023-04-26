@@ -3,10 +3,9 @@ import { FC, useState } from 'react';
 import Location from '~/lib/components/form/Location';
 import { useSites } from '../../sites';
 import { Site } from '../../types';
-import { useIsMobile } from '../../utils';
-import { NowcastingLogo } from '../icons/NavbarIcons';
-import BackButton from './BackButton';
 import Details from './Details';
+import BackNav from '../navigation/BackNav';
+import { useIsMobile } from '~/lib/utils';
 
 enum Page {
   Details = 'Details',
@@ -65,14 +64,10 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   return (
     <div className="w-full md:flex-col md:justify-center">
-      <div className="flex h-[var(--nav-height)] w-full flex-row items-center justify-between bg-ocf-black px-5 md:justify-center md:py-2">
-        <div className="md:hidden">
-          {!(page === Page.Location && sites.length === 0) && (
-            <BackButton onClick={lastPageCallback} />
-          )}
-        </div>
-        <NowcastingLogo />
-      </div>
+      <BackNav
+        backButton={!(page === Page.Location && sites.length === 0)}
+        lastPageCallback={lastPageCallback}
+      />
       {generateFormPage()}
     </div>
   );

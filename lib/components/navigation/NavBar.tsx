@@ -33,7 +33,6 @@ const NavBar: FC = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const { sites } = useSites();
   const { user } = useUser();
-  const router = useRouter();
 
   const handleOpenSidebar: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();

@@ -59,18 +59,19 @@ const Location: FC<Props> = ({
         </div>
         <div className="mb-3 mt-3 flex items-center justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-between">
           <div className="hidden md:block">
-            <button
+            <Button
+              form="panel-form"
               onClick={lastPageCallback}
-              className="flex items-center text-ocf-yellow"
+              variant="outlined"
             >
-              <ChevronLeftIcon width="24" height="24" />
               Back
-            </button>
+            </Button>
           </div>
           <Button
             disabled={!isSubmissionEnabled}
             onClick={nextPageCallback}
             variant="solid"
+            className="w-full"
           >
             Next
           </Button>

@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
-  getInverters,
   getLinkRedirectURL,
   getLinkedVendors,
   testClientID,
@@ -157,7 +156,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     } else if (mockApiRoute === 'sites') {
       res.status(200).json(siteListJson);
     } else if (mockApiRoute === 'enode/inverters') {
-      res.status(200).json(invertersJson);
+      res.status(200).json({ inverters: invertersJson });
     } else if (
       mockApiRoute.startsWith('sites') &&
       mockApiRoute.endsWith('inverters')

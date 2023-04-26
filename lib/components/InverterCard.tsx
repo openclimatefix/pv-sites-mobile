@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Inverter } from '../enode';
+import { Inverter } from '../types';
 
 interface InverterCardProps {
   inverter: Inverter;
@@ -44,13 +44,7 @@ export const InverterCard: FC<InverterCardProps> = ({
   );
 
   return selectMode ? (
-    <button
-      onClick={() => {
-        !!onClick && onClick();
-      }}
-    >
-      {renderCardContent()}
-    </button>
+    <button onClick={onClick}>{renderCardContent()}</button>
   ) : (
     renderCardContent()
   );
