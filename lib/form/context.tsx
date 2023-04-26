@@ -54,7 +54,7 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     });
   };
 
-  const postPanelData = async () => {
+  const postPanelData = () => {
     const date = new Date().toISOString();
     const tilt = parseFloat(panelDetails.tilt);
     const orientation = parseFloat(panelDetails.direction);
@@ -76,7 +76,7 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
       inverter_capacity_kw: inverterCapacityKw,
       module_capacity_kw: moduleCapacityKw,
     };
-    await trigger(data);
+    return trigger(data);
   };
 
   return (

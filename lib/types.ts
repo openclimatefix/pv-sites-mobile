@@ -10,7 +10,7 @@ export interface Site {
   tilt?: number;
   latitude: number;
   longitude: number;
-  installed_capacity_kw: number;
+  installed_capacity_kw: number | null;
   created_utc: string;
   updated_utc: string;
 }
@@ -84,7 +84,7 @@ export interface Form {
     moduleCapacityKw,
   }: PanelDetails) => void;
   setSiteCoordinates: ({ latitude, longitude }: LatitudeLongitude) => void;
-  postPanelData: () => Promise<void>;
+  postPanelData: () => Promise<Response | undefined>;
 }
 
 export interface PanelDetails {

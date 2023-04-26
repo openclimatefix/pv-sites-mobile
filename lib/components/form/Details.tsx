@@ -25,7 +25,7 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
 interface Props {
   lastPageCallback: () => void;
-  nextPageCallback: () => void;
+  nextPageCallback: (site?: Site) => void;
   site?: Site;
 }
 
@@ -46,8 +46,11 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
 
     if (!didSubmit) {
       setDidSubmit(true);
-      await postPanelData();
-      nextPageCallback();
+      const res = await postPanelData();
+      if (res) {
+        const site = (await res.json()) as Site;
+        nextPageCallback(site);
+      }
     }
   };
 

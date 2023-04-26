@@ -1,11 +1,13 @@
-import content from '../content/power-card-content.json';
 import { Carousel } from 'react-responsive-carousel';
 import PowerInfoCard from '~/lib/components/PowerInfoCard';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Image from 'next/image';
 import { withSites } from '~/lib/sites';
+import { appliances } from '~/lib/appliances';
 
 const MoreInfo = () => {
+  const sortedAppliances = appliances.sort((a, b) => b.kW - a.kW);
+
   return (
     <div className="min-h-screen w-screen max-w-screen-lg bg-ocf-black px-4">
       <h1 className="my-2 mt-4 text-3xl font-bold text-ocf-gray">More Info</h1>
@@ -60,13 +62,8 @@ const MoreInfo = () => {
             );
           }}
         >
-          {content.appliances.map((element) => (
-            <PowerInfoCard
-              key={element.name}
-              src={element.icon}
-              appliance={element.name}
-              kW={element.kW}
-            />
+          {sortedAppliances.map((element) => (
+            <PowerInfoCard key={element.name} {...element} />
           ))}
         </Carousel>
       </div>
