@@ -1,4 +1,5 @@
 import { withSites } from '~/lib/utils';
+import { pages } from '../help/[page]'
 
 const Help = () => {
   return <div />;
@@ -10,7 +11,7 @@ export const getServerSideProps = withSites({
     return {
       redirect: {
         permanent: false,
-        destination: `/help/add-site-location`,
+        destination: `/help/${Object.keys(pages)[0]}`,
       },
     };
   },
