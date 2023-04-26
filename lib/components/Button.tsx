@@ -14,7 +14,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
   children,
   disabled = false,
   hidden,
-  className='',
+  className = '',
   variant = 'solid',
   onClick,
 }) => {

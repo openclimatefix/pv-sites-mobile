@@ -44,11 +44,7 @@ export const InverterCard: FC<InverterCardProps> = ({
   );
 
   return selectMode ? (
-    <button
-      onClick={onClick}
-    >
-      {renderCardContent()}
-    </button>
+    <button onClick={onClick}>{renderCardContent()}</button>
   ) : (
     renderCardContent()
   );
