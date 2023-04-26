@@ -1,22 +1,22 @@
 import content from '../content/power-card-content.json';
 import { Carousel } from 'react-responsive-carousel';
-import PowerInfoCard from '~/components/PowerInfoCard';
+import PowerInfoCard from '~/lib/components/PowerInfoCard';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Image from 'next/image';
-import { withSites } from '~/lib/utils';
+import { withSites } from '~/lib/sites';
 
 const MoreInfo = () => {
   return (
-    <div className="bg-ocf-black w-screen min-h-screen max-w-screen-lg px-4">
-      <h1 className="my-2 mt-4 text-ocf-gray text-3xl font-bold">More Info</h1>
-      <div className="bg-ocf-black-500 rounded-lg">
+    <div className="min-h-screen w-screen max-w-screen-lg bg-ocf-black px-4">
+      <h1 className="my-2 mt-4 text-3xl font-bold text-ocf-gray">More Info</h1>
+      <div className="rounded-lg bg-ocf-black-500">
         <Carousel
           showStatus={false}
           showThumbs={false}
           renderArrowPrev={(clickHandler) => {
             return (
               <div
-                className={`absolute top-0 bottom-0 left-0 flex items-center p-3 cursor-pointer z-20`}
+                className={`absolute bottom-0 left-0 top-0 z-20 flex cursor-pointer items-center p-3`}
                 onClick={clickHandler}
               >
                 <Image
@@ -31,7 +31,7 @@ const MoreInfo = () => {
           renderArrowNext={(clickHandler) => {
             return (
               <div
-                className="absolute top-0 bottom-0 right-0 flex items-center p-3 cursor-pointer z-20"
+                className="absolute bottom-0 right-0 top-0 z-20 flex cursor-pointer items-center p-3"
                 onClick={clickHandler}
               >
                 <Image
@@ -46,7 +46,7 @@ const MoreInfo = () => {
           renderIndicator={(clickHandler, isSelected, index, label) => {
             return (
               <li
-                className={`rounded-full w-[8px] h-[8px] cursor-pointer mx-2 inline-block ${
+                className={`mx-2 inline-block h-[8px] w-[8px] cursor-pointer rounded-full ${
                   isSelected ? 'bg-ocf-yellow' : 'bg-ocf-gray-200'
                 }`}
                 onClick={clickHandler}

@@ -1,11 +1,7 @@
-import {
-  getAccessToken,
-  GetAccessTokenResult,
-  withPageAuthRequired,
-} from '@auth0/nextjs-auth0';
-import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { getCurrentTimeGenerationIndex } from './graphs';
-import { GenerationDataPoint, SiteList } from './types';
+import { useSites } from './sites';
+
+import { useRouter } from 'next/router';
+import { useEffect, useState, RefObject } from 'react';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -19,156 +15,9 @@ export function camelCaseID(id: string) {
   return [first, ...rest.map(capitalize)].join('');
 }
 
-interface SlopeInterface {
-  type: 'increasing' | 'decreasing' | 'constant';
-  endIndex: number;
-}
-
-/**
- * Determines the next local minimum or maximum value in a generation array
- * @param array Array to search for a local minimum or maximum value
- * @param key The key that represents the values being compared in array
- * @param startIndex The index to start the search at
- * @returns The index of the next minimum or maximum value
- */
-export const getTrendAfterIndex = (
-  array: GenerationDataPoint[],
-  startIndex: number
-): SlopeInterface | null => {
-  if (startIndex === array.length - 1) {
-    return {
-      type: 'constant',
-      endIndex: startIndex,
-    };
-  }
-
-  const first = array[startIndex].generation_kw;
-  const second = array[startIndex + 1].generation_kw;
-
-  const firstDifference = second - first;
-  const firstSlopeSign = Math.sign(firstDifference);
-
-  startIndex += 1;
-
-  while (startIndex < array.length - 1) {
-    const prev = array[startIndex - 1].generation_kw;
-    const curr = array[startIndex].generation_kw;
-
-    const currentDifference = curr - prev;
-    const currentSlopeSign = Math.sign(currentDifference);
-
-    if (firstSlopeSign !== currentSlopeSign && currentSlopeSign !== 0) {
-      // Slope was constant until current index
-      if (firstSlopeSign === 0) {
-        return { type: 'constant', endIndex: startIndex };
-      }
-
-      // Slope was negative or positive until current index
-      return {
-        type: firstSlopeSign < currentSlopeSign ? 'decreasing' : 'increasing',
-        endIndex: startIndex,
-      };
-    }
-
-    startIndex += 1;
-  }
-
-  return {
-    type: firstSlopeSign < 0 ? 'decreasing' : 'increasing',
-    endIndex: startIndex,
-  };
-};
-
-export const getCurrentTimeGeneration = (
-  generationData: GenerationDataPoint[]
-) =>
-  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
-
-interface NextThreshold {
-  aboveThreshold: boolean;
-  index: number;
-}
-
-/**
- * Determines the hour difference between the current time and the next time we are above or below
- * the sunny threshold
- * @param generationData expected generation data (kilowatts) at specific times
- * @param threshold sunny threshold in kilowatts
- * @returns Object containing hour difference between the next date and
- * if this date is above or below the threshold
- */
-export const getNextThresholdIndex = (
-  generationData: GenerationDataPoint[],
-  threshold: number
-): NextThreshold | null => {
-  const startIndex = getCurrentTimeGenerationIndex(generationData);
-
-  const currentAboveThreshold =
-    generationData[startIndex].generation_kw >= threshold;
-
-  for (let i = startIndex; i < generationData.length; i++) {
-    const futureAboveThreshold = generationData[i].generation_kw >= threshold;
-    // If this future point's "aboveThreshold" state is different than current
-    if (futureAboveThreshold !== currentAboveThreshold) {
-      return {
-        aboveThreshold: futureAboveThreshold,
-        index: i,
-      };
-    }
-  }
-
-  return null;
-};
-
 /* Latitude/longitude for London, England */
 export const originalLat = 51.5072;
 export const originalLng = 0.1276;
-
-type WithSitesOptions = {
-  getServerSideProps?: (
-    ctx: GetServerSidePropsContext & { siteList: SiteList }
-  ) => Promise<GetServerSidePropsResult<any>>;
-};
-export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
-  return withPageAuthRequired({
-    async getServerSideProps(ctx) {
-      let accessToken: GetAccessTokenResult;
-      try {
-        accessToken = await getAccessToken(ctx.req, ctx.res);
-      } catch {
-        return {
-          redirect: {
-            destination: '/api/auth/login',
-          },
-        };
-      }
-
-      const siteList = (await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken.accessToken}`,
-          },
-        }
-      ).then((res) => res.json())) as SiteList;
-
-      const otherProps: any = await getServerSideProps?.({
-        ...ctx,
-        siteList,
-      });
-      if (otherProps?.props instanceof Promise) {
-        return {
-          ...otherProps,
-          props: otherProps.props.then((props: any) => ({
-            ...props,
-            siteList,
-          })),
-        };
-      }
-      return { ...otherProps, props: { ...otherProps?.props, siteList } };
-    },
-  });
-}
 
 /*
   Represents the zoom threshold for the Site map. 
@@ -176,23 +25,71 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
 */
 export const zoomLevelThreshold = 14;
 
-export const skeleton = `flex-1 text-transparent bg-ocf-gray-1000 w-[100%] rounded-2xl animate-pulse select-none`;
+export function useNoScroll() {
+  const router = useRouter();
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual';
+
+    router.beforePopState((state) => {
+      state.options.scroll = false;
+      return true;
+    });
+  }, [router]);
+}
+
+export function useMediaQuery(query: string) {
+  const matchMedia = (query: string) => {
+    if (typeof window === 'undefined') {
+      return { matches: false };
+    }
+    return window.matchMedia(query);
+  };
+
+  const [matches, setMatches] = useState(matchMedia(query).matches);
+
+  useEffect(() => {
+    const mediaQueryList = matchMedia(query);
+
+    if (!('addEventListener' in mediaQueryList)) return;
+
+    const onChange = (mediaQueryList: MediaQueryListEvent) => {
+      setMatches(mediaQueryList.matches);
+    };
+
+    mediaQueryList.addEventListener('change', onChange);
+    return () => mediaQueryList.removeEventListener('change', onChange);
+  }, [query]);
+
+  return matches;
+}
+
+export function useIsMobile() {
+  return useMediaQuery('(max-width: 768px)');
+}
+
+export function useIsSitePage() {
+  const { asPath } = useRouter();
+  const { sites } = useSites();
+
+  const isSitePage = sites.length > 1 && asPath.match(/\/dashboard\/.+/);
+
+  return isSitePage;
+}
 
 /**
- * Converts a day string to a number
- *
- * @method dayOfWeekAsInteger
- * @param {String} day
- * @return {Number} Returns day as number
+ * Determines if the user clicked outside the ref
+ * @param ref reference to an HTML component
+ * @param handle function to call after a click outside the ref is detected
  */
-export const dayOfWeekAsInteger = (day: string) => {
-  return [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ].indexOf(day);
-};
+export function useClickedOutside(ref: RefObject<any>, handler: () => void) {
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        handler();
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside, { capture: true });
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [ref, handler]);
+}

@@ -41,3 +41,5 @@ public/*.js
 public/*.map
 
 .vscode
+
+pv-site-api.env
