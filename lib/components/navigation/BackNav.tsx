@@ -13,7 +13,7 @@ const BackNav: FC<BackNavProps> = ({
 }) => {
   return (
     <div className="flex h-[var(--nav-height)] w-full flex-row items-center justify-between bg-ocf-black px-5 md:justify-center md:py-2">
-      <div className="md:hidden">
+      <div className="mt-2 md:hidden">
         {backButton && <BackButton onClick={lastPageCallback} />}
       </div>
       <NowcastingLogo />
