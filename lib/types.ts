@@ -15,10 +15,6 @@ export interface Site {
   updated_utc: string;
 }
 
-export interface SiteList {
-  site_list: Site[];
-}
-
 export interface GenerationDataPoint {
   datetime_utc: Date;
   generation_kw: number;
@@ -104,4 +100,33 @@ export type FormPostData = {
   updated_utc: string;
   orientation: number;
   tilt: number;
+};
+
+export type Inverter = {
+  id: string;
+  vendor: string;
+  chargingLocationId: string | null;
+  lastSeen: string;
+  isReachable: boolean;
+  productionState: {
+    productionRate: number | null;
+    isProducing: boolean | null;
+    totalLifetimeProduction: number | null;
+    lastUpdated: string | null;
+  };
+  information: {
+    id: string;
+    brand: string;
+    model: string;
+    siteName: string;
+    installationDate: string;
+  };
+  location: {
+    longitude: number | null;
+    latitude: number | null;
+  };
+};
+
+export type Inverters = {
+  inverters: Inverter[];
 };
