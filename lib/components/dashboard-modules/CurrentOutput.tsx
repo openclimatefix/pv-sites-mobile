@@ -19,7 +19,7 @@ const CurrentOutput: FC<CurrentOutputProps> = ({ sites }) => {
   const title = totalInstalledCapacityKw ? 'Current Output' : 'Percent Yield';
 
   const value = totalInstalledCapacityKw
-    ? currentOutput
+    ? currentOutput.toFixed(2)
     : 100 * currentOutput + '%';
 
   return (
