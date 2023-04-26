@@ -14,7 +14,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
   children,
   disabled = false,
   hidden,
-  className,
+  className='',
   variant = 'solid',
   onClick,
 }) => {
@@ -32,7 +32,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
       disabled={disabled}
       className={`${variant === 'solid' ? solidButton : outlinedButton} ${
         hidden && `${hidden}:hidden`
-      } ${className && className}`}
+      } ${className}`}
     >
       {children}
     </button>

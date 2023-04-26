@@ -64,7 +64,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     nextPageCallback();
   };
 
-  const addOrRemove = (inverter: string) => {
+  const toggleSelected = (inverter: string) => {
     if (selectedInverters.includes(inverter)) {
       setSelectedInverters(selectedInverters.filter((e) => e !== inverter));
     } else {
@@ -99,7 +99,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
                 selected={
                   isSelectMode && selectedInverters.includes(inverter.id)
                 }
-                onClick={() => addOrRemove(inverter.id)}
+                onClick={() => toggleSelected(inverter.id)}
                 key={inverter.id}
               />
             ))}

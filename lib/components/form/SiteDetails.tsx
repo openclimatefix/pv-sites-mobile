@@ -5,6 +5,7 @@ import { useSites } from '../../sites';
 import { Site } from '../../types';
 import Details from './Details';
 import BackNav from '../navigation/BackNav';
+import { useIsMobile } from '~/lib/utils';
 
 enum Page {
   Details = 'Details',
@@ -17,6 +18,7 @@ interface SiteDetailsProps {
 
 const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
   const [page, setPage] = useState<Page>(Page.Location);
+  const mobile = useIsMobile();
   const router = useRouter();
   const { sites } = useSites();
 
@@ -30,7 +32,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = () => {
     if (page === Page.Details) {
-      router.push('/dashboard');
+      router.push(mobile ? '/sites' : '/dashboard');
     } else {
       setPage(Page.Details);
     }
