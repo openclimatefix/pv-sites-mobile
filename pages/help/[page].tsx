@@ -47,21 +47,24 @@ const Help = () => {
   const router = useRouter();
   const { page } = router.query;
   return (
-    <div className="flex flex-row">
-      <div className="flex flex-col">
-        {Object.keys(pages).map((page) => {
-          return (
-            <MenuLink
-              key={page}
-              linkProps={{ href: `/help/${page}` }}
-              label={page
-                .split('-')
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ')}
-              currentPath={router.asPath}
-            />
-          );
-        })}
+    <div className="flex w-full">
+      <div className="flex-1 flex">
+        <div className="flex-1"></div>
+        <div className="flex flex-col">
+          {Object.keys(pages).map((page) => {
+            return (
+              <MenuLink
+                key={page}
+                linkProps={{ href: `/help/${page}` }}
+                label={page
+                  .split('-')
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ')}
+                currentPath={router.asPath}
+              />
+            );
+          })}
+        </div>
       </div>
       <div className="bg-ocf-black w-screen min-h-screen max-w-screen-lg px-4">
         <ReactMarkdown
@@ -98,6 +101,7 @@ const Help = () => {
           {page ? pages[page as string] : ''}
         </ReactMarkdown>
       </div>
+      <div className="flex-1"></div>
     </div>
   );
 };
