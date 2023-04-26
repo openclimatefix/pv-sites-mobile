@@ -1,8 +1,5 @@
 import addSiteLocation from '../../content/help/addSiteLocation.md';
-import helpTopic2 from '../../content/help/addSiteLocation.md';
-import helpTopic3 from '../../content/help/addSiteLocation.md';
-import helpTopic4 from '../../content/help/addSiteLocation.md';
-import { withSites } from '~/lib/utils';
+import { withSites } from '~/lib/sites';
 import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -10,9 +7,6 @@ import { LinkProps } from 'next/link';
 
 export const pages: any = {
   'add-site-location': addSiteLocation,
-  'help-topic-2': helpTopic2,
-  'help-topic-3': helpTopic3,
-  'help-topic-4': helpTopic4,
 };
 
 type MenuLinkProps = {
@@ -32,9 +26,9 @@ const MenuLink: React.FC<MenuLinkProps> = ({
     <Link {...linkProps}>
       <a>
         <div
-          className={`px-4 py-2 flex items-center rounded-md text-gray-600 hover:text-gray-700 transition-colors transform`}
+          className={`flex transform items-center rounded-md px-4 py-2 text-gray-600 transition-colors hover:text-gray-700`}
         >
-          <span className={`mx-4 font-medium flex-1 align-center ${textColor}`}>
+          <span className={`align-center mx-4 flex-1 font-medium ${textColor}`}>
             {label}
           </span>
         </div>
@@ -48,7 +42,7 @@ const Help = () => {
   const { page } = router.query;
   return (
     <div className="flex w-full">
-      <div className="flex-1 flex">
+      <div className="flex flex-1">
         <div className="flex-1"></div>
         <div className="flex flex-col">
           {Object.keys(pages).map((page) => {
@@ -66,33 +60,33 @@ const Help = () => {
           })}
         </div>
       </div>
-      <div className="bg-ocf-black w-screen min-h-screen max-w-screen-lg px-4">
+      <div className="min-h-screen w-screen max-w-screen-lg bg-ocf-black px-4">
         <ReactMarkdown
           components={{
             h1: ({ node, ...props }) => (
               <h1
-                className="font-semibold text-2xl text-ocf-yellow pb-2.5"
+                className="pb-2.5 text-2xl font-semibold text-ocf-yellow"
                 {...props}
               />
             ),
             h2: ({ node, ...props }) => (
               <h2
-                className="font-semibold text-xl text-ocf-yellow pt-5 pb-2.5"
+                className="pb-2.5 pt-5 text-xl font-semibold text-ocf-yellow"
                 {...props}
               />
             ),
             p: ({ node, ...props }) => (
-              <p className="text-xl text-white pb-1.5" {...props} />
+              <p className="pb-1.5 text-xl text-white" {...props} />
             ),
             ul: ({ node, ...props }) => (
               <ul
-                className="list-disc text-xl text-white pb-1.5 pl-10"
+                className="list-disc pb-1.5 pl-10 text-xl text-white"
                 {...props}
               />
             ),
             ol: ({ node, ...props }) => (
               <ol
-                className="list-decimal text-xl text-white pb-1.5 pl-6"
+                className="list-decimal pb-1.5 pl-6 text-xl text-white"
                 {...props}
               />
             ),
@@ -115,6 +109,6 @@ export const getServerSideProps = withSites({
         notFound: true,
       };
     }
-    return { props: { siteList: context.siteList } };
+    return { props: { siteList: context.sites } };
   },
 });

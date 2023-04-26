@@ -1,4 +1,4 @@
-import { withSites } from '~/lib/utils';
+import { withSites } from '~/lib/sites';
 import { pages } from '../help/[page]';
 
 const Help = () => {
@@ -7,7 +7,7 @@ const Help = () => {
 
 export default Help;
 export const getServerSideProps = withSites({
-  async getServerSideProps({ siteList }) {
+  async getServerSideProps({ sites }) {
     return {
       redirect: {
         permanent: false,
