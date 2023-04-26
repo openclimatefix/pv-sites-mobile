@@ -9,7 +9,6 @@ import { skeleton } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
 import { CloudyIcon, PartlyCloudyIcon, SunnyIcon } from '../icons';
-import dayjs from 'dayjs';
 
 const cloudyThreshold = 0.3;
 const sunnyThreshold = 0.7;
