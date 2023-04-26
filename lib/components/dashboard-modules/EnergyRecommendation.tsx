@@ -16,8 +16,8 @@ const getRecommendedAppliance = (
 
   for (const appliance of appliances) {
     if (
-      !recommended ||
-      (appliance.kW > recommended.kW && appliance.kW <= currentOutput)
+      appliance.kW > (recommended?.kW ?? 0) &&
+      appliance.kW <= currentOutput
     ) {
       recommended = appliance;
     }
