@@ -141,7 +141,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           onClick={nextPageOrSubmit}
         >
           {didSubmit && <Spinner width={5} height={5} margin={4} />}
-          Finish
+          {isSelectMode ? 'Finish' : 'Next'}
           {didSubmit && <div className="mx-4 w-5" />}
         </Button>
       </div>
