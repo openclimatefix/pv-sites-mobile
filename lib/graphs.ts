@@ -59,8 +59,6 @@ export function addTimePoint(
     return generationDataInterpolated;
   }
 
-  console.error(generationData);
-
   const forecastValuePeriod = dayjs
     .duration(
       generationData[1].datetime_utc.getTime() -

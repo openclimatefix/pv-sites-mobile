@@ -98,7 +98,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
             }}
           />
           <Input
-            id="solar-panel-direction"
+            id="solar-array-direction"
             label="Solar array direction"
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
             value={panelDetails.direction}
@@ -124,7 +124,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           />
 
           <Input
-            id="solar-panel-tilt"
+            id="solar-array-tilt"
             label="Solar array tilt"
             description="(Degrees above the horizontal)"
             value={String(panelDetails.tilt)}
@@ -145,7 +145,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           />
 
           <Input
-            id="solar-panel-tilt"
+            id="inverter-capacity"
             label="Inverter capacity"
             value={String(panelDetails.inverterCapacityKw)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -168,7 +168,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
 
           <Input
             label="Solar panel nameplate capacity"
-            id="solar-panel-capacity"
+            id="module-capacity"
             value={String(panelDetails.moduleCapacityKw)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
@@ -178,7 +178,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
             }
             inputProps={{
               type: 'number',
-              placeholder: '3000 kW',
+              placeholder: '5 kW',
               min: '0',
               step: 'any',
               onKeyDown: preventMinus,
