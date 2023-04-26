@@ -89,7 +89,7 @@ export interface PanelDetails {
 }
 
 export type FormPostData = {
-  site_uuid: number;
+  site_uuid: number; //is this type correct? ¯\_(ツ)_/¯
   client_name: string;
   client_site_id: number;
   client_site_name: string;
@@ -129,4 +129,8 @@ export type Inverter = {
 
 export type Inverters = {
   inverters: Inverter[];
+};
+
+export type InverterPutData = {
+  client_ids: string[];
 };

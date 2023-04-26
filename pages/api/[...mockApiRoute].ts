@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
-  getInverters,
   getLinkRedirectURL,
   getLinkedVendors,
   testClientID,
