@@ -1,9 +1,9 @@
+import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import { FC, PropsWithChildren } from 'react';
 import BottomNavBar from './navigation/BottomNavBar';
 import NavBar from './navigation/NavBar';
 import Transition from './navigation/Transition';
-import { useUser } from '@auth0/nextjs-auth0';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useUser();
