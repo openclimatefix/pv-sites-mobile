@@ -9,7 +9,10 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { user } = useUser();
   const { asPath: path } = useRouter();
   // TODO: Improve this
-  const showNav = !!user && !path.startsWith('/site-details');
+  const showNav =
+    !!user &&
+    !path.startsWith('/site-details') &&
+    !path.startsWith('/inverters');
 
   return (
     <>

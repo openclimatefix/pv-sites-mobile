@@ -8,6 +8,8 @@
   --form-header-padding: 32px;
   --bottom-nav-height: 50px;
   --bottom-nav-margin: calc(20px + var(--bottom-nav-height));
+  --screen-height: calc(100vh - var(--nav-height) - var(--bottom-nav-height));
+  --onboarding-height: calc(100vh - var(--nav-height));
 }
 
 @media (min-width: 768px) {
