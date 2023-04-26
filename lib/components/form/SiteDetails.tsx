@@ -30,9 +30,9 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     }
   };
 
-  const nextPageCallback = () => {
+  const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(mobile ? '/sites' : '/dashboard');
+      router.push(mobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }

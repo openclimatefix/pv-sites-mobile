@@ -12,6 +12,13 @@ const defaultUseTimeOptions: UseTimeOptions = {
   updateEnabled: false,
 };
 
+/**
+ * Gets time and sun position related information for a specific site.
+ * Also, optionally creates an interval to update the current time.
+ * @param site The site
+ * @param updateEnabled Whether or not to create an interval to update the current time
+ * @returns Time (in site timezone) and sun position related information
+ */
 export const useSiteTime = (
   site: Site,
   { updateEnabled = false } = defaultUseTimeOptions
@@ -22,6 +29,8 @@ export const useSiteTime = (
     () => fetchTimeZone(latitude, longitude)
   );
   const [currentTime, setCurrentTime] = useState(dayjs().tz(timezone));
+
+  useEffect(() => setCurrentTime(dayjs().tz(timezone)), [timezone]);
 
   useEffect(() => {
     if (updateEnabled) {
@@ -41,8 +50,8 @@ export const useSiteTime = (
 
   const isDayTime = useMemo(
     () =>
-      currentTime.isAfter(dayjs(times.dawn)) &&
-      currentTime.isBefore(dayjs(times.dusk)),
+      currentTime.isAfter(dayjs(times.sunrise)) &&
+      currentTime.isBefore(dayjs(times.sunset)),
     [currentTime, times]
   );
 
@@ -64,6 +73,7 @@ export const useSiteTime = (
     timeFormat,
     dayFormat,
     weekdayFormat,
+    timezone,
     ...times,
   };
 };

@@ -56,7 +56,7 @@ const ContactButton = () => {
           href={`/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`}
         >
           <a
-            className={`flex items-center justify-center gap-5 px-4 py-3 text-gray-300 transition-all hover:bg-ocf-gray-1000`}
+            className={`flex items-center justify-center gap-5 px-4 py-3 text-white transition-all hover:bg-ocf-gray-1000`}
           >
             <div className="h-6 w-6">
               <LogoutIcon />

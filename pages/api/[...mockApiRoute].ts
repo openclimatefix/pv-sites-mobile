@@ -54,7 +54,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const doesPropertyExist = (propname: string) => !!req.body[propname];
 
       if (PVSiteMetadataProps.every(doesPropertyExist)) {
-        res.status(200).send('success');
+        res.status(200).json(siteListJson.site_list[0]);
       } else {
         res.status(400).send('PV site metadata missing required props');
       }

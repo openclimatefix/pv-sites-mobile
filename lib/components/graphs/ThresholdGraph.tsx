@@ -25,6 +25,7 @@ import {
   makeGraphable,
 } from 'lib/graphs';
 
+import dayjs from 'dayjs';
 import {
   generationDataOverDateRange,
   getClosestForecastIndex,
@@ -45,7 +46,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const [timeEnabled, setTimeEnabled] = useState(
     totalForecastedGeneration !== undefined
   );
-  const { currentTime, sunrise, sunset, weekdayFormat, timeFormat } =
+  const { currentTime, sunrise, sunset, timeFormat, weekdayFormat, timezone } =
     useSiteTime(representativeSite, {
       updateEnabled: timeEnabled,
     });
@@ -246,9 +247,13 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
       Date.now() < graphData[0].datetime_utc.getTime() ||
       Date.now() > graphData[numForecastValues - 1].datetime_utc.getTime()
     ) {
+      const currentDay = currentTime.day();
+      const firstDay = dayjs(graphData[0].datetime_utc).tz(timezone).day();
+      const relativeDay = currentDay !== firstDay ? 'Tomorrow' : 'Today';
+
       return (
         <p className="text-base font-medium text-white">
-          Tomorrow&apos;s Forecast
+          {relativeDay}&apos;s Forecast
         </p>
       );
     }

@@ -15,20 +15,20 @@ interface ExpectedTotalOutputProps {
 const ExpectedTotalOutput: FC<ExpectedTotalOutputProps> = ({ sites }) => {
   const representativeSite = sites[0];
   const { isLoading, totalForecastedGeneration } = useSiteAggregation(sites);
-  const { dawn, dusk } = useSiteTime(representativeSite);
+  const { sunrise, sunset } = useSiteTime(representativeSite);
+
+  const value = totalForecastedGeneration
+    ? getTotalExpectedOutput(
+        generationDataOverDateRange(totalForecastedGeneration, sunrise, sunset)
+      )
+        .toFixed(2)
+        .toString() + ' kWh'
+    : 'Loading...';
 
   return (
     <NumberDisplay
       title="Today's Expected Output"
-      value={
-        totalForecastedGeneration
-          ? getTotalExpectedOutput(
-              generationDataOverDateRange(totalForecastedGeneration, dawn, dusk)
-            )
-              .toFixed(2)
-              .toString() + ' kWh'
-          : 'Loading'
-      }
+      value={value}
       isLoading={isLoading}
     />
   );
