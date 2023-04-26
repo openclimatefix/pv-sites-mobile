@@ -40,11 +40,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   isSelectMode = false,
   backButton = false,
 }) => {
-  const {
-    data: inverters,
-    error,
-    isLoading,
-  } = useSWR<Inverters>(
+  const { data: inverters, isLoading } = useSWR<Inverters>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
   );
 
@@ -73,7 +69,11 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   };
 
   // @TODO skeletons!!
-  return (
+  return isLoading ? (
+    <div className="flex h-[var(--onboarding-height)] w-full items-center justify-center">
+      <Spinner width={10} height={10} margin={0} />
+    </div>
+  ) : (
     <div className="flex h-[var(--onboarding-height)] w-full flex-col items-center">
       <div className="flex h-full w-11/12 max-w-lg flex-col justify-between md:mt-8 md:max-w-4xl">
         <div className="flex w-full flex-grow flex-col p-3 pt-0">
