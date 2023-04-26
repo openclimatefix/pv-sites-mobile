@@ -14,7 +14,9 @@ const parseAppliance = (appliance: (typeof content.appliances)[number]) => {
 };
 
 const MoreInfo = () => {
-  const appliances = content.appliances.map(parseAppliance);
+  const appliances = content.appliances
+    .map(parseAppliance)
+    .sort((a, b) => b.kW - a.kW);
 
   return (
     <div className="min-h-screen w-screen max-w-screen-lg bg-ocf-black px-4">
