@@ -8,6 +8,13 @@
       "action": "charge"
     },
     {
+      "name": "Home Battery",
+      "icon": "home-battery.svg",
+      "kW": "3",
+      "duration": "4",
+      "action": "charge"
+    },
+    {
       "name": "Washing Machine",
       "icon": "washing-machine.svg",
       "kW": "2.1",
