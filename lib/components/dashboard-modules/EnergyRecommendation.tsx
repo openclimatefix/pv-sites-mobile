@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import content from '../../../content/power-card-content.json';
 import NumberDisplay from './NumberDisplay';
 import RecommendationDisplay from './RecommendationDisplay';
 import { Site } from '~/lib/types';
@@ -7,26 +6,24 @@ import { useSiteAggregation } from '~/lib/sites';
 import { getCurrentTimeGeneration } from '~/lib/generation';
 import { useSiteTime } from '~/lib/time';
 import { skeleton } from '~/lib/skeleton';
+import { Appliance, appliances } from '~/lib/appliances';
 
-/**
- * Determines the appliance with the greatest energy required that is less than or equal to the current output
- * @param currentOutput the current output in kW based on the getCurrentTimeGeneration
- * @returns the index of the appliance with the greatest enrgy requiement less than or equal to the current ouput
- * or -1 if an index could not be found
- */
+const getRecommendedAppliance = (
+  currentOutput: number,
+  appliances: Appliance[]
+) => {
+  let recommended: Appliance | null = null;
 
-const getBestRecommendationIndex = (currentOutput: number) => {
-  let maxIndex = null;
-  let maxKW = 0;
-
-  content.appliances.forEach((appliance, i) => {
-    if (Number(appliance.kW) > maxKW && Number(appliance.kW) <= currentOutput) {
-      maxIndex = i;
-      maxKW = Number(appliance.kW);
+  for (const appliance of appliances) {
+    if (
+      !recommended ||
+      (appliance.kW > recommended.kW && appliance.kW <= currentOutput)
+    ) {
+      recommended = appliance;
     }
-  });
+  }
 
-  return maxIndex;
+  return recommended;
 };
 
 interface EnergyRecommendationProps {
@@ -40,9 +37,8 @@ const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
   const currentOutput =
     totalForecastedGeneration &&
     getCurrentTimeGeneration(totalForecastedGeneration);
-  const recommendationIdx = currentOutput
-    ? getBestRecommendationIndex(currentOutput)
-    : null;
+  const recommended =
+    currentOutput && getRecommendedAppliance(currentOutput, appliances);
 
   const { isDayTime } = useSiteTime(representativeSite);
 
@@ -63,7 +59,9 @@ const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
         <div className={skeleton}></div>
       </div>
     );
-  } else if (!isDayTime && currentOutput === 0) {
+  }
+
+  if (!isDayTime && currentOutput === 0) {
     return (
       <RecommendationDisplay
         src="/nighttime.svg"
@@ -71,24 +69,21 @@ const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
         description="Solar output is currently 0&nbsp;kW"
       />
     );
-  } else if (recommendationIdx) {
-    const appliance = content.appliances[recommendationIdx];
+  }
+
+  if (recommended) {
     return (
       <RecommendationDisplay
-        src={`/appliances/icons/${appliance.icon}`}
-        alt={appliance.name}
-        description={`You have enough power to ${appliance.action} your ${appliance.name}`}
-      />
-    );
-  } else {
-    return (
-      <NumberDisplay
-        title="Recommendations"
-        value="N/A"
-        isLoading={isLoading}
+        src={`/appliances/icons/${recommended.icon}`}
+        alt={recommended.name}
+        description={`You have enough power to ${recommended.action} your ${recommended.name}`}
       />
     );
   }
+
+  return (
+    <NumberDisplay title="Recommendations" value="N/A" isLoading={isLoading} />
+  );
 };
 
 export default EnergyRecommendation;

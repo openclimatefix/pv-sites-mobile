@@ -1,36 +1,31 @@
 import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
-import { Site } from '~/lib/types';
-import { useSiteAggregation, useSiteData } from '~/lib/sites';
 import { getCurrentTimeGeneration } from '~/lib/generation';
+import { useSiteAggregation } from '~/lib/sites';
+import { Site } from '~/lib/types';
 
 interface CurrentOutputProps {
   sites: Site[];
 }
 
 const CurrentOutput: FC<CurrentOutputProps> = ({ sites }) => {
-  const { totalForecastedGeneration, isLoading } = useSiteAggregation(sites);
-  const currentOutput =
-    totalForecastedGeneration &&
-    getCurrentTimeGeneration(totalForecastedGeneration);
+  const { totalInstalledCapacityKw, totalForecastedGeneration, isLoading } =
+    useSiteAggregation(sites);
 
-  function outputMessage(
-    isLoading: boolean,
-    currentOutput: number | undefined
-  ) {
-    if (isLoading) {
-      return 'Loading...';
-    } else if (currentOutput === undefined) {
-      return 'N/A';
-    } else {
-      return currentOutput.toFixed(2);
-    }
-  }
+  const currentOutput = totalForecastedGeneration
+    ? getCurrentTimeGeneration(totalForecastedGeneration)
+    : 0;
+
+  const title = totalInstalledCapacityKw ? 'Current Output' : 'Percent Yield';
+
+  const value = totalInstalledCapacityKw
+    ? currentOutput
+    : 100 * currentOutput + '%';
 
   return (
     <NumberDisplay
-      title="Current Output"
-      value={`${outputMessage(isLoading, currentOutput)}`}
+      title={title}
+      value={isLoading ? 'Loading...' : value.toString()}
       isLoading={isLoading}
     />
   );

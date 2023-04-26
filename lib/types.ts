@@ -10,7 +10,7 @@ export interface Site {
   tilt?: number;
   latitude: number;
   longitude: number;
-  installed_capacity_kw: number;
+  installed_capacity_kw: number | null;
   created_utc: string;
   updated_utc: string;
 }

@@ -16,7 +16,7 @@ const defaultUseTimeOptions: UseTimeOptions = {
  * Gets time and sun position related information for a specific site.
  * Also, optionally creates an interval to update the current time.
  * @param site The site
- * @param { updateEnabled } Whether or not to create an interval to update the current time
+ * @param updateEnabled Whether or not to create an interval to update the current time
  * @returns Time (in site timezone) and sun position related information
  */
 export const useSiteTime = (
@@ -31,6 +31,8 @@ export const useSiteTime = (
   const [currentTime, setCurrentTime] = useState(dayjs().tz(timezone));
 
   useEffect(() => {
+    setCurrentTime(dayjs().tz(timezone));
+
     if (updateEnabled) {
       const interval = setInterval(
         () => setCurrentTime(dayjs().tz(timezone)),

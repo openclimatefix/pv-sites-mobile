@@ -1,7 +1,7 @@
 {
   "appliances": [
     {
-      "name": "Car",
+      "name": "Electric Vehicle",
       "icon": "car.svg",
       "kW": "3.6",
       "duration": "4.0",

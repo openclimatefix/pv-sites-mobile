@@ -134,7 +134,7 @@ export function useSiteAggregation(sites: Site[]) {
     isManyForecastLoading || isManyClearskyLoading || isManyActualLoading;
 
   const totalInstalledCapacityKw = sites.reduce(
-    (total, site) => total + site.installed_capacity_kw,
+    (total, site) => total + (site.installed_capacity_kw ?? 0),
     0
   );
 
