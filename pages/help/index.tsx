@@ -1,5 +1,5 @@
 import { withSites } from '~/lib/utils';
-import { pages } from '../help/[page]'
+import { pages } from '../help/[page]';
 
 const Help = () => {
   return <div />;
