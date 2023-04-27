@@ -80,7 +80,10 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site, isEditing = false }) => {
               title="Details"
               href={`/site-details/${site?.site_uuid}`}
             />
-            <NavbarLink title="Inverters" href="/more-info" />
+            <NavbarLink
+              title="Inverters"
+              href={`/inverters/${site?.site_uuid}`}
+            />
           </div>
         </div>
       )}

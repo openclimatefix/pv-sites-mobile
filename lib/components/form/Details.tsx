@@ -25,7 +25,7 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
 interface Props {
   lastPageCallback: () => void;
-  nextPageCallback: () => void;
+  nextPageCallback: (site?: Site) => void;
   isEditing: boolean;
   site?: Site;
 }
@@ -46,8 +46,6 @@ const Details: FC<Props> = ({
   panelDetails.direction =
     site?.orientation?.toString() ?? panelDetails.direction;
   panelDetails.tilt = site?.tilt?.toString() ?? panelDetails.tilt;
-  panelDetails.capacity =
-    site?.installed_capacity_kw?.toString() ?? panelDetails.capacity;
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
