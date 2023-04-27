@@ -8,17 +8,18 @@ import { NowcastingLogo } from '../icons/NavbarIcons';
 import BackButton from './BackButton';
 import Details from './Details';
 
-enum Page {
+export enum Page {
   Details = 'Details',
   Location = 'Location',
 }
 
 interface SiteDetailsProps {
   site?: Site;
+  startPage?: Page;
 }
 
-const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
-  const [page, setPage] = useState<Page>(Page.Location);
+const SiteDetails: FC<SiteDetailsProps> = ({ site, startPage = Page.Location}) => {
+  const [page, setPage] = useState<Page>(startPage);
   const mobile = useIsMobile();
   const router = useRouter();
   const { sites } = useSites();

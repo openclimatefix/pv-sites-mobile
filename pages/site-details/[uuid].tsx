@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import SiteDetails from '../../lib/components/form/SiteDetails';
+import SiteDetails, { Page } from '../../lib/components/form/SiteDetails';
 import { useRouter } from 'next/router';
 import { withSites } from '~/lib/sites';
 import { Site } from '~/lib/types';
@@ -11,7 +11,7 @@ interface NewSiteDetailsProps {
 const NewSiteDetails: FC<NewSiteDetailsProps> = ({ sites }) => {
   const router = useRouter();
   const { uuid } = router.query;
-  return <SiteDetails site={sites.find((site) => site.site_uuid === uuid)!} />;
+  return <SiteDetails site={sites.find((site) => site.site_uuid === uuid)!} startPage={Page.Details}/>;
 };
 
 export const getServerSideProps = withSites({
