@@ -26,16 +26,10 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: (site?: Site) => void;
-  isEditing: boolean;
   site?: Site;
 }
 
-const Details: FC<Props> = ({
-  lastPageCallback,
-  nextPageCallback,
-  isEditing = false,
-  site,
-}) => {
+const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
   const { siteCoordinates, setFormData, panelDetails, postPanelData } =
     useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -86,7 +80,7 @@ const Details: FC<Props> = ({
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          {isEditing && (
+          {site && (
             <div
               className="flex flex-col md:hidden"
               onClick={() => lastPageCallback()}
@@ -219,7 +213,7 @@ const Details: FC<Props> = ({
             className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:bg-ocf-gray-300 peer-invalid:bg-ocf-gray-300 md:hidden"
           >
             {didSubmit && <Spinner width={5} height={5} margin={4} />}
-            {isEditing ? 'Save Changes' : 'Finish'}
+            {site ? 'Save Changes' : 'Finish'}
             {didSubmit && <div className="mx-4 w-5" />}
           </button>
         </form>
@@ -232,7 +226,7 @@ const Details: FC<Props> = ({
 
         <Button form="panel-form" disabled={didSubmit} variant="solid">
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
-          {isEditing ? 'Save Changes' : 'Finish'}
+          {site ? 'Save Changes' : 'Finish'}
           {didSubmit && <div className="mx-2 w-5" />}
         </Button>
       </div>

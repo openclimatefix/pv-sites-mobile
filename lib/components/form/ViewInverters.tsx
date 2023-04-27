@@ -28,7 +28,6 @@ interface ViewInvertersProps {
   siteUUID?: string;
   isSelectMode?: boolean;
   backButton?: boolean;
-  isEditing?: boolean;
   nextPageCallback: () => void;
   lastPageCallback?: () => void;
 }
@@ -41,7 +40,6 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   lastPageCallback,
   isSelectMode = false,
   backButton = false,
-  isEditing = true,
 }) => {
   const { data: inverters, isLoading } = useSWR<Inverters>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
@@ -79,12 +77,10 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   ) : (
     <div className="flex h-[var(--onboarding-height)] w-full flex-col items-center">
       <div className="flex h-full w-11/12 max-w-lg flex-col justify-between md:mt-8 md:max-w-4xl">
-        {isEditing && (
-          <div className="flex w-full p-3">
-            <NavbarLink title="Details" href={`/site-details/${siteUUID}`} />
-            <NavbarLink title="Inverters" href={`/inverters/${siteUUID}`} />
-          </div>
-        )}
+        <div className="flex w-full p-3">
+          <NavbarLink title="Details" href={`/site-details/${siteUUID}`} />
+          <NavbarLink title="Inverters" href={`/inverters/${siteUUID}`} />
+        </div>
         <div className="flex w-full flex-grow flex-col p-3 pt-0">
           {isSelectMode ? (
             <>

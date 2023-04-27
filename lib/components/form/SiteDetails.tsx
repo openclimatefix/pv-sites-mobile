@@ -15,13 +15,10 @@ export enum Page {
 
 interface SiteDetailsProps {
   site?: Site;
-  isEditing?: boolean;
 }
 
-const SiteDetails: FC<SiteDetailsProps> = ({ site, isEditing = false }) => {
-  const [page, setPage] = useState<Page>(
-    isEditing ? Page.Details : Page.Location
-  );
+const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
+  const [page, setPage] = useState<Page>(site ? Page.Details : Page.Location);
   const mobile = useIsMobile();
   const router = useRouter();
   const { sites } = useSites();
@@ -49,7 +46,6 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site, isEditing = false }) => {
           <Details
             lastPageCallback={lastPageCallback}
             nextPageCallback={nextPageCallback}
-            isEditing={isEditing}
             site={site}
           />
         );
@@ -73,7 +69,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site, isEditing = false }) => {
         backButton={!(page === Page.Location && sites.length === 0)}
         lastPageCallback={lastPageCallback}
       />
-      {isEditing && (
+      {site && (
         <div className="flex w-full justify-center">
           <div className="mb-2 flex w-4/5 md:w-9/12 md:px-8">
             <NavbarLink
