@@ -7,6 +7,7 @@ import { useIsMobile } from '../../utils';
 import { NowcastingLogo } from '../icons/NavbarIcons';
 import BackButton from './BackButton';
 import Details from './Details';
+import { NavbarLink } from '../navigation/NavBar';
 
 export enum Page {
   Details = 'Details',
@@ -15,11 +16,13 @@ export enum Page {
 
 interface SiteDetailsProps {
   site?: Site;
-  startPage?: Page;
+  isEditing?: boolean;
 }
 
-const SiteDetails: FC<SiteDetailsProps> = ({ site, startPage = Page.Location}) => {
-  const [page, setPage] = useState<Page>(startPage);
+const SiteDetails: FC<SiteDetailsProps> = ({ site, isEditing = false }) => {
+  const [page, setPage] = useState<Page>(
+    isEditing ? Page.Details : Page.Location
+  );
   const mobile = useIsMobile();
   const router = useRouter();
   const { sites } = useSites();
@@ -66,7 +69,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site, startPage = Page.Location}) =
   };
 
   return (
-    <div className="w-full md:flex-col md:justify-center">
+    <div className="w-full flex-col md:justify-center">
       <div className="flex h-[var(--nav-height)] w-full flex-row items-center justify-between bg-ocf-black px-5 md:justify-center md:py-2">
         <div className="md:hidden">
           {!(page === Page.Location && sites.length === 0) && (
@@ -75,6 +78,17 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site, startPage = Page.Location}) =
         </div>
         <NowcastingLogo />
       </div>
+      {isEditing && (
+        <div className="flex w-full justify-center">
+          <div className="flex w-4/5 md:w-10/12">
+            <NavbarLink
+              title="Details"
+              href={`/site-details/${site?.site_uuid}`}
+            />
+            <NavbarLink title="Inverters" href="/more-info" />
+          </div>
+        </div>
+      )}
       {generateFormPage()}
     </div>
   );

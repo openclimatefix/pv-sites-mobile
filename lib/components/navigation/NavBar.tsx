@@ -12,7 +12,7 @@ type NavbarLinkProps = {
   href: string;
 };
 
-const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
+export const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
   const { asPath: path } = useRouter();
   const isActive = href === path;
   const textColor = isActive ? 'text-amber' : 'text-white';

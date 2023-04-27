@@ -11,7 +11,12 @@ interface NewSiteDetailsProps {
 const NewSiteDetails: FC<NewSiteDetailsProps> = ({ sites }) => {
   const router = useRouter();
   const { uuid } = router.query;
-  return <SiteDetails site={sites.find((site) => site.site_uuid === uuid)!} startPage={Page.Details}/>;
+  return (
+    <SiteDetails
+      site={sites.find((site) => site.site_uuid === uuid)!}
+      isEditing={true}
+    />
+  );
 };
 
 export const getServerSideProps = withSites({
