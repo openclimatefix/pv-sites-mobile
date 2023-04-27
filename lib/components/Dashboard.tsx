@@ -16,7 +16,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
   const isAggregate = sites.length > 1;
 
   return (
-    <div className="mb-[var(--bottom-nav-margin)] w-screen max-w-screen-xl bg-ocf-black px-4">
+    <div className="mb-[var(--bottom-nav-margin)] w-screen max-w-screen-lg bg-ocf-black px-4">
       <div className="flex flex-row items-center justify-between">
         <h1 className="mb-4 mt-4 text-3xl font-bold text-ocf-gray">
           {isAggregate ? 'Dashboard' : sites[0].client_site_name}

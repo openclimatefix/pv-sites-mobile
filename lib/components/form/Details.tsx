@@ -10,6 +10,7 @@ import { Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
+import BackButton from './BackButton';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -52,8 +53,11 @@ const Details: FC<Props> = ({
 
     if (!didSubmit) {
       setDidSubmit(true);
-      await postPanelData();
-      nextPageCallback();
+      const res = await postPanelData();
+      if (res) {
+        const site = (await res.json()) as Site;
+        nextPageCallback(site);
+      }
     }
   };
 
@@ -124,8 +128,8 @@ const Details: FC<Props> = ({
             }}
           />
           <Input
-            id="solar-panel-direction"
-            label="Solar panel direction"
+            id="solar-array-direction"
+            label="Solar array direction"
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
             value={panelDetails.direction}
             help="I don't know"
@@ -150,8 +154,8 @@ const Details: FC<Props> = ({
           />
 
           <Input
-            id="solar-panel-tilt"
-            label="Solar panel tilt"
+            id="solar-array-tilt"
+            label="Solar array tilt"
             description="(Degrees above the horizontal)"
             value={String(panelDetails.tilt)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -171,23 +175,40 @@ const Details: FC<Props> = ({
           />
 
           <Input
-            label={
-              <>
-                Solar panel capacity
-                <span className="text-xs font-normal"> (optional)</span>
-              </>
-            }
-            id="solar-panel-capacity"
-            value={String(panelDetails.capacity)}
+            id="inverter-capacity"
+            label="Inverter capacity"
+            value={String(panelDetails.inverterCapacityKw)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...panelDetails,
-                capacity: e.currentTarget.value,
+                inverterCapacityKw: e.currentTarget.value,
               })
             }
             inputProps={{
               type: 'number',
-              placeholder: '2800 kW',
+              placeholder: '3000 kW',
+              min: '0',
+              step: 'any',
+              required: true,
+              onKeyDown: preventMinus,
+              pattern: '[0-9]*',
+              inputMode: 'numeric',
+            }}
+          />
+
+          <Input
+            label="Solar panel nameplate capacity"
+            id="module-capacity"
+            value={String(panelDetails.moduleCapacityKw)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormData({
+                ...panelDetails,
+                moduleCapacityKw: e.currentTarget.value,
+              })
+            }
+            inputProps={{
+              type: 'number',
+              placeholder: '5 kW',
               min: '0',
               step: 'any',
               onKeyDown: preventMinus,
@@ -207,13 +228,10 @@ const Details: FC<Props> = ({
       </div>
       <Modal show={showModal} setShow={setShowModal} />
       <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
-        <button
-          onClick={lastPageCallback}
-          className="flex items-center text-ocf-yellow"
-        >
-          <ChevronLeftIcon width="24" height="24" />
+        <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
           Back
-        </button>
+        </Button>
+
         <Button form="panel-form" disabled={didSubmit} variant="solid">
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           {isEditing ? 'Save Changes' : 'Finish'}

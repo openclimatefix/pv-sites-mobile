@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 import {
   Area,
@@ -25,8 +25,10 @@ import {
   makeGraphable,
 } from 'lib/graphs';
 
+import dayjs from 'dayjs';
 import {
   generationDataOverDateRange,
+  getClosestForecastIndex,
   getCurrentTimeGenerationIndex,
 } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
@@ -44,7 +46,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const [timeEnabled, setTimeEnabled] = useState(
     totalForecastedGeneration !== undefined
   );
-  const { currentTime, sunrise, sunset, weekdayFormat, timeFormat } =
+  const { currentTime, sunrise, sunset, timeFormat, weekdayFormat, timezone } =
     useSiteTime(representativeSite, {
       updateEnabled: timeEnabled,
     });
@@ -68,30 +70,36 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     ? Math.max(...graphData.map((value) => value.generation_kw))
     : 0;
 
-  const renderCurrentTimeMarker = ({ x, y, index }: any) => {
-    if (!graphData) return null;
-
-    /* 
+  const renderCurrentTimeMarker = useCallback(
+    ({ x, y, index }: any) => {
+      if (!graphData) return;
+      /* 
     Return null if this index doesn't correspond to the current time
     or if the current time is past the start/end dates of the graph
     */
-    const currentTimeIndex = getCurrentTimeGenerationIndex(graphData);
-    if (
-      index !== currentTimeIndex ||
-      (currentTimeIndex === 0 &&
-        Date.now() < graphData[index].datetime_utc.getTime()) ||
-      (currentTimeIndex === graphData.length - 1 &&
-        Date.now() > graphData[index].datetime_utc.getTime())
-    ) {
-      return null;
-    }
+      const currentTimeIndex = getClosestForecastIndex(
+        graphData,
+        currentTime.toDate()
+      );
 
-    return (
-      <g>
-        <LineCircle x={x} y={y} />
-      </g>
-    );
-  };
+      if (
+        index !== currentTimeIndex ||
+        (currentTimeIndex === 0 &&
+          Date.now() < graphData[index].datetime_utc.getTime()) ||
+        (currentTimeIndex === graphData.length - 1 &&
+          Date.now() > graphData[index].datetime_utc.getTime())
+      ) {
+        return null;
+      }
+
+      return (
+        <g>
+          <LineCircle x={x} y={y} />
+        </g>
+      );
+    },
+    [graphData, currentTime]
+  );
 
   /**
    * Generates the gradient for the graph based on the threshold
@@ -239,9 +247,13 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
       Date.now() < graphData[0].datetime_utc.getTime() ||
       Date.now() > graphData[numForecastValues - 1].datetime_utc.getTime()
     ) {
+      const currentDay = currentTime.day();
+      const firstDay = dayjs(graphData[0].datetime_utc).tz(timezone).day();
+      const relativeDay = currentDay !== firstDay ? 'Tomorrow' : 'Today';
+
       return (
         <p className="text-base font-medium text-white">
-          Tomorrow&apos;s Forecast
+          {relativeDay}&apos;s Forecast
         </p>
       );
     }
@@ -275,7 +287,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
           </div>
         </div>
 
-        {!isLoading && graphData && (
+        {!isLoading && graphableData && (
           <ResponsiveContainer
             className="mt-[15px] touch-pan-y touch-pinch-zoom"
             width="100%"
@@ -325,6 +337,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
                 strokeDasharray="2"
                 fill="url(#thresholdGraphArea)"
                 onAnimationEnd={() => setTimeEnabled(true)}
+                isAnimationActive={!timeEnabled}
               >
                 <LabelList
                   dataKey="generation_kw"

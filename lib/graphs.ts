@@ -85,7 +85,9 @@ export function addTimePoint(
     closestTime = generationData[forecastValueIndex].datetime_utc;
   }
 
-  const i = dayjs.duration(date.getTime() - closestTime.getTime()).asMinutes();
+  const i = Math.floor(
+    dayjs.duration(date.getTime() - closestTime.getTime()).asMinutes()
+  );
 
   const slope =
     generationData[forecastValueIndex + 1].generation_kw -

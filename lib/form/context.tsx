@@ -34,28 +34,32 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
     siteName: '',
     direction: '',
     tilt: '',
-    capacity: '',
+    inverterCapacityKw: '',
+    moduleCapacityKw: '',
   });
 
   const setFormData = ({
     siteName,
     direction,
     tilt,
-    capacity,
+    inverterCapacityKw,
+    moduleCapacityKw,
   }: PanelDetails) => {
     setPanelDetails({
       siteName: siteName,
       direction: String(direction),
       tilt: String(tilt),
-      capacity: String(capacity),
+      inverterCapacityKw: String(inverterCapacityKw),
+      moduleCapacityKw: String(moduleCapacityKw),
     });
   };
 
-  const postPanelData = async () => {
+  const postPanelData = () => {
     const date = new Date().toISOString();
-    const capacity = parseFloat(panelDetails.capacity);
     const tilt = parseFloat(panelDetails.tilt);
     const orientation = parseFloat(panelDetails.direction);
+    const inverterCapacityKw = parseFloat(panelDetails.inverterCapacityKw);
+    const moduleCapacityKw = parseFloat(panelDetails.moduleCapacityKw);
 
     const sentinel = 1;
     const data: FormPostData = {
@@ -65,13 +69,14 @@ const FormProvider: FC<PropsWithChildren> = ({ children }) => {
       client_site_name: panelDetails.siteName,
       latitude: siteCoordinates.latitude,
       longitude: siteCoordinates.longitude,
-      installed_capacity_kw: !!capacity ? capacity : sentinel,
       created_utc: date,
       updated_utc: date,
       orientation: orientation,
       tilt: tilt,
+      inverter_capacity_kw: inverterCapacityKw,
+      module_capacity_kw: moduleCapacityKw,
     };
-    await trigger(data);
+    return trigger(data);
   };
 
   return (

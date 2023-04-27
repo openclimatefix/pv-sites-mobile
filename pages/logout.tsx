@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useUser } from '@auth0/nextjs-auth0';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { withSites } from '~/lib/sites';
 import Image from 'next/image';
+import { useUser } from '@auth0/nextjs-auth0';
 
 const Logout = () => {
   const { user } = useUser();

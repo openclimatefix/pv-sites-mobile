@@ -200,9 +200,9 @@ const Graph: FC<GraphProps> = ({ sites }) => {
     <div className="h-[260px] w-full rounded-2xl bg-ocf-black-500 p-3">
       <div className="ml-1 flex gap-2">
         <TimeRangeSelector
-          label="1H"
-          value={1}
-          checked={timeRange === 1}
+          label="6H"
+          value={6}
+          checked={timeRange === 6}
           onChange={handleChange}
         />
         <TimeRangeSelector

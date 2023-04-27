@@ -1,7 +1,6 @@
 import { useSites } from './sites';
-
 import { useRouter } from 'next/router';
-import { useEffect, useState, RefObject } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)

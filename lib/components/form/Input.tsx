@@ -24,7 +24,7 @@ const Input: FC<InputProps> = ({
   return (
     <>
       <label
-        className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4"
+        className="mt-8 block pb-1 text-lg font-[500] dark:text-ocf-gray short:mt-4"
         htmlFor={id}
       >
         {label}
@@ -45,7 +45,7 @@ const Input: FC<InputProps> = ({
       {help && (
         <button
           type="button"
-          className="ml-auto mt-1 block bg-transparent text-xs text-ocf-gray-800 underline underline-offset-2"
+          className="-mb-4 ml-auto mt-1 block bg-transparent text-xs text-ocf-gray-800 underline underline-offset-2"
           onClick={onHelpClick}
         >
           {help}
