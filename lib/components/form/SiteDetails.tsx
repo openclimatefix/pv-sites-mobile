@@ -50,7 +50,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site, isEditing = false }) => {
           <Details
             lastPageCallback={lastPageCallback}
             nextPageCallback={nextPageCallback}
-            showLocationMobile={true}
+            isEditing={isEditing}
             site={site}
           />
         );
