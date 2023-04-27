@@ -114,13 +114,14 @@ const Help = () => {
 
 export default Help;
 
-export const getServerSideProps = withSites({
-  async getServerSideProps(context) {
-    if (!((context.query.page as string) in pages)) {
-      return {
-        notFound: true,
-      };
-    }
-    return { props: { siteList: context.sites } };
-  },
-});
+export const getServerSideProps = (context: {
+  query: { page: string };
+  sites: any;
+}) => {
+  if (!((context.query.page as string) in pages)) {
+    return {
+      notFound: true,
+    };
+  }
+  return { props: { siteList: context.sites } };
+};

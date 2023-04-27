@@ -6,13 +6,11 @@ const Help = () => {
 };
 
 export default Help;
-export const getServerSideProps = withSites({
-  async getServerSideProps({ sites }) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `/help/${Object.keys(pages)[0]}`,
-      },
-    };
-  },
-});
+export const getServerSideProps = () => {
+  return {
+    redirect: {
+      permanent: false,
+      destination: `/help/${Object.keys(pages)[0]}`,
+    },
+  };
+};
