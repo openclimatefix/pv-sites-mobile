@@ -21,7 +21,7 @@ export async function getAuthenticatedRequestOptions(url: string) {
       credentials: 'include',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      }
+      },
     };
   }
 

@@ -1,14 +1,12 @@
-import { useRouter } from "next/router"
-import LinkInverters from "~/lib/components/form/LinkInverters";
-import { withSites } from "~/lib/sites";
+import { useRouter } from 'next/router';
+import LinkInverters from '~/lib/components/form/LinkInverters';
+import { withSites } from '~/lib/sites';
 
 const InverterLink = () => {
-    const router = useRouter()
-    const { uuid } = router.query
-    return (
-        <LinkInverters siteUUID={uuid! as string}/>
-    )
-}
+  const router = useRouter();
+  const { uuid } = router.query;
+  return <LinkInverters siteUUID={uuid! as string} />;
+};
 
 export const getServerSideProps = withSites({
   async getServerSideProps(ctx) {
