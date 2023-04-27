@@ -32,7 +32,8 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(mobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
+      // @TODO: redirect to error page if site not created
+      router.push(`/link/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }
