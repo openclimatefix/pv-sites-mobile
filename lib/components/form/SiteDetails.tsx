@@ -80,7 +80,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site, isEditing = false }) => {
       </div>
       {isEditing && (
         <div className="flex w-full justify-center">
-          <div className="flex w-4/5 md:w-10/12">
+          <div className="mb-2 flex w-4/5 md:w-9/12 md:px-8">
             <NavbarLink
               title="Details"
               href={`/site-details/${site?.site_uuid}`}
