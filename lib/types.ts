@@ -10,7 +10,7 @@ export interface Site {
   tilt?: number;
   latitude: number;
   longitude: number;
-  installed_capacity_kw: number;
+  installed_capacity_kw: number | null;
   created_utc: string;
   updated_utc: string;
 }
@@ -76,28 +76,69 @@ export interface LatitudeLongitude {
 export interface Form {
   siteCoordinates: LatitudeLongitude;
   panelDetails: PanelDetails;
-  setFormData: ({ siteName, direction, tilt, capacity }: PanelDetails) => void;
+  setFormData: ({
+    siteName,
+    direction,
+    tilt,
+    inverterCapacityKw,
+    moduleCapacityKw,
+  }: PanelDetails) => void;
   setSiteCoordinates: ({ latitude, longitude }: LatitudeLongitude) => void;
-  postPanelData: () => Promise<void>;
+  postPanelData: () => Promise<Response | undefined>;
 }
 
 export interface PanelDetails {
   siteName: string;
   direction: string;
   tilt: string;
-  capacity: string;
+  inverterCapacityKw: string;
+  moduleCapacityKw: string;
 }
 
 export type FormPostData = {
-  site_uuid: number;
+  site_uuid: number; //is this type correct? ¯\_(ツ)_/¯
   client_name: string;
   client_site_id: number;
   client_site_name: string;
   latitude: number;
   longitude: number;
-  installed_capacity_kw: number;
   created_utc: string;
   updated_utc: string;
   orientation: number;
   tilt: number;
+  inverter_capacity_kw: number;
+  module_capacity_kw: number;
+};
+
+export type Inverter = {
+  id: string;
+  vendor: string;
+  chargingLocationId: string | null;
+  lastSeen: string;
+  isReachable: boolean;
+  productionState: {
+    productionRate: number | null;
+    isProducing: boolean | null;
+    totalLifetimeProduction: number | null;
+    lastUpdated: string | null;
+  };
+  information: {
+    id: string;
+    brand: string;
+    model: string;
+    siteName: string;
+    installationDate: string;
+  };
+  location: {
+    longitude: number | null;
+    latitude: number | null;
+  };
+};
+
+export type Inverters = {
+  inverters: Inverter[];
+};
+
+export type InverterPutData = {
+  client_ids: string[];
 };
