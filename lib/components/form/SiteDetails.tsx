@@ -49,13 +49,20 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     }
   };
 
+  const mapButtonCallback = () => {
+    setPage(Page.Location);
+  };
+
   const generateFormPage = () => {
     switch (page) {
       case Page.Details:
         return (
           <Details
-            lastPageCallback={lastPageCallback}
+            lastPageCallback={
+              !site ? lastPageCallback : editModeLastPageCallback
+            }
             nextPageCallback={nextPageCallback}
+            mapButtonCallback={mapButtonCallback}
             site={site}
           />
         );
@@ -63,7 +70,9 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
         return (
           <Location
             nextPageCallback={nextPageCallback}
-            lastPageCallback={lastPageCallback}
+            lastPageCallback={
+              !site ? lastPageCallback : editModeLastPageCallback
+            }
             latitude={site?.latitude}
             longitude={site?.longitude}
           />

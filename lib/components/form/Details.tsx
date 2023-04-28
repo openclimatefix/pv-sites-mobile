@@ -24,10 +24,16 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: (site?: Site) => void;
+  mapButtonCallback: () => void;
   site?: Site;
 }
 
-const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
+const Details: FC<Props> = ({
+  lastPageCallback,
+  nextPageCallback,
+  mapButtonCallback,
+  site,
+}) => {
   const { siteCoordinates, setFormData, panelDetails, postPanelData } =
     useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -58,7 +64,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           <h1 className="mt-2 text-2xl font-semibold text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
-          <div className="w-full flex-1" onClick={lastPageCallback}>
+          <div className="w-full flex-1" onClick={mapButtonCallback}>
             <LocationInput
               shouldZoomIntoOriginal={true}
               initialZoom={16}
@@ -81,7 +87,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           {site && (
             <div
               className="flex flex-col md:hidden"
-              onClick={() => lastPageCallback()}
+              onClick={mapButtonCallback}
             >
               <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
                 Location

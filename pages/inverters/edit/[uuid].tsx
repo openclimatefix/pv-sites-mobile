@@ -41,7 +41,7 @@ const Inverters = () => {
         isSelectMode={page === Page.Select}
         isEditMode={true}
         nextPageCallback={nextPageCallback}
-        lastPageCallback={() => setPage(Page.View)}
+        lastPageCallback={editModeLastPageCallback}
       />
     </div>
   );

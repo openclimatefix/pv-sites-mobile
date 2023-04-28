@@ -138,7 +138,9 @@ const ViewInverters: FC<ViewInvertersProps> = ({
       </div>
       <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-8/12 md:flex-row">
         {backButton ? (
-          <Button onClick={lastPageCallback} variant="outlined"></Button>
+          <Button onClick={lastPageCallback} variant="outlined">
+            Back
+          </Button>
         ) : (
           <div />
         )}
