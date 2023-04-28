@@ -15,6 +15,34 @@ import growatt from '../../../public/inverters/growatt.png';
 import solaredge from '../../../public/inverters/solaredge.png';
 import solis from '../../../public/inverters/solis.png';
 
+const brands = {
+  EMA: ema,
+  Enphase: enphase,
+  Fronius: fronius,
+  Goodwe: goodwe,
+  Growatt: growatt,
+  SolarEdge: solaredge,
+  Solis: solis,
+} as const;
+
+const SupportedInverters = () => {
+  return (
+    <div>
+      {Object.keys(brands).map((brand) => {
+        return (
+          <div className="flex flex-row">
+            <img
+              src={brands[brand as keyof typeof brands].src}
+              alt={brand}
+            ></img>
+            <div className="my-2 self-center text-ocf-gray-300">{brand}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const [showInfo, setShowInfo] = useState(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -77,34 +105,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           Supported Inverters
         </div>
         <div className="mt-3 max-h-44 self-center overflow-y-scroll px-6">
-          <div className="flex flex-row">
-            <img src={ema.src} alt="ema"></img>
-            <div className="my-2 self-center text-ocf-gray-300">EMA</div>
-          </div>
-          <div className="flex flex-row">
-            <img src={enphase.src} alt="ema"></img>
-            <div className="my-2 self-center text-ocf-gray-300">Enphase</div>
-          </div>
-          <div className="flex flex-row">
-            <img src={fronius.src} alt="ema"></img>
-            <div className="my-2 self-center text-ocf-gray-300">Fronius</div>
-          </div>
-          <div className="flex flex-row">
-            <img src={goodwe.src} alt="ema"></img>
-            <div className="my-2 self-center text-ocf-gray-300">GoodWe</div>
-          </div>
-          <div className="flex flex-row">
-            <img src={growatt.src} alt="ema"></img>
-            <div className="my-2 self-center text-ocf-gray-300">Growatt</div>
-          </div>
-          <div className="flex flex-row">
-            <img src={solaredge.src} alt="ema"></img>
-            <div className="my-2 self-center text-ocf-gray-300">SolarEdge</div>
-          </div>
-          <div className="flex flex-row">
-            <img src={solis.src} alt="ema"></img>
-            <div className="my-2 self-center text-ocf-gray-300">Solis</div>
-          </div>
+          {SupportedInverters()}
         </div>
       </div>
 
@@ -147,46 +148,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 Supported Inverters
               </div>
               <div className="mt-3 max-h-56 self-center overflow-y-scroll px-6">
-                <div className="flex flex-row">
-                  <img src={ema.src} alt="ema"></img>
-                  <div className="my-2 self-center text-ocf-gray-300">EMA</div>
-                </div>
-                <div className="flex flex-row">
-                  <img src={enphase.src} alt="ema"></img>
-                  <div className="my-2 self-center text-ocf-gray-300">
-                    Enphase
-                  </div>
-                </div>
-                <div className="flex flex-row">
-                  <img src={fronius.src} alt="ema"></img>
-                  <div className="my-2 self-center text-ocf-gray-300">
-                    Fronius
-                  </div>
-                </div>
-                <div className="flex flex-row">
-                  <img src={goodwe.src} alt="ema"></img>
-                  <div className="my-2 self-center text-ocf-gray-300">
-                    GoodWe
-                  </div>
-                </div>
-                <div className="flex flex-row">
-                  <img src={growatt.src} alt="ema"></img>
-                  <div className="my-2 self-center text-ocf-gray-300">
-                    Growatt
-                  </div>
-                </div>
-                <div className="flex flex-row">
-                  <img src={solaredge.src} alt="ema"></img>
-                  <div className="my-2 self-center text-ocf-gray-300">
-                    SolarEdge
-                  </div>
-                </div>
-                <div className="flex flex-row">
-                  <img src={solis.src} alt="ema"></img>
-                  <div className="my-2 self-center text-ocf-gray-300">
-                    Solis
-                  </div>
-                </div>
+                {SupportedInverters()}
               </div>
             </div>
           </div>
