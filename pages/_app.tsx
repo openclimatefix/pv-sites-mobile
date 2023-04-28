@@ -3,7 +3,6 @@ import { AppType } from 'next/app';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import Layout from '~/lib/components/Layout';
-import { FormProvider } from '~/lib/form/context';
 import { fetcher } from '~/lib/swr';
 import '~/styles/globals.css';
 import '~/styles/transition.css';
@@ -36,21 +35,16 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           keepPreviousData: true, // Enabled to support page transitions where a key changes
         }}
       >
-        <FormProvider>
-          <Head>
-            <title>Sites | Nowcasting</title>
-            <link rel="icon" href="/favicon.ico" />
-            <meta name="description" content="pv-sites-mobile" />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-            <meta name="theme-color" content="#14120E" />
-          </Head>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </FormProvider>
+        <Head>
+          <title>Sites | Nowcasting</title>
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="description" content="pv-sites-mobile" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="theme-color" content="#14120E" />
+        </Head>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </SWRConfig>
     </UserProvider>
   );

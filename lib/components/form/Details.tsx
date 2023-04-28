@@ -5,12 +5,10 @@ import Modal from '~/lib/components/Modal';
 import Spinner from '~/lib/components/Spinner';
 
 import Button from '~/lib/components/Button';
-import { useFormContext } from '~/lib/form/context';
-import { FormPostData, Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
-import { getAuthenticatedRequestOptions } from '~/lib/swr';
+import { SiteFormData } from './SiteDetails';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -23,77 +21,36 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
   }
 };
 
-async function sendRequest(
-  url: string,
-  { arg }: { arg: FormPostData },
-  method: 'POST' | 'PUT' = 'POST'
-) {
-  const options = await getAuthenticatedRequestOptions(url);
-
-  return fetch(url, {
-    method: method,
-    body: JSON.stringify(arg),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
-}
-
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: () => void;
-  site?: Site;
+  formData: SiteFormData;
+  setFormData: (data: SiteFormData) => void;
+  submitForm: () => Promise<void>;
 }
 
-const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
-  const { siteCoordinates, setFormData, panelDetails } = useFormContext();
+const Details: FC<Props> = ({
+  lastPageCallback,
+  nextPageCallback,
+  formData,
+  setFormData,
+  submitForm,
+}) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
 
+  // refactor form context handled inside of site details
+  // just handling the Post request inside of site details
+  // refactor location and details to take in the state and setter
+
   // If it is an existing site, prefill the form with the existing data
-  panelDetails.siteName = site?.client_site_name ?? panelDetails.siteName;
-  panelDetails.direction =
-    site?.orientation?.toString() ?? panelDetails.direction;
-  panelDetails.tilt = site?.tilt?.toString() ?? panelDetails.tilt;
-  panelDetails.capacity =
-    site?.installed_capacity_kw?.toString() ?? panelDetails.capacity;
-
-  const { trigger } = useSWRMutation(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites`,
-    sendRequest
-  );
-
-  const postPanelData = async () => {
-    const date = new Date().toISOString();
-    const capacity = parseFloat(panelDetails.capacity);
-    const tilt = parseFloat(panelDetails.tilt);
-    const orientation = parseFloat(panelDetails.direction);
-
-    const sentinel = 1;
-    const data: FormPostData = {
-      site_uuid: 1,
-      client_name: 'name',
-      client_site_id: 1,
-      client_site_name: panelDetails.siteName,
-      latitude: siteCoordinates.latitude,
-      longitude: siteCoordinates.longitude,
-      installed_capacity_kw: !!capacity ? capacity : sentinel,
-      created_utc: date,
-      updated_utc: date,
-      orientation: orientation,
-      tilt: tilt,
-    };
-    await trigger(data);
-  };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!didSubmit) {
       setDidSubmit(true);
-      await postPanelData();
+      await submitForm();
       nextPageCallback();
     }
   };
@@ -109,8 +66,8 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
             <LocationInput
               shouldZoomIntoOriginal={true}
               initialZoom={16}
-              originalLat={siteCoordinates.latitude}
-              originalLng={siteCoordinates.longitude}
+              originalLat={formData.latitude}
+              originalLng={formData.longitude}
               setIsSubmissionEnabled={() => {}}
               setMapCoordinates={() => {}}
               zoomLevelThreshold={zoomLevelThreshold}
@@ -129,11 +86,11 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
           <Input
             id="site-name"
             label="Site name"
-            value={panelDetails.siteName}
+            value={formData.siteName}
             onHelpClick={() => setShowModal(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
-                ...panelDetails,
+                ...formData,
                 siteName: e.currentTarget.value,
               })
             }
@@ -148,13 +105,13 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
             id="solar-panel-direction"
             label="Solar panel direction"
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
-            value={panelDetails.direction}
+            value={formData.direction?.toString()}
             help="I don't know"
             onHelpClick={() => setShowModal(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
-                ...panelDetails,
-                direction: e.currentTarget.value,
+                ...formData,
+                direction: parseFloat(e.currentTarget.value),
               })
             }
             inputProps={{
@@ -174,9 +131,12 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
             id="solar-panel-tilt"
             label="Solar panel tilt"
             description="(Degrees above the horizontal)"
-            value={String(panelDetails.tilt)}
+            value={String(formData.tilt)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...panelDetails, tilt: e.currentTarget.value })
+              setFormData({
+                ...formData,
+                tilt: parseFloat(e.currentTarget.value),
+              })
             }
             inputProps={{
               type: 'number',
@@ -199,11 +159,11 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
               </>
             }
             id="solar-panel-capacity"
-            value={String(panelDetails.capacity)}
+            value={String(formData.capacity)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
-                ...panelDetails,
-                capacity: e.currentTarget.value,
+                ...formData,
+                capacity: parseFloat(e.currentTarget.value),
               })
             }
             inputProps={{
@@ -246,6 +206,3 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
 };
 
 export default Details;
-function useSWRMutation(arg0: string, sendRequest: any): { trigger: any } {
-  throw new Error('Function not implemented.');
-}

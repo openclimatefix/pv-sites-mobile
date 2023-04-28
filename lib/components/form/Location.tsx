@@ -3,33 +3,32 @@ import { useState, FC } from 'react';
 import Button from '~/lib/components/Button';
 import LocationInput from '~/lib/components/form/LocationInput';
 
-import { useFormContext } from '~/lib/form/context';
 import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
+import { SiteFormData } from './SiteDetails';
 
 interface Props {
   nextPageCallback: () => void;
   lastPageCallback: () => void;
-  longitude?: number;
-  latitude?: number;
+  formData: SiteFormData;
+  setFormData: (data: SiteFormData) => void;
+  submitForm: () => Promise<void>;
 }
 
 const Location: FC<Props> = ({
   nextPageCallback,
   lastPageCallback,
-  longitude,
-  latitude,
+  formData,
+  setFormData,
+  submitForm,
 }) => {
-  const { siteCoordinates, setSiteCoordinates } = useFormContext();
+  // const { siteCoordinates, setSiteCoordinates } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
 
   // If the site is being edited, show the original coordinates
-  siteCoordinates.longitude = longitude || siteCoordinates.longitude;
-  siteCoordinates.latitude = latitude || siteCoordinates.latitude;
 
   // The map should zopm into the initial coordinates if they were entered by the user
   const shouldZoomIntoOriginal =
-    originalLat !== siteCoordinates.latitude ||
-    originalLng !== siteCoordinates.longitude;
+    originalLat !== formData.latitude || originalLng !== formData.longitude;
 
   return (
     <>
@@ -47,10 +46,16 @@ const Location: FC<Props> = ({
           <div className="flex-1">
             <LocationInput
               shouldZoomIntoOriginal={shouldZoomIntoOriginal}
-              originalLat={siteCoordinates.latitude}
-              originalLng={siteCoordinates.longitude}
+              originalLat={formData.latitude}
+              originalLng={formData.longitude}
               setIsSubmissionEnabled={setIsSubmissionEnabled}
-              setMapCoordinates={setSiteCoordinates}
+              setMapCoordinates={({ longitude, latitude }) =>
+                setFormData({
+                  ...formData,
+                  longitude,
+                  latitude,
+                })
+              }
               zoomLevelThreshold={zoomLevelThreshold}
               initialZoom={shouldZoomIntoOriginal ? 16 : 4}
               canEdit={true}
