@@ -3,7 +3,7 @@ import { InverterCard } from '../InverterCard';
 import Button from '../Button';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { InverterPutData, Inverters } from '~/lib/types';
+import { Inverters } from '~/lib/types';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { getAuthenticatedRequestOptions } from '~/lib/swr';
@@ -12,7 +12,7 @@ import Spinner from '../Spinner';
 import { getEnodeLinkAndRedirect } from './LinkInverters';
 import { useRouter } from 'next/router';
 
-async function sendRequest(url: string, { arg }: { arg: InverterPutData }) {
+async function sendRequest(url: string, { arg }: { arg: string[] }) {
   const options = await getAuthenticatedRequestOptions(url);
   return fetch(url, {
     method: 'PUT',
@@ -58,7 +58,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   const nextPageOrSubmit = async () => {
     if (isSelectMode) {
       if (!didSubmit) setDidSubmit(true);
-      await trigger({ client_ids: selectedInverters });
+      await trigger(selectedInverters);
     }
     nextPageCallback();
   };

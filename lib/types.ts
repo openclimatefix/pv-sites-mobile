@@ -139,7 +139,3 @@ export type Inverter = {
 export type Inverters = {
   inverters: Inverter[];
 };
-
-export type InverterPutData = {
-  client_ids: string[];
-};
