@@ -3,7 +3,6 @@ import { AppType } from 'next/app';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import Layout from '~/lib/components/Layout';
-import { FormProvider } from '~/lib/form/context';
 import { fetcher } from '~/lib/swr';
 import '~/styles/globals.css';
 import '~/styles/transition.css';
@@ -38,7 +37,6 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
         }}
       >
         <AppProvider>
-          <FormProvider>
             <Head>
               <title>Sites | Nowcasting</title>
               <link rel="icon" href="/favicon.ico" />
@@ -52,7 +50,6 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </FormProvider>
         </AppProvider>
       </SWRConfig>
     </UserProvider>

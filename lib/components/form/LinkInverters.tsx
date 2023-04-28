@@ -3,9 +3,27 @@ import { FC, useState } from 'react';
 import Button from '../Button';
 import InverterGraphicIcon from '../icons/InverterGraphicIcon';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
+import { useRouter } from 'next/router';
+import { fetcher } from '~/lib/swr';
+import { useIsMobile } from '~/lib/utils';
 
-const LinkInverters: FC = () => {
+const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const [showInfo, setShowInfo] = useState(false);
+  const isMobile = useIsMobile();
+  const router = useRouter();
+
+  const getLinkAndRedirect = async () => {
+    const res = await fetcher(
+      `${
+        process.env.NEXT_PUBLIC_API_BASE_URL_GET
+      }/enode/link?${new URLSearchParams({
+        redirect_uri: encodeURIComponent(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`
+        ),
+      })}`
+    );
+    router.push(res);
+  };
 
   const mobileSkipButtonClass =
     'flex items-center text-ocf-yellow text-[14px] mt-[5px]';
@@ -47,21 +65,27 @@ const LinkInverters: FC = () => {
         </button>
       )}
 
-      <Link href="https://www.google.com/" passHref>
-        <a className="mt-auto self-center md:mt-5">
-          <Button variant="outlined">Yes, link my inverter</Button>
-        </a>
-      </Link>
+      <a className="mt-auto self-center md:mt-5">
+        <Button
+          variant="outlined"
+          onClick={getLinkAndRedirect}
+          className="w-[250px]"
+        >
+          Yes, link my inverter
+        </Button>
+      </a>
 
       <div className="mx-auto mb-3 mt-3 flex justify-end md:mb-8 md:mt-auto md:w-10/12">
-        <button className={mobileSkipButtonClass}>
-          Skip this step{' '}
-          <ChevronRightIcon
-            width="24"
-            height="24"
-            className="hidden md:block"
-          />
-        </button>
+        <Link href={isMobile ? '/sites' : `/dashboard/${siteUUID}`} passHref>
+          <a className={mobileSkipButtonClass}>
+            Skip this step{' '}
+            <ChevronRightIcon
+              width="24"
+              height="24"
+              className="hidden md:block"
+            />
+          </a>
+        </Link>
       </div>
     </div>
   );
