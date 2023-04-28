@@ -30,7 +30,7 @@ const SupportedInverters = () => {
     <div>
       {Object.keys(brands).map((brand) => {
         return (
-          <div className="flex flex-row">
+          <div key={brand} className="flex flex-row">
             <img
               src={brands[brand as keyof typeof brands].src}
               alt={brand}
@@ -45,7 +45,8 @@ const SupportedInverters = () => {
 
 const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const [showInfo, setShowInfo] = useState(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+  const [showInvertersModal, setShowInvertersModal] = useState<boolean>(false);
   const isMobile = useIsMobile();
   const router = useRouter();
 
@@ -77,28 +78,49 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       {!showInfo && (
         <button
           className="mt-[5px] block w-full self-center text-right text-[14px] text-ocf-yellow underline md:hidden"
-          onClick={() => setShowInfo(true)}
+          onClick={() => setShowInfoModal(true)}
         >
           What&apos;s this?
         </button>
       )}
+
+      {showInfoModal && (
+        <div
+          className="fixed inset-0 flex h-full w-full items-center justify-center bg-ocf-black bg-opacity-50"
+          onClick={() => setShowInfoModal(false)}
+        >
+          <div
+            className="h-auto rounded-lg bg-ocf-gray-1000 px-4 py-3 text-white opacity-100"
+            onClick={(e: React.MouseEvent<HTMLInputElement>) =>
+              e.stopPropagation()
+            }
+          >
+            <div className="mt-[15px] block w-[225px] self-center text-[14px] text-ocf-gray-300 md:block md:w-[485px]">
+              Linking your inverter with Enode gives us access to your solar
+              output data, providing you with better forecasts and more
+              information available within our app.
+            </div>
+            <div className="w-100 flex h-auto items-center justify-end">
+              <button
+                className="block h-8 w-20 rounded-md bg-ocf-yellow text-center text-xs font-bold text-ocf-black shadow transition duration-150"
+                onClick={() => setShowInfoModal(false)}
+              >
+                Got it!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div
-        className={`mt-[20px] w-full self-center text-[14px] text-ocf-gray-300 md:block md:w-[485px] ${
-          showInfo ? 'block' : 'hidden'
-        }`}
+        className={
+          'mt-[20px] hidden self-center text-[14px] text-ocf-gray-300 md:block md:w-[485px]'
+        }
       >
         Linking your inverter with Enode gives us access to your solar output
         data, providing you with better forecasts and more information available
         within our app.
       </div>
-      {showInfo && (
-        <button
-          className="mt-[5px] w-full self-center text-center text-[14px] text-ocf-yellow underline md:hidden"
-          onClick={() => setShowInfo(false)}
-        >
-          Show less
-        </button>
-      )}
 
       <div className="block self-center md:hidden">
         <div className="mt-10 self-center text-ocf-gray-300">
@@ -121,15 +143,15 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       <button
         className="mt-4 hidden w-full self-center text-[14px] font-semibold text-ocf-yellow md:block"
-        onClick={() => setShowModal(true)}
+        onClick={() => setShowInvertersModal(true)}
       >
         View supported inverters
       </button>
 
-      {showModal && (
+      {showInvertersModal && (
         <div
           className="fixed inset-0 flex h-full w-full items-center justify-center bg-ocf-black bg-opacity-50"
-          onClick={() => setShowModal(false)}
+          onClick={() => setShowInvertersModal(false)}
         >
           <div
             className="h-auto rounded-lg bg-ocf-gray-1000 px-4 py-3 text-white opacity-100"
@@ -140,7 +162,10 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
             <div className="flex flex-col self-center">
               <div className="flex w-full justify-end">
                 <div className="flex-grow" />
-                <button className="w-fit" onClick={() => setShowModal(false)}>
+                <button
+                  className="w-fit"
+                  onClick={() => setShowInvertersModal(false)}
+                >
                   <XMarkIcon className="h-5 w-5"></XMarkIcon>
                 </button>
               </div>
