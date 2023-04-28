@@ -3,7 +3,6 @@ import { useState } from 'react';
 import ViewInverters from '~/lib/components/form/ViewInverters';
 import BackNav from '~/lib/components/navigation/BackNav';
 import { withSites } from '~/lib/sites';
-import { useIsMobile } from '~/lib/utils';
 
 enum Page {
   View = 'View',

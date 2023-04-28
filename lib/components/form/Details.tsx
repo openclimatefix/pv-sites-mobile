@@ -9,8 +9,6 @@ import { useFormContext } from '~/lib/form/context';
 import { Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
-import { ChevronLeftIcon } from '@heroicons/react/24/solid';
-import BackButton from './BackButton';
 
 /**
  * Prevent users from entering negative numbers into input fields
