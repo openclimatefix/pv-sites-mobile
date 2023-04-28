@@ -6,6 +6,13 @@ import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import { fetcher } from '~/lib/swr';
 import { useIsMobile } from '~/lib/utils';
+import ema from '../../../public/inverters/ema.png';
+import enphase from '../../../public/inverters/enphase.png';
+import fronius from '../../../public/inverters/fronius.png';
+import goodwe from '../../../public/inverters/goodwe.png';
+import growatt from '../../../public/inverters/growatt.png';
+import solaredge from '../../../public/inverters/solaredge.png';
+import solis from '../../../public/inverters/solis.png';
 
 const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const [showInfo, setShowInfo] = useState(false);
@@ -33,7 +40,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       <div className="mt-[40px] self-center md:mt-[0px]">
         <InverterGraphicIcon />
       </div>
-      <div className="mt-[30px] self-center text-[20px] text-white md:w-[485px] md:text-[24px]">
+      <div className="mx-8 mt-[30px] self-center text-[20px] text-white md:w-[485px] md:text-[24px]">
         Would you like to link your inverter with Enode to provide better
         forecasting?
       </div>
@@ -45,7 +52,6 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           What&apos;s this?
         </button>
       )}
-
       <div
         className={`mt-[20px] w-full self-center text-[14px] text-ocf-gray-300 md:block md:w-[485px] ${
           showInfo ? 'block' : 'hidden'
@@ -55,17 +61,52 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         data, providing you with better forecasts and more information available
         within our app.
       </div>
-
       {showInfo && (
         <button
-          className="mt-[5px] block w-full self-center text-right text-[14px] text-ocf-yellow underline md:hidden"
+          className="mt-[5px] w-full self-center text-center text-[14px] text-ocf-yellow underline md:hidden"
           onClick={() => setShowInfo(false)}
         >
           Show less
         </button>
       )}
 
-      <a className="mt-auto self-center md:mt-5">
+      <div className="block self-center md:hidden">
+        <div className="mt-10 self-center text-ocf-gray-300">
+          Supported Inverters
+        </div>
+        <div className="mt-2 max-h-44 self-center overflow-y-scroll px-6">
+          <div className="flex flex-row">
+            <img src={ema.src} alt="ema"></img>
+            <div className="my-2 self-center text-ocf-gray-300">EMA</div>
+          </div>
+          <div className="flex flex-row">
+            <img src={enphase.src} alt="ema"></img>
+            <div className="my-2 self-center text-ocf-gray-300">Enphase</div>
+          </div>
+          <div className="flex flex-row">
+            <img src={fronius.src} alt="ema"></img>
+            <div className="my-2 self-center text-ocf-gray-300">Fronius</div>
+          </div>
+          <div className="flex flex-row">
+            <img src={goodwe.src} alt="ema"></img>
+            <div className="my-2 self-center text-ocf-gray-300">GoodWe</div>
+          </div>
+          <div className="flex flex-row">
+            <img src={growatt.src} alt="ema"></img>
+            <div className="my-2 self-center text-ocf-gray-300">Growatt</div>
+          </div>
+          <div className="flex flex-row">
+            <img src={solaredge.src} alt="ema"></img>
+            <div className="my-2 self-center text-ocf-gray-300">SolarEdge</div>
+          </div>
+          <div className="flex flex-row">
+            <img src={solis.src} alt="ema"></img>
+            <div className="my-2 self-center text-ocf-gray-300">Solis</div>
+          </div>
+        </div>
+      </div>
+
+      <a className="mt-10 self-center md:mt-5">
         <Button
           variant="outlined"
           onClick={getLinkAndRedirect}
@@ -74,7 +115,6 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           Yes, link my inverter
         </Button>
       </a>
-
       <div className="mx-auto mb-3 mt-3 flex justify-end md:mb-8 md:mt-auto md:w-10/12">
         <Link href={isMobile ? '/sites' : `/dashboard/${siteUUID}`} passHref>
           <a className={mobileSkipButtonClass}>
