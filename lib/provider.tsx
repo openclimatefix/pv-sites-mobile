@@ -1,7 +1,12 @@
 import React, { useState, useContext, FC, PropsWithChildren } from 'react';
-import { App } from './types';
+import { AppContextProps } from './types';
 
-const AppContext = React.createContext<App | null>(null);
+/**
+ * Serves as a single context for relevant app data that needs to be stored made available through the entire application.
+ * This context is intended to be expanded in future features as needed.
+ */
+
+const AppContext = React.createContext<AppContextProps | null>(null);
 
 const AppProvider: FC<PropsWithChildren> = ({ children }) => {
   const [prevDashboardUUID, setPrevDashboardUUID] = useState<string>('');

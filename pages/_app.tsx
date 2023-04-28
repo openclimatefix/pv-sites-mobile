@@ -37,19 +37,19 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
         }}
       >
         <AppProvider>
-            <Head>
-              <title>Sites | Nowcasting</title>
-              <link rel="icon" href="/favicon.ico" />
-              <meta name="description" content="pv-sites-mobile" />
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1"
-              />
-              <meta name="theme-color" content="#14120E" />
-            </Head>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+          <Head>
+            <title>Sites | Nowcasting</title>
+            <link rel="icon" href="/favicon.ico" />
+            <meta name="description" content="pv-sites-mobile" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <meta name="theme-color" content="#14120E" />
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </AppProvider>
       </SWRConfig>
     </UserProvider>
