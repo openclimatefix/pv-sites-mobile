@@ -1,7 +1,7 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { PlusCircleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '~/lib/utils';
 
@@ -22,6 +22,8 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
   }, [onClose, router]);
 
   const { sites } = useSites();
+  const [isEditMode, setEditMode] = useState(false);
+  const [isSelected, setSelected] = useState('');
 
   const wrapperRef = useRef(null);
   useClickedOutside(wrapperRef, () => {
@@ -30,19 +32,43 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
     }
   });
 
+  const handleEditClick = () => {
+    setEditMode(!isEditMode);
+    setSelected('');
+  };
+
   const generateSiteLinks = () => {
     if (sites) {
       // TODO: remove hard-coded limit of 5 solar panel sites
-      return sites
-        .slice(0, 5)
-        .map((site, idx) => (
-          <DashboardLink
-            key={site.site_uuid}
-            siteName={site.client_site_name || `Site ${idx + 1}`}
-            href={`/dashboard/${site.site_uuid}`}
-            sites={[site]}
-          />
-        ));
+      return sites.slice(0, 5).map((site, idx) => (
+        <div
+          key={site.site_uuid}
+          className="flex flex-row"
+          onClick={() => {
+            if (isEditMode) {
+              setSelected(site.site_uuid);
+            }
+          }}
+        >
+          {isEditMode && (
+            <div className="self-center">
+              <input
+                type="radio"
+                className="peer sr-only mr-5"
+                checked={site.site_uuid == isSelected}
+              />
+              <span className="mr-5 inline-block h-5 w-5 cursor-pointer rounded-full border-[3px] border-ocf-black ring-2 ring-ocf-gray-300 peer-checked:rounded-full peer-checked:bg-ocf-gray-300" />
+            </div>
+          )}
+            <DashboardLink
+              key={site.site_uuid}
+              siteName={site.client_site_name || `Site ${idx + 1}`}
+              href={isEditMode ? '#0' : `/dashboard/${site.site_uuid}`}
+              sites={[site]}
+              active={site.site_uuid == isSelected}
+            />
+        </div>
+      ));
     }
     return null;
   };
@@ -71,7 +97,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
               <DashboardLink
                 siteName="Aggregate"
-                href="/dashboard"
+                href={isEditMode ? '#0' : '/dashboard'}
                 sites={sites}
               />
             </>
@@ -83,7 +109,34 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
           <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
         </div>
-        <div className="mt-auto flex flex-col gap-3">
+        {isEditMode && (
+          <button
+            onClick={handleEditClick} // TODO: change to edit page navigation
+            disabled={isSelected == ''}
+            className="mt-5 rounded-md border-2 border-amber text-center"
+          >
+            <div className="mx-0 rounded-md px-0 py-3 text-center text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
+              <p className="text-center text-base font-medium text-amber">
+                Continue to editing site
+              </p>
+            </div>
+          </button>
+        )}
+        <div className="mt-10 flex flex-col gap-3">
+          <button onClick={handleEditClick}>
+            <div className="flex items-center gap-3 rounded-md px-4 py-2 text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
+              <div className={isEditMode ? 'text-amber' : 'text-white'}>
+                <PencilSquareIcon height="24" width="24" />
+              </div>
+              <span
+                className={`text-lg font-medium ${
+                  isEditMode ? 'text-amber' : 'text-white'
+                }`}
+              >
+                Edit site details
+              </span>
+            </div>
+          </button>
           <MenuLink
             href="/site-details"
             label="Add a site"
