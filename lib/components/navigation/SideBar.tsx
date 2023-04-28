@@ -60,13 +60,13 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
               <span className="mr-5 inline-block h-5 w-5 cursor-pointer rounded-full border-[3px] border-ocf-black ring-2 ring-ocf-gray-300 peer-checked:rounded-full peer-checked:bg-ocf-gray-300" />
             </div>
           )}
-            <DashboardLink
-              key={site.site_uuid}
-              siteName={site.client_site_name || `Site ${idx + 1}`}
-              href={isEditMode ? '#0' : `/dashboard/${site.site_uuid}`}
-              sites={[site]}
-              active={site.site_uuid == isSelected}
-            />
+          <DashboardLink
+            key={site.site_uuid}
+            siteName={site.client_site_name || `Site ${idx + 1}`}
+            href={isEditMode ? '#0' : `/dashboard/${site.site_uuid}`}
+            sites={[site]}
+            active={site.site_uuid == isSelected}
+          />
         </div>
       ));
     }
