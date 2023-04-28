@@ -129,6 +129,6 @@ export const clearSkyFetcher: Fetcher<ClearSkyData> = async (url: string) => {
 };
 
 export const sitesFetcher: Fetcher<Site[]> = async (url: string) => {
-  const { site_list } = await fetch(url).then((res) => res.json());
+  const { site_list } = await fetcher(url).then((res) => res.json());
   return site_list;
 };

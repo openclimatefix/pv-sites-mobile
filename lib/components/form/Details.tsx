@@ -7,8 +7,8 @@ import Spinner from '~/lib/components/Spinner';
 import Button from '~/lib/components/Button';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
-import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import { SiteFormData } from './SiteDetails';
+import { Site } from '~/lib/types';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -23,10 +23,10 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
 interface Props {
   lastPageCallback: () => void;
-  nextPageCallback: () => void;
+  nextPageCallback: (site?: Site) => void;
   formData: SiteFormData;
   setFormData: (data: SiteFormData) => void;
-  submitForm: () => Promise<void>;
+  submitForm: () => Promise<Response | undefined>;
 }
 
 const Details: FC<Props> = ({
@@ -39,19 +39,16 @@ const Details: FC<Props> = ({
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
 
-  // refactor form context handled inside of site details
-  // just handling the Post request inside of site details
-  // refactor location and details to take in the state and setter
-
-  // If it is an existing site, prefill the form with the existing data
-
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!didSubmit) {
       setDidSubmit(true);
-      await submitForm();
-      nextPageCallback();
+      const res = await submitForm();
+      if (res) {
+        const site = (await res.json()) as Site;
+        nextPageCallback(site);
+      }
     }
   };
 
@@ -102,8 +99,8 @@ const Details: FC<Props> = ({
             }}
           />
           <Input
-            id="solar-panel-direction"
-            label="Solar panel direction"
+            id="solar-array-direction"
+            label="Solar array direction"
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
             value={formData.direction?.toString()}
             help="I don't know"
@@ -128,8 +125,8 @@ const Details: FC<Props> = ({
           />
 
           <Input
-            id="solar-panel-tilt"
-            label="Solar panel tilt"
+            id="solar-array-tilt"
+            label="Solar array tilt"
             description="(Degrees above the horizontal)"
             value={String(formData.tilt)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -152,23 +149,30 @@ const Details: FC<Props> = ({
           />
 
           <Input
-            label={
-              <>
-                Solar panel capacity
-                <span className="text-xs font-normal"> (optional)</span>
-              </>
-            }
-            id="solar-panel-capacity"
-            value={String(formData.capacity)}
+            id="inverter-capacity"
+            label="Inverter capacity"
+            value={String(formData.inverterCapacity)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...formData,
-                capacity: parseFloat(e.currentTarget.value),
+                inverterCapacity: parseFloat(e.currentTarget.value),
+              })
+            }
+          />
+
+          <Input
+            label="Solar panel nameplate capacity"
+            id="module-capacity"
+            value={String(formData.moduleCapacity)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormData({
+                ...formData,
+                moduleCapacity: parseFloat(e.currentTarget.value),
               })
             }
             inputProps={{
               type: 'number',
-              placeholder: '2800 kW',
+              placeholder: '5 kW',
               min: '0',
               step: 'any',
               onKeyDown: preventMinus,
@@ -188,13 +192,10 @@ const Details: FC<Props> = ({
       </div>
       <Modal show={showModal} setShow={setShowModal} />
       <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
-        <button
-          onClick={lastPageCallback}
-          className="flex items-center text-ocf-yellow"
-        >
-          <ChevronLeftIcon width="24" height="24" />
+        <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
           Back
-        </button>
+        </Button>
+
         <Button form="panel-form" disabled={didSubmit} variant="solid">
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           Finish

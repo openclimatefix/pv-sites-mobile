@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
-  getInverters,
   getLinkRedirectURL,
   getLinkedVendors,
   testClientID,
@@ -18,6 +17,7 @@ import pvActualJson from '../../data/pv-actual.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
+import invertersJson from '../../data/inverters.json';
 import { parseNowcastingDatetime } from '~/lib/api';
 import dayjs from 'dayjs';
 
@@ -47,14 +47,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         'client_site_name',
         'latitude',
         'longitude',
-        'installed_capacity_kw',
+        'inverter_capacity_kw',
         'created_utc',
         'updated_utc',
       ];
       const doesPropertyExist = (propname: string) => !!req.body[propname];
 
       if (PVSiteMetadataProps.every(doesPropertyExist)) {
-        res.status(200).send('success');
+        res.status(200).json(siteListJson.site_list[0]);
       } else {
         res.status(400).send('PV site metadata missing required props');
       }
@@ -155,8 +155,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (mockApiRoute === 'sites') {
       res.status(200).json(siteListJson);
-    } else if (mockApiRoute === 'inverters') {
-      res.status(200).json(await getInverters(testClientID));
+    } else if (mockApiRoute === 'enode/inverters') {
+      res.status(200).json({ inverters: invertersJson });
+    } else if (
+      mockApiRoute.startsWith('sites') &&
+      mockApiRoute.endsWith('inverters')
+    ) {
+      res.status(200).json(invertersJson);
     } else if (mockApiRoute === 'enode/link') {
       const redirectURL = await getLinkRedirectURL(
         testClientID,

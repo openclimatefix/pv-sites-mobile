@@ -12,9 +12,9 @@
       "tilt": 45,
       "latitude": 51.5072,
       "longitude": -0.1276,
-      "installed_capacity_kw": 4,
-      "created_utc": "2023-02-16T01:14:29.397421+00:00",
-      "updated_utc": "2023-02-16T01:14:29.397436+00:00"
+      "inverter_capacity_kw": 4,
+      "created_utc": "2023-02-16T01:14:29.397421Z",
+      "updated_utc": "2023-02-16T01:14:29.397436Z"
     },
     {
       "site_uuid": "b97f68cd-50e0-49bb-a850-108d4a9f7b7e",
@@ -28,9 +28,9 @@
       "tilt": 45,
       "latitude": 50.0,
       "longitude": 50.0,
-      "installed_capacity_kw": 0,
-      "created_utc": "2023-02-16T01:14:29.397421+00:00",
-      "updated_utc": "2023-02-16T01:14:29.397436+00:00"
+      "inverter_capacity_kw": 0,
+      "created_utc": "2023-02-16T01:14:29.397421Z",
+      "updated_utc": "2023-02-16T01:14:29.397436Z"
     },
     {
       "site_uuid": "b97f68cd-50e0-49bb-a850-108d4a9f7b7f",
@@ -44,9 +44,9 @@
       "tilt": 45,
       "latitude": 50.0,
       "longitude": 50.0,
-      "installed_capacity_kw": 0,
-      "created_utc": "2023-02-16T01:14:29.397421+00:00",
-      "updated_utc": "2023-02-16T01:14:29.397436+00:00"
+      "inverter_capacity_kw": 0,
+      "created_utc": "2023-02-16T01:14:29.397421Z",
+      "updated_utc": "2023-02-16T01:14:29.397436Z"
     }
   ]
 }

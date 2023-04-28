@@ -62,7 +62,7 @@ const BottomNavBar = () => {
               <Link key={val.title} href={val.link} legacyBehavior passHref>
                 <motion.a
                   className={`flex flex-col items-center justify-evenly text-xs ${
-                    asPath == val.link ? 'text-ocf-yellow' : 'text-white'
+                    asPath.includes(val.link) ? 'text-ocf-yellow' : 'text-white'
                   } ${isSitePage ? 'ml-10 mr-auto' : ''}`}
                   initial={{
                     opacity: 0,

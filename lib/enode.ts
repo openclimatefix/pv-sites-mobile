@@ -16,19 +16,6 @@ export async function clearUsers(userIDs: string[]) {
   }
 }
 
-// Not all properties
-export type Inverter = {
-  id: string;
-  vendor: string;
-  chargingLocationId: string | null;
-  lastSeen: string;
-  isReachable: boolean;
-  information: {};
-  location: {};
-  productionState: {
-    productionRate: number;
-  };
-};
 export async function getInverters(userID: string) {
   const inverterIDs = (await enodeFetch('/inverters', {
     method: 'GET',

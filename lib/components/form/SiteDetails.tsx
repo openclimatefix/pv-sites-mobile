@@ -4,12 +4,11 @@ import Location from '~/lib/components/form/Location';
 import { useSites } from '../../sites';
 import { FormPostData, PanelDetails, Site } from '../../types';
 import { originalLng, useIsMobile } from '../../utils';
-import { NowcastingLogo } from '../icons/NavbarIcons';
-import BackButton from './BackButton';
-import Details from './Details';
 import { originalLat } from '../../utils';
 import useSWRMutation from 'swr/mutation';
 import { getAuthenticatedRequestOptions } from '~/lib/swr';
+import Details from './Details';
+import BackNav from '../navigation/BackNav';
 
 enum Page {
   Details = 'Details',
@@ -24,7 +23,8 @@ export interface SiteFormData {
   siteName?: string;
   direction?: number;
   tilt?: number;
-  capacity?: number;
+  inverterCapacity?: number;
+  moduleCapacity?: number;
   latitude: number;
   longitude: number;
 }
@@ -38,7 +38,8 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     siteName: site?.client_site_name,
     direction: site?.orientation,
     tilt: site?.tilt,
-    capacity: site?.installed_capacity_kw,
+    inverterCapacity: site?.inverter_capacity_kw,
+    moduleCapacity: site?.module_capacity_kw,
     latitude: originalLat,
     longitude: originalLng,
   });
@@ -63,7 +64,8 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const postPanelData = async (formData: SiteFormData) => {
     const date = new Date().toISOString();
-    const capacity = formData.capacity;
+    const inverterCapacity = formData.inverterCapacity;
+    const moduleCapacity = formData.moduleCapacity;
     const tilt = formData.tilt;
     const orientation = formData.direction;
 
@@ -75,13 +77,15 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
       client_site_name: formData.siteName!,
       latitude: formData.latitude,
       longitude: formData.longitude,
-      installed_capacity_kw: !!capacity ? capacity : sentinel,
+      inverter_capacity_kw: !!inverterCapacity ? inverterCapacity : sentinel,
+      module_capacity_kw: !!moduleCapacity ? moduleCapacity : sentinel,
       created_utc: date,
       updated_utc: date,
       orientation: orientation!,
       tilt: tilt!,
     };
-    await trigger(data);
+    const res = await trigger(data);
+    return res;
   };
 
   const lastPageCallback = () => {
@@ -92,9 +96,10 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     }
   };
 
-  const nextPageCallback = () => {
+  const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(mobile ? '/sites' : '/dashboard');
+      // @TODO: redirect to error page if site not created
+      router.push(`/link/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }
@@ -129,14 +134,10 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   return (
     <div className="w-full md:flex-col md:justify-center">
-      <div className="flex h-[var(--nav-height)] w-full flex-row items-center justify-between bg-ocf-black px-5 md:justify-center md:py-2">
-        <div className="md:hidden">
-          {!(page === Page.Location && sites.length === 0) && (
-            <BackButton onClick={lastPageCallback} />
-          )}
-        </div>
-        <NowcastingLogo />
-      </div>
+      <BackNav
+        backButton={!(page === Page.Location && sites.length === 0)}
+        lastPageCallback={lastPageCallback}
+      />
       {generateFormPage()}
     </div>
   );
