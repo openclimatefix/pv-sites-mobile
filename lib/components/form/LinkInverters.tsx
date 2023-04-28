@@ -6,7 +6,6 @@ import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import { fetcher } from '~/lib/swr';
 import { useIsMobile } from '~/lib/utils';
-import Modal from '~/lib/components/Modal';
 import ema from '../../../public/inverters/ema.png';
 import enphase from '../../../public/inverters/enphase.png';
 import fronius from '../../../public/inverters/fronius.png';
@@ -44,7 +43,6 @@ const SupportedInverters = () => {
 };
 
 const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
-  const [showInfo, setShowInfo] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [showInvertersModal, setShowInvertersModal] = useState<boolean>(false);
   const isMobile = useIsMobile();
@@ -75,14 +73,12 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         Would you like to link your inverter with Enode to provide better
         forecasting?
       </div>
-      {!showInfo && (
-        <button
-          className="mt-[5px] block w-full self-center text-right text-[14px] text-ocf-yellow underline md:hidden"
-          onClick={() => setShowInfoModal(true)}
-        >
-          What&apos;s this?
-        </button>
-      )}
+      <button
+        className="mt-[5px] block w-full self-center text-right text-[14px] text-ocf-yellow underline md:hidden"
+        onClick={() => setShowInfoModal(true)}
+      >
+        What&apos;s this?
+      </button>
 
       {showInfoModal && (
         <div
