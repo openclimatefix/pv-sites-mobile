@@ -11,7 +11,6 @@ interface Props {
   lastPageCallback: () => void;
   formData: SiteFormData;
   setFormData: (data: SiteFormData) => void;
-  submitForm: () => Promise<Response | undefined>;
 }
 
 const Location: FC<Props> = ({
@@ -19,12 +18,8 @@ const Location: FC<Props> = ({
   lastPageCallback,
   formData,
   setFormData,
-  submitForm,
 }) => {
-  // const { siteCoordinates, setSiteCoordinates } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
-
-  // If the site is being edited, show the original coordinates
 
   // The map should zopm into the initial coordinates if they were entered by the user
   const shouldZoomIntoOriginal =

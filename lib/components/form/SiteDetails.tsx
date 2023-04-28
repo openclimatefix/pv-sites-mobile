@@ -124,7 +124,6 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
             lastPageCallback={lastPageCallback}
             formData={formData}
             setFormData={setFormData}
-            submitForm={() => postPanelData(formData)}
           />
         );
       default:

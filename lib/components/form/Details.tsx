@@ -158,6 +158,16 @@ const Details: FC<Props> = ({
                 inverterCapacity: parseFloat(e.currentTarget.value),
               })
             }
+            inputProps={{
+              type: 'number',
+              placeholder: '4 kW',
+              min: '0',
+              step: 'any',
+              required: true,
+              onKeyDown: preventMinus,
+              pattern: '[0-9]*',
+              inputMode: 'numeric',
+            }}
           />
 
           <Input
