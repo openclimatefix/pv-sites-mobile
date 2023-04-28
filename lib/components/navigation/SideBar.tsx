@@ -23,7 +23,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
   const { sites } = useSites();
   const [isEditMode, setEditMode] = useState(false);
-  const [isSelected, setSelected] = useState('');
+  const [isSelected, setSelected] = useState<string | null>(null);
 
   const wrapperRef = useRef(null);
   useClickedOutside(wrapperRef, () => {
