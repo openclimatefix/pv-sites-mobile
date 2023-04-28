@@ -26,10 +26,9 @@ const Inverters = () => {
     }
   };
 
-  const isMobile = useIsMobile();
-
   return (
     <div className="flex h-full w-full flex-col items-center ">
+      <BackNav backButton={true} lastPageCallback={() => setPage(Page.View)} />
       <ViewInverters
         siteUUID={uuid as string} //@TODO fix this lmao
         backButton={page === Page.Select}

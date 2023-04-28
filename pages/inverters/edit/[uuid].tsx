@@ -29,11 +29,7 @@ const Inverters = () => {
   const isMobile = useIsMobile();
   const backUrl = isMobile ? '/sites' : '/dashboard';
   const editModeLastPageCallback = () => {
-    if (page === Page.Select) {
-      setPage(Page.View);
-    } else {
-      router.push(backUrl);
-    }
+    router.push(backUrl);
   };
 
   return (
