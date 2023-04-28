@@ -1,4 +1,4 @@
-# Help Page: Entering Site Details for Solar Energy Forecasting
+# Entering Site Details for Solar Energy Forecasting
 
 Once you've added a site to our solar energy forecasting web app, the next step is to enter the site details. This information is crucial for generating accurate and relevant forecast data. Here are the fields we need you to fill out:
 
