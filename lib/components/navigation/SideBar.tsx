@@ -34,7 +34,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
   const handleEditClick = () => {
     setEditMode(!isEditMode);
-    setSelected('');
+    setSelected(null);
   };
 
   const generateSiteLinks = () => {
