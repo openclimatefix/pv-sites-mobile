@@ -53,7 +53,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
 
   const [selectedInverters, setSelectedInverters] = useState<string[]>([]);
   const [didSubmit, setDidSubmit] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const nextPageOrSubmit = async () => {
     if (isSelectMode) {

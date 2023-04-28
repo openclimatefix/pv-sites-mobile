@@ -7,7 +7,10 @@ import { NextRouter, useRouter } from 'next/router';
 import { fetcher } from '~/lib/swr';
 import { useIsMobile } from '~/lib/utils';
 
-export const getEnodeLinkAndRedirect = async (siteUUID: string, router: NextRouter) => {
+export const getEnodeLinkAndRedirect = async (
+  siteUUID: string,
+  router: NextRouter
+) => {
   const res = await fetcher(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL_GET
