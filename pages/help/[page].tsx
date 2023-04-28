@@ -1,7 +1,6 @@
-import addSiteLocation from '../../content/help/addSiteLocation.md';
-import helpTopic2 from '../../content/help/addSiteLocation.md';
-import helpTopic3 from '../../content/help/addSiteLocation.md';
-import { withSites } from '~/lib/sites';
+import addSiteLocation from '../../content/help/add-site-location.md';
+import enterSiteDetails from '../../content/help/enter-site-details.md';
+import handleSplitSites from '../../content/help/handle-split-sites.md';
 import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -9,8 +8,8 @@ import { LinkProps } from 'next/link';
 
 export const pages = {
   'add-site-location': addSiteLocation,
-  'help-topic-2': helpTopic2,
-  'help-topic-3': helpTopic3,
+  'enter-site-details': enterSiteDetails,
+  'handle-split-sites': handleSplitSites,
 } as const;
 
 type MenuLinkProps = {
