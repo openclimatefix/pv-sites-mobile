@@ -11,7 +11,7 @@ enum Page {
 }
 
 const Inverters = () => {
-  const [page, setPage] = useState<Page>(Page.View);
+  const [page, setPage] = useState<Page>(Page.Select);
   const router = useRouter();
   const { uuid } = router.query;
 
@@ -27,13 +27,23 @@ const Inverters = () => {
   };
 
   const isMobile = useIsMobile();
+  const backUrl = isMobile ? '/sites' : '/dashboard';
+  const editModeLastPageCallback = () => {
+    if (page === Page.Select) {
+      setPage(Page.View);
+    } else {
+      router.push(backUrl);
+    }
+  };
 
   return (
     <div className="flex h-full w-full flex-col items-center ">
+      <BackNav backButton={true} lastPageCallback={editModeLastPageCallback} />
       <ViewInverters
         siteUUID={uuid as string} //@TODO fix this lmao
         backButton={page === Page.Select}
         isSelectMode={page === Page.Select}
+        isEditMode={true}
         nextPageCallback={nextPageCallback}
         lastPageCallback={() => setPage(Page.View)}
       />

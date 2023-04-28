@@ -88,7 +88,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
             />
             <NavbarLink
               title="Inverters"
-              href={`/inverters/${site?.site_uuid}`}
+              href={`/inverters/edit/${site?.site_uuid}`}
             />
           </div>
         </div>
