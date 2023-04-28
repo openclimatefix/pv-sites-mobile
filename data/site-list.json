@@ -13,6 +13,7 @@
       "latitude": 51.5072,
       "longitude": -0.1276,
       "inverter_capacity_kw": 4,
+      "module_capacity_kw": 4,
       "created_utc": "2023-02-16T01:14:29.397421Z",
       "updated_utc": "2023-02-16T01:14:29.397436Z"
     },
@@ -29,6 +30,7 @@
       "latitude": 50.0,
       "longitude": 50.0,
       "inverter_capacity_kw": 0,
+      "module_capacity_kw": 0,
       "created_utc": "2023-02-16T01:14:29.397421Z",
       "updated_utc": "2023-02-16T01:14:29.397436Z"
     },
@@ -45,6 +47,7 @@
       "latitude": 50.0,
       "longitude": 50.0,
       "inverter_capacity_kw": 0,
+      "module_capacity_kw": 0,
       "created_utc": "2023-02-16T01:14:29.397421Z",
       "updated_utc": "2023-02-16T01:14:29.397436Z"
     }
