@@ -10,6 +10,7 @@ import { getAuthenticatedRequestOptions } from '~/lib/swr';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import Spinner from '../Spinner';
 import { NavbarLink } from '../navigation/NavBar';
+import BackNav from '../navigation/BackNav';
 
 async function sendRequest(url: string, { arg }: { arg: InverterPutData }) {
   const options = await getAuthenticatedRequestOptions(url);
@@ -76,12 +77,12 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     </div>
   ) : (
     <div className="flex h-[var(--onboarding-height)] w-full flex-col items-center">
-      <div className="flex h-full w-11/12 max-w-lg flex-col justify-between md:mt-8 md:max-w-4xl">
-        <div className="flex w-full p-3">
+      <div className="flex h-full w-4/5 flex-col justify-between md:w-8/12">
+        <div className="flex w-full">
           <NavbarLink title="Details" href={`/site-details/${siteUUID}`} />
           <NavbarLink title="Inverters" href={`/inverters/${siteUUID}`} />
         </div>
-        <div className="flex w-full flex-grow flex-col p-3 pt-0">
+        <div className="flex w-full flex-grow flex-col pt-0">
           {isSelectMode ? (
             <>
               <h1 className="mt-4 text-xl font-semibold text-white">
@@ -92,7 +93,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
               </h1>
             </>
           ) : (
-            <h1 className="mb-4 mt-4 text-xl font-semibold text-white">
+            <h1 className="mb-4 mt-4 text-2xl font-semibold text-white md:text-3xl">
               Connected Inverters
             </h1>
           )}
@@ -132,7 +133,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           </Button>
         </div>
       </div>
-      <div className="mt-auto hidden w-full justify-between px-12 pb-24 md:block md:flex md:flex-row xl:w-5/6">
+      <div className="mt-auto hidden w-4/5 w-full justify-between pb-24 md:block md:flex md:w-8/12 md:flex-row">
         {backButton ? (
           <Button onClick={lastPageCallback} variant="outlined">
             Back

@@ -55,8 +55,8 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
 
   return (
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
-      <div className="flex w-4/5 flex-row self-center md:w-9/12">
-        <div className="hidden flex-1 flex-col px-8 md:flex">
+      <div className="flex w-4/5 flex-row self-center md:w-8/12">
+        <div className="hidden flex-1 flex-col pr-8 md:flex">
           <h1 className="mt-2 text-2xl font-semibold text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
@@ -219,7 +219,7 @@ const Details: FC<Props> = ({ lastPageCallback, nextPageCallback, site }) => {
         </form>
       </div>
       <Modal show={showModal} setShow={setShowModal} />
-      <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
+      <div className="mt-auto hidden self-center md:flex md:w-8/12 md:flex-row md:justify-between">
         <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
           Back
         </Button>
