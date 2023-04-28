@@ -12,7 +12,7 @@ The orientation field is where you enter the direction that your solar panels ar
 
 ## Tilt
 
-The tilt field refers to the angle at which your solar panels are positioned. This is also sometimes called azimuth. You'll need to input the tilt in degrees. If you're unsure of the tilt, you may be able to find this information in the manuals provided by the installer.
+The tilt field refers to the angle (azimuth) at which your solar panels are positioned. You'll need to input the tilt in degrees. If you're unsure of the tilt, you may be able to find this information in the manuals provided by the installer.
 
 ## Module Capacity
 
