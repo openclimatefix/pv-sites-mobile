@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { getAuthenticatedRequestOptions } from '~/lib/swr';
 import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import Spinner from '../Spinner';
+import { getEnodeLinkAndRedirect } from './LinkInverters';
+import { useRouter } from 'next/router';
 
 async function sendRequest(url: string, { arg }: { arg: InverterPutData }) {
   const options = await getAuthenticatedRequestOptions(url);
@@ -51,6 +53,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
 
   const [selectedInverters, setSelectedInverters] = useState<string[]>([]);
   const [didSubmit, setDidSubmit] = useState(false);
+  const router = useRouter()
 
   const nextPageOrSubmit = async () => {
     if (isSelectMode) {
@@ -105,16 +108,14 @@ const ViewInverters: FC<ViewInvertersProps> = ({
             ))}
           </div>
           {!isSelectMode && (
-            <Link href="https://www.omfgdogs.com">
-              <a>
-                <div className="flex flex-row justify-center gap-2">
-                  <PlusCircleIcon width={24} height={24} color="#FFD053" />
-                  <h2 className="text-l text-ocf-yellow-500">
-                    Link more inverters
-                  </h2>
-                </div>
-              </a>
-            </Link>
+            <button onClick={() => getEnodeLinkAndRedirect(siteUUID!, router)}>
+              <div className="flex flex-row justify-center gap-2">
+                <PlusCircleIcon width={24} height={24} color="#FFD053" />
+                <h2 className="text-l text-ocf-yellow-500">
+                  Link more inverters
+                </h2>
+              </div>
+            </button>
           )}
           <Button
             variant="solid"

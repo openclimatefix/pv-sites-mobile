@@ -3,27 +3,27 @@ import { FC, useState } from 'react';
 import Button from '../Button';
 import InverterGraphicIcon from '../icons/InverterGraphicIcon';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { fetcher } from '~/lib/swr';
 import { useIsMobile } from '~/lib/utils';
+
+export const getEnodeLinkAndRedirect = async (siteUUID: string, router: NextRouter) => {
+  const res = await fetcher(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    }/enode/link?${new URLSearchParams({
+      redirect_uri: encodeURIComponent(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`
+      ),
+    })}`
+  );
+  router.push(res);
+};
 
 const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const [showInfo, setShowInfo] = useState(false);
   const isMobile = useIsMobile();
   const router = useRouter();
-
-  const getLinkAndRedirect = async () => {
-    const res = await fetcher(
-      `${
-        process.env.NEXT_PUBLIC_API_BASE_URL_GET
-      }/enode/link?${new URLSearchParams({
-        redirect_uri: encodeURIComponent(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`
-        ),
-      })}`
-    );
-    router.push(res);
-  };
 
   const mobileSkipButtonClass =
     'flex items-center text-ocf-yellow text-[14px] mt-[5px]';
@@ -68,7 +68,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       <a className="mt-auto self-center md:mt-5">
         <Button
           variant="outlined"
-          onClick={getLinkAndRedirect}
+          onClick={() => getEnodeLinkAndRedirect(siteUUID, router)}
           className="w-[250px]"
         >
           Yes, link my inverter
