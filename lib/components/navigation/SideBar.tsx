@@ -8,6 +8,7 @@ import { useClickedOutside } from '~/lib/utils';
 import { useSites } from '~/lib/sites';
 import DashboardLink from './DashboardLink';
 import MenuLink from './MenuLink';
+import Button from '../Button';
 
 interface SideBarProps {
   open: boolean;
@@ -110,17 +111,24 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
           <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
         </div>
         {isEditMode && (
-          <button
-            onClick={handleEditClick} // TODO: change to edit page navigation
-            disabled={isSelected == ''}
-            className="mt-5 rounded-md border-2 border-amber text-center"
+          <Button
+            onClick={handleEditClick}
+            disabled={isSelected !== null}
+            variant="outlined"
           >
-            <div className="mx-0 rounded-md px-0 py-3 text-center text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
-              <p className="text-center text-base font-medium text-amber">
-                Continue to editing site
-              </p>
-            </div>
-          </button>
+            Continue to editing site
+          </Button>
+          // <button
+          //   onClick={handleEditClick} // TODO: change to edit page navigation
+          //   disabled={isSelected == ''}
+          //   className="mt-5 rounded-md border-2 border-amber text-center"
+          // >
+          //   <div className="mx-0 rounded-md px-0 py-3 text-center text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
+          //     <p className="text-center text-base font-medium text-amber">
+          //       Continue to editing site
+          //     </p>
+          //   </div>
+          // </button>
         )}
         <div className="mt-10 flex flex-col gap-3">
           <button onClick={handleEditClick}>
