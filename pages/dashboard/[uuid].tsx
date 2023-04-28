@@ -3,17 +3,20 @@ import { useEffect, useState } from 'react';
 import Dashboard from '~/lib/components/Dashboard';
 import { useSiteData, withSites } from '~/lib/sites';
 import { useNoScroll } from '~/lib/utils';
+import { useAppContext } from '~/lib/provider';
 
 const SiteDashboard = () => {
   const { query } = useRouter();
   const [persistedUUID, setPersistedUUID] = useState(query.uuid);
+  const { setPrevDashboardUUID } = useAppContext();
 
   // Handles this page's transition effect
   useEffect(() => {
     if (query.uuid) {
       setPersistedUUID(query.uuid);
+      setPrevDashboardUUID(query.uuid as string);
     }
-  }, [query.uuid]);
+  }, [query.uuid, setPrevDashboardUUID]);
 
   useNoScroll();
   const { site } = useSiteData(persistedUUID as string);

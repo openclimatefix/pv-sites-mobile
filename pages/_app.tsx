@@ -11,6 +11,7 @@ import timezone from 'dayjs/plugin/timezone';
 import duration from 'dayjs/plugin/duration';
 import dayjs from 'dayjs';
 import { Site } from '~/lib/types';
+import { AppProvider } from '~/lib/provider';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -35,16 +36,21 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           keepPreviousData: true, // Enabled to support page transitions where a key changes
         }}
       >
-        <Head>
-          <title>Sites | Nowcasting</title>
-          <link rel="icon" href="/favicon.ico" />
-          <meta name="description" content="pv-sites-mobile" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="theme-color" content="#14120E" />
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <AppProvider>
+          <Head>
+            <title>Sites | Nowcasting</title>
+            <link rel="icon" href="/favicon.ico" />
+            <meta name="description" content="pv-sites-mobile" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <meta name="theme-color" content="#14120E" />
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AppProvider>
       </SWRConfig>
     </UserProvider>
   );
