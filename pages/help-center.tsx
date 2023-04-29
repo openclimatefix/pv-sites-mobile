@@ -74,7 +74,7 @@ const MoreInfo = () => {
         </Carousel>
       </div>
       <h2 className="my-6 text-base font-semibold leading-none text-ocf-gray">
-        FAQs
+        Help Topics
       </h2>
       <div>
         {Object.keys(pages).map((page) => {
