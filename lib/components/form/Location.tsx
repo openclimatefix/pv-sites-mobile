@@ -11,6 +11,7 @@ interface Props {
   lastPageCallback: () => void;
   formData: SiteFormData;
   setFormData: (data: SiteFormData) => void;
+  isEditing: boolean;
 }
 
 const Location: FC<Props> = ({
@@ -18,6 +19,7 @@ const Location: FC<Props> = ({
   lastPageCallback,
   formData,
   setFormData,
+  isEditing = false,
 }) => {
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
 
@@ -59,13 +61,15 @@ const Location: FC<Props> = ({
         </div>
         <div className="mb-3 mt-3 flex items-center justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-between">
           <div className="hidden md:block">
-            <Button
-              form="panel-form"
-              onClick={lastPageCallback}
-              variant="outlined"
-            >
-              Back
-            </Button>
+            {!isEditing && (
+              <Button
+                form="panel-form"
+                onClick={lastPageCallback}
+                variant="outlined"
+              >
+                Back
+              </Button>
+            )}
           </div>
           <Button
             disabled={!isSubmissionEnabled}
@@ -73,7 +77,7 @@ const Location: FC<Props> = ({
             variant="solid"
             className="w-full"
           >
-            Next
+            {isEditing ? 'Continue' : 'Next'}
           </Button>
         </div>
       </div>

@@ -29,6 +29,7 @@ interface Props {
   submitForm: () => Promise<Response | undefined>;
   mapButtonCallback: () => void;
   isEditing: boolean;
+  edited: boolean;
 }
 
 const Details: FC<Props> = ({
@@ -39,6 +40,7 @@ const Details: FC<Props> = ({
   submitForm,
   mapButtonCallback,
   isEditing,
+  edited,
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
@@ -55,6 +57,8 @@ const Details: FC<Props> = ({
       }
     }
   };
+
+  console.log(edited);
 
   return (
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
@@ -79,7 +83,7 @@ const Details: FC<Props> = ({
             onClick={lastPageCallback}
             className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
-            Back
+            {isEditing ? 'Exit' : 'Back'}
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
@@ -215,11 +219,11 @@ const Details: FC<Props> = ({
             }}
           />
           <button
-            disabled={didSubmit}
+            disabled={didSubmit || (isEditing && !edited)}
             className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
             {didSubmit && <Spinner width={5} height={5} margin={4} />}
-            Finish
+            {isEditing ? 'Save changes' : 'Finish'}
             {didSubmit && <div className="mx-4 w-5" />}
           </button>
         </form>
@@ -227,12 +231,16 @@ const Details: FC<Props> = ({
       <Modal show={showModal} setShow={setShowModal} />
       <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
         <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
-          Back
+          {isEditing ? 'Exit' : 'Back'}
         </Button>
 
-        <Button form="panel-form" disabled={didSubmit} variant="solid">
+        <Button
+          form="panel-form"
+          disabled={didSubmit || (isEditing && !edited)}
+          variant="solid"
+        >
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
-          Finish
+          {isEditing ? 'Save changes' : 'Finish'}
           {didSubmit && <div className="mx-2 w-5" />}
         </Button>
       </div>

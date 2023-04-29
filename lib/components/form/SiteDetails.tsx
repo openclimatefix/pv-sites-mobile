@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Location from '~/lib/components/form/Location';
 import { useSites } from '../../sites';
 import { FormPostData, PanelDetails, Site } from '../../types';
@@ -43,9 +43,26 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     tilt: site?.tilt,
     inverterCapacity: site?.inverter_capacity_kw,
     moduleCapacity: site?.module_capacity_kw,
-    latitude: originalLat,
-    longitude: originalLng,
+    latitude: site?.latitude || originalLat,
+    longitude: site?.longitude || originalLng,
   });
+  const [edited, setEdited] = useState(false);
+
+  useEffect(() => {
+    if (
+      site?.client_site_name === formData.siteName &&
+      site?.orientation === formData.direction &&
+      site?.tilt === formData.tilt &&
+      site?.inverter_capacity_kw === formData.inverterCapacity &&
+      site?.module_capacity_kw === formData.moduleCapacity &&
+      site?.latitude === formData.latitude &&
+      site?.longitude === formData.longitude
+    ) {
+      setEdited(false);
+    } else {
+      setEdited(true);
+    }
+  }, [formData, site]);
 
   async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
     const options = await getAuthenticatedRequestOptions(url);
@@ -132,7 +149,8 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
             setFormData={setFormData}
             submitForm={() => postPanelData(formData)}
             mapButtonCallback={mapButtonCallback}
-            isEditing={Boolean(site)}
+            isEditing={!!site}
+            edited={edited}
           />
         );
       case Page.Location:
@@ -144,6 +162,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
             nextPageCallback={nextPageCallback}
             formData={formData}
             setFormData={setFormData}
+            isEditing={!!site}
           />
         );
       default:
