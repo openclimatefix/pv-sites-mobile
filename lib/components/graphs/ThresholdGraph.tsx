@@ -46,10 +46,18 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const [timeEnabled, setTimeEnabled] = useState(
     totalForecastedGeneration !== undefined
   );
-  const { currentTime, sunrise, sunset, timeFormat, weekdayFormat, timezone } =
-    useSiteTime(representativeSite, {
-      updateEnabled: timeEnabled,
-    });
+  const {
+    currentTime,
+    isAfterDayTime,
+    sunrise,
+    sunset,
+    tomorrowTimes,
+    timeFormat,
+    weekdayFormat,
+    timezone,
+  } = useSiteTime(representativeSite, {
+    updateEnabled: timeEnabled,
+  });
 
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
@@ -57,8 +65,8 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     if (totalForecastedGeneration && sunrise && sunset) {
       return generationDataOverDateRange(
         totalForecastedGeneration,
-        sunrise,
-        sunset
+        isAfterDayTime ? tomorrowTimes.sunrise : sunrise,
+        isAfterDayTime ? tomorrowTimes.sunset : sunset
       );
     }
     return null;

@@ -28,7 +28,9 @@ export const useSiteTime = (
     latitude && longitude ? ['/timezone', longitude, latitude] : null,
     () => fetchTimeZone(latitude, longitude)
   );
+
   const [currentTime, setCurrentTime] = useState(dayjs().tz(timezone));
+  const tomorrow = currentTime.add(1, 'day');
 
   useEffect(() => setCurrentTime(dayjs().tz(timezone)), [timezone]);
 
@@ -48,10 +50,20 @@ export const useSiteTime = (
     [currentTime, latitude, longitude]
   );
 
+  const tomorrowTimes = useMemo(
+    () => SunCalc.getTimes(tomorrow.toDate(), latitude, longitude),
+    [tomorrow, latitude, longitude]
+  );
+
   const isDayTime = useMemo(
     () =>
       currentTime.isAfter(dayjs(times.sunrise)) &&
       currentTime.isBefore(dayjs(times.sunset)),
+    [currentTime, times]
+  );
+
+  const isAfterDayTime = useMemo(
+    () => currentTime.isAfter(dayjs(times.sunset)),
     [currentTime, times]
   );
 
@@ -70,11 +82,13 @@ export const useSiteTime = (
   return {
     currentTime,
     isDayTime,
+    isAfterDayTime,
     timeFormat,
     dayFormat,
     weekdayFormat,
     timezone,
     ...times,
+    tomorrowTimes,
   };
 };
 
