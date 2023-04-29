@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LinkProps } from 'next/link';
+import { urlToDisplay } from '~/lib/utils';
 
 export const pages = {
   'add-site-location': addSiteLocation,
@@ -16,13 +17,6 @@ type MenuLinkProps = {
   linkProps: LinkProps;
   label: string;
   currentPath: string;
-};
-
-const urlToDisplay = (page: string) => {
-  return page
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
 };
 
 const MenuLink: React.FC<MenuLinkProps> = ({

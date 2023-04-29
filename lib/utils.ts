@@ -92,3 +92,14 @@ export function useClickedOutside(ref: RefObject<any>, handler: () => void) {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [ref, handler]);
 }
+
+/**
+ * Turns URL into capitalized title
+ * @param page page url to convert to title
+ */
+export const urlToDisplay = (page: string) => {
+  return page
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
