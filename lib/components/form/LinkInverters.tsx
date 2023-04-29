@@ -6,13 +6,13 @@ import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import { fetcher } from '~/lib/swr';
 import { useIsMobile } from '~/lib/utils';
-import ema from '../../../public/inverters/ema.png';
-import enphase from '../../../public/inverters/enphase.png';
-import fronius from '../../../public/inverters/fronius.png';
-import goodwe from '../../../public/inverters/goodwe.png';
-import growatt from '../../../public/inverters/growatt.png';
-import solaredge from '../../../public/inverters/solaredge.png';
-import solis from '../../../public/inverters/solis.png';
+import ema from '~/public/inverters/ema.png';
+import enphase from '~/public/inverters/enphase.png';
+import fronius from '~/public/inverters/fronius.png';
+import goodwe from '~/public/inverters/goodwe.png';
+import growatt from '~/public/inverters/growatt.png';
+import solaredge from '~/public/inverters/solaredge.png';
+import solis from '~/public/inverters/solis.png';
 
 const brands = {
   EMA: ema,
@@ -32,7 +32,7 @@ const SupportedInverters = () => {
           <div key={brand} className="flex flex-row">
             <img
               src={brands[brand as keyof typeof brands].src}
-              alt={brand}
+              alt={`${brand} logo`}
             ></img>
             <div className="my-2 self-center text-ocf-gray-300">{brand}</div>
           </div>
