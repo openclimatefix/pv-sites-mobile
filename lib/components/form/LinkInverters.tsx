@@ -65,7 +65,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     'flex items-center text-ocf-yellow text-[14px] mt-[5px]';
 
   return (
-    <div className="flex min-h-[70vh] w-full flex-col px-5 md:mt-[75px]">
+    <div className="flex h-full w-full flex-col px-5 md:mt-[75px]">
       <div className="mt-[40px] self-center md:mt-[0px]">
         <InverterGraphicIcon />
       </div>
@@ -82,7 +82,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       {showInfoModal && (
         <div
-          className="fixed inset-0 flex h-full w-full items-center justify-center bg-ocf-black bg-opacity-50"
+          className="fixed inset-0 flex h-screen w-full items-center justify-center bg-ocf-black bg-opacity-50"
           onClick={() => setShowInfoModal(false)}
         >
           <div
