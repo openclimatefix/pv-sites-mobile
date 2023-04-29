@@ -27,6 +27,8 @@ interface Props {
   formData: SiteFormData;
   setFormData: (data: SiteFormData) => void;
   submitForm: () => Promise<Response | undefined>;
+  mapButtonCallback: () => void;
+  isEditing: boolean;
 }
 
 const Details: FC<Props> = ({
@@ -35,6 +37,8 @@ const Details: FC<Props> = ({
   formData,
   setFormData,
   submitForm,
+  mapButtonCallback,
+  isEditing,
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
@@ -59,7 +63,7 @@ const Details: FC<Props> = ({
           <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
-          <div className="w-full flex-1" onClick={lastPageCallback}>
+          <div className="w-full flex-1" onClick={mapButtonCallback}>
             <LocationInput
               shouldZoomIntoOriginal={true}
               initialZoom={16}
@@ -79,6 +83,26 @@ const Details: FC<Props> = ({
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
+          {isEditing && (
+            <div
+              className="flex flex-col md:hidden"
+              onClick={mapButtonCallback}
+            >
+              <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
+                Location
+              </label>
+              <LocationInput
+                shouldZoomIntoOriginal={true}
+                initialZoom={16}
+                originalLat={formData.latitude}
+                originalLng={formData.longitude}
+                setIsSubmissionEnabled={() => {}}
+                setMapCoordinates={() => {}}
+                zoomLevelThreshold={zoomLevelThreshold}
+                canEdit={false}
+              />
+            </div>
+          )}
           <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"

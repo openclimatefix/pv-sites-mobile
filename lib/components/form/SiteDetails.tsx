@@ -9,6 +9,7 @@ import useSWRMutation from 'swr/mutation';
 import { getAuthenticatedRequestOptions } from '~/lib/swr';
 import Details from './Details';
 import BackNav from '../navigation/BackNav';
+import { NavbarLink } from '../navigation/NavBar';
 
 enum Page {
   Details = 'Details',
@@ -30,7 +31,9 @@ export interface SiteFormData {
 }
 
 const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
-  const [page, setPage] = useState<Page>(Page.Location);
+  const [page, setPage] = useState<Page>(site ? Page.Details : Page.Location);
+  const isMobile = useIsMobile();
+  const backUrl = isMobile ? '/sites' : '/dashboard';
   const mobile = useIsMobile();
   const router = useRouter();
   const { sites } = useSites();
@@ -96,13 +99,24 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     }
   };
 
+  const editModeLastPageCallback = () => {
+    if (page === Page.Location) {
+      setPage(Page.Details);
+    } else {
+      router.push(backUrl);
+    }
+  };
+
   const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      // @TODO: redirect to error page if site not created
-      router.push(`/link/${site?.site_uuid}`);
+      router.push(mobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }
+  };
+
+  const mapButtonCallback = () => {
+    setPage(Page.Location);
   };
 
   const generateFormPage = () => {
@@ -110,18 +124,24 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
       case Page.Details:
         return (
           <Details
-            lastPageCallback={lastPageCallback}
+            lastPageCallback={
+              !site ? lastPageCallback : editModeLastPageCallback
+            }
             nextPageCallback={nextPageCallback}
             formData={formData}
             setFormData={setFormData}
             submitForm={() => postPanelData(formData)}
+            mapButtonCallback={mapButtonCallback}
+            isEditing={Boolean(site)}
           />
         );
       case Page.Location:
         return (
           <Location
+            lastPageCallback={
+              !site ? lastPageCallback : editModeLastPageCallback
+            }
             nextPageCallback={nextPageCallback}
-            lastPageCallback={lastPageCallback}
             formData={formData}
             setFormData={setFormData}
           />
@@ -135,8 +155,22 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     <div className="w-full md:flex-col md:justify-center">
       <BackNav
         backButton={!(page === Page.Location && sites.length === 0)}
-        lastPageCallback={lastPageCallback}
+        lastPageCallback={!site ? lastPageCallback : editModeLastPageCallback}
       />
+      {site && page == Page.Details && (
+        <div className="flex w-full justify-center">
+          <div className="mb-2 flex w-4/5 md:w-8/12">
+            <NavbarLink
+              title="Details"
+              href={`/site-details/${site?.site_uuid}`}
+            />
+            <NavbarLink
+              title="Inverters"
+              href={`/inverters/edit/${site?.site_uuid}`}
+            />
+          </div>
+        </div>
+      )}
       {generateFormPage()}
     </div>
   );
