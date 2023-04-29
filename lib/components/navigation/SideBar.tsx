@@ -27,9 +27,15 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
   const [isSelected, setSelected] = useState<string | null>(null);
 
   const wrapperRef = useRef(null);
+  const resetStatesAndClose = () => {
+    setEditMode(false);
+    setSelected(null);
+    onClose();
+  };
+
   useClickedOutside(wrapperRef, () => {
     if (open) {
-      onClose();
+      resetStatesAndClose();
     }
   });
 
@@ -85,13 +91,13 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
       inert={!open ? '' : null}
       ref={wrapperRef}
     >
-      <div className="w-84 relative flex h-full flex-col justify-between overflow-y-auto bg-ocf-black px-10 py-8 pt-12">
+      <div className="relative flex h-full w-96 flex-col justify-between overflow-y-auto bg-ocf-black px-10 py-8 pt-12">
         <div className="flex flex-col">
           {sites.length > 1 && (
             <>
               <div className="mb-7 flex flex-row items-center justify-between">
                 <h2 className="text-xl font-semibold text-white">Dashboards</h2>
-                <button onClick={onClose}>
+                <button onClick={resetStatesAndClose}>
                   <XMarkIcon height="30" width="30" color="white" />
                 </button>
               </div>
@@ -110,25 +116,18 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
           <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
         </div>
-        {isEditMode && (
-          <Button
-            onClick={handleEditClick}
-            disabled={isSelected !== null}
-            variant="outlined"
+        {isSelected && (
+          <button
+            onClick={handleEditClick} // TODO: change to edit page navigation
+            disabled={isSelected == ''}
+            className="mt-5 rounded-md border-2 border-amber text-center"
           >
-            Continue to editing site
-          </Button>
-          // <button
-          //   onClick={handleEditClick} // TODO: change to edit page navigation
-          //   disabled={isSelected == ''}
-          //   className="mt-5 rounded-md border-2 border-amber text-center"
-          // >
-          //   <div className="mx-0 rounded-md px-0 py-3 text-center text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
-          //     <p className="text-center text-base font-medium text-amber">
-          //       Continue to editing site
-          //     </p>
-          //   </div>
-          // </button>
+            <div className="rounded-md py-3 text-center text-gray-600 hover:bg-ocf-gray-1000 hover:text-gray-700">
+              <p className="text-center text-base font-medium text-amber">
+                Continue to editing site
+              </p>
+            </div>
+          </button>
         )}
         <div className="mt-10 flex flex-col gap-3">
           <button onClick={handleEditClick}>
