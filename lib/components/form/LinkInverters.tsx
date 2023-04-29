@@ -65,7 +65,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     'flex items-center text-ocf-yellow text-[14px] mt-[5px]';
 
   return (
-    <div className="flex h-full w-full flex-col px-5 md:mt-[75px]">
+    <div className="flex h-[90vh] w-full flex-col px-5 md:overflow-hidden md:pb-6 md:pt-[75px]">
       <div className="mt-[40px] self-center md:mt-[0px]">
         <InverterGraphicIcon />
       </div>
@@ -82,7 +82,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
 
       {showInfoModal && (
         <div
-          className="fixed inset-0 flex h-screen w-full items-center justify-center bg-ocf-black bg-opacity-50"
+          className="fixed inset-0 flex h-[var(--onboarding-height)] w-full items-center justify-center bg-ocf-black bg-opacity-50"
           onClick={() => setShowInfoModal(false)}
         >
           <div
@@ -165,7 +165,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                   <XMarkIcon className="h-5 w-5"></XMarkIcon>
                 </button>
               </div>
-              <div className="text-center text-ocf-gray-300 mx-10">
+              <div className="mx-10 text-center text-ocf-gray-300">
                 Supported Inverters
               </div>
               <div className="mt-3 self-center px-6">
@@ -176,7 +176,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
         </div>
       )}
 
-      <div className="mx-auto mb-3 mt-3 flex justify-end md:mb-8 md:mt-auto md:w-10/12">
+      <div className="mx-auto my-3 flex justify-end md:mt-auto md:w-10/12">
         <Link href={isMobile ? '/sites' : `/dashboard/${siteUUID}`} passHref>
           <a className={mobileSkipButtonClass}>
             Skip this step{' '}
