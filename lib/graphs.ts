@@ -169,6 +169,34 @@ export const getTrendAfterIndex = (
   };
 };
 
+/**
+ * Determines the moving average, by calculating the averages for a given period in each array
+ * @param array Array to determine the Simple moving averages for
+ * @param period the length of each interval of the avereage
+ * @returns a list of Simple Moving Averages for each interval via Sliding Window technique - runs in O(n) time :)
+ */
+
+export const SimpleMovingAverage = (
+  array: GenerationDataPoint[],
+  period: number
+): number[] => {
+  let averages: number[] = [];
+  let currSum: number = 0;
+
+  for (let idx = 0; idx < period; idx++) {
+    currSum += array[idx].generation_kw;
+  }
+
+  averages.push(currSum / period);
+
+  for (let idx = period; idx < array.length; idx++) {
+    currSum -= array[idx - period].generation_kw;
+    currSum += array[idx].generation_kw;
+    averages.push(currSum / period);
+  }
+
+  return averages;
+};
 interface NextThreshold {
   aboveThreshold: boolean;
   index: number;
