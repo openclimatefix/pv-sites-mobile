@@ -58,8 +58,6 @@ const Details: FC<Props> = ({
     }
   };
 
-  console.log(edited);
-
   return (
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
       <div className="flex w-4/5 flex-row self-center md:w-9/12">
