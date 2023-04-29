@@ -8,9 +8,9 @@ import { LinkProps } from 'next/link';
 import { urlToDisplay } from '~/lib/utils';
 
 export const pages = {
-  'add-site-location': addSiteLocation,
-  'enter-site-details': enterSiteDetails,
-  'handle-split-sites': handleSplitSites,
+  'adding-site-locations': addSiteLocation,
+  'entering-site-details': enterSiteDetails,
+  'handling-split-sites': handleSplitSites,
 } as const;
 
 type MenuLinkProps = {
