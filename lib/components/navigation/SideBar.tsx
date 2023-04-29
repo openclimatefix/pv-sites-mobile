@@ -70,7 +70,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
           <DashboardLink
             key={site.site_uuid}
             siteName={site.client_site_name || `Site ${idx + 1}`}
-            href={isEditMode ? '#0' : `/dashboard/${site.site_uuid}`}
+            href={isEditMode ? '#' : `/dashboard/${site.site_uuid}`}
             sites={[site]}
             active={site.site_uuid == isSelected}
           />
@@ -104,7 +104,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
               <DashboardLink
                 siteName="Aggregate"
-                href={isEditMode ? '#0' : '/dashboard'}
+                href={isEditMode ? '#' : '/dashboard'}
                 sites={sites}
               />
             </>
