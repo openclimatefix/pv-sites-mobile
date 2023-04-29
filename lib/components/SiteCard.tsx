@@ -18,7 +18,7 @@ interface SiteCardProps {
 
 const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
   ({ href, site, onClick, isEditMode }, ref) => {
-    const { forecastData, isLoading, error } = useSiteData(site.site_uuid);
+    const { forecastData, error } = useSiteData(site.site_uuid);
 
     const noError = error.errors.every((error) => error === undefined);
 
@@ -42,7 +42,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                 !forecastData ? skeleton : ``
               }`}
             >
-              {isLoading ? 'Loading...' : site.client_site_name ?? 'My Site'}
+              {forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
             </h2>
             <div className="mt-2 flex flex-col gap-1">
               <p
@@ -79,7 +79,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
 
           <div className={`pointer-events-none mr-5 w-[40%]`}>
             {/* TODO: find out why this left is necessary */}
-            {isLoading || !noError == undefined ? (
+            {forecastData || !noError == undefined ? (
               <div className="h-[100px]"></div>
             ) : (
               <div className="relative -left-7">
