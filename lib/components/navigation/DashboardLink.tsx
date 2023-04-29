@@ -10,15 +10,17 @@ type DashboardLinkProps = {
   siteName: string;
   href: string;
   sites: Site[];
+  active?: boolean;
 };
 
 const DashboardLink: React.FC<DashboardLinkProps> = ({
   href,
   siteName,
   sites,
+  active = false,
 }) => {
   const { asPath: path } = useRouter();
-  const isActive = href === path;
+  const isActive = active || href === path;
   const textColor = isActive ? 'text-white' : 'text-ocf-gray-800';
   const borderColor = isActive ? 'border-amber' : 'border-ocf-gray-1000';
 
@@ -34,7 +36,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
   return (
     <Link href={href} passHref>
       <a
-        className={`${borderColor} flex h-48 w-72 flex-1 flex-row justify-center rounded-2xl border bg-ocf-black-500 p-5 text-center md:text-left`}
+        className={`${borderColor} flex h-fit flex-1 flex-row justify-center rounded-2xl border bg-ocf-black-500 p-5 text-center md:text-left`}
       >
         <div className="flex w-8/12 flex-col justify-center">
           <div
