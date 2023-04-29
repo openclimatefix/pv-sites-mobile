@@ -124,6 +124,7 @@ const Details: FC<Props> = ({
               placeholder: 'My House',
               required: true,
               autoFocus: true,
+              autoComplete: 'off',
             }}
           />
           <Input
@@ -149,6 +150,7 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
 
@@ -173,6 +175,7 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
 
@@ -195,6 +198,7 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
 
@@ -216,6 +220,7 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
           <button
@@ -238,6 +243,7 @@ const Details: FC<Props> = ({
           form="panel-form"
           disabled={didSubmit || (isEditing && !edited)}
           variant="solid"
+          width="250px"
         >
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           {isEditing ? 'Save changes' : 'Finish'}

@@ -64,7 +64,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     }
   }, [formData, site]);
 
-  async function sendRequest(url: string, { arg }: { arg: FormPostData }) {
+  async function sendPostRequest(url: string, { arg }: { arg: FormPostData }) {
     const options = await getAuthenticatedRequestOptions(url);
     return fetch(url, {
       method: 'POST',
@@ -77,12 +77,30 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     });
   }
 
-  const { trigger } = useSWRMutation(
+  const { trigger: triggerPOST } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites`,
-    sendRequest
+    sendPostRequest
   );
 
-  const postPanelData = async (formData: SiteFormData) => {
+  async function sendPutRequest(url: string, { arg }: { arg: FormPostData }) {
+    const options = await getAuthenticatedRequestOptions(url);
+    return fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(arg),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+  }
+
+  const { trigger: triggerPUT } = useSWRMutation(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites/${site?.site_uuid}`,
+    sendPutRequest
+  );
+
+  const sendPanelData = async (formData: SiteFormData) => {
     const date = new Date().toISOString();
     const inverterCapacity = formData.inverterCapacity;
     const moduleCapacity = formData.moduleCapacity;
@@ -99,13 +117,15 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
       longitude: formData.longitude,
       inverter_capacity_kw: !!inverterCapacity ? inverterCapacity : sentinel,
       module_capacity_kw: !!moduleCapacity ? moduleCapacity : sentinel,
-      created_utc: date,
+      created_utc: site?.created_utc || date,
       updated_utc: date,
       orientation: orientation!,
       tilt: tilt!,
     };
-    const res = await trigger(data);
-    return res;
+    if (!!site) {
+      return await triggerPUT(data);
+    }
+    return await triggerPOST(data);
   };
 
   const lastPageCallback = () => {
@@ -147,7 +167,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
             nextPageCallback={nextPageCallback}
             formData={formData}
             setFormData={setFormData}
-            submitForm={() => postPanelData(formData)}
+            submitForm={() => sendPanelData(formData)}
             mapButtonCallback={mapButtonCallback}
             isEditing={!!site}
             edited={edited}
