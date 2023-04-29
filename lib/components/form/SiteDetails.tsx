@@ -63,43 +63,32 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     }
   }, [formData, site]);
 
-  async function sendPostRequest(url: string, { arg }: { arg: FormPostData }) {
-    const options = await getAuthenticatedRequestOptions(url);
-    return fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(arg),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-    });
-  }
+  const sendFormData =
+    (method: string) =>
+    async (url: string, { arg }: { arg: FormPostData }) => {
+      const options = await getAuthenticatedRequestOptions(url);
+      return fetch(url, {
+        method,
+        body: JSON.stringify(arg),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+      });
+    };
 
-  const { trigger: triggerPOST } = useSWRMutation(
+  const { trigger: createSite } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites`,
-    sendPostRequest
+    sendFormData('POST')
   );
 
-  async function sendPutRequest(url: string, { arg }: { arg: FormPostData }) {
-    const options = await getAuthenticatedRequestOptions(url);
-    return fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(arg),
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-    });
-  }
-
-  const { trigger: triggerPUT } = useSWRMutation(
+  const { trigger: updateSite } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites/${site?.site_uuid}`,
-    sendPutRequest
+    sendFormData('PUT')
   );
 
-  const sendPanelData = async (formData: SiteFormData) => {
+  const submitForm = async (formData: SiteFormData) => {
     const date = new Date().toISOString();
     const inverterCapacity = formData.inverterCapacity;
     const moduleCapacity = formData.moduleCapacity;
@@ -121,10 +110,8 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
       orientation: orientation!,
       tilt: tilt!,
     };
-    if (!!site) {
-      return await triggerPUT(data);
-    }
-    return await triggerPOST(data);
+
+    return !!site ? updateSite(data) : createSite(data);
   };
 
   const lastPageCallback = () => {
@@ -166,7 +153,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
             nextPageCallback={nextPageCallback}
             formData={formData}
             setFormData={setFormData}
-            submitForm={() => sendPanelData(formData)}
+            submitForm={() => submitForm(formData)}
             mapButtonCallback={mapButtonCallback}
             isEditing={!!site}
             edited={edited}
