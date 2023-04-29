@@ -42,17 +42,25 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   backButton = false,
   isEditMode = false,
 }) => {
-  const { data: inverters, isLoading } = useSWR<Inverters>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
-  );
+  const { data: allInverters, isLoading: isAllInvertersLoading } =
+    useSWR<Inverters>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
+    );
+  const { data: siteInverters, isLoading: isSiteInvertersLoading } =
+    useSWR<Inverters>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/inverters`
+    );
 
   const { trigger } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites/${siteUUID}/inverters`,
     sendRequest
   );
 
-  const [selectedInverters, setSelectedInverters] = useState<string[]>([]);
+  const [selectedInverters, setSelectedInverters] = useState<string[]>(
+    siteInverters?.inverters?.map((inverter) => inverter.id) || []
+  );
   const [didSubmit, setDidSubmit] = useState(false);
+  const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
 
   const nextPageOrSubmit = async () => {
     if (isSelectMode) {
@@ -103,7 +111,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
             <h1 className="text-md text-white">{defaultSubtitleText}</h1>
           )}
           <div className="mb-8 mt-4 grid w-full grid-cols-1 items-center justify-center gap-4 md:mt-2 md:grid-cols-2">
-            {inverters?.inverters.map((inverter) => (
+            {allInverters?.inverters.map((inverter) => (
               <InverterCard
                 inverter={inverter}
                 selectMode={isSelectMode}
@@ -139,7 +147,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
       <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-8/12 md:flex-row">
         {backButton ? (
           <Button onClick={lastPageCallback} variant="outlined">
-            Back
+            {isEditMode ? 'Exit' : 'Back'}
           </Button>
         ) : (
           <div />
@@ -148,6 +156,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           variant="solid"
           disabled={(isSelectMode && selectedInverters.length < 1) || didSubmit}
           onClick={nextPageOrSubmit}
+          width="250px"
         >
           {didSubmit && <Spinner width={5} height={5} margin={4} />}
           {isEditMode ? editModeButtonText : defaultButtonText}

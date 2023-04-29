@@ -125,7 +125,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
             disabled={selected === null}
             className="mt-5 rounded-md border-2 border-amber text-center"
           >
-            <div className="rounded-md py-3 text-center text-gray-600 hover:bg-ocf-gray-1000 hover:text-gray-700">
+            <div className="rounded-md py-3 text-center text-gray-600 transition-all">
               <p className="text-center text-base font-medium text-amber">
                 Continue to editing site
               </p>
