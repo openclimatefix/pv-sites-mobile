@@ -16,7 +16,7 @@ export const InverterCard: FC<InverterCardProps> = ({
 }) => {
   const renderCardContent = () => (
     <div
-      className={`flex w-full flex-col rounded-lg border-[1px] bg-ocf-black-500 p-3 pl-4 text-left ${
+      className={`flex w-full max-w-lg flex-col rounded-lg border-[1px] bg-ocf-black-500 p-3 pl-4 text-left ${
         selected ? 'border-ocf-yellow-500' : 'border-ocf-black-500'
       }`}
     >

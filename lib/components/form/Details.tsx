@@ -5,10 +5,10 @@ import Modal from '~/lib/components/Modal';
 import Spinner from '~/lib/components/Spinner';
 
 import Button from '~/lib/components/Button';
-import { useFormContext } from '~/lib/form/context';
-import { Site } from '~/lib/types';
 import { zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
+import { SiteFormData } from './SiteDetails';
+import { Site } from '~/lib/types';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -24,32 +24,27 @@ const preventMinus = (e: React.KeyboardEvent<HTMLInputElement>) => {
 interface Props {
   lastPageCallback: () => void;
   nextPageCallback: (site?: Site) => void;
-  mapButtonCallback: () => void;
-  site?: Site;
+  formData: SiteFormData;
+  setFormData: (data: SiteFormData) => void;
+  submitForm: () => Promise<Response | undefined>;
 }
 
 const Details: FC<Props> = ({
   lastPageCallback,
   nextPageCallback,
-  mapButtonCallback,
-  site,
+  formData,
+  setFormData,
+  submitForm,
 }) => {
-  const { siteCoordinates, setFormData, panelDetails, postPanelData } =
-    useFormContext();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
 
-  // If it is an existing site, prefill the form with the existing data
-  panelDetails.siteName = site?.client_site_name ?? panelDetails.siteName;
-  panelDetails.direction =
-    site?.orientation?.toString() ?? panelDetails.direction;
-  panelDetails.tilt = site?.tilt?.toString() ?? panelDetails.tilt;
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!didSubmit) {
       setDidSubmit(true);
-      const res = await postPanelData();
+      const res = await submitForm();
       if (res) {
         const site = (await res.json()) as Site;
         nextPageCallback(site);
@@ -59,17 +54,17 @@ const Details: FC<Props> = ({
 
   return (
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
-      <div className="flex w-4/5 flex-row self-center md:w-8/12">
-        <div className="hidden flex-1 flex-col pr-8 md:flex">
-          <h1 className="mt-2 text-2xl font-semibold text-ocf-gray md:text-3xl">
+      <div className="flex w-4/5 flex-row self-center md:w-9/12">
+        <div className="hidden flex-1 flex-col px-8 md:flex">
+          <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
-          <div className="w-full flex-1" onClick={mapButtonCallback}>
+          <div className="w-full flex-1" onClick={lastPageCallback}>
             <LocationInput
               shouldZoomIntoOriginal={true}
               initialZoom={16}
-              originalLat={siteCoordinates.latitude}
-              originalLng={siteCoordinates.longitude}
+              originalLat={formData.latitude}
+              originalLng={formData.longitude}
               setIsSubmissionEnabled={() => {}}
               setMapCoordinates={() => {}}
               zoomLevelThreshold={zoomLevelThreshold}
@@ -78,41 +73,21 @@ const Details: FC<Props> = ({
           </div>
           <button
             onClick={lastPageCallback}
-            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:bg-ocf-gray-300 peer-invalid:bg-ocf-gray-300 md:hidden"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
             Back
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
-          {site && (
-            <div
-              className="flex flex-col md:hidden"
-              onClick={mapButtonCallback}
-            >
-              <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
-                Location
-              </label>
-              <LocationInput
-                shouldZoomIntoOriginal={true}
-                initialZoom={16}
-                originalLat={siteCoordinates.latitude}
-                originalLng={siteCoordinates.longitude}
-                setIsSubmissionEnabled={() => {}}
-                setMapCoordinates={() => {}}
-                zoomLevelThreshold={zoomLevelThreshold}
-                canEdit={false}
-              />
-            </div>
-          )}
           <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
             label="Site name"
-            value={panelDetails.siteName}
+            value={formData.siteName}
             onHelpClick={() => setShowModal(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
-                ...panelDetails,
+                ...formData,
                 siteName: e.currentTarget.value,
               })
             }
@@ -127,13 +102,13 @@ const Details: FC<Props> = ({
             id="solar-array-direction"
             label="Solar array direction"
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
-            value={panelDetails.direction}
+            value={formData.direction?.toString()}
             help="I don't know"
             onHelpClick={() => setShowModal(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
-                ...panelDetails,
-                direction: e.currentTarget.value,
+                ...formData,
+                direction: parseFloat(e.currentTarget.value),
               })
             }
             inputProps={{
@@ -153,9 +128,12 @@ const Details: FC<Props> = ({
             id="solar-array-tilt"
             label="Solar array tilt"
             description="(Degrees above the horizontal)"
-            value={String(panelDetails.tilt)}
+            value={String(formData.tilt)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormData({ ...panelDetails, tilt: e.currentTarget.value })
+              setFormData({
+                ...formData,
+                tilt: parseFloat(e.currentTarget.value),
+              })
             }
             inputProps={{
               type: 'number',
@@ -173,16 +151,16 @@ const Details: FC<Props> = ({
           <Input
             id="inverter-capacity"
             label="Inverter capacity"
-            value={String(panelDetails.inverterCapacityKw)}
+            value={String(formData.inverterCapacity)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
-                ...panelDetails,
-                inverterCapacityKw: e.currentTarget.value,
+                ...formData,
+                inverterCapacity: parseFloat(e.currentTarget.value),
               })
             }
             inputProps={{
               type: 'number',
-              placeholder: '3000 kW',
+              placeholder: '4 kW',
               min: '0',
               step: 'any',
               required: true,
@@ -195,11 +173,11 @@ const Details: FC<Props> = ({
           <Input
             label="Solar panel nameplate capacity"
             id="module-capacity"
-            value={String(panelDetails.moduleCapacityKw)}
+            value={String(formData.moduleCapacity)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
-                ...panelDetails,
-                moduleCapacityKw: e.currentTarget.value,
+                ...formData,
+                moduleCapacity: parseFloat(e.currentTarget.value),
               })
             }
             inputProps={{
@@ -214,23 +192,23 @@ const Details: FC<Props> = ({
           />
           <button
             disabled={didSubmit}
-            className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:bg-ocf-gray-300 peer-invalid:bg-ocf-gray-300 md:hidden"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
             {didSubmit && <Spinner width={5} height={5} margin={4} />}
-            {site ? 'Save Changes' : 'Finish'}
+            Finish
             {didSubmit && <div className="mx-4 w-5" />}
           </button>
         </form>
       </div>
       <Modal show={showModal} setShow={setShowModal} />
-      <div className="mt-auto hidden self-center md:flex md:w-8/12 md:flex-row md:justify-between">
+      <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
         <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
           Back
         </Button>
 
         <Button form="panel-form" disabled={didSubmit} variant="solid">
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
-          {site ? 'Save Changes' : 'Finish'}
+          Finish
           {didSubmit && <div className="mx-2 w-5" />}
         </Button>
       </div>
