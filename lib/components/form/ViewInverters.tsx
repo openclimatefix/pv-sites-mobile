@@ -1,16 +1,15 @@
-import { FC, useState } from 'react';
-import { InverterCard } from '../InverterCard';
-import Button from '../Button';
-import useSWR from 'swr';
-import useSWRMutation from 'swr/mutation';
-import { InverterPutData, Inverters } from '~/lib/types';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { FC, useState } from 'react';
+import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
 import { getAuthenticatedRequestOptions } from '~/lib/swr';
-import { ChevronLeftIcon } from '@heroicons/react/24/solid';
+import { Inverters } from '~/lib/types';
+import Button from '../Button';
+import { InverterCard } from '../InverterCard';
 import Spinner from '../Spinner';
 
-async function sendRequest(url: string, { arg }: { arg: InverterPutData }) {
+async function sendRequest(url: string, { arg }: { arg: string[] }) {
   const options = await getAuthenticatedRequestOptions(url);
   return fetch(url, {
     method: 'PUT',
