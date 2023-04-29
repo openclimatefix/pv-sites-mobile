@@ -55,13 +55,13 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                   ? currentOutput.toFixed(2) + ' kW'
                   : 'loading...'}
               </p>
-              {site.installed_capacity_kw !== null && (
+              {site.inverter_capacity_kw !== null && (
                 <p
                   className={`text-xs font-medium text-ocf-gray-500 transition-all ${
                     forecastData || !noError ? skeleton : ''
                   }`}
                 >
-                  Max. capacity: {site.installed_capacity_kw.toFixed(2)} kW
+                  Max. capacity: {site.inverter_capacity_kw?.toFixed(2)} kW
                 </p>
               )}
               <p
@@ -70,9 +70,8 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
                 }`}
               >
                 Current yield:{' '}
-                {site.installed_capacity_kw && currentOutput != undefined
-                  ? (currentOutput / site.installed_capacity_kw).toFixed(2) +
-                    '%'
+                {site.inverter_capacity_kw && currentOutput != undefined
+                  ? (currentOutput / site.inverter_capacity_kw).toFixed(2) + '%'
                   : 'loading...'}
               </p>
             </div>

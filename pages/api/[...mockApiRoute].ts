@@ -47,7 +47,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         'client_site_name',
         'latitude',
         'longitude',
-        'installed_capacity_kw',
+        'inverter_capacity_kw',
         'created_utc',
         'updated_utc',
       ];

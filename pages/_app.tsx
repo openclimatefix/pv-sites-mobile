@@ -3,7 +3,6 @@ import { AppType } from 'next/app';
 import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import Layout from '~/lib/components/Layout';
-import { FormProvider } from '~/lib/form/context';
 import { fetcher } from '~/lib/swr';
 import '~/styles/globals.css';
 import '~/styles/transition.css';
@@ -12,6 +11,7 @@ import timezone from 'dayjs/plugin/timezone';
 import duration from 'dayjs/plugin/duration';
 import dayjs from 'dayjs';
 import { Site } from '~/lib/types';
+import { AppProvider } from '~/lib/provider';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -36,7 +36,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           keepPreviousData: true, // Enabled to support page transitions where a key changes
         }}
       >
-        <FormProvider>
+        <AppProvider>
           <Head>
             <title>Sites | Nowcasting</title>
             <link rel="icon" href="/favicon.ico" />
@@ -50,7 +50,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </FormProvider>
+        </AppProvider>
       </SWRConfig>
     </UserProvider>
   );
