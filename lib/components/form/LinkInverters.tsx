@@ -86,7 +86,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           onClick={() => setShowInfoModal(false)}
         >
           <div
-            className="h-auto rounded-lg bg-ocf-gray-1000 px-4 py-3 text-white opacity-100"
+            className="h-auto rounded-lg bg-ocf-black-500 px-4 py-3 text-white opacity-100"
             onClick={(e: React.MouseEvent<HTMLInputElement>) =>
               e.stopPropagation()
             }
@@ -138,7 +138,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       </a>
 
       <button
-        className="mt-4 hidden w-full self-center text-[14px] font-semibold text-ocf-yellow md:block"
+        className="mt-4 hidden w-full self-center text-[14px] text-ocf-yellow md:block"
         onClick={() => setShowInvertersModal(true)}
       >
         View supported inverters
@@ -150,7 +150,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           onClick={() => setShowInvertersModal(false)}
         >
           <div
-            className="h-auto rounded-lg bg-ocf-gray-1000 px-4 py-3 text-white opacity-100"
+            className="h-auto rounded-lg bg-ocf-black-500 px-4 py-3 text-white opacity-100"
             onClick={(e: React.MouseEvent<HTMLInputElement>) =>
               e.stopPropagation()
             }
@@ -165,10 +165,10 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                   <XMarkIcon className="h-5 w-5"></XMarkIcon>
                 </button>
               </div>
-              <div className="text-center text-ocf-gray-300">
+              <div className="text-center text-ocf-gray-300 mx-10">
                 Supported Inverters
               </div>
-              <div className="mt-3 max-h-56 self-center overflow-y-scroll px-6">
+              <div className="mt-3 self-center px-6">
                 {SupportedInverters()}
               </div>
             </div>
