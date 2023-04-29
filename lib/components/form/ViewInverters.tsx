@@ -55,7 +55,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   const nextPageOrSubmit = async () => {
     if (isSelectMode) {
       if (!didSubmit) setDidSubmit(true);
-      await trigger({ client_ids: selectedInverters });
+      await trigger(selectedInverters);
     }
     nextPageCallback();
   };

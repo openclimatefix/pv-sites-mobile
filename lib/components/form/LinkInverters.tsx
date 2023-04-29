@@ -17,10 +17,8 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       `${
         process.env.NEXT_PUBLIC_API_BASE_URL_GET
       }/enode/link?${new URLSearchParams({
-        redirect_uri: encodeURIComponent(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`
-        ),
-      })}`
+        redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`,
+      }).toString()}`
     );
     router.push(res);
   };
