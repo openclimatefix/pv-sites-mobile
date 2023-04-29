@@ -18,7 +18,7 @@ interface SiteCardProps {
 
 const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
   ({ href, site, onClick, isEditMode }, ref) => {
-    const { forecastData, isLoading, error } = useSiteData(site.site_uuid);
+    const { forecastData, error } = useSiteData(site.site_uuid);
 
     const noError = error.errors.every((error) => error === undefined);
 
@@ -39,15 +39,15 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
           <div className="flex w-[60%] flex-1 flex-col p-4 pl-5">
             <h2
               className={`text-xl font-semibold text-amber transition-all ${
-                isLoading || !noError ? skeleton : ``
+                forecastData || !noError ? skeleton : ``
               }`}
             >
-              {isLoading ? 'Loading...' : site.client_site_name ?? 'My Site'}
+              {forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
             </h2>
             <div className="mt-2 flex flex-col gap-1">
               <p
                 className={`text-xs font-medium text-ocf-gray-500 transition-all ${
-                  isLoading || !noError ? skeleton : ``
+                  forecastData || !noError ? skeleton : ``
                 }`}
               >
                 Current output:{' '}
@@ -58,7 +58,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               {site.inverter_capacity_kw !== null && (
                 <p
                   className={`text-xs font-medium text-ocf-gray-500 transition-all ${
-                    isLoading || !noError ? skeleton : ''
+                    forecastData || !noError ? skeleton : ''
                   }`}
                 >
                   Max. capacity: {site.inverter_capacity_kw?.toFixed(2)} kW
@@ -66,7 +66,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               )}
               <p
                 className={`text-xs font-medium text-ocf-gray-500 transition-all ${
-                  isLoading || !noError ? skeleton : ``
+                  forecastData || !noError ? skeleton : ``
                 }`}
               >
                 Current yield:{' '}
@@ -79,7 +79,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
 
           <div className={`pointer-events-none mr-5 w-[40%]`}>
             {/* TODO: find out why this left is necessary */}
-            {isLoading || !noError == undefined ? (
+            {forecastData || !noError == undefined ? (
               <div className="h-[100px]"></div>
             ) : (
               <div className="relative -left-7">

@@ -27,7 +27,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
   const { totalForecastedGeneration } = useSiteAggregation(sites);
 
   const currentOutput = useMemo(() => {
-    return totalForecastedGeneration
+    return totalForecastedGeneration?.length
       ? Math.round(getCurrentTimeGeneration(totalForecastedGeneration) * 100) /
           100
       : undefined;

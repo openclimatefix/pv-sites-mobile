@@ -187,10 +187,11 @@ export const getNextThresholdIndex = (
   threshold: number
 ): NextThreshold | null => {
   const startIndex = getCurrentTimeGenerationIndex(generationData);
+  if (!generationData[startIndex]) return null;
 
-  const currentAboveThreshold =
-    generationData[startIndex].generation_kw >= threshold;
+  const currentGeneration = generationData[startIndex].generation_kw;
 
+  const currentAboveThreshold = currentGeneration >= threshold;
   for (let i = startIndex; i < generationData.length; i++) {
     const futureAboveThreshold = generationData[i].generation_kw >= threshold;
     // If this future point's "aboveThreshold" state is different than current

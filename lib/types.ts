@@ -140,10 +140,6 @@ export type Inverters = {
   inverters: Inverter[];
 };
 
-export type InverterPutData = {
-  client_ids: string[];
-};
-
 export type AppContextProps = {
   prevDashboardUUID: string;
   setPrevDashboardUUID: (newPrevDasboard: string) => void;

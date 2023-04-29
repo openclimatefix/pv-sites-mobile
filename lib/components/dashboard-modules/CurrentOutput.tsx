@@ -12,14 +12,14 @@ const CurrentOutput: FC<CurrentOutputProps> = ({ sites }) => {
   const { totalInstalledCapacityKw, totalForecastedGeneration, isLoading } =
     useSiteAggregation(sites);
 
-  const currentOutput = totalForecastedGeneration
+  const currentOutput = totalForecastedGeneration?.length
     ? getCurrentTimeGeneration(totalForecastedGeneration)
     : 0;
 
   const title = totalInstalledCapacityKw ? 'Current Output' : 'Percent Yield';
 
   const value = totalInstalledCapacityKw
-    ? currentOutput.toFixed(2)
+    ? currentOutput.toFixed(2) + ' kW'
     : 100 * currentOutput + '%';
 
   return (
