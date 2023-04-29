@@ -34,7 +34,6 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
   const [page, setPage] = useState<Page>(site ? Page.Details : Page.Location);
   const isMobile = useIsMobile();
   const backUrl = isMobile ? '/sites' : '/dashboard';
-  const mobile = useIsMobile();
   const router = useRouter();
   const { sites } = useSites();
   const [formData, setFormData] = useState<SiteFormData>({
@@ -146,7 +145,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(mobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
+      router.push(isMobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }
