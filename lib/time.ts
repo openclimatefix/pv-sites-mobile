@@ -30,10 +30,9 @@ export const useSiteTime = (
   );
 
   const [currentTime, setCurrentTime] = useState(dayjs().tz(timezone));
-  const [tomorrow, setTomorrow] = useState(currentTime.add(1, 'day'));
+  const tomorrow = currentTime.add(1, 'day');
 
   useEffect(() => setCurrentTime(dayjs().tz(timezone)), [timezone]);
-  useEffect(() => setTomorrow(currentTime.add(1, 'day')), [currentTime]);
 
   useEffect(() => {
     if (updateEnabled) {
