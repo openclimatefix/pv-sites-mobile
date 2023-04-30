@@ -24,7 +24,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
   const { sites } = useSites();
   const [isEditMode, setEditMode] = useState(false);
-  const [isSelected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null | 'Aggregate'>(null);
 
   const wrapperRef = useRef(null);
   const resetStatesAndClose = () => {
@@ -62,7 +62,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
               <input
                 type="radio"
                 className="peer sr-only mr-5"
-                checked={site.site_uuid == isSelected}
+                checked={site.site_uuid === selected}
               />
               <span className="mr-5 inline-block h-5 w-5 cursor-pointer rounded-full border-[3px] border-ocf-black ring-2 ring-ocf-gray-300 peer-checked:rounded-full peer-checked:bg-ocf-gray-300" />
             </div>
@@ -70,9 +70,9 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
           <DashboardLink
             key={site.site_uuid}
             siteName={site.client_site_name || `Site ${idx + 1}`}
-            href={isEditMode ? '#' : `/dashboard/${site.site_uuid}`}
+            href={isEditMode ? '#0' : `/dashboard/${site.site_uuid}`}
             sites={[site]}
-            active={site.site_uuid == isSelected}
+            active={site.site_uuid === selected}
           />
         </div>
       ));
@@ -106,6 +106,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
                 siteName="Aggregate"
                 href={isEditMode ? '#' : '/dashboard'}
                 sites={sites}
+                active={selected === 'Aggregate'}
               />
             </>
           )}
@@ -116,13 +117,15 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
           <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
         </div>
-        {isSelected && (
+        {selected && (
           <button
-            onClick={handleEditClick} // TODO: change to edit page navigation
-            disabled={isSelected == ''}
+            onClick={() => {
+              router.push(`/site-details/${selected}`);
+            }}
+            disabled={selected === null}
             className="mt-5 rounded-md border-2 border-amber text-center"
           >
-            <div className="rounded-md py-3 text-center text-gray-600 hover:bg-ocf-gray-1000 hover:text-gray-700">
+            <div className="rounded-md py-3 text-center text-gray-600 transition-all">
               <p className="text-center text-base font-medium text-amber">
                 Continue to editing site
               </p>

@@ -13,9 +13,9 @@ type NavbarLinkProps = {
   href: string;
 };
 
-const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
+export const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
   const { asPath: path } = useRouter();
-  const isActive = href === path;
+  const isActive = path.startsWith(href);
   const textColor = isActive ? 'text-amber' : 'text-white';
   return (
     <Link href={href} passHref>
@@ -72,7 +72,7 @@ const NavBar: FC = () => {
                 : `/dashboard/${prevDashboardUUID}`
             }
           />
-          <NavbarLink title="More Info" href="/more-info" />
+          <NavbarLink title="Help Center" href="/help" />
           <div className="hidden md:block">
             <ContactButton />
           </div>

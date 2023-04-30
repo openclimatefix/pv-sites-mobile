@@ -27,6 +27,9 @@ interface Props {
   formData: SiteFormData;
   setFormData: (data: SiteFormData) => void;
   submitForm: () => Promise<Response | undefined>;
+  mapButtonCallback: () => void;
+  isEditing: boolean;
+  edited: boolean;
 }
 
 const Details: FC<Props> = ({
@@ -35,6 +38,9 @@ const Details: FC<Props> = ({
   formData,
   setFormData,
   submitForm,
+  mapButtonCallback,
+  isEditing,
+  edited,
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
@@ -59,7 +65,7 @@ const Details: FC<Props> = ({
           <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-3xl">
             Your site&apos;s details
           </h1>
-          <div className="w-full flex-1" onClick={lastPageCallback}>
+          <div className="w-full flex-1" onClick={mapButtonCallback}>
             <LocationInput
               shouldZoomIntoOriginal={true}
               initialZoom={16}
@@ -75,10 +81,30 @@ const Details: FC<Props> = ({
             onClick={lastPageCallback}
             className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
-            Back
+            {isEditing ? 'Exit' : 'Back'}
           </button>
         </div>
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
+          {isEditing && (
+            <div
+              className="flex flex-col md:hidden"
+              onClick={mapButtonCallback}
+            >
+              <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
+                Location
+              </label>
+              <LocationInput
+                shouldZoomIntoOriginal={true}
+                initialZoom={16}
+                originalLat={formData.latitude}
+                originalLng={formData.longitude}
+                setIsSubmissionEnabled={() => {}}
+                setMapCoordinates={() => {}}
+                zoomLevelThreshold={zoomLevelThreshold}
+                canEdit={false}
+              />
+            </div>
+          )}
           <div className="hidden md:block md:h-7" />
           <Input
             id="site-name"
@@ -96,6 +122,7 @@ const Details: FC<Props> = ({
               placeholder: 'My House',
               required: true,
               autoFocus: true,
+              autoComplete: 'off',
             }}
           />
           <Input
@@ -121,6 +148,7 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
 
@@ -145,6 +173,7 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
 
@@ -167,6 +196,7 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
 
@@ -188,14 +218,15 @@ const Details: FC<Props> = ({
               onKeyDown: preventMinus,
               pattern: '[0-9]*',
               inputMode: 'numeric',
+              autoComplete: 'off',
             }}
           />
           <button
-            disabled={didSubmit}
+            disabled={didSubmit || (isEditing && !edited)}
             className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
             {didSubmit && <Spinner width={5} height={5} margin={4} />}
-            Finish
+            {isEditing ? 'Save changes' : 'Finish'}
             {didSubmit && <div className="mx-4 w-5" />}
           </button>
         </form>
@@ -203,12 +234,17 @@ const Details: FC<Props> = ({
       <Modal show={showModal} setShow={setShowModal} />
       <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
         <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
-          Back
+          {isEditing ? 'Exit' : 'Back'}
         </Button>
 
-        <Button form="panel-form" disabled={didSubmit} variant="solid">
+        <Button
+          form="panel-form"
+          disabled={didSubmit || (isEditing && !edited)}
+          variant="solid"
+          width="250px"
+        >
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
-          Finish
+          {isEditing ? 'Save changes' : 'Finish'}
           {didSubmit && <div className="mx-2 w-5" />}
         </Button>
       </div>

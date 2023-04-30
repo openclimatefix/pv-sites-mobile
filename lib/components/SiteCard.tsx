@@ -39,7 +39,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
           <div className="flex w-[60%] flex-1 flex-col p-4 pl-5">
             <h2
               className={`text-xl font-semibold text-amber transition-all ${
-                forecastData || !noError ? skeleton : ``
+                !forecastData ? skeleton : ``
               }`}
             >
               {forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
@@ -47,7 +47,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
             <div className="mt-2 flex flex-col gap-1">
               <p
                 className={`text-xs font-medium text-ocf-gray-500 transition-all ${
-                  forecastData || !noError ? skeleton : ``
+                  !forecastData ? skeleton : ``
                 }`}
               >
                 Current output:{' '}
@@ -58,7 +58,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               {site.inverter_capacity_kw !== null && (
                 <p
                   className={`text-xs font-medium text-ocf-gray-500 transition-all ${
-                    forecastData || !noError ? skeleton : ''
+                    !forecastData ? skeleton : ''
                   }`}
                 >
                   Max. capacity: {site.inverter_capacity_kw?.toFixed(2)} kW
@@ -66,7 +66,7 @@ const SiteCard = React.forwardRef<HTMLAnchorElement, SiteCardProps>(
               )}
               <p
                 className={`text-xs font-medium text-ocf-gray-500 transition-all ${
-                  forecastData || !noError ? skeleton : ``
+                  !forecastData ? skeleton : ``
                 }`}
               >
                 Current yield:{' '}
