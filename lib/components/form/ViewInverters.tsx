@@ -57,8 +57,11 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     sendRequest
   );
 
+  //TODO look over this to see if suitable in main
   const [selectedInverters, setSelectedInverters] = useState<string[]>(
-    siteInverters?.inverters?.map((inverter) => inverter.id) || []
+    isEditMode
+      ? siteInverters?.inverters?.map((inverter) => inverter.id) || []
+      : []
   );
   const [didSubmit, setDidSubmit] = useState(false);
   const router = useRouter();
