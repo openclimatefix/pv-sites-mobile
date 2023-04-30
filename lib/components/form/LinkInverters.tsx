@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { FC, useState } from 'react';
 import Button from '../Button';
 import InverterGraphicIcon from '../icons/InverterGraphicIcon';
+import { NextRouter, useRouter } from 'next/router';
 import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { useRouter } from 'next/router';
 import { fetcher } from '~/lib/swr';
 import { useIsMobile } from '~/lib/utils';
 import ema from '~/public/inverters/ema.png';
@@ -13,6 +13,7 @@ import goodwe from '~/public/inverters/goodwe.png';
 import growatt from '~/public/inverters/growatt.png';
 import solaredge from '~/public/inverters/solaredge.png';
 import solis from '~/public/inverters/solis.png';
+import Image from 'next/image';
 
 const brands = {
   EMA: ema,
@@ -30,10 +31,10 @@ const SupportedInverters = () => {
       {Object.keys(brands).map((brand) => {
         return (
           <div key={brand} className="flex flex-row">
-            <img
+            <Image
               src={brands[brand as keyof typeof brands].src}
               alt={`${brand} logo`}
-            ></img>
+            />
             <div className="my-2 self-center text-ocf-gray-300">{brand}</div>
           </div>
         );
@@ -42,22 +43,27 @@ const SupportedInverters = () => {
   );
 };
 
+export const getEnodeLinkAndRedirect = async (
+  siteUUID: string,
+  router: NextRouter
+) => {
+  const res = await fetcher(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    }/enode/link?${new URLSearchParams({
+      redirect_uri: encodeURIComponent(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`
+      ),
+    })}`
+  );
+  router.push(res);
+};
+
 const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [showInvertersModal, setShowInvertersModal] = useState<boolean>(false);
   const isMobile = useIsMobile();
   const router = useRouter();
-
-  const getLinkAndRedirect = async () => {
-    const res = await fetcher(
-      `${
-        process.env.NEXT_PUBLIC_API_BASE_URL_GET
-      }/enode/link?${new URLSearchParams({
-        redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`,
-      }).toString()}`
-    );
-    router.push(res);
-  };
 
   const mobileSkipButtonClass =
     'flex items-center text-ocf-yellow text-[14px] mt-[5px]';
@@ -128,7 +134,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       <a className="mt-10 self-center md:mt-5">
         <Button
           variant="outlined"
-          onClick={getLinkAndRedirect}
+          onClick={() => getEnodeLinkAndRedirect(siteUUID, router)}
           className="w-[250px]"
         >
           Yes, link my inverter
