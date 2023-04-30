@@ -52,10 +52,6 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
       updateEnabled: timeEnabled,
     });
 
-  if (totalForecastedGeneration) {
-    console.log(SimpleMovingAverage(totalForecastedGeneration, 5));
-  }
-
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
   const rawGraphData = useMemo(() => {
