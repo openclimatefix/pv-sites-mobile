@@ -45,15 +45,19 @@ export const useSiteTime = (
     }
   }, [updateEnabled, timezone]);
 
-  const times = useMemo(
-    () => SunCalc.getTimes(currentTime.toDate(), latitude, longitude),
-    [currentTime, latitude, longitude]
-  );
+  const times = useMemo(() => {
+    const times = SunCalc.getTimes(currentTime.toDate(), latitude, longitude);
+    times.sunrise.setDate(currentTime.toDate().getDate());
+    times.sunset.setDate(currentTime.toDate().getDate());
+    return times;
+  }, [currentTime, latitude, longitude]);
 
-  const tomorrowTimes = useMemo(
-    () => SunCalc.getTimes(tomorrow.toDate(), latitude, longitude),
-    [tomorrow, latitude, longitude]
-  );
+  const tomorrowTimes = useMemo(() => {
+    const times = SunCalc.getTimes(tomorrow.toDate(), latitude, longitude);
+    times.sunrise.setDate(tomorrow.toDate().getDate());
+    times.sunset.setDate(tomorrow.toDate().getDate());
+    return times;
+  }, [tomorrow, latitude, longitude]);
 
   const isDayTime = useMemo(
     () =>

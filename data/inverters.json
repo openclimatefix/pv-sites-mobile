@@ -1,21 +1,21 @@
 [
   {
     "id": "1",
-    "vendor": "VendorA",
+    "vendor": "EMA",
     "chargingLocationId": "asjdfslkf",
     "lastSeen": "2023-04-22T10:30:00.000Z",
     "isReachable": true,
     "productionState": {
-      "productionRate": 1000,
+      "productionRate": 4,
       "isProducing": true,
       "totalLifetimeProduction": 100000,
       "lastUpdated": "2023-04-22T10:30:00.000Z"
     },
     "information": {
       "id": "1",
-      "brand": "BrandA",
-      "model": "ModelA1",
-      "siteName": "Site A",
+      "brand": "EMA",
+      "model": "SE7K-RW0TEBNN4",
+      "siteName": "Roof",
       "installationDate": "2021-04-23"
     },
     "location": {
@@ -25,74 +25,26 @@
   },
   {
     "id": "2",
-    "vendor": "VendorB",
+    "vendor": "EMA",
     "chargingLocationId": "101",
     "lastSeen": "2023-04-22T10:00:00.000Z",
-    "isReachable": false,
+    "isReachable": true,
     "productionState": {
-      "productionRate": null,
-      "isProducing": null,
-      "totalLifetimeProduction": null,
-      "lastUpdated": null
+      "productionRate": 3,
+      "isProducing": true,
+      "totalLifetimeProduction": 100000,
+      "lastUpdated": "2023-04-22T10:30:00.000Z"
     },
     "information": {
       "id": "2",
-      "brand": "BrandB",
-      "model": "ModelB1",
-      "siteName": "Site B",
+      "brand": "EMA",
+      "model": "SE7K-RW0TEBNN4",
+      "siteName": "Porch",
       "installationDate": "2021-06-15"
     },
     "location": {
       "longitude": -118.2437,
       "latitude": 34.0522
-    }
-  },
-  {
-    "id": "3",
-    "vendor": "VendorC",
-    "chargingLocationId": "102",
-    "lastSeen": "2023-04-22T12:00:00.000Z",
-    "isReachable": true,
-    "productionState": {
-      "productionRate": 1500,
-      "isProducing": true,
-      "totalLifetimeProduction": 200000,
-      "lastUpdated": "2023-04-22T12:00:00.000Z"
-    },
-    "information": {
-      "id": "3",
-      "brand": "BrandC",
-      "model": "ModelC1",
-      "siteName": "Site C",
-      "installationDate": "2020-12-10"
-    },
-    "location": {
-      "longitude": -111.8315,
-      "latitude": 33.4152
-    }
-  },
-  {
-    "id": "4",
-    "vendor": "VendorD",
-    "chargingLocationId": null,
-    "lastSeen": "2023-04-22T08:00:00.000Z",
-    "isReachable": true,
-    "productionState": {
-      "productionRate": 0,
-      "isProducing": false,
-      "totalLifetimeProduction": 50000,
-      "lastUpdated": "2023-04-22T08:00:00.000Z"
-    },
-    "information": {
-      "id": "4",
-      "brand": "BrandD",
-      "model": "ModelD1",
-      "siteName": "Site D",
-      "installationDate": "2019-11-01"
-    },
-    "location": {
-      "longitude": -80.1918,
-      "latitude": 25.7617
     }
   }
 ]

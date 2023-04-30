@@ -32,12 +32,13 @@ const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
     const days = [];
     for (let i = 0; i < daysOfForecast; i++) {
       const day = currentTime.add(i, 'days');
-
       const { sunrise, sunset } = SunCalc.getTimes(
         day.toDate(),
         representativeSite.latitude,
         representativeSite.longitude
       );
+      sunrise.setDate(day.toDate().getDate());
+      sunset.setDate(day.toDate().getDate());
 
       if (!totalForecastedGeneration || !totalClearskyGeneration) {
         days.push(undefined);

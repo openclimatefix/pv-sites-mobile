@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   clearUsers,
+  getInverters,
   getLinkRedirectURL,
   getLinkedVendors,
   testClientID,
@@ -22,7 +23,7 @@ import { parseNowcastingDatetime } from '~/lib/api';
 import dayjs from 'dayjs';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  let { mockApiRoute, site_uuids } = req.query;
+  let { mockApiRoute, site_uuids, redirect_uri } = req.query;
 
   if (!mockApiRoute) {
     res.status(404).send('Not found');
@@ -36,6 +37,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (site_uuids) {
     mockApiRoute += `?site_uuids=${site_uuids}`;
+  }
+
+  if (req.method === 'PUT') {
+    if (
+      mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/inverters'
+    ) {
+      res.status(200).json('Done');
+    }
   }
 
   if (req.method == 'POST') {
@@ -144,7 +153,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
+      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e'
     ) {
       const actualMultiple = pvActualMultipleJson as UnparsedActualData[];
       res.status(200).json([
@@ -155,7 +164,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
+      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e'
     ) {
       const forecastMultiple = pvForecastMultipleJson as UnparsedForecastData[];
       res.status(200).json([
@@ -166,7 +175,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e,b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
+      'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182,b97f68cd-50e0-49bb-a850-108d4a9f7b7e'
     ) {
       const clearskyMultiple = pvClearskyMultipleJson as UnparsedClearSkyData[];
       res.status(200).json([
@@ -185,24 +194,27 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     ) {
       res.status(200).json(invertersJson);
     } else if (mockApiRoute === 'enode/link') {
+      console.log(redirect_uri, req.query);
       const redirectURL = await getLinkRedirectURL(
         testClientID,
-        process.env.AUTH0_BASE_URL + '/api/enode/link-return' // Should use a different redirect URL in the future (not AUTH0 base)
+        redirect_uri as string
       );
 
       // Maxed connections
       if (!redirectURL) {
-        res.redirect(307, '/account?linkSuccess=false');
+        res.redirect(307, '/inverters?linkSuccess=false');
+        throw new Error('ERR!');
+        return;
       }
 
-      res.redirect(307, redirectURL);
+      res.status(200).json(redirectURL);
     } else if (mockApiRoute === 'enode/link-return') {
       const linkedVendors = await getLinkedVendors(testClientID);
       const linkSuccess =
         linkedVendors.length > 0 &&
         linkedVendors.every((vendor) => vendor.isValid);
       const redirectURL =
-        '/account?' +
+        '/inverters/?' +
         new URLSearchParams({ linkSuccess: linkSuccess.toString() });
       res.redirect(307, redirectURL);
     } else if (mockApiRoute === 'enode/clear-users') {
