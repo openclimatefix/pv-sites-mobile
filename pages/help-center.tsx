@@ -6,7 +6,7 @@ import { withSites } from '~/lib/sites';
 import { appliances } from '~/lib/appliances';
 import FAQLink from '~/lib/components/navigation/FAQLink';
 import { pages } from './help/[page]';
-import { urlToDisplay } from '~/lib/utils';
+import { hyphensToTitleCase } from '~/lib/utils';
 
 const MoreInfo = () => {
   const sortedAppliances = appliances.sort((a, b) => b.kW - a.kW);
@@ -81,7 +81,7 @@ const MoreInfo = () => {
           return (
             <FAQLink
               key={page}
-              title={urlToDisplay(page)}
+              title={hyphensToTitleCase(page)}
               href={`/help/${page}`}
             />
           );

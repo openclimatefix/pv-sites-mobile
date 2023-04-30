@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LinkProps } from 'next/link';
-import { urlToDisplay } from '~/lib/utils';
+import { hyphensToTitleCase } from '~/lib/utils';
 
 export const pages = {
   'adding-site-locations': addSiteLocation,
@@ -58,7 +58,7 @@ const Help = () => {
               <MenuLink
                 key={page}
                 linkProps={{ href: `/help/${page}` }}
-                label={urlToDisplay(page)}
+                label={hyphensToTitleCase(page)}
                 currentPath={router.asPath}
               />
             );
