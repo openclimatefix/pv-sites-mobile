@@ -9,6 +9,7 @@ import {
   UnparsedForecastData,
 } from './types';
 import { fetcher } from './swr';
+import dayjs from 'dayjs';
 
 /**
  * Parses a datetime string from the Nowcasting API, assumed to be in UTC.
@@ -17,10 +18,11 @@ import { fetcher } from './swr';
  * @returns The date object for the date
  */
 export function parseNowcastingDatetime(datetime: string) {
+  // TODO REVERT ALL THIS
   // if (!datetime.endsWith('Z')) {
   //   datetime += 'Z';
   // }
-  return new Date(datetime);
+  return dayjs(new Date(datetime)).tz('America/Chicago').toDate();
 }
 
 function parseForecastData(
