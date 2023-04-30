@@ -19,6 +19,7 @@ import {
 } from '../icons/FutureThreshold';
 
 import {
+  SimpleMovingAverage,
   addTimePoint,
   getTrendAfterIndex,
   graphThreshold,
@@ -50,6 +51,10 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     useSiteTime(representativeSite, {
       updateEnabled: timeEnabled,
     });
+
+  if (totalForecastedGeneration) {
+    console.log(SimpleMovingAverage(totalForecastedGeneration, 5));
+  }
 
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
@@ -212,13 +217,17 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const getSolarActivityText = () => {
     if (!totalForecastedGeneration) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(totalForecastedGeneration);
-    const slope = getTrendAfterIndex(totalForecastedGeneration, currIndex);
+    const averagedForecastGeneration = SimpleMovingAverage(
+      totalForecastedGeneration,
+      3
+    );
+    const currIndex = getCurrentTimeGenerationIndex(averagedForecastGeneration);
+    const slope = getTrendAfterIndex(averagedForecastGeneration, currIndex);
 
     if (slope) {
       const { type, endIndex } = slope;
       const slopeForecastDate = timeFormat(
-        totalForecastedGeneration[endIndex].datetime_utc
+        averagedForecastGeneration[endIndex].datetime_utc
       );
 
       switch (type) {

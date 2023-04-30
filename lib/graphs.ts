@@ -4,6 +4,7 @@ import {
   getClosestForecastIndex,
   getCurrentTimeGenerationIndex,
 } from './generation';
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 
 export const getGraphStartDate = (currentTime: number) => {
   const currentDate = new Date(currentTime);
@@ -171,31 +172,47 @@ export const getTrendAfterIndex = (
 
 /**
  * Determines the moving average, by calculating the averages for a given period in each array
- * @param array Array to determine the Simple moving averages for
- * @param period the length of each interval of the avereage
- * @returns a list of Simple Moving Averages for each interval via Sliding Window technique - runs in O(n) time :)
+ * @param array Array of GenerationDataPoints to determine the Simple moving averages for
+ * @param period the length of each interval of the average, the length of the period must be odd or it will throw an exception
+ * @returns a GenerationDataPoint array of Simple Moving Averages for each indexin O(n * p) time unfortunately
  */
 
 export const SimpleMovingAverage = (
   array: GenerationDataPoint[],
   period: number
-): number[] => {
+): GenerationDataPoint[] => {
+  if (period % 2 == 0) {
+    throw new Error('Period must be an odd number');
+  } else if (period > array.length) {
+    throw new Error('Period must be less than or equal to array size');
+  }
+
   let averages: number[] = [];
-  let currSum: number = 0;
 
-  for (let idx = 0; idx < period; idx++) {
-    currSum += array[idx].generation_kw;
+  const upperBound = Math.floor(period / 2);
+
+  for (let i = 0; i < array.length; i++) {
+    const valsBefore = i;
+    const valsAfter = array.length - i - 1;
+
+    const range = Math.min(valsBefore, valsAfter, upperBound);
+    let currSum = 0;
+    for (let j = i - range; j < i + range + 1; j++) {
+      currSum += array[j].generation_kw;
+    }
+    averages.push(currSum / (2 * range + 1));
   }
 
-  averages.push(currSum / period);
-
-  for (let idx = period; idx < array.length; idx++) {
-    currSum -= array[idx - period].generation_kw;
-    currSum += array[idx].generation_kw;
-    averages.push(currSum / period);
+  let newPoints: GenerationDataPoint[] = [];
+  for (let i = 0; i < averages.length; i++) {
+    const point: GenerationDataPoint = {
+      datetime_utc: array[i].datetime_utc,
+      generation_kw: averages[i],
+    };
+    newPoints.push(point);
   }
 
-  return averages;
+  return newPoints;
 };
 interface NextThreshold {
   aboveThreshold: boolean;
