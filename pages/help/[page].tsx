@@ -1,29 +1,22 @@
-import addSiteLocation from '../../content/help/addSiteLocation.md';
-import helpTopic2 from '../../content/help/addSiteLocation.md';
-import helpTopic3 from '../../content/help/addSiteLocation.md';
-import { withSites } from '~/lib/sites';
+import addSiteLocation from '../../content/help/add-site-location.md';
+import enterSiteDetails from '../../content/help/enter-site-details.md';
+import handleSplitSites from '../../content/help/handle-split-sites.md';
 import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LinkProps } from 'next/link';
+import { hyphensToTitleCase } from '~/lib/utils';
 
 export const pages = {
-  'add-site-location': addSiteLocation,
-  'help-topic-2': helpTopic2,
-  'help-topic-3': helpTopic3,
+  'adding-site-locations': addSiteLocation,
+  'entering-site-details': enterSiteDetails,
+  'handling-split-sites': handleSplitSites,
 } as const;
 
 type MenuLinkProps = {
   linkProps: LinkProps;
   label: string;
   currentPath: string;
-};
-
-const urlToDisplay = (page: string) => {
-  return page
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
 };
 
 const MenuLink: React.FC<MenuLinkProps> = ({
@@ -65,7 +58,7 @@ const Help = () => {
               <MenuLink
                 key={page}
                 linkProps={{ href: `/help/${page}` }}
-                label={urlToDisplay(page)}
+                label={hyphensToTitleCase(page)}
                 currentPath={router.asPath}
               />
             );
@@ -113,15 +106,3 @@ const Help = () => {
 };
 
 export default Help;
-
-export const getServerSideProps = (context: {
-  query: { page: string };
-  sites: any;
-}) => {
-  if (!((context.query.page as string) in pages)) {
-    return {
-      notFound: true,
-    };
-  }
-  return { props: { siteList: context.sites } };
-};

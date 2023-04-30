@@ -6,15 +6,16 @@ import { useSites } from '~/lib/sites';
 import ContactButton from '../ContactButton';
 import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
 import SideBar from './SideBar';
+import { useAppContext } from '~/lib/provider';
 
 type NavbarLinkProps = {
   title: string;
   href: string;
 };
 
-const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
+export const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
   const { asPath: path } = useRouter();
-  const isActive = href === path;
+  const isActive = path.startsWith(href);
   const textColor = isActive ? 'text-amber' : 'text-white';
   return (
     <Link href={href} passHref>
@@ -33,6 +34,8 @@ const NavBar: FC = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const { sites } = useSites();
   const { user } = useUser();
+
+  const { prevDashboardUUID } = useAppContext();
 
   const handleOpenSidebar: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
@@ -61,8 +64,15 @@ const NavBar: FC = () => {
         )}
         <NowcastingLogo />
         <div className="invisible hidden flex-row items-center justify-center  md:visible md:flex">
-          <NavbarLink title="Dashboard" href="/dashboard" />
-          <NavbarLink title="More Info" href="/more-info" />
+          <NavbarLink
+            title="Dashboard"
+            href={
+              prevDashboardUUID === ''
+                ? `/dashboard`
+                : `/dashboard/${prevDashboardUUID}`
+            }
+          />
+          <NavbarLink title="Help Center" href="/help" />
           <div className="hidden md:block">
             <ContactButton />
           </div>

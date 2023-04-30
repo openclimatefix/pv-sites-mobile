@@ -3,7 +3,7 @@ import { GenerationDataPoint } from './types';
 export const getCurrentTimeGeneration = (
   generationData: GenerationDataPoint[]
 ) =>
-  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
+  generationData[getCurrentTimeGenerationIndex(generationData)]?.generation_kw;
 
 /**
  * @returns the index of the forecasted date that is closest to the current time
@@ -21,6 +21,10 @@ export function getClosestForecastIndex(
   generationData: GenerationDataPoint[],
   targetDate: Date
 ) {
+  if (generationData.length === 0) {
+    return -1;
+  }
+
   let closest = 0;
 
   for (let i = 0; i < generationData.length; i++) {

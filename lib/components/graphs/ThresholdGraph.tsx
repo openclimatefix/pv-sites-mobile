@@ -19,6 +19,7 @@ import {
 } from '../icons/FutureThreshold';
 
 import {
+  SimpleMovingAverage,
   addTimePoint,
   getTrendAfterIndex,
   graphThreshold,
@@ -46,10 +47,18 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const [timeEnabled, setTimeEnabled] = useState(
     totalForecastedGeneration !== undefined
   );
-  const { currentTime, sunrise, sunset, timeFormat, weekdayFormat, timezone } =
-    useSiteTime(representativeSite, {
-      updateEnabled: timeEnabled,
-    });
+  const {
+    currentTime,
+    isAfterDayTime,
+    sunrise,
+    sunset,
+    tomorrowTimes,
+    timeFormat,
+    weekdayFormat,
+    timezone,
+  } = useSiteTime(representativeSite, {
+    updateEnabled: timeEnabled,
+  });
 
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
@@ -57,8 +66,8 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
     if (totalForecastedGeneration && sunrise && sunset) {
       return generationDataOverDateRange(
         totalForecastedGeneration,
-        sunrise,
-        sunset
+        isAfterDayTime ? tomorrowTimes.sunrise : sunrise,
+        isAfterDayTime ? tomorrowTimes.sunset : sunset
       );
     }
     return null;
@@ -212,13 +221,17 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const getSolarActivityText = () => {
     if (!totalForecastedGeneration) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(totalForecastedGeneration);
-    const slope = getTrendAfterIndex(totalForecastedGeneration, currIndex);
+    const averagedForecastGeneration = SimpleMovingAverage(
+      totalForecastedGeneration,
+      3
+    );
+    const currIndex = getCurrentTimeGenerationIndex(averagedForecastGeneration);
+    const slope = getTrendAfterIndex(averagedForecastGeneration, currIndex);
 
     if (slope) {
       const { type, endIndex } = slope;
       const slopeForecastDate = timeFormat(
-        totalForecastedGeneration[endIndex].datetime_utc
+        averagedForecastGeneration[endIndex].datetime_utc
       );
 
       switch (type) {

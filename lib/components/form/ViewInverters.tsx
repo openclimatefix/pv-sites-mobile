@@ -1,14 +1,15 @@
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
-import { InverterCard } from '../InverterCard';
-import Button from '../Button';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { Inverters } from '~/lib/types';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { getAuthenticatedRequestOptions } from '~/lib/swr';
 import Spinner from '../Spinner';
 import { getEnodeLinkAndRedirect } from './LinkInverters';
 import { useRouter } from 'next/router';
+import Button from '../Button';
+import { InverterCard } from '../InverterCard';
+import { NavbarLink } from '../navigation/NavBar';
 
 async function sendRequest(url: string, { arg }: { arg: string[] }) {
   const options = await getAuthenticatedRequestOptions(url);
@@ -26,6 +27,7 @@ async function sendRequest(url: string, { arg }: { arg: string[] }) {
 interface ViewInvertersProps {
   siteUUID?: string;
   isSelectMode?: boolean;
+  isEditMode?: boolean;
   backButton?: boolean;
   nextPageCallback: () => void;
   lastPageCallback?: () => void;
@@ -39,19 +41,28 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   lastPageCallback,
   isSelectMode = false,
   backButton = false,
+  isEditMode = false,
 }) => {
-  const { data: inverters, isLoading } = useSWR<Inverters>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
-  );
+  const { data: allInverters, isLoading: isAllInvertersLoading } =
+    useSWR<Inverters>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
+    );
+  const { data: siteInverters, isLoading: isSiteInvertersLoading } =
+    useSWR<Inverters>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/inverters`
+    );
 
   const { trigger } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites/${siteUUID}/inverters`,
     sendRequest
   );
 
-  const [selectedInverters, setSelectedInverters] = useState<string[]>([]);
+  const [selectedInverters, setSelectedInverters] = useState<string[]>(
+    siteInverters?.inverters?.map((inverter) => inverter.id) || []
+  );
   const [didSubmit, setDidSubmit] = useState(false);
   const router = useRouter();
+  const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
 
   const nextPageOrSubmit = async () => {
     if (isSelectMode) {
@@ -69,6 +80,14 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     }
   };
 
+  const defaultTitleText = isSelectMode
+    ? 'Select Inverters'
+    : 'Connected Inverters';
+  const editModeTitleText = 'Connected Inverters';
+  const defaultSubtitleText = 'Click to select or deselect an inverter';
+  const defaultButtonText = isSelectMode ? 'Submit' : 'Next';
+  const editModeButtonText = 'Save Changes';
+
   // @TODO skeletons!!
   return isLoading ? (
     <div className="flex h-[var(--onboarding-height)] w-full items-center justify-center">
@@ -76,24 +95,25 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     </div>
   ) : (
     <div className="flex h-[var(--onboarding-height)] w-full flex-col items-center">
-      <div className="flex h-full w-11/12 max-w-lg flex-col justify-between md:mt-8 md:max-w-4xl">
-        <div className="flex w-full flex-grow flex-col p-3 pt-0">
-          {isSelectMode ? (
-            <>
-              <h1 className="mt-4 text-xl font-semibold text-white">
-                Select Inverters
-              </h1>
-              <h1 className="text-md mb-4 text-white">
-                Select the inverters that correspond to this site.
-              </h1>
-            </>
-          ) : (
-            <h1 className="mb-4 mt-4 text-xl font-semibold text-white">
-              Connected Inverters
-            </h1>
+      <div className="flex h-full w-4/5 flex-col justify-between md:w-8/12">
+        {isEditMode && (
+          <div className="flex w-full">
+            <NavbarLink title="Details" href={`/site-details/${siteUUID}`} />
+            <NavbarLink
+              title="Inverters"
+              href={`/inverters/edit/${siteUUID}`}
+            />
+          </div>
+        )}
+        <div className="flex w-full flex-grow flex-col pt-0">
+          <h1 className="mt-4 text-xl font-semibold text-white">
+            {isEditMode ? editModeTitleText : defaultTitleText}
+          </h1>
+          {isSelectMode && (
+            <h1 className="text-md text-white">{defaultSubtitleText}</h1>
           )}
-          <div className="mb-8 grid w-full grid-cols-1 items-center justify-center gap-4 md:mt-2 md:grid-cols-2">
-            {inverters?.inverters.map((inverter) => (
+          <div className="mb-8 mt-4 grid w-full grid-cols-1 items-center justify-center gap-4 md:mt-2 md:grid-cols-2">
+            {allInverters?.inverters.map((inverter) => (
               <InverterCard
                 inverter={inverter}
                 selectMode={isSelectMode}
@@ -122,14 +142,14 @@ const ViewInverters: FC<ViewInvertersProps> = ({
             className="mb-8 mt-auto w-full self-center"
             onClick={nextPageOrSubmit}
           >
-            {isSelectMode ? 'Finish' : 'Next'}
+            {isEditMode ? 'Save Changes' : defaultButtonText}
           </Button>
         </div>
       </div>
-      <div className="mt-auto hidden w-full justify-between px-12 pb-24 md:block md:flex md:flex-row xl:w-5/6">
+      <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-8/12 md:flex-row">
         {backButton ? (
           <Button onClick={lastPageCallback} variant="outlined">
-            Back
+            {isEditMode ? 'Exit' : 'Back'}
           </Button>
         ) : (
           <div />
@@ -138,9 +158,10 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           variant="solid"
           disabled={(isSelectMode && selectedInverters.length < 1) || didSubmit}
           onClick={nextPageOrSubmit}
+          width="250px"
         >
           {didSubmit && <Spinner width={5} height={5} margin={4} />}
-          {isSelectMode ? 'Finish' : 'Next'}
+          {isEditMode ? editModeButtonText : defaultButtonText}
           {didSubmit && <div className="mx-4 w-5" />}
         </Button>
       </div>

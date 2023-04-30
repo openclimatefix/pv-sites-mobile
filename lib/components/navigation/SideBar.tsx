@@ -1,13 +1,14 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { PlusCircleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '~/lib/utils';
 
 import { useSites } from '~/lib/sites';
 import DashboardLink from './DashboardLink';
 import MenuLink from './MenuLink';
+import Button from '../Button';
 
 interface SideBarProps {
   open: boolean;
@@ -22,27 +23,59 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
   }, [onClose, router]);
 
   const { sites } = useSites();
+  const [isEditMode, setEditMode] = useState(false);
+  const [selected, setSelected] = useState<string | null | 'Aggregate'>(null);
 
   const wrapperRef = useRef(null);
+  const resetStatesAndClose = () => {
+    setEditMode(false);
+    setSelected(null);
+    onClose();
+  };
+
   useClickedOutside(wrapperRef, () => {
     if (open) {
-      onClose();
+      resetStatesAndClose();
     }
   });
+
+  const handleEditClick = () => {
+    setEditMode(!isEditMode);
+    setSelected(null);
+  };
 
   const generateSiteLinks = () => {
     if (sites) {
       // TODO: remove hard-coded limit of 5 solar panel sites
-      return sites
-        .slice(0, 5)
-        .map((site, idx) => (
+      return sites.slice(0, 5).map((site, idx) => (
+        <div
+          key={site.site_uuid}
+          className="flex flex-row"
+          onClick={() => {
+            if (isEditMode) {
+              setSelected(site.site_uuid);
+            }
+          }}
+        >
+          {isEditMode && (
+            <div className="self-center">
+              <input
+                type="radio"
+                className="peer sr-only mr-5"
+                checked={site.site_uuid === selected}
+              />
+              <span className="mr-5 inline-block h-5 w-5 cursor-pointer rounded-full border-[3px] border-ocf-black ring-2 ring-ocf-gray-300 peer-checked:rounded-full peer-checked:bg-ocf-gray-300" />
+            </div>
+          )}
           <DashboardLink
             key={site.site_uuid}
             siteName={site.client_site_name || `Site ${idx + 1}`}
-            href={`/dashboard/${site.site_uuid}`}
+            href={isEditMode ? '#0' : `/dashboard/${site.site_uuid}`}
             sites={[site]}
+            active={site.site_uuid === selected}
           />
-        ));
+        </div>
+      ));
     }
     return null;
   };
@@ -58,21 +91,22 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
       inert={!open ? '' : null}
       ref={wrapperRef}
     >
-      <div className="w-84 relative flex h-full flex-col justify-between overflow-y-auto bg-ocf-black px-10 py-8 pt-12">
+      <div className="relative flex h-full w-96 flex-col justify-between overflow-y-auto bg-ocf-black px-10 py-8 pt-12">
         <div className="flex flex-col">
           {sites.length > 1 && (
             <>
               <div className="mb-7 flex flex-row items-center justify-between">
                 <h2 className="text-xl font-semibold text-white">Dashboards</h2>
-                <button onClick={onClose}>
+                <button onClick={resetStatesAndClose}>
                   <XMarkIcon height="30" width="30" color="white" />
                 </button>
               </div>
 
               <DashboardLink
                 siteName="Aggregate"
-                href="/dashboard"
+                href={isEditMode ? '#' : '/dashboard'}
                 sites={sites}
+                active={selected === 'Aggregate'}
               />
             </>
           )}
@@ -83,7 +117,36 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
           <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
         </div>
-        <div className="mt-auto flex flex-col gap-3">
+        {selected && (
+          <button
+            onClick={() => {
+              router.push(`/site-details/${selected}`);
+            }}
+            disabled={selected === null}
+            className="mt-5 rounded-md border-2 border-amber text-center"
+          >
+            <div className="rounded-md py-3 text-center text-gray-600 transition-all">
+              <p className="text-center text-base font-medium text-amber">
+                Continue to editing site
+              </p>
+            </div>
+          </button>
+        )}
+        <div className="mt-10 flex flex-col gap-3">
+          <button onClick={handleEditClick}>
+            <div className="flex items-center gap-3 rounded-md px-4 py-2 text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
+              <div className={isEditMode ? 'text-amber' : 'text-white'}>
+                <PencilSquareIcon height="24" width="24" />
+              </div>
+              <span
+                className={`text-lg font-medium ${
+                  isEditMode ? 'text-amber' : 'text-white'
+                }`}
+              >
+                Edit site details
+              </span>
+            </div>
+          </button>
           <MenuLink
             href="/site-details"
             label="Add a site"

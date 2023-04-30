@@ -4,13 +4,19 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Image from 'next/image';
 import { withSites } from '~/lib/sites';
 import { appliances } from '~/lib/appliances';
+import FAQLink from '~/lib/components/navigation/FAQLink';
+import { pages } from './help/[page]';
+import { hyphensToTitleCase } from '~/lib/utils';
 
 const MoreInfo = () => {
   const sortedAppliances = appliances.sort((a, b) => b.kW - a.kW);
 
   return (
     <div className="min-h-screen w-screen max-w-screen-lg bg-ocf-black px-4">
-      <h1 className="my-2 mt-4 text-3xl font-bold text-ocf-gray">More Info</h1>
+      <h1 className="my-4 text-3xl font-bold text-ocf-gray">Help Center</h1>
+      <h2 className="my-6 text-base font-semibold leading-none text-ocf-gray">
+        Energy usage by appliance
+      </h2>
       <div className="rounded-lg bg-ocf-black-500">
         <Carousel
           showStatus={false}
@@ -66,6 +72,20 @@ const MoreInfo = () => {
             <PowerInfoCard key={element.name} {...element} />
           ))}
         </Carousel>
+      </div>
+      <h2 className="my-6 text-base font-semibold leading-none text-ocf-gray">
+        Help Topics
+      </h2>
+      <div>
+        {Object.keys(pages).map((page) => {
+          return (
+            <FAQLink
+              key={page}
+              title={hyphensToTitleCase(page)}
+              href={`/help/${page}`}
+            />
+          );
+        })}
       </div>
     </div>
   );
