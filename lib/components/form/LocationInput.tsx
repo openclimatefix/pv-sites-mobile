@@ -30,7 +30,7 @@ const LocationInput: FC<LocationInputProps> = ({
   const map = useRef<mapboxgl.Map>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
   const [isPastZoomThreshold, setIsPastZoomThreshold] = useState(false);
-  const [isInUK, setIsInUK] = useState(false);
+  const [isInUK, setIsInUK] = useState(true); //@TODO: CHANGE THIS BACK TO FALSE
   const [isMoving, setIsMoving] = useState(false);
   const [zoom, setZoom] = useState(initialZoom);
 
@@ -78,7 +78,7 @@ const LocationInput: FC<LocationInputProps> = ({
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
-      countries: 'GB',
+      // countries: 'GB', @TODO: PUT THIS BACK IN AFTER DEMO
       placeholder: 'Search a location',
       marker: false,
       render: renderFunction,
@@ -222,10 +222,10 @@ const LocationInput: FC<LocationInputProps> = ({
     });
 
     geocoder.on('result', (result) => {
-      const isUK =
-        result.result.context.find((e: Record<string, string>) =>
-          e.id.includes('country')
-        ).short_code === 'gb';
+      const isUK = true; //@TODO CHANGE HTIS BACK AFTER SHOWCASE
+      // result.result.context.find((e: Record<string, string>) =>
+      //   e.id.includes('country')
+      // ).short_code === 'gb';
 
       if (!isUK && map.current) {
         popup = new mapboxgl.Popup({
@@ -241,7 +241,7 @@ const LocationInput: FC<LocationInputProps> = ({
           )
           .addTo(map.current);
       }
-      setIsInUK(isUK);
+      setIsInUK(true); //@TODO: CHANGE THIS BACK AFTER SHOWCASE
     });
   }, [
     canEdit,
