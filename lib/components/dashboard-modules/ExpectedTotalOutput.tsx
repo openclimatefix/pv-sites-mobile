@@ -3,7 +3,7 @@ import {
   generationDataOverDateRange,
   getTotalExpectedOutput,
 } from '~/lib/generation';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSiteAggregation, useSiteData } from '~/lib/sites';
 import { Site } from '~/lib/types';
 import NumberDisplay from './NumberDisplay';
 import { useSiteTime } from '~/lib/time';

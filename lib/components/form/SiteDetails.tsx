@@ -132,7 +132,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(isMobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
+      router.push(`/link/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }
