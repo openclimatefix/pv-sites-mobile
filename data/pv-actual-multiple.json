@@ -1504,83 +1504,83 @@
       },
       {
         "datetime_utc": "2023-04-01T07:15:00",
-        "actual_generation_kw": 0.10836192
+        "actual_generation_kw": 0.12097
       },
       {
         "datetime_utc": "2023-04-01T07:20:00",
-        "actual_generation_kw": 0.1076646
+        "actual_generation_kw": 0.17234
       },
       {
         "datetime_utc": "2023-04-01T07:25:00",
-        "actual_generation_kw": 0.12034560000000001
+        "actual_generation_kw": 0.189898
       },
       {
         "datetime_utc": "2023-04-01T07:30:00",
-        "actual_generation_kw": 0.10241388000000001
+        "actual_generation_kw": 0.9234
       },
       {
         "datetime_utc": "2023-04-01T07:35:00",
-        "actual_generation_kw": 0.13160159999999999
+        "actual_generation_kw": 0.32415
       },
       {
         "datetime_utc": "2023-04-01T07:40:00",
-        "actual_generation_kw": 0.11723124000000001
+        "actual_generation_kw": 0.54545
       },
       {
         "datetime_utc": "2023-04-01T07:45:00",
-        "actual_generation_kw": 0.06707952
+        "actual_generation_kw": 0.65313
       },
       {
         "datetime_utc": "2023-04-01T07:50:00",
-        "actual_generation_kw": 0.07281204
+        "actual_generation_kw": 0.98345
       },
       {
         "datetime_utc": "2023-04-01T07:55:00",
-        "actual_generation_kw": 0.14817239999999998
+        "actual_generation_kw": 1.11751
       },
       {
         "datetime_utc": "2023-04-01T08:00:00",
-        "actual_generation_kw": 0.07445952
+        "actual_generation_kw": 1.23234
       },
       {
         "datetime_utc": "2023-04-01T08:05:00",
-        "actual_generation_kw": 0.13053
+        "actual_generation_kw": 1.21124
       },
       {
         "datetime_utc": "2023-04-01T08:10:00",
-        "actual_generation_kw": 0.169518
+        "actual_generation_kw": 1.34325
       },
       {
         "datetime_utc": "2023-04-01T08:15:00",
-        "actual_generation_kw": 0.181974
+        "actual_generation_kw": 1.64543
       },
       {
         "datetime_utc": "2023-04-01T08:20:00",
-        "actual_generation_kw": 0.1889016
+        "actual_generation_kw": 1.743
       },
       {
         "datetime_utc": "2023-04-01T08:25:00",
-        "actual_generation_kw": 0.1834752
+        "actual_generation_kw": 1.823
       },
       {
         "datetime_utc": "2023-04-01T08:30:00",
-        "actual_generation_kw": 0.11471759999999999
+        "actual_generation_kw": 1.50034
       },
       {
         "datetime_utc": "2023-04-01T08:35:00",
-        "actual_generation_kw": 0.037337159999999994
+        "actual_generation_kw": 1.1236
       },
       {
         "datetime_utc": "2023-04-01T08:40:00",
-        "actual_generation_kw": 0.03579768
+        "actual_generation_kw": 1.738
       },
       {
         "datetime_utc": "2023-04-01T08:45:00",
-        "actual_generation_kw": 0.157308
+        "actual_generation_kw": 1.81233
       },
       {
         "datetime_utc": "2023-04-01T08:50:00",
-        "actual_generation_kw": 0.253896
+        "actual_generation_kw": 1.90123
       },
       {
         "datetime_utc": "2023-04-01T08:55:00",
@@ -1588,7 +1588,7 @@
       },
       {
         "datetime_utc": "2023-04-01T09:00:00",
-        "actual_generation_kw": 0.41323560000000004
+        "actual_generation_kw": 2.13245
       },
       {
         "datetime_utc": "2023-04-01T09:05:00",
@@ -1600,7 +1600,7 @@
       },
       {
         "datetime_utc": "2023-04-01T09:15:00",
-        "actual_generation_kw": 0.3897816
+        "actual_generation_kw": 2.41234
       },
       {
         "datetime_utc": "2023-04-01T09:20:00",
@@ -1610,10 +1610,7 @@
         "datetime_utc": "2023-04-01T09:25:00",
         "actual_generation_kw": 0.5154552
       },
-      {
-        "datetime_utc": "2023-04-01T09:30:00",
-        "actual_generation_kw": 0.493554
-      },
+      { "datetime_utc": "2023-04-01T09:30:00", "actual_generation_kw": 2.698 },
       {
         "datetime_utc": "2023-04-01T09:35:00",
         "actual_generation_kw": 0.5118204
@@ -1624,7 +1621,7 @@
       },
       {
         "datetime_utc": "2023-04-01T09:45:00",
-        "actual_generation_kw": 0.5666568
+        "actual_generation_kw": 2.7112344
       },
       {
         "datetime_utc": "2023-04-01T09:50:00",
@@ -1636,7 +1633,7 @@
       },
       {
         "datetime_utc": "2023-04-01T10:00:00",
-        "actual_generation_kw": 0.35278319999999996
+        "actual_generation_kw": 2.61233434
       },
       {
         "datetime_utc": "2023-04-01T10:05:00",
@@ -1648,7 +1645,7 @@
       },
       {
         "datetime_utc": "2023-04-01T10:15:00",
-        "actual_generation_kw": 0.50763
+        "actual_generation_kw": 2.4781234
       },
       {
         "datetime_utc": "2023-04-01T10:20:00",
@@ -1660,7 +1657,7 @@
       },
       {
         "datetime_utc": "2023-04-01T10:30:00",
-        "actual_generation_kw": 0.46629240000000005
+        "actual_generation_kw": 2.783412
       },
       {
         "datetime_utc": "2023-04-01T10:35:00",
@@ -1672,7 +1669,7 @@
       },
       {
         "datetime_utc": "2023-04-01T10:45:00",
-        "actual_generation_kw": 0.7469436
+        "actual_generation_kw": 2.83192
       },
       {
         "datetime_utc": "2023-04-01T10:50:00",
@@ -1684,7 +1681,7 @@
       },
       {
         "datetime_utc": "2023-04-01T11:00:00",
-        "actual_generation_kw": 0.766284
+        "actual_generation_kw": 2.691019
       },
       {
         "datetime_utc": "2023-04-01T11:05:00",
@@ -1696,7 +1693,7 @@
       },
       {
         "datetime_utc": "2023-04-01T11:15:00",
-        "actual_generation_kw": 0.7073328
+        "actual_generation_kw": 3.001234
       },
       {
         "datetime_utc": "2023-04-01T11:20:00",
@@ -1708,7 +1705,7 @@
       },
       {
         "datetime_utc": "2023-04-01T11:30:00",
-        "actual_generation_kw": 1.0464252
+        "actual_generation_kw": 3.3343434
       },
       {
         "datetime_utc": "2023-04-01T11:35:00",
@@ -1720,7 +1717,7 @@
       },
       {
         "datetime_utc": "2023-04-01T11:45:00",
-        "actual_generation_kw": 0.8689104
+        "actual_generation_kw": 3.5341223
       },
       {
         "datetime_utc": "2023-04-01T11:50:00",
@@ -1732,7 +1729,7 @@
       },
       {
         "datetime_utc": "2023-04-01T12:00:00",
-        "actual_generation_kw": 1.0433208
+        "actual_generation_kw": 3.134566
       },
       {
         "datetime_utc": "2023-04-01T12:05:00",
@@ -1744,7 +1741,7 @@
       },
       {
         "datetime_utc": "2023-04-01T12:15:00",
-        "actual_generation_kw": 0.7875647999999998
+        "actual_generation_kw": 3.234153
       },
       {
         "datetime_utc": "2023-04-01T12:20:00",
@@ -1756,7 +1753,7 @@
       },
       {
         "datetime_utc": "2023-04-01T12:30:00",
-        "actual_generation_kw": 1.1526696
+        "actual_generation_kw": 2.78783423
       },
       {
         "datetime_utc": "2023-04-01T12:35:00",
@@ -1768,7 +1765,7 @@
       },
       {
         "datetime_utc": "2023-04-01T12:45:00",
-        "actual_generation_kw": 0.9776256000000001
+        "actual_generation_kw": 2.812345
       },
       {
         "datetime_utc": "2023-04-01T12:50:00",
@@ -1780,7 +1777,7 @@
       },
       {
         "datetime_utc": "2023-04-01T13:00:00",
-        "actual_generation_kw": 0.6633288
+        "actual_generation_kw": 2.62413098
       },
       {
         "datetime_utc": "2023-04-01T13:05:00",
@@ -1792,7 +1789,7 @@
       },
       {
         "datetime_utc": "2023-04-01T13:15:00",
-        "actual_generation_kw": 1.679424
+        "actual_generation_kw": 2.78981238
       },
       {
         "datetime_utc": "2023-04-01T13:20:00",
@@ -1804,7 +1801,7 @@
       },
       {
         "datetime_utc": "2023-04-01T13:30:00",
-        "actual_generation_kw": 2.2306440000000003
+        "actual_generation_kw": 2.890123849
       },
       {
         "datetime_utc": "2023-04-01T13:35:00",
@@ -1816,7 +1813,7 @@
       },
       {
         "datetime_utc": "2023-04-01T13:45:00",
-        "actual_generation_kw": 1.663596
+        "actual_generation_kw": 2.6123120348
       },
       {
         "datetime_utc": "2023-04-01T13:50:00",
@@ -1828,7 +1825,7 @@
       },
       {
         "datetime_utc": "2023-04-01T14:00:00",
-        "actual_generation_kw": 0.7668048
+        "actual_generation_kw": 2.68132789489714
       },
       {
         "datetime_utc": "2023-04-01T14:05:00",
@@ -1840,7 +1837,7 @@
       },
       {
         "datetime_utc": "2023-04-01T14:15:00",
-        "actual_generation_kw": 1.302984
+        "actual_generation_kw": 2.47816234
       },
       {
         "datetime_utc": "2023-04-01T14:20:00",
@@ -1852,7 +1849,7 @@
       },
       {
         "datetime_utc": "2023-04-01T14:30:00",
-        "actual_generation_kw": 3.213168
+        "actual_generation_kw": 2.123847987
       },
       {
         "datetime_utc": "2023-04-01T14:35:00",
@@ -1864,7 +1861,7 @@
       },
       {
         "datetime_utc": "2023-04-01T14:45:00",
-        "actual_generation_kw": 0.5110452
+        "actual_generation_kw": 2.0123414
       },
       {
         "datetime_utc": "2023-04-01T14:50:00",
@@ -1876,7 +1873,7 @@
       },
       {
         "datetime_utc": "2023-04-01T15:00:00",
-        "actual_generation_kw": 1.638288
+        "actual_generation_kw": 2.0123948
       },
       {
         "datetime_utc": "2023-04-01T15:05:00",
@@ -1888,7 +1885,7 @@
       },
       {
         "datetime_utc": "2023-04-01T15:15:00",
-        "actual_generation_kw": 0.3614088
+        "actual_generation_kw": 1.757341
       },
       {
         "datetime_utc": "2023-04-01T15:20:00",
@@ -1900,7 +1897,7 @@
       },
       {
         "datetime_utc": "2023-04-01T15:30:00",
-        "actual_generation_kw": 2.075964
+        "actual_generation_kw": 1.23612456
       },
       {
         "datetime_utc": "2023-04-01T15:35:00",
@@ -1912,7 +1909,7 @@
       },
       {
         "datetime_utc": "2023-04-01T15:45:00",
-        "actual_generation_kw": 0.64023
+        "actual_generation_kw": 1.323456
       },
       {
         "datetime_utc": "2023-04-01T15:50:00",
@@ -1924,7 +1921,7 @@
       },
       {
         "datetime_utc": "2023-04-01T16:00:00",
-        "actual_generation_kw": 0.4493988
+        "actual_generation_kw": 1.139058987
       },
       {
         "datetime_utc": "2023-04-01T16:05:00",
@@ -1936,7 +1933,7 @@
       },
       {
         "datetime_utc": "2023-04-01T16:15:00",
-        "actual_generation_kw": 0.6940512
+        "actual_generation_kw": 1.2341324
       },
       {
         "datetime_utc": "2023-04-01T16:20:00",
@@ -1948,7 +1945,7 @@
       },
       {
         "datetime_utc": "2023-04-01T16:30:00",
-        "actual_generation_kw": 1.2027480000000002
+        "actual_generation_kw": 0.989317486
       },
       {
         "datetime_utc": "2023-04-01T16:35:00",
@@ -1960,7 +1957,7 @@
       },
       {
         "datetime_utc": "2023-04-01T16:45:00",
-        "actual_generation_kw": 1.3458720000000002
+        "actual_generation_kw": 1.09878687
       },
       {
         "datetime_utc": "2023-04-01T16:50:00",
@@ -1972,7 +1969,7 @@
       },
       {
         "datetime_utc": "2023-04-01T17:00:00",
-        "actual_generation_kw": 0.5339615999999999
+        "actual_generation_kw": 0.89875765
       },
       {
         "datetime_utc": "2023-04-01T17:05:00",
@@ -1984,7 +1981,7 @@
       },
       {
         "datetime_utc": "2023-04-01T17:15:00",
-        "actual_generation_kw": 0.33532439999999997
+        "actual_generation_kw": 0.72314234
       },
       {
         "datetime_utc": "2023-04-01T17:20:00",
@@ -1996,7 +1993,7 @@
       },
       {
         "datetime_utc": "2023-04-01T17:30:00",
-        "actual_generation_kw": 0.2162148
+        "actual_generation_kw": 0.31415926535
       },
       {
         "datetime_utc": "2023-04-01T17:35:00",
@@ -2008,7 +2005,7 @@
       },
       {
         "datetime_utc": "2023-04-01T17:45:00",
-        "actual_generation_kw": 0.1357692
+        "actual_generation_kw": 0.1222234
       },
       {
         "datetime_utc": "2023-04-01T17:50:00",
@@ -2016,7 +2013,7 @@
       },
       {
         "datetime_utc": "2023-04-01T17:55:00",
-        "actual_generation_kw": 0.05203044
+        "actual_generation_kw": 0.10000123
       },
       {
         "datetime_utc": "2023-04-01T18:00:00",
