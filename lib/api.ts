@@ -18,11 +18,11 @@ import dayjs from 'dayjs';
  * @returns The date object for the date
  */
 export function parseNowcastingDatetime(datetime: string) {
+  if (!datetime.endsWith('Z')) {
+    datetime += 'Z';
+  }
   // TODO REVERT ALL THIS
-  // if (!datetime.endsWith('Z')) {
-  //   datetime += 'Z';
-  // }
-  return dayjs(new Date(datetime), 'America/Chicago').toDate();
+  return dayjs(new Date(datetime)).tz('America/Chicago', true).toDate();
 }
 
 function parseForecastData(
