@@ -13,6 +13,7 @@ import goodwe from '~/public/inverters/goodwe.png';
 import growatt from '~/public/inverters/growatt.png';
 import solaredge from '~/public/inverters/solaredge.png';
 import solis from '~/public/inverters/solis.png';
+import Image from 'next/image';
 
 const brands = {
   EMA: ema,
@@ -33,7 +34,7 @@ const SupportedInverters = () => {
             <img
               src={brands[brand as keyof typeof brands].src}
               alt={`${brand} logo`}
-            ></img>
+            />
             <div className="my-2 self-center text-ocf-gray-300">{brand}</div>
           </div>
         );
@@ -60,10 +61,10 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   };
 
   const mobileSkipButtonClass =
-    'flex items-center text-ocf-yellow text-[14px] mt-[5px]';
+    'flex items-center text-ocf-yellow text-[14px] mt-[5px] md:font-normal font-bold';
 
   return (
-    <div className="flex h-[90vh] w-full flex-col px-5 md:overflow-hidden md:pb-6 md:pt-[75px]">
+    <div className="flex w-full flex-col px-5 md:h-[90vh] md:overflow-hidden md:pb-6 md:pt-[75px]">
       <div className="mt-[40px] self-center md:mt-[0px]">
         <InverterGraphicIcon />
       </div>

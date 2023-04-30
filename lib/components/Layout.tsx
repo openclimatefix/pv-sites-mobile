@@ -12,7 +12,8 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
   const showNav =
     !!user &&
     !path.startsWith('/site-details') &&
-    !path.startsWith('/inverters');
+    !path.startsWith('/inverters') &&
+    !path.startsWith('/link');
 
   return (
     <>
