@@ -26,16 +26,29 @@ const SiteGraph: FC<SiteGraphProps> = ({
     totalForecastedGeneration !== undefined
   );
 
-  const { dusk, dawn } = useSiteTime(representativeSite, {
-    updateEnabled: timeEnabled,
-  });
+  const { isAfterDayTime, sunrise, sunset, tomorrowTimes } = useSiteTime(
+    representativeSite,
+    {
+      updateEnabled: timeEnabled,
+    }
+  );
 
   const graphData = useMemo(() => {
     if (totalForecastedGeneration) {
-      return generationDataOverDateRange(totalForecastedGeneration, dawn, dusk);
+      return generationDataOverDateRange(
+        totalForecastedGeneration,
+        isAfterDayTime ? tomorrowTimes.sunrise : sunrise,
+        isAfterDayTime ? tomorrowTimes.sunset : sunset
+      );
     }
     return null;
-  }, [totalForecastedGeneration, dawn, dusk]);
+  }, [
+    totalForecastedGeneration,
+    isAfterDayTime,
+    sunrise,
+    sunset,
+    tomorrowTimes,
+  ]);
 
   if (!graphData) return null;
 

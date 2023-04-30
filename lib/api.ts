@@ -17,9 +17,9 @@ import { fetcher } from './swr';
  * @returns The date object for the date
  */
 export function parseNowcastingDatetime(datetime: string) {
-  if (!datetime.endsWith('Z')) {
-    datetime += 'Z';
-  }
+  // if (!datetime.endsWith('Z')) {
+  //   datetime += 'Z';
+  // }
   return new Date(datetime);
 }
 
