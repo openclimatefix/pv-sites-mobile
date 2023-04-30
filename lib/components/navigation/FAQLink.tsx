@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-type FAQLinkProps = {
+type HelpCenterLinkProps = {
   title: string;
   href: string;
 };
