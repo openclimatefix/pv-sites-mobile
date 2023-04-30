@@ -194,7 +194,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     ) {
       res.status(200).json(invertersJson);
     } else if (mockApiRoute === 'enode/link') {
-      console.log(redirect_uri, req.query);
       const redirectURL = await getLinkRedirectURL(
         testClientID,
         redirect_uri as string

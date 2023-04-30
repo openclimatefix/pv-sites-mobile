@@ -15,7 +15,7 @@
       "id": "1",
       "brand": "EMA",
       "model": "SE7K-RW0TEBNN4",
-      "siteName": "My House",
+      "siteName": "APSystems QT2 - House",
       "installationDate": "2021-04-23"
     },
     "location": {
@@ -39,7 +39,7 @@
       "id": "2",
       "brand": "EMA",
       "model": "SE7K-RW0TEBNN4",
-      "siteName": "My Garage",
+      "siteName": "APSystems DS3 - Garage",
       "installationDate": "2021-06-15"
     },
     "location": {
