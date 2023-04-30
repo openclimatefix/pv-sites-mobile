@@ -1,7 +1,8 @@
+import dayjs from 'dayjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { parseNowcastingDatetime } from '~/lib/api';
 import {
   clearUsers,
-  getInverters,
   getLinkRedirectURL,
   getLinkedVendors,
   testClientID,
@@ -11,16 +12,21 @@ import {
   UnparsedClearSkyData,
   UnparsedForecastData,
 } from '~/lib/types';
-import pvClearskyMultipleJson from '../../data/pv-clearsky-multiple.json';
 import clearskyJson from '../../data/clearsky.json';
+import invertersJson from '../../data/inverters.json';
 import pvActualMultipleJson from '../../data/pv-actual-multiple.json';
 import pvActualJson from '../../data/pv-actual.json';
+import pvClearskyMultipleJson from '../../data/pv-clearsky-multiple.json';
 import pvForecastMultipleJson from '../../data/pv-forecast-multiple.json';
 import pvForecastJson from '../../data/pv-forecast.json';
 import siteListJson from '../../data/site-list.json';
-import invertersJson from '../../data/inverters.json';
-import { parseNowcastingDatetime } from '~/lib/api';
-import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(duration);
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   let { mockApiRoute, site_uuids, redirect_uri } = req.query;
