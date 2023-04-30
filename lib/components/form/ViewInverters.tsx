@@ -1,5 +1,5 @@
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { Inverters } from '~/lib/types';
@@ -63,6 +63,8 @@ const ViewInverters: FC<ViewInvertersProps> = ({
       ? siteInverters?.inverters?.map((inverter) => inverter.id) || []
       : []
   );
+
+
   const [didSubmit, setDidSubmit] = useState(false);
   const router = useRouter();
   const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
