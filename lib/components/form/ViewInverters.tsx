@@ -64,7 +64,6 @@ const ViewInverters: FC<ViewInvertersProps> = ({
       : []
   );
 
-
   const [didSubmit, setDidSubmit] = useState(false);
   const router = useRouter();
   const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
