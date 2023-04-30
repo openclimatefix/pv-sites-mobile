@@ -76,7 +76,9 @@ const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
       <RecommendationDisplay
         src={`/appliances/icons/${recommended.icon}`}
         alt={recommended.name}
-        description={`You have enough power to ${recommended.action} your ${recommended.name.toLowerCase()}`}
+        description={`You have enough power to ${
+          recommended.action
+        } your ${recommended.name.toLowerCase()}`}
       />
     );
   }
