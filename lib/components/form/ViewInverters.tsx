@@ -9,6 +9,7 @@ import Button from '../Button';
 import { InverterCard } from '../InverterCard';
 import Spinner from '../Spinner';
 import { NavbarLink } from '../navigation/NavBar';
+import { CheckIcon } from '@heroicons/react/24/solid';
 
 async function sendRequest(url: string, { arg }: { arg: string[] }) {
   const options = await getAuthenticatedRequestOptions(url);
@@ -60,14 +61,21 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     siteInverters?.inverters?.map((inverter) => inverter.id) || []
   );
   const [didSubmit, setDidSubmit] = useState(false);
+  const [showSuccessIcon, setShowSuccessIcon] = useState(false);
   const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
 
   const nextPageOrSubmit = async () => {
     if (isSelectMode) {
-      if (!didSubmit) setDidSubmit(true);
-      await trigger(selectedInverters);
+      await submit();
     }
     nextPageCallback();
+  };
+
+  const submit = async () => {
+    if (!didSubmit) setDidSubmit(true);
+    await trigger(selectedInverters);
+    setToTrueForSeconds(setShowSuccessIcon, 2);
+    setDidSubmit(false);
   };
 
   const toggleSelected = (inverter: string) => {
@@ -76,6 +84,16 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     } else {
       setSelectedInverters([...selectedInverters, inverter]);
     }
+  };
+
+  const setToTrueForSeconds = (
+    setter: (arg0: boolean) => void,
+    seconds: number
+  ) => {
+    setter(true);
+    setTimeout(() => {
+      setter(false);
+    }, seconds * 1000);
   };
 
   const defaultTitleText = isSelectMode
@@ -104,7 +122,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           </div>
         )}
         <div className="flex w-full flex-grow flex-col pt-0">
-          <h1 className="mt-4 text-xl font-semibold text-white">
+          <h1 className="mt-4 text-xl font-semibold text-white md:text-2xl">
             {isEditMode ? editModeTitleText : defaultTitleText}
           </h1>
           {isSelectMode && (
@@ -135,18 +153,33 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           </Link>
           <Button
             variant="solid"
-            disabled={isSelectMode && selectedInverters.length < 1}
+            disabled={
+              (isSelectMode && selectedInverters.length < 1) || didSubmit
+            }
             hidden="md"
             className="mb-8 mt-auto w-full self-center"
-            onClick={nextPageOrSubmit}
+            onClick={isEditMode ? submit : nextPageOrSubmit}
           >
-            {isEditMode ? 'Save Changes' : defaultButtonText}
+            {(didSubmit || showSuccessIcon) && (
+              <div className="mx-2 h-5 w-5 overflow-hidden">
+                {didSubmit && <Spinner width={5} height={5} margin={0} />}
+                {!didSubmit && showSuccessIcon && (
+                  <CheckIcon className="h-5 w-5 fill-ocf-black text-gray-200 dark:text-ocf-gray-300" />
+                )}
+              </div>
+            )}
+            {isEditMode ? editModeButtonText : defaultButtonText}
+            {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
           </Button>
         </div>
       </div>
       <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-8/12 md:flex-row">
         {backButton ? (
-          <Button onClick={lastPageCallback} variant="outlined">
+          <Button
+            onClick={lastPageCallback}
+            variant="outlined"
+            className="w-[250px]"
+          >
             {isEditMode ? 'Exit' : 'Back'}
           </Button>
         ) : (
@@ -155,12 +188,19 @@ const ViewInverters: FC<ViewInvertersProps> = ({
         <Button
           variant="solid"
           disabled={(isSelectMode && selectedInverters.length < 1) || didSubmit}
-          onClick={nextPageOrSubmit}
-          width="250px"
+          onClick={isEditMode ? submit : nextPageOrSubmit}
+          className="w-[250px]"
         >
-          {didSubmit && <Spinner width={5} height={5} margin={4} />}
+          {(didSubmit || showSuccessIcon) && (
+            <div className="mx-2 h-5 w-5 overflow-hidden">
+              {didSubmit && <Spinner width={5} height={5} margin={0} />}
+              {!didSubmit && showSuccessIcon && (
+                <CheckIcon className="h-5 w-5 fill-ocf-black text-gray-200 dark:text-ocf-gray-300" />
+              )}
+            </div>
+          )}
           {isEditMode ? editModeButtonText : defaultButtonText}
-          {didSubmit && <div className="mx-4 w-5" />}
+          {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
         </Button>
       </div>
     </div>
