@@ -125,16 +125,19 @@ const ViewInverters: FC<ViewInvertersProps> = ({
               />
             ))}
           </div>
-          {!isSelectMode && (
-            <button onClick={() => getEnodeLinkAndRedirect(siteUUID!, router)}>
-              <div className="flex flex-row justify-center gap-2">
-                <PlusCircleIcon width={24} height={24} color="#FFD053" />
-                <h2 className="text-l text-ocf-yellow-500">
-                  Link more inverters
-                </h2>
-              </div>
-            </button>
-          )}
+          {!isSelectMode ||
+            (isEditMode && (
+              <button
+                onClick={() => getEnodeLinkAndRedirect(siteUUID!, router)}
+              >
+                <div className="flex flex-row justify-center gap-2">
+                  <PlusCircleIcon width={24} height={24} color="#FFD053" />
+                  <h2 className="text-l text-ocf-yellow-500">
+                    Link more inverters
+                  </h2>
+                </div>
+              </button>
+            ))}
           <Button
             variant="solid"
             disabled={isSelectMode && selectedInverters.length < 1}
