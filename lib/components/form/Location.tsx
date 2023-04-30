@@ -61,7 +61,7 @@ const Location: FC<Props> = ({
         </div>
         <div className="mb-3 mt-3 flex items-center justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-between">
           <div className="hidden md:block">
-            {!isEditing && (
+            {/* {!isEditing && (
               <Button
                 form="panel-form"
                 onClick={lastPageCallback}
@@ -69,7 +69,7 @@ const Location: FC<Props> = ({
               >
                 Back
               </Button>
-            )}
+            )} */}
           </div>
           <Button
             disabled={!isSubmissionEnabled}
