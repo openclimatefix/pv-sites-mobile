@@ -75,7 +75,7 @@ const Location: FC<Props> = ({
             disabled={!isSubmissionEnabled}
             onClick={nextPageCallback}
             variant="solid"
-            className="w-[250px]"
+            className="w-full md:w-[250px]"
           >
             {isEditing ? 'Continue' : 'Next'}
           </Button>
