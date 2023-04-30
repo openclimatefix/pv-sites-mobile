@@ -50,5 +50,3 @@ const Logout = () => {
 };
 
 export default Logout;
-
-export const getServerSideProps = withSites();
