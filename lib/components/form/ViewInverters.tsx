@@ -1,13 +1,14 @@
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import { FC, useState } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { getAuthenticatedRequestOptions } from '~/lib/swr';
 import { Inverters } from '~/lib/types';
+import { getAuthenticatedRequestOptions } from '~/lib/swr';
+import Spinner from '../Spinner';
+import { getEnodeLinkAndRedirect } from './LinkInverters';
+import { useRouter } from 'next/router';
 import Button from '../Button';
 import { InverterCard } from '../InverterCard';
-import Spinner from '../Spinner';
 import { NavbarLink } from '../navigation/NavBar';
 
 async function sendRequest(url: string, { arg }: { arg: string[] }) {
@@ -60,6 +61,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     siteInverters?.inverters?.map((inverter) => inverter.id) || []
   );
   const [didSubmit, setDidSubmit] = useState(false);
+  const router = useRouter();
   const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
 
   const nextPageOrSubmit = async () => {
@@ -123,16 +125,16 @@ const ViewInverters: FC<ViewInvertersProps> = ({
               />
             ))}
           </div>
-          <Link href="https://www.omfgdogs.com">
-            <a>
+          {!isSelectMode && (
+            <button onClick={() => getEnodeLinkAndRedirect(siteUUID!, router)}>
               <div className="flex flex-row justify-center gap-2">
                 <PlusCircleIcon width={24} height={24} color="#FFD053" />
                 <h2 className="text-l text-ocf-yellow-500">
                   Link more inverters
                 </h2>
               </div>
-            </a>
-          </Link>
+            </button>
+          )}
           <Button
             variant="solid"
             disabled={isSelectMode && selectedInverters.length < 1}
