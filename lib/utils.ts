@@ -97,7 +97,7 @@ export function useClickedOutside(ref: RefObject<any>, handler: () => void) {
  * Turns URL into capitalized title
  * @param page page url to convert to title
  */
-export const urlToDisplay = (page: string) => {
+export const hyphensToTitleCase = (page: string) => {
   return page
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
