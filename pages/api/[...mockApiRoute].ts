@@ -63,7 +63,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method == 'GET') {
     if (
-      mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_actual'
+      mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_actual' ||
+      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/pv_actual' ||
+      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7f/pv_actual'
     ) {
       const pvActual = pvActualJson as UnparsedActualData;
       res.status(200).json({
@@ -71,7 +73,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         pv_actual_values: fakeDates(pvActual.pv_actual_values, 'datetime_utc'),
       });
     } else if (
-      mockApiRoute === 'sites/725a8670-d012-474d-b901-1179f43e7182/pv_forecast'
+      mockApiRoute ===
+        'sites/725a8670-d012-474d-b901-1179f43e7182/pv_forecast' ||
+      mockApiRoute ===
+        'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/pv_forecast' ||
+      mockApiRoute === 'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7f/pv_forecast'
     ) {
       const pvForecast = pvForecastJson as UnparsedForecastData;
       res.status(200).json({
@@ -80,7 +86,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     } else if (
       mockApiRoute ===
-      'sites/725a8670-d012-474d-b901-1179f43e7182/clearsky_estimate'
+        'sites/725a8670-d012-474d-b901-1179f43e7182/clearsky_estimate' ||
+      mockApiRoute ===
+        'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7e/clearsky_estimate' ||
+      mockApiRoute ===
+        'sites/b97f68cd-50e0-49bb-a850-108d4a9f7b7f/clearsky_estimate'
     ) {
       const clearSky = clearskyJson as UnparsedClearSkyData;
       res.status(200).json({
@@ -89,7 +99,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
     } else if (
       mockApiRoute ===
-      'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182'
+        'sites/pv_forecast?site_uuids=725a8670-d012-474d-b901-1179f43e7182' ||
+      mockApiRoute ===
+        'sites/pv_forecast?site_uuids=b97f68cd-50e0-49bb-a850-108d4a9f7b7e' ||
+      mockApiRoute ===
+        'sites/pv_forecast?site_uuids=b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
     ) {
       const forecastMultiple = [pvForecastJson] as UnparsedForecastData[];
       res.status(200).json([
@@ -100,7 +114,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182'
+        'sites/clearsky_estimate?site_uuids=725a8670-d012-474d-b901-1179f43e7182' ||
+      mockApiRoute ===
+        'sites/clearsky_estimate?site_uuids=b97f68cd-50e0-49bb-a850-108d4a9f7b7e' ||
+      mockApiRoute ===
+        'sites/clearsky_estimate?site_uuids=b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
     ) {
       const clearskyMultiple = [clearskyJson] as UnparsedClearSkyData[];
       res.status(200).json([
@@ -111,7 +129,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ]);
     } else if (
       mockApiRoute ===
-      'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182'
+        'sites/pv_actual?site_uuids=725a8670-d012-474d-b901-1179f43e7182' ||
+      mockApiRoute ===
+        'sites/pv_actual?site_uuids=b97f68cd-50e0-49bb-a850-108d4a9f7b7e' ||
+      mockApiRoute ===
+        'sites/pv_actual?site_uuids=b97f68cd-50e0-49bb-a850-108d4a9f7b7f'
     ) {
       const actualMultiple = [pvActualJson] as UnparsedActualData[];
       res.status(200).json([
