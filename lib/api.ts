@@ -22,7 +22,7 @@ export function parseNowcastingDatetime(datetime: string) {
   // if (!datetime.endsWith('Z')) {
   //   datetime += 'Z';
   // }
-  return dayjs(new Date(datetime)).tz('America/Chicago').toDate();
+  return dayjs(new Date(datetime), 'America/Chicago').toDate();
 }
 
 function parseForecastData(
