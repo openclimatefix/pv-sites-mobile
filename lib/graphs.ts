@@ -201,8 +201,8 @@ export const calculateCenteredMovingAverage = (
   );
 
   // Calculate the centered moving average for each point
-  for (let i = 0; i < averagedPoints.length; i++) {
-    if (i == 0 || i == averagedPoints.length - 1) {
+  for (let i = 0; i < points.length; i++) {
+    if (i == 0 || i == points.length - 1) {
       averagedPoints.push({
         datetime_utc: points[i].datetime_utc,
         generation_kw: points[i].generation_kw,
