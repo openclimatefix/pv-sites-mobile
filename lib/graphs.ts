@@ -192,13 +192,15 @@ export const calculateCenteredMovingAverage = (
   const averagedPoints: GenerationDataPoint[] = [];
 
   // Calculate the prefix sum of the generation data
-  const prefixSum = points.reduce(
-    (acc, curr) => {
-      acc.push(acc[acc.length - 1] + curr.generation_kw);
-      return acc;
-    },
-    [0]
-  );
+  const prefixSum: number[] = Array(points.length).fill(0);
+  for (let i = 0; i < points.length; i++) {
+    if (i == 0) {
+      prefixSum[i] = points[i].generation_kw;
+      continue;
+    }
+
+    prefixSum[i] = prefixSum[i - 1] + points[i].generation_kw;
+  }
 
   // Calculate the centered moving average for each point
   for (let i = 0; i < points.length; i++) {
