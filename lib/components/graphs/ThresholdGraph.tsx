@@ -19,11 +19,11 @@ import {
 } from '../icons/FutureThreshold';
 
 import {
-  SimpleMovingAverage,
   addTimePoint,
   getTrendAfterIndex,
   graphThreshold,
   makeGraphable,
+  calculateCenteredMovingAverage,
 } from 'lib/graphs';
 
 import dayjs from 'dayjs';
@@ -221,7 +221,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const getSolarActivityText = () => {
     if (!totalForecastedGeneration) return null;
 
-    const averagedForecastGeneration = SimpleMovingAverage(
+    const averagedForecastGeneration = calculateCenteredMovingAverage(
       totalForecastedGeneration,
       3
     );
