@@ -205,7 +205,7 @@ export const calculateCenteredMovingAverage = (
     if (i == 0 || i == averagedPoints.length - 1) {
       averagedPoints.push({
         datetime_utc: points[i].datetime_utc,
-        generation_kw: prefixSum[period - 1] / period,
+        generation_kw: points[i].generation_kw,
       });
       continue;
     }
