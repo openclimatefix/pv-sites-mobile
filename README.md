@@ -24,11 +24,17 @@ This project is a Next.js 13 application built using the `pages` directory.
 
 Install dependencies with yarn:
 
-`yarn`
+    yarn
+
+Create a copy of `.env.local.example` with the name `.env.local` and fill in environment variables:
+
+    cp .env.local.example .env.local
+
+### Usage
 
 Run the development server:
 
-`yarn dev`
+    yarn dev
 
 ### Contributing
 
