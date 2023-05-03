@@ -42,6 +42,10 @@ Run the development server:
 
 Create a branch with the format `<initials>/<short-description>` in all lowercase with words separated by dashes.
 
+## Deployment
+
+This application is meant to be deployed to [Vercel](https://vercel.com/) and should have all environment variables not described as optional in `.env.local.example` supplied. This includes environment variables in `.env.production`, which are a generic baseline that won't function with most production deployments.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
