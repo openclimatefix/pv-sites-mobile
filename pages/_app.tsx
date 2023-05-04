@@ -21,8 +21,9 @@ type AppProps = { sites?: Site[]; user?: UserProfile };
 
 const App: AppType<AppProps> = ({ Component, pageProps }) => {
   const swrFallback = {
-    [`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`]:
-      pageProps.sites ?? [],
+    [`${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`]: {
+      site_list: pageProps.sites ?? [],
+    },
   };
 
   return (
