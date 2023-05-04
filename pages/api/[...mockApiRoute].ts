@@ -165,7 +165,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     } else if (mockApiRoute === 'enode/link') {
       const redirectURL = await getLinkRedirectURL(
         testClientID,
-        process.env.AUTH0_BASE_URL + '/api/enode/link-return' // Should use a different redirect URL in the future (not AUTH0 base)
+        process.env.AUTH0_BASE_URL + '/api/enode/link-return'
       );
 
       // Maxed connections
