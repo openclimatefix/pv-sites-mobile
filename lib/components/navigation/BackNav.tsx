@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import BackButton from '../form/BackButton';
-import { NowcastingLogo } from '../icons/NavbarIcons';
+import { NowcastingLogo } from '../icons';
 
 interface BackNavProps {
   backButton?: boolean;

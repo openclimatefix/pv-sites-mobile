@@ -1,5 +1,4 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/solid';
-import { useState, FC } from 'react';
+import { FC, useState } from 'react';
 import Button from '~/lib/components/Button';
 import LocationInput from '~/lib/components/form/LocationInput';
 

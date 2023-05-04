@@ -10,8 +10,10 @@ interface ProfilePictureProps {
 }
 
 const ProfilePicture: FC<ProfilePictureProps> = ({ user, onClick }) => {
+  const Element = onClick ? 'button' : 'div';
+
   return (
-    <button
+    <Element
       className="h-[31px] w-[31px] rounded-full bg-ocf-gray-800 text-[12px] text-white"
       onClick={onClick}
     >
@@ -19,7 +21,7 @@ const ProfilePicture: FC<ProfilePictureProps> = ({ user, onClick }) => {
         ?.split(' ')
         .map((name) => name.charAt(0))
         .join('')}
-    </button>
+    </Element>
   );
 };
 
@@ -54,15 +56,12 @@ const ContactButton = () => {
         </div>
         <Link
           href={`/api/auth/logout?returnTo=${process.env.NEXT_PUBLIC_AUTH0_LOGOUT_REDIRECT}`}
+          className={`flex items-center justify-center gap-5 px-4 py-3 text-white transition-all hover:bg-ocf-gray-1000`}
         >
-          <a
-            className={`flex items-center justify-center gap-5 px-4 py-3 text-white transition-all hover:bg-ocf-gray-1000`}
-          >
-            <div className="h-6 w-6">
-              <LogoutIcon />
-            </div>
-            Sign Out
-          </a>
+          <div className="h-6 w-6">
+            <LogoutIcon />
+          </div>
+          Sign Out
         </Link>
       </div>
     </div>

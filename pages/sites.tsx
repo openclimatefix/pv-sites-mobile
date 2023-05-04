@@ -2,7 +2,7 @@ import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useState } from 'react';
-import SiteCardLink from '~/lib/components/SiteCard';
+import SiteCard from '~/lib/components/SiteCard';
 import { useSites, withSites } from '~/lib/sites';
 
 const Sites = () => {
@@ -26,7 +26,7 @@ const Sites = () => {
         </button>
       </div>
       {sites.map((site) => (
-        <SiteCardLink key={site.site_uuid} site={site} isEditMode={editMode} />
+        <SiteCard key={site.site_uuid} site={site} isEditMode={editMode} />
       ))}
       {editMode && (
         <Link href="/site-details">

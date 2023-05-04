@@ -1,46 +1,29 @@
 import dayjs from 'dayjs';
-import { GenerationDataPoint } from './types';
 import {
   getClosestForecastIndex,
   getCurrentTimeGenerationIndex,
 } from './generation';
-import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import { GenerationDataPoint } from './types';
 
-export const getGraphStartDate = (currentTime: number) => {
-  const currentDate = new Date(currentTime);
-  return new Date(
-    Date.UTC(
-      currentDate.getUTCFullYear(),
-      currentDate.getUTCMonth(),
-      currentDate.getUTCHours() > 20
-        ? currentDate.getUTCDate() + 1
-        : currentDate.getUTCDate(),
-      8
-    )
-  );
-};
+// Minutes that graphable generation data must be divisble by
+const graphableGenerationDataPeriod = 15;
 
-export const getGraphEndDate = (currentTime: number) => {
-  const currentDate = new Date(currentTime);
-  return new Date(
-    Date.UTC(
-      currentDate.getUTCFullYear(),
-      currentDate.getUTCMonth(),
-      currentDate.getUTCHours() > 20
-        ? currentDate.getUTCDate() + 1
-        : currentDate.getUTCDate(),
-      20
-    )
-  );
-};
-
+/**
+ * Makes generation data graphable by changing Date objects to unix timestamps
+ * and optionally restricting its period to every `graphableGenerationDataPeriod`
+ * @param generationData the generation data
+ * @param restrictPeriod whether or not to restrict the period
+ * @returns
+ */
 export function makeGraphable(
   generationData: GenerationDataPoint[],
   restrictPeriod = false
 ) {
   return generationData
     .filter((point) =>
-      restrictPeriod ? point.datetime_utc.getMinutes() % 15 === 0 : true
+      restrictPeriod
+        ? point.datetime_utc.getMinutes() % graphableGenerationDataPeriod === 0
+        : true
     )
     .map((point) => ({
       ...point,
@@ -48,6 +31,12 @@ export function makeGraphable(
     }));
 }
 
+/**
+ * Adds an interpolated data point to the generation data at a specific time
+ * @param generationData the generation data
+ * @param date the interpolated point time
+ * @returns the data with the interpolated point
+ */
 export function addTimePoint(
   generationData: GenerationDataPoint[],
   date: Date
