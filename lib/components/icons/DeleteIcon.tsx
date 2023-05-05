@@ -1,4 +1,6 @@
-const DeleteIcon: React.FC = ({}) => (
+import { FC } from 'react';
+
+const DeleteIcon: FC = () => (
   <svg
     width="24"
     height="24"

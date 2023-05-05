@@ -1,14 +1,13 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { PencilSquareIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { PlusCircleIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '~/lib/utils';
 
 import { useSites } from '~/lib/sites';
 import DashboardLink from './DashboardLink';
 import MenuLink from './MenuLink';
-import Button from '../Button';
 
 interface SideBarProps {
   open: boolean;
@@ -24,14 +23,9 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
   const { sites } = useSites();
   const [isEditMode, setEditMode] = useState(false);
-  const [selected, setSelected] = useState<string | null | 'Aggregate'>(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const wrapperRef = useRef(null);
-  const resetStatesAndClose = () => {
-    setEditMode(false);
-    setSelected(null);
-    onClose();
-  };
 
   useClickedOutside(wrapperRef, () => {
     if (open) {
@@ -44,40 +38,52 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
     setSelected(null);
   };
 
+  const resetStatesAndClose = () => {
+    setEditMode(false);
+    setSelected(null);
+    onClose();
+  };
+
   const generateSiteLinks = () => {
-    if (sites) {
-      // TODO: remove hard-coded limit of 5 solar panel sites
-      return sites.slice(0, 5).map((site, idx) => (
-        <div
+    if (!sites) {
+      return null;
+    }
+
+    // TODO: remove hard-coded limit of 5 solar panel sites, use pagination
+    return sites.slice(0, 5).map((site, idx) => (
+      <div
+        key={site.site_uuid}
+        className="flex flex-row"
+        onClick={() => {
+          if (isEditMode) {
+            setSelected(selected === site.site_uuid ? null : site.site_uuid);
+          }
+        }}
+      >
+        {isEditMode && (
+          <div className="self-center">
+            <input
+              type="radio"
+              className="peer sr-only mr-5"
+              checked={site.site_uuid === selected}
+            />
+            <span className="mr-5 inline-block h-5 w-5 cursor-pointer rounded-full border-[3px] border-ocf-black ring-2 ring-ocf-gray-300 peer-checked:rounded-full peer-checked:bg-ocf-gray-300" />
+          </div>
+        )}
+        <DashboardLink
           key={site.site_uuid}
-          className="flex flex-row"
-          onClick={() => {
+          siteName={site.client_site_name}
+          href={`/dashboard/${site.site_uuid}`}
+          sites={[site]}
+          active={isEditMode ? site.site_uuid === selected : undefined}
+          onClick={(e) => {
             if (isEditMode) {
-              setSelected(site.site_uuid);
+              e.preventDefault();
             }
           }}
-        >
-          {isEditMode && (
-            <div className="self-center">
-              <input
-                type="radio"
-                className="peer sr-only mr-5"
-                checked={site.site_uuid === selected}
-              />
-              <span className="mr-5 inline-block h-5 w-5 cursor-pointer rounded-full border-[3px] border-ocf-black ring-2 ring-ocf-gray-300 peer-checked:rounded-full peer-checked:bg-ocf-gray-300" />
-            </div>
-          )}
-          <DashboardLink
-            key={site.site_uuid}
-            siteName={site.client_site_name || `Site ${idx + 1}`}
-            href={isEditMode ? '#0' : `/dashboard/${site.site_uuid}`}
-            sites={[site]}
-            active={site.site_uuid === selected}
-          />
-        </div>
-      ));
-    }
-    return null;
+        />
+      </div>
+    ));
   };
 
   return (
@@ -104,9 +110,14 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
 
               <DashboardLink
                 siteName="Aggregate"
-                href={isEditMode ? '#' : '/dashboard'}
+                href="/dashboard"
                 sites={sites}
-                active={selected === 'Aggregate'}
+                active={isEditMode ? false : undefined}
+                onClick={(e) => {
+                  if (isEditMode) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </>
           )}

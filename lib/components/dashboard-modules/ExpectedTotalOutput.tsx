@@ -14,12 +14,17 @@ interface ExpectedTotalOutputProps {
 
 const ExpectedTotalOutput: FC<ExpectedTotalOutputProps> = ({ sites }) => {
   const representativeSite = sites[0];
-  const { isLoading, totalForecastedGeneration } = useSiteAggregation(sites);
+  const { isLoading, aggregateForecastedGeneration } =
+    useSiteAggregation(sites);
   const { sunrise, sunset } = useSiteTime(representativeSite);
 
-  const value = totalForecastedGeneration
+  const value = aggregateForecastedGeneration
     ? getTotalExpectedOutput(
-        generationDataOverDateRange(totalForecastedGeneration, sunrise, sunset)
+        generationDataOverDateRange(
+          aggregateForecastedGeneration,
+          sunrise,
+          sunset
+        )
       )
         .toFixed(2)
         .toString() + ' kWh'
