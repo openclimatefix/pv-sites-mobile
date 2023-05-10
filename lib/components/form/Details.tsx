@@ -241,7 +241,7 @@ const Details: FC<Props> = ({
           form="panel-form"
           disabled={didSubmit || (isEditing && !edited)}
           variant="solid"
-          width={isEditing ? "250px" : "200px"}
+          width={isEditing ? '250px' : '200px'}
         >
           {didSubmit && <Spinner width={5} height={5} margin={2} />}
           {isEditing ? 'Save changes' : 'Finish'}
