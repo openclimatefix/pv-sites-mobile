@@ -9,10 +9,63 @@ import { skeleton } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
 import { CloudyIcon, PartlyCloudyIcon, SunnyIcon } from '../icons';
+import { Dayjs } from 'dayjs';
 
 const cloudyThreshold = 0.3;
 const sunnyThreshold = 0.7;
 const daysOfForecast = 3;
+
+/**
+ * Creates a list of "day" objects to render, with a corresponding date,
+ * aggregate forecasted generation, and aggregate clearsky generation
+ * @param currentTime the current time
+ * @param site the site, to get location
+ * @param aggregateForecastedGeneration the aggregate forecast generation data
+ * @param aggregateClearskyGeneration the aggregate clearsky generation data
+ * @returns the list of day objects with necessary data for UI
+ */
+const createDays = (
+  currentTime: Dayjs,
+  site: Site,
+  aggregateForecastedGeneration: GenerationDataPoint[] | undefined,
+  aggregateClearskyGeneration: GenerationDataPoint[] | undefined
+) => {
+  const days = [];
+  for (let i = 0; i < daysOfForecast; i++) {
+    const day = currentTime.add(i, 'days');
+
+    const { sunrise, sunset } = SunCalc.getTimes(
+      day.toDate(),
+      site.latitude,
+      site.longitude
+    );
+
+    if (!aggregateForecastedGeneration || !aggregateClearskyGeneration) {
+      days.push(undefined);
+      continue;
+    }
+
+    days.push({
+      date: day,
+      aggregateForecastedGeneration: getTotalExpectedOutput(
+        generationDataOverDateRange(
+          aggregateForecastedGeneration,
+          sunrise,
+          sunset
+        )
+      ),
+      aggregateClearskyGeneration: getTotalExpectedOutput(
+        generationDataOverDateRange(
+          aggregateClearskyGeneration,
+          sunrise,
+          sunset
+        )
+      ),
+    });
+  }
+
+  return days;
+};
 
 type WeatherCardProps = {
   sites: Site[];
@@ -21,54 +74,16 @@ type WeatherCardProps = {
 const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
   const representativeSite = sites[0];
 
-  const { totalForecastedGeneration, totalClearskyGeneration } =
+  const { aggregateForecastedGeneration, aggregateClearskyGeneration } =
     useSiteAggregation(sites);
   const { currentTime } = useSiteTime(representativeSite);
-
-  const createDays = (
-    totalForecastedGeneration: GenerationDataPoint[] | undefined,
-    totalClearskyGeneration: GenerationDataPoint[] | undefined
-  ) => {
-    const days = [];
-    for (let i = 0; i < daysOfForecast; i++) {
-      const day = currentTime.add(i, 'days');
-      const { sunrise, sunset } = SunCalc.getTimes(
-        day.toDate(),
-        representativeSite.latitude,
-        representativeSite.longitude
-      );
-      sunrise.setDate(day.toDate().getDate());
-      sunset.setDate(day.toDate().getDate());
-
-      if (!totalForecastedGeneration || !totalClearskyGeneration) {
-        days.push(undefined);
-        continue;
-      }
-
-      days.push({
-        date: day,
-        totalForecastedGeneration: getTotalExpectedOutput(
-          generationDataOverDateRange(
-            totalForecastedGeneration,
-            sunrise,
-            sunset
-          )
-        ),
-        totalClearskyGeneration: getTotalExpectedOutput(
-          generationDataOverDateRange(totalClearskyGeneration, sunrise, sunset)
-        ),
-      });
-    }
-
-    return days;
-  };
 
   const renderDay = (
     day: NonNullable<ReturnType<typeof createDays>[number]>,
     index: number
   ) => {
     const generationPercentOfClearsky =
-      day.totalForecastedGeneration / day.totalClearskyGeneration;
+      day.aggregateForecastedGeneration / day.aggregateClearskyGeneration;
 
     let icon = <CloudyIcon />;
     if (generationPercentOfClearsky > cloudyThreshold) {
@@ -86,7 +101,7 @@ const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
           </p>
           <div className="margin-0 flex-1 self-center">{icon}</div>
           <p className="flex-1 text-xs text-amber">
-            {day.totalForecastedGeneration.toFixed(2)} kWh
+            {day.aggregateForecastedGeneration.toFixed(2)} kWh
           </p>
         </div>
       </div>
@@ -105,7 +120,12 @@ const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
     </div>
   );
 
-  const days = createDays(totalForecastedGeneration, totalClearskyGeneration);
+  const days = createDays(
+    currentTime,
+    representativeSite,
+    aggregateForecastedGeneration,
+    aggregateClearskyGeneration
+  );
 
   return (
     <div className="flex flex-row justify-around rounded-2xl bg-ocf-black-500">

@@ -1,4 +1,6 @@
-const PartlyCloudyIcon: React.FC = ({}) => (
+import { FC } from 'react';
+
+const PartlyCloudyIcon: FC = ({}) => (
   <svg
     width="38"
     height="36"

@@ -8,6 +8,14 @@ import { useSiteTime } from '~/lib/time';
 import { skeleton } from '~/lib/skeleton';
 import { Appliance, appliances } from '~/lib/appliances';
 
+/**
+ * Finds the "recommended appliance" given the current output and a list of appliances
+ * The "recommended appliance" is just the appliance with the most power required,
+ * but still useable given the current output.
+ * @param currentOutput the current output
+ * @param appliances the list of appliances
+ * @returns the "recommended appliance"
+ */
 const getRecommendedAppliance = (
   currentOutput: number,
   appliances: Appliance[]
@@ -31,12 +39,13 @@ interface EnergyRecommendationProps {
 }
 
 const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
-  const { isLoading, totalForecastedGeneration } = useSiteAggregation(sites);
+  const { isLoading, aggregateForecastedGeneration } =
+    useSiteAggregation(sites);
   const representativeSite = sites[0];
 
   const currentOutput =
-    totalForecastedGeneration &&
-    getCurrentTimeGeneration(totalForecastedGeneration);
+    aggregateForecastedGeneration &&
+    getCurrentTimeGeneration(aggregateForecastedGeneration);
   const recommended =
     currentOutput && getRecommendedAppliance(currentOutput, appliances);
 

@@ -1,4 +1,6 @@
-const SunnyIcon: React.FC = ({}) => (
+import { FC } from 'react';
+
+const SunnyIcon: FC = ({}) => (
   <svg
     width="36"
     height="35"

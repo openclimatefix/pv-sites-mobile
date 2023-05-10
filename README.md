@@ -24,17 +24,27 @@ This project is a Next.js 13 application built using the `pages` directory.
 
 Install dependencies with yarn:
 
-`yarn`
+    yarn
+
+Create a copy of `.env.local.example` with the name `.env.local` and fill in environment variables:
+
+    cp .env.local.example .env.local
+
+### Usage
 
 Run the development server:
 
-`yarn dev`
+    yarn dev
 
 ### Contributing
 
 #### Hack4Impact
 
 Create a branch with the format `<initials>/<short-description>` in all lowercase with words separated by dashes.
+
+## Deployment
+
+This application is meant to be deployed to [Vercel](https://vercel.com/) and should have all environment variables not described as optional in `.env.local.example` supplied. This includes environment variables in `.env.production`, which are a generic baseline that won't function with most production deployments.
 
 ## Contributors ✨
 

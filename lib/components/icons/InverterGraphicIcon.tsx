@@ -1,4 +1,6 @@
-const InverterGraphicIcon: React.FC = ({}) => (
+import { FC } from 'react';
+
+const InverterGraphicIcon: FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="261"

@@ -1,4 +1,5 @@
 import { LegendLineGraphIcon } from '@openclimatefix/nowcasting-ui.icons.icons';
+import dayjs from 'dayjs';
 import { addTimePoint, makeGraphable } from 'lib/graphs';
 import { ChangeEventHandler, FC, useState } from 'react';
 import {
@@ -15,36 +16,30 @@ import { generationDataOverDateRange } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
+import TimeRangeInput from './TimeRangeInput';
 
+const graphPriorPercentage = 1 / 8;
 function getGraphStartDate(currentDate: Date, totalHours: number) {
-  return new Date(
-    Date.UTC(
-      currentDate.getUTCFullYear(),
-      currentDate.getUTCMonth(),
-      currentDate.getUTCDate(),
-      totalHours > 1
-        ? currentDate.getUTCHours() - totalHours / 8 //ensures Now indicator is ~1/8 of the way through the graph for 1D and 2D
-        : currentDate.getUTCHours(),
-      totalHours > 1 ? 0 : currentDate.getUTCMinutes() - 15 //ensures Now indicator is ~1/8 of the way through the graph for 1H
-    )
-  );
+  return dayjs(currentDate)
+    .subtract(totalHours * graphPriorPercentage)
+    .toDate();
 }
 
 function getGraphEndDate(currentDate: Date, totalHours: number) {
-  return new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate(),
-    totalHours > 1
-      ? currentDate.getHours() + (7 * totalHours) / 8 //ensures end time is 1D or 2D after start time
-      : currentDate.getHours(),
-    totalHours > 1 ? 0 : currentDate.getMinutes() + 45 //ensures end time is 1H after start time
-  );
+  return dayjs(currentDate)
+    .add(totalHours * (1 - graphPriorPercentage))
+    .toDate();
 }
 
-function getXTickValues(times: number[], numTicks: number) {
+/**
+ * Computes x tick values given a number of ticks and valid ticks. This ensures labeled ticks are real x values.
+ * @param ticks the ticks, in this case timestampts
+ * @param numTicks the total number of ticks required
+ * @returns the tick values
+ */
+function getXTickValues(ticks: number[], numTicks: number) {
   const tickValues: any[] = [];
-  const dataLength = times.length;
+  const dataLength = ticks.length;
 
   if (dataLength === 0) {
     return tickValues;
@@ -54,43 +49,12 @@ function getXTickValues(times: number[], numTicks: number) {
 
   for (let i = 0; i < numTicks; i++) {
     const index = Math.min(i * tickStep, dataLength - 1);
-    const tickValue = times[index];
+    const tickValue = ticks[index];
     tickValues.push(tickValue);
   }
 
   return tickValues;
 }
-
-interface TimeRangeSelectorProps {
-  label: string;
-  value: number;
-  checked: boolean;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-}
-
-const TimeRangeSelector: FC<TimeRangeSelectorProps> = ({
-  label,
-  value,
-  checked,
-  onChange,
-}) => {
-  return (
-    <label className="block" htmlFor={label}>
-      <input
-        className="peer sr-only"
-        type="radio"
-        name={label}
-        id={label}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-      />
-      <span className="relative inline-block h-7 w-10 cursor-pointer rounded-md bg-ocf-gray-1000 pt-0.5 text-center text-ocf-gray-300 peer-checked:rounded-md peer-checked:bg-ocf-yellow-500 peer-checked:text-black peer-focus-visible:ring">
-        {label}
-      </span>
-    </label>
-  );
-};
 
 interface GraphProps {
   sites: Site[];
@@ -100,10 +64,10 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   const representativeSite = sites[0];
 
   const {
-    totalForecastedGeneration,
+    aggregateForecastedGeneration,
     isLoading,
-    totalClearskyGeneration,
-    totalActualGeneration,
+    aggregateClearskyGeneration,
+    aggregateActualGeneration,
   } = useSiteAggregation(sites);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime, weekdayFormat } = useSiteTime(representativeSite, {
@@ -116,11 +80,11 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   endDate.setHours(endDate.getHours() + 48);
 
   const forecastDataTrimmed =
-    totalForecastedGeneration &&
+    aggregateForecastedGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          totalForecastedGeneration,
+          aggregateForecastedGeneration,
           getGraphStartDate(currentTime.toDate(), timeRange),
           getGraphEndDate(currentTime.toDate(), timeRange)
         ),
@@ -129,10 +93,10 @@ const Graph: FC<GraphProps> = ({ sites }) => {
     );
 
   const actualDataTrimmed =
-    totalActualGeneration &&
+    aggregateActualGeneration &&
     makeGraphable(
       generationDataOverDateRange(
-        totalActualGeneration,
+        aggregateActualGeneration,
         getGraphStartDate(currentTime.toDate(), timeRange),
         currentTime.toDate()
       ),
@@ -140,11 +104,11 @@ const Graph: FC<GraphProps> = ({ sites }) => {
     );
 
   const clearSkyEstimateTrimmed =
-    totalClearskyGeneration &&
+    aggregateClearskyGeneration &&
     makeGraphable(
       addTimePoint(
         generationDataOverDateRange(
-          totalClearskyGeneration,
+          aggregateClearskyGeneration,
           getGraphStartDate(currentTime.toDate(), timeRange),
           getGraphEndDate(currentTime.toDate(), timeRange)
         ),
@@ -199,19 +163,19 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   return (
     <div className="h-[260px] w-full rounded-2xl bg-ocf-black-500 p-3">
       <div className="ml-1 flex gap-2">
-        <TimeRangeSelector
+        <TimeRangeInput
           label="6H"
           value={6}
           checked={timeRange === 6}
           onChange={handleChange}
         />
-        <TimeRangeSelector
+        <TimeRangeInput
           label="1D"
           value={24}
           checked={timeRange === 24}
           onChange={handleChange}
         />
-        <TimeRangeSelector
+        <TimeRangeInput
           label="2D"
           value={48}
           checked={timeRange === 48}

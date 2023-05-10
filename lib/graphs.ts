@@ -1,46 +1,29 @@
 import dayjs from 'dayjs';
-import { GenerationDataPoint } from './types';
 import {
   getClosestForecastIndex,
   getCurrentTimeGenerationIndex,
 } from './generation';
-import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import { GenerationDataPoint } from './types';
 
-export const getGraphStartDate = (currentTime: number) => {
-  const currentDate = new Date(currentTime);
-  return new Date(
-    Date.UTC(
-      currentDate.getUTCFullYear(),
-      currentDate.getUTCMonth(),
-      currentDate.getUTCHours() > 20
-        ? currentDate.getUTCDate() + 1
-        : currentDate.getUTCDate(),
-      8
-    )
-  );
-};
+// Minutes that graphable generation data must be divisble by
+const graphableGenerationDataPeriod = 15;
 
-export const getGraphEndDate = (currentTime: number) => {
-  const currentDate = new Date(currentTime);
-  return new Date(
-    Date.UTC(
-      currentDate.getUTCFullYear(),
-      currentDate.getUTCMonth(),
-      currentDate.getUTCHours() > 20
-        ? currentDate.getUTCDate() + 1
-        : currentDate.getUTCDate(),
-      20
-    )
-  );
-};
-
+/**
+ * Makes generation data graphable by changing Date objects to unix timestamps
+ * and optionally restricting its period to every `graphableGenerationDataPeriod`
+ * @param generationData the generation data
+ * @param restrictPeriod whether or not to restrict the period
+ * @returns
+ */
 export function makeGraphable(
   generationData: GenerationDataPoint[],
   restrictPeriod = false
 ) {
   return generationData
     .filter((point) =>
-      restrictPeriod ? point.datetime_utc.getMinutes() % 15 === 0 : true
+      restrictPeriod
+        ? point.datetime_utc.getMinutes() % graphableGenerationDataPeriod === 0
+        : true
     )
     .map((point) => ({
       ...point,
@@ -48,6 +31,12 @@ export function makeGraphable(
     }));
 }
 
+/**
+ * Adds an interpolated data point to the generation data at a specific time
+ * @param generationData the generation data
+ * @param date the interpolated point time
+ * @returns the data with the interpolated point
+ */
 export function addTimePoint(
   generationData: GenerationDataPoint[],
   date: Date
@@ -171,49 +160,74 @@ export const getTrendAfterIndex = (
 };
 
 /**
- * Determines the moving average, by calculating the averages for a given period in each array
- * @param array Array of GenerationDataPoints to determine the Simple moving averages for
- * @param period the length of each interval of the average, the length of the period must be odd or it will throw an exception
- * @returns a GenerationDataPoint array of Simple Moving Averages for each indexin O(n * p) time unfortunately
+ * Calculate the centered moving average for a given period in O(n) time.
+ *
+ * @param points - the array of points to calculate the centered moving average for
+ * @param period - the period (maximum window size) to calculate the centered moving average for
+ * @returns an array of points with the centered moving average calculated
+ *
+ * @throws an error if the period is even or greater than the length of the array
  */
-
-export const SimpleMovingAverage = (
-  array: GenerationDataPoint[],
+export const calculateCenteredMovingAverage = (
+  points: GenerationDataPoint[],
   period: number
 ): GenerationDataPoint[] => {
   if (period % 2 == 0) {
     throw new Error('Period must be an odd number');
-  } else if (period > array.length) {
+  } else if (period > points.length) {
     throw new Error('Period must be less than or equal to array size');
   }
 
-  let averages: number[] = [];
+  const averagedPoints: GenerationDataPoint[] = [];
 
-  const upperBound = Math.floor(period / 2);
-
-  for (let i = 0; i < array.length; i++) {
-    const valsBefore = i;
-    const valsAfter = array.length - i - 1;
-
-    const range = Math.min(valsBefore, valsAfter, upperBound);
-    let currSum = 0;
-    for (let j = i - range; j < i + range + 1; j++) {
-      currSum += array[j].generation_kw;
+  // Calculate the prefix sum of the generation data
+  const prefixSum: number[] = Array(points.length).fill(0);
+  for (let i = 0; i < points.length; i++) {
+    if (i == 0) {
+      prefixSum[i] = points[i].generation_kw;
+      continue;
     }
-    averages.push(currSum / (2 * range + 1));
+
+    prefixSum[i] = prefixSum[i - 1] + points[i].generation_kw;
   }
 
-  let newPoints: GenerationDataPoint[] = [];
-  for (let i = 0; i < averages.length; i++) {
-    const point: GenerationDataPoint = {
-      datetime_utc: array[i].datetime_utc,
-      generation_kw: averages[i],
-    };
-    newPoints.push(point);
+  // Calculate the centered moving average for each point
+  for (let i = 0; i < points.length; i++) {
+    if (i == 0 || i == points.length - 1) {
+      averagedPoints.push({
+        datetime_utc: points[i].datetime_utc,
+        generation_kw: points[i].generation_kw,
+      });
+      continue;
+    }
+
+    // Calculate the bounds of the window, making sure to not go out of bounds
+    let lowerBound = Math.max(0, i - Math.floor(period / 2));
+    let upperBound = Math.min(points.length - 1, i + Math.floor(period / 2));
+
+    // Calculate the radius of the window so that the current point is in the center
+    const windowRadius = Math.min(i - lowerBound, upperBound - i);
+
+    // Recalculate the bounds of the window
+    lowerBound = i - windowRadius;
+    upperBound = i + windowRadius;
+
+    // Calculate the sum of the window using the prefix sum
+    const sum =
+      lowerBound == 0
+        ? prefixSum[upperBound]
+        : prefixSum[upperBound] - prefixSum[lowerBound - 1];
+
+    averagedPoints.push({
+      datetime_utc: points[i].datetime_utc,
+      // Divide the sum by the number of points in the window
+      generation_kw: sum / (upperBound - lowerBound + 1),
+    });
   }
 
-  return newPoints;
+  return averagedPoints;
 };
+
 interface NextThreshold {
   aboveThreshold: boolean;
   index: number;

@@ -1,31 +1,17 @@
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import { FC, useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { FC, useState } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
+import { getEnodeLinkURL, sendMutation } from '~/lib/api';
 import { Inverters } from '~/lib/types';
-import { getAuthenticatedRequestOptions } from '~/lib/swr';
-import Spinner from '../Spinner';
-import { getEnodeLinkAndRedirect } from './LinkInverters';
-import { useRouter } from 'next/router';
 import Button from '../Button';
 import { InverterCard } from '../InverterCard';
+import { Spinner } from '../icons';
 import { NavbarLink } from '../navigation/NavBar';
 
-async function sendRequest(url: string, { arg }: { arg: string[] }) {
-  const options = await getAuthenticatedRequestOptions(url);
-  return fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(arg),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
-}
-
 interface ViewInvertersProps {
-  siteUUID?: string;
+  siteUUID: string;
   isSelectMode?: boolean;
   isEditMode?: boolean;
   backButton?: boolean;
@@ -54,7 +40,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
 
   const { trigger } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites/${siteUUID}/inverters`,
-    sendRequest
+    sendMutation('PUT')
   );
 
   //TODO look over this to see if suitable in main
@@ -84,11 +70,14 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     }
   };
 
+  const redirectToEnode = async () => {
+    const url = await getEnodeLinkURL(siteUUID);
+    router.push(url);
+  };
+
   const defaultTitleText = isSelectMode
     ? 'Select Inverters'
     : 'Connected Inverters';
-  const editModeTitleText = 'Connected Inverters';
-  const defaultSubtitleText = 'Click to select or deselect an inverter';
   const defaultButtonText = isSelectMode ? 'Submit' : 'Next';
   const editModeButtonText = 'Save Changes';
 
@@ -111,10 +100,12 @@ const ViewInverters: FC<ViewInvertersProps> = ({
         )}
         <div className="flex w-full flex-grow flex-col pt-0">
           <h1 className="mt-4 text-xl font-semibold text-white">
-            {isEditMode ? editModeTitleText : defaultTitleText}
+            {isEditMode ? 'Connected Inverters' : defaultTitleText}
           </h1>
           {isSelectMode && (
-            <h1 className="text-md text-white">{defaultSubtitleText}</h1>
+            <h1 className="text-md text-white">
+              Click to select or deselect an inverter
+            </h1>
           )}
           <div className="mb-8 mt-4 grid w-full grid-cols-1 items-center justify-center gap-4 md:mt-2 md:grid-cols-2">
             {allInverters?.inverters.map((inverter) => (
@@ -129,19 +120,16 @@ const ViewInverters: FC<ViewInvertersProps> = ({
               />
             ))}
           </div>
-          {!isSelectMode ||
-            (isEditMode && (
-              <button
-                onClick={() => getEnodeLinkAndRedirect(siteUUID!, router)}
-              >
-                <div className="flex flex-row justify-center gap-2">
-                  <PlusCircleIcon width={24} height={24} color="#FFD053" />
-                  <h2 className="text-l text-ocf-yellow-500">
-                    Link more inverters
-                  </h2>
-                </div>
-              </button>
-            ))}
+          {!isSelectMode && (
+            <button onClick={redirectToEnode}>
+              <div className="flex flex-row justify-center gap-2">
+                <PlusCircleIcon width={24} height={24} color="#FFD053" />
+                <h2 className="text-l text-ocf-yellow-500">
+                  Link more inverters
+                </h2>
+              </div>
+            </button>
+          )}
           <Button
             variant="solid"
             disabled={isSelectMode && selectedInverters.length < 1}

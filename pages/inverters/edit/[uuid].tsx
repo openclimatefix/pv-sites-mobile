@@ -36,7 +36,7 @@ const Inverters = () => {
     <div className="flex h-full w-full flex-col items-center ">
       <BackNav backButton={true} lastPageCallback={editModeLastPageCallback} />
       <ViewInverters
-        siteUUID={uuid as string} //@TODO fix this lmao
+        siteUUID={uuid as string}
         backButton={page === Page.Select}
         isSelectMode={page === Page.Select}
         isEditMode={true}
@@ -50,7 +50,7 @@ const Inverters = () => {
 export const getServerSideProps = withSites({
   async getServerSideProps(ctx) {
     const { sites, query } = ctx;
-    if (!sites.map((site) => site.site_uuid).includes(query.uuid as string)) {
+    if (!sites.find((site) => site.site_uuid === (query.uuid as string))) {
       return {
         notFound: true,
       };

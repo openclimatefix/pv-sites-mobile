@@ -97,7 +97,6 @@ export interface PanelDetails {
 }
 
 export type FormPostData = {
-  site_uuid: number; //is this type correct? ¯\_(ツ)_/¯
   client_name: string;
   client_site_id: number;
   client_site_name: string;
