@@ -43,11 +43,9 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     sendMutation('PUT')
   );
 
-  //TODO look over this to see if suitable in main
   const [selectedInverters, setSelectedInverters] = useState<string[]>(
     siteInverters?.inverters?.map((inverter) => inverter.id) || []
   );
-
   const [didSubmit, setDidSubmit] = useState(false);
   const router = useRouter();
   const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
