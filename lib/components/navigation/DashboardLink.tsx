@@ -30,9 +30,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
 
   const currentOutput = useMemo(() => {
     return aggregateForecastedGeneration?.length
-      ? Math.round(
-          getCurrentTimeGeneration(aggregateForecastedGeneration) * 100
-        ) / 100
+      ? getCurrentTimeGeneration(aggregateForecastedGeneration).toFixed(2)
       : undefined;
   }, [aggregateForecastedGeneration]);
 
@@ -52,7 +50,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
           <div
             className={`text-xs ${textColor} font-medium leading-none transition-all md:leading-none`}
           >
-            Current output: {currentOutput.toFixed(2)} kW
+            Current output: {currentOutput} kW
           </div>
         )}
       </div>

@@ -45,9 +45,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
 
   //TODO look over this to see if suitable in main
   const [selectedInverters, setSelectedInverters] = useState<string[]>(
-    isEditMode
-      ? siteInverters?.inverters?.map((inverter) => inverter.id) || []
-      : []
+    siteInverters?.inverters?.map((inverter) => inverter.id) || []
   );
 
   const [didSubmit, setDidSubmit] = useState(false);

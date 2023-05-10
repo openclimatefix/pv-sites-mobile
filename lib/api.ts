@@ -20,8 +20,7 @@ export function parseNowcastingDatetime(datetime: string) {
   if (!datetime.endsWith('Z')) {
     datetime += 'Z';
   }
-  // TODO REVERT ALL THIS
-  return dayjs(new Date(datetime)).tz('America/Chicago', true).toDate();
+  return new Date(datetime);
 }
 
 /**
