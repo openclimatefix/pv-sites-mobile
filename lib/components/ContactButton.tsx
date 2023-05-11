@@ -14,7 +14,7 @@ const ProfilePicture: FC<ProfilePictureProps> = ({ user, onClick }) => {
 
   return (
     <Element
-      className="h-[31px] w-[31px] rounded-full bg-ocf-gray-800 text-[12px] text-white"
+      className="flex h-[31px] w-[31px] items-center justify-center rounded-full bg-ocf-gray-800 text-[12px] text-white"
       onClick={onClick}
     >
       {user?.name
