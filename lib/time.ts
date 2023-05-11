@@ -46,12 +46,18 @@ export const useSiteTime = (
   }, [updateEnabled, timezone]);
 
   const times = useMemo(
-    () => SunCalc.getTimes(currentTime.tz(timezone).$d, latitude, longitude),
+    () =>
+      SunCalc.getTimes(
+        (currentTime.tz(timezone) as any).$d,
+        latitude,
+        longitude
+      ),
     [currentTime, latitude, longitude, timezone]
   );
 
   const tomorrowTimes = useMemo(
-    () => SunCalc.getTimes(tomorrow.tz(timezone).$d, latitude, longitude),
+    () =>
+      SunCalc.getTimes((tomorrow.tz(timezone) as any).$d, latitude, longitude),
     [tomorrow, latitude, longitude, timezone]
   );
 
