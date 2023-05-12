@@ -21,13 +21,13 @@ import TimeRangeInput from './TimeRangeInput';
 const graphPriorPercentage = 1 / 8;
 function getGraphStartDate(currentDate: Date, totalHours: number) {
   return dayjs(currentDate)
-    .subtract(totalHours * graphPriorPercentage)
+    .subtract(totalHours * graphPriorPercentage, 'hours')
     .toDate();
 }
 
 function getGraphEndDate(currentDate: Date, totalHours: number) {
   return dayjs(currentDate)
-    .add(totalHours * (1 - graphPriorPercentage))
+    .add(totalHours * (1 - graphPriorPercentage), 'hours')
     .toDate();
 }
 

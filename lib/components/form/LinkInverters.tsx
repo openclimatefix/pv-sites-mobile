@@ -1,5 +1,4 @@
 import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
@@ -31,7 +30,7 @@ const SupportedInverters: FC = () => {
       {Object.keys(brands).map((brand) => {
         return (
           <div key={brand} className="flex flex-row">
-            <Image
+            <img
               src={brands[brand as keyof typeof brands].src}
               alt={`${brand} logo`}
             />

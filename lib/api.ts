@@ -1,14 +1,14 @@
+import dayjs from 'dayjs';
 import { Fetcher } from 'swr';
+import { fetcher, getAuthenticatedRequestOptions } from './swr';
 import {
   ActualData,
   ClearSkyData,
   ForecastData,
-  Site,
   UnparsedActualData,
   UnparsedClearSkyData,
   UnparsedForecastData,
 } from './types';
-import { fetcher, getAuthenticatedRequestOptions } from './swr';
 
 /**
  * Parses a datetime string from the Nowcasting API, assumed to be in UTC.

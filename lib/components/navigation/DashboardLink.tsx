@@ -30,9 +30,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
 
   const currentOutput = useMemo(() => {
     return aggregateForecastedGeneration?.length
-      ? Math.round(
-          getCurrentTimeGeneration(aggregateForecastedGeneration) * 100
-        ) / 100
+      ? getCurrentTimeGeneration(aggregateForecastedGeneration).toFixed(2)
       : undefined;
   }, [aggregateForecastedGeneration]);
 

@@ -4,9 +4,9 @@ import {
   getTotalExpectedOutput,
 } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
+import { useSiteTime } from '~/lib/time';
 import { Site } from '~/lib/types';
 import NumberDisplay from './NumberDisplay';
-import { useSiteTime } from '~/lib/time';
 
 interface ExpectedTotalOutputProps {
   sites: Site[];

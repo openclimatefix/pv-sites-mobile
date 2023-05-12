@@ -45,14 +45,21 @@ export const useSiteTime = (
     }
   }, [updateEnabled, timezone]);
 
+  // Fix these anys later... need time with hours in timezone...
   const times = useMemo(
-    () => SunCalc.getTimes(currentTime.toDate(), latitude, longitude),
-    [currentTime, latitude, longitude]
+    () =>
+      SunCalc.getTimes(
+        (currentTime.tz(timezone) as any).$d,
+        latitude,
+        longitude
+      ),
+    [currentTime, latitude, longitude, timezone]
   );
 
   const tomorrowTimes = useMemo(
-    () => SunCalc.getTimes(tomorrow.toDate(), latitude, longitude),
-    [tomorrow, latitude, longitude]
+    () =>
+      SunCalc.getTimes((tomorrow.tz(timezone) as any).$d, latitude, longitude),
+    [tomorrow, latitude, longitude, timezone]
   );
 
   const isDayTime = useMemo(
