@@ -24,6 +24,9 @@ export const originalLng = 0.1276;
 */
 export const zoomLevelThreshold = 14;
 
+/**
+ * Prevents scrolling on this page to support page transitions
+ */
 export function useNoScroll() {
   const router = useRouter();
   useEffect(() => {
@@ -63,6 +66,7 @@ export function useMediaQuery(query: string) {
 }
 
 export function useIsMobile() {
+  // Tailwind `md` breakpoint: https://tailwindcss.com/docs/screens
   return useMediaQuery('(max-width: 768px)');
 }
 
@@ -92,3 +96,14 @@ export function useClickedOutside(ref: RefObject<any>, handler: () => void) {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [ref, handler]);
 }
+
+/**
+ * Turns URL into capitalized title
+ * @param page page url to convert to title
+ */
+export const hyphensToTitleCase = (page: string) => {
+  return page
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};

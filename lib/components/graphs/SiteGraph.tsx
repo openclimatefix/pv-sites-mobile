@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react';
 import { generationDataOverDateRange } from '~/lib/generation';
 import { makeGraphable } from '~/lib/graphs';
-import { useSiteAggregation, useSiteData } from '~/lib/sites';
+import { useSiteAggregation } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { Site } from '~/lib/types';
 
@@ -21,21 +21,34 @@ const SiteGraph: FC<SiteGraphProps> = ({
   color = '#FFD053',
 }) => {
   const representativeSite = sites[0];
-  const { totalForecastedGeneration } = useSiteAggregation(sites);
+  const { aggregateForecastedGeneration } = useSiteAggregation(sites);
   const [timeEnabled, setTimeEnabled] = useState(
-    totalForecastedGeneration !== undefined
+    aggregateForecastedGeneration !== undefined
   );
 
-  const { dusk, dawn } = useSiteTime(representativeSite, {
-    updateEnabled: timeEnabled,
-  });
+  const { isAfterDayTime, sunrise, sunset, tomorrowTimes } = useSiteTime(
+    representativeSite,
+    {
+      updateEnabled: timeEnabled,
+    }
+  );
 
   const graphData = useMemo(() => {
-    if (totalForecastedGeneration) {
-      return generationDataOverDateRange(totalForecastedGeneration, dawn, dusk);
+    if (aggregateForecastedGeneration) {
+      return generationDataOverDateRange(
+        aggregateForecastedGeneration,
+        isAfterDayTime ? tomorrowTimes.sunrise : sunrise,
+        isAfterDayTime ? tomorrowTimes.sunset : sunset
+      );
     }
     return null;
-  }, [totalForecastedGeneration, dawn, dusk]);
+  }, [
+    aggregateForecastedGeneration,
+    isAfterDayTime,
+    tomorrowTimes,
+    sunrise,
+    sunset,
+  ]);
 
   if (!graphData) return null;
 

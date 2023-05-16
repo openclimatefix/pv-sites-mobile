@@ -1,5 +1,4 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/solid';
-import { useState, FC } from 'react';
+import { FC, useState } from 'react';
 import Button from '~/lib/components/Button';
 import LocationInput from '~/lib/components/form/LocationInput';
 
@@ -76,7 +75,7 @@ const Location: FC<Props> = ({
             disabled={!isSubmissionEnabled}
             onClick={nextPageCallback}
             variant="solid"
-            className="w-[250px]"
+            className="w-full md:w-[250px]"
           >
             {isEditing ? 'Continue' : 'Next'}
           </Button>

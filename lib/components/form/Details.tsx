@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 
 import Input from '~/lib/components/form/Input';
-import Modal from '~/lib/components/Modal';
-import Spinner from '~/lib/components/Spinner';
+import Modal from '~/lib/components/form/Modal';
+import { Spinner } from '~/lib/components/icons';
 
 import Button from '~/lib/components/Button';
 import { zoomLevelThreshold } from '../../utils';
@@ -43,7 +43,7 @@ const Details: FC<Props> = ({
   isEditing,
   edited,
 }) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
   const [showSuccessIcon, setShowSuccessIcon] = useState<boolean>(false);
 
@@ -127,7 +127,7 @@ const Details: FC<Props> = ({
             id="site-name"
             label="Site name"
             value={formData.siteName}
-            onHelpClick={() => setShowModal(true)}
+            onHelpClick={() => setModalOpen(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...formData,
@@ -148,7 +148,7 @@ const Details: FC<Props> = ({
             description="(0º = North, 90º = East, 180º = South, 270º = West)"
             value={formData.direction?.toString()}
             help="I don't know"
-            onHelpClick={() => setShowModal(true)}
+            onHelpClick={() => setModalOpen(true)}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...formData,
@@ -255,14 +255,9 @@ const Details: FC<Props> = ({
           </button>
         </form>
       </div>
-      <Modal show={showModal} setShow={setShowModal} />
-      <div className="mx-auto mt-auto hidden w-8/12 md:flex md:flex-row md:justify-between">
-        <Button
-          form="panel-form"
-          onClick={lastPageCallback}
-          variant="outlined"
-          className="w-[250px]"
-        >
+      <Modal open={modalOpen} onOpen={setModalOpen} />
+      <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
+        <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
           {isEditing ? 'Exit' : 'Back'}
         </Button>
 
@@ -270,7 +265,7 @@ const Details: FC<Props> = ({
           form="panel-form"
           disabled={didSubmit || (isEditing && !edited)}
           variant="solid"
-          className="w-[250px]"
+          className={isEditing ? 'w-[250px]' : 'w-[200px]'}
         >
           {(didSubmit || showSuccessIcon) && (
             <div className="mx-2 h-5 w-5 overflow-hidden">

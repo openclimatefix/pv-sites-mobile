@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { FC, MouseEventHandler, useState } from 'react';
 import { useSites } from '~/lib/sites';
 import ContactButton from '../ContactButton';
-import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
+import { HamburgerIcon, NowcastingLogo } from '../icons';
 import SideBar from './SideBar';
 import { useAppContext } from '~/lib/provider';
 
@@ -15,17 +15,16 @@ type NavbarLinkProps = {
 
 export const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
   const { asPath: path } = useRouter();
-  const isActive = href === path;
+  const isActive = path.startsWith(href);
   const textColor = isActive ? 'text-amber' : 'text-white';
   return (
-    <Link href={href} passHref>
-      <a
-        className={`${textColor} mr-6 text-lg font-medium ${
-          isActive && 'underline decoration-2 underline-offset-8'
-        }`}
-      >
-        {title}
-      </a>
+    <Link
+      href={href}
+      className={`${textColor} mr-6 text-lg font-medium ${
+        isActive && 'underline decoration-2 underline-offset-8'
+      }`}
+    >
+      {title}
     </Link>
   );
 };
@@ -59,7 +58,7 @@ const NavBar: FC = () => {
                 : 'opacity-100'
             } invisible flex flex-col justify-center text-gray-600 transition-all md:visible`}
           >
-            <MenuLogo />
+            <HamburgerIcon />
           </button>
         )}
         <NowcastingLogo />
@@ -67,12 +66,12 @@ const NavBar: FC = () => {
           <NavbarLink
             title="Dashboard"
             href={
-              prevDashboardUUID === ''
+              !prevDashboardUUID
                 ? `/dashboard`
                 : `/dashboard/${prevDashboardUUID}`
             }
           />
-          <NavbarLink title="More Info" href="/more-info" />
+          <NavbarLink title="Help Center" href="/help" />
           <div className="hidden md:block">
             <ContactButton />
           </div>

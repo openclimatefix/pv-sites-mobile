@@ -9,11 +9,11 @@ interface CurrentOutputProps {
 }
 
 const CurrentOutput: FC<CurrentOutputProps> = ({ sites }) => {
-  const { totalInstalledCapacityKw, totalForecastedGeneration, isLoading } =
+  const { totalInstalledCapacityKw, aggregateForecastedGeneration, isLoading } =
     useSiteAggregation(sites);
 
-  const currentOutput = totalForecastedGeneration?.length
-    ? getCurrentTimeGeneration(totalForecastedGeneration)
+  const currentOutput = aggregateForecastedGeneration?.length
+    ? getCurrentTimeGeneration(aggregateForecastedGeneration)
     : 0;
 
   const title = totalInstalledCapacityKw ? 'Current Output' : 'Percent Yield';

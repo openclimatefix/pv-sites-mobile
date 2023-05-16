@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import {
   Area,
@@ -12,14 +12,11 @@ import {
   YAxis,
 } from 'recharts';
 
-import {
-  DownArrowIcon,
-  LineCircle,
-  UpArrowIcon,
-} from '../icons/FutureThreshold';
+import { DownArrowIcon, LineCircle, UpArrowIcon } from '../icons';
 
 import {
   addTimePoint,
+  calculateCenteredMovingAverage,
   getTrendAfterIndex,
   graphThreshold,
   makeGraphable,
@@ -41,10 +38,10 @@ interface ThresholdGraphProps {
 
 const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const representativeSite = sites[0];
-  const { totalForecastedGeneration, totalInstalledCapacityKw, isLoading } =
+  const { aggregateForecastedGeneration, totalInstalledCapacityKw, isLoading } =
     useSiteAggregation(sites);
   const [timeEnabled, setTimeEnabled] = useState(
-    totalForecastedGeneration !== undefined
+    aggregateForecastedGeneration !== undefined
   );
   const {
     currentTime,
@@ -61,16 +58,14 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
 
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
-  const rawGraphData = useMemo(() => {
-    if (totalForecastedGeneration && sunrise && sunset) {
-      return generationDataOverDateRange(
-        totalForecastedGeneration,
-        isAfterDayTime ? tomorrowTimes.sunrise : sunrise,
-        isAfterDayTime ? tomorrowTimes.sunset : sunset
-      );
-    }
-    return null;
-  }, [totalForecastedGeneration, sunrise, sunset]);
+  const rawGraphData =
+    aggregateForecastedGeneration &&
+    generationDataOverDateRange(
+      aggregateForecastedGeneration,
+      isAfterDayTime ? tomorrowTimes.sunrise : sunrise,
+      isAfterDayTime ? tomorrowTimes.sunset : sunset
+    );
+
   const graphData =
     rawGraphData && addTimePoint(rawGraphData, currentTime.toDate());
 
@@ -80,11 +75,8 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
 
   const renderCurrentTimeMarker = useCallback(
     ({ x, y, index }: any) => {
-      if (!graphData) return;
-      /* 
-    Return null if this index doesn't correspond to the current time
-    or if the current time is past the start/end dates of the graph
-    */
+      if (!graphData) return null;
+
       const currentTimeIndex = getClosestForecastIndex(
         graphData,
         currentTime.toDate()
@@ -218,15 +210,19 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
    * and returns text indicating increasing/decreasing solar activity
    */
   const getSolarActivityText = () => {
-    if (!totalForecastedGeneration) return null;
+    if (!aggregateForecastedGeneration) return null;
 
-    const currIndex = getCurrentTimeGenerationIndex(totalForecastedGeneration);
-    const slope = getTrendAfterIndex(totalForecastedGeneration, currIndex);
+    const averagedForecastGeneration = calculateCenteredMovingAverage(
+      aggregateForecastedGeneration,
+      3
+    );
+    const currIndex = getCurrentTimeGenerationIndex(averagedForecastGeneration);
+    const slope = getTrendAfterIndex(averagedForecastGeneration, currIndex);
 
     if (slope) {
       const { type, endIndex } = slope;
       const slopeForecastDate = timeFormat(
-        totalForecastedGeneration[endIndex].datetime_utc
+        averagedForecastGeneration[endIndex].datetime_utc
       );
 
       switch (type) {

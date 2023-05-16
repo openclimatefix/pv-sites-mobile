@@ -12,14 +12,14 @@ interface SunnyTimeframeProps {
 
 const SunnyTimeframe: FC<SunnyTimeframeProps> = ({ sites }) => {
   const representativeSite = sites[0];
-  const { totalForecastedGeneration, totalInstalledCapacityKw, isLoading } =
+  const { aggregateForecastedGeneration, totalInstalledCapacityKw, isLoading } =
     useSiteAggregation(sites);
   const [isRelativeTime, setIsRelativeTime] = useState(false);
   const { timeFormat } = useSiteTime(representativeSite);
 
   const thresholdCapacityKW = totalInstalledCapacityKw * graphThreshold;
 
-  if (!totalForecastedGeneration) {
+  if (!aggregateForecastedGeneration) {
     return (
       <NumberDisplay
         title="Loading"
@@ -31,7 +31,7 @@ const SunnyTimeframe: FC<SunnyTimeframeProps> = ({ sites }) => {
   }
 
   const nextThreshold = getNextThresholdIndex(
-    totalForecastedGeneration,
+    aggregateForecastedGeneration,
     thresholdCapacityKW
   );
 
@@ -45,11 +45,9 @@ const SunnyTimeframe: FC<SunnyTimeframeProps> = ({ sites }) => {
   let sunnyText = '';
 
   if (isRelativeTime) {
-    let difference = dayjs(totalForecastedGeneration[index].datetime_utc).diff(
-      dayjs(),
-      'hours',
-      true
-    );
+    let difference = dayjs(
+      aggregateForecastedGeneration[index].datetime_utc
+    ).diff(dayjs(), 'hours', true);
 
     let timeUnit = difference === 1 ? 'Hour' : 'Hours';
 
@@ -62,7 +60,7 @@ const SunnyTimeframe: FC<SunnyTimeframeProps> = ({ sites }) => {
     value = `${Math.round(difference)} ${timeUnit}`;
     sunnyText = aboveThreshold ? 'Sunny in' : 'Sunny for';
   } else {
-    value = timeFormat(totalForecastedGeneration[index].datetime_utc);
+    value = timeFormat(aggregateForecastedGeneration[index].datetime_utc);
     sunnyText = aboveThreshold ? 'Sunny at' : 'Sunny until';
   }
 

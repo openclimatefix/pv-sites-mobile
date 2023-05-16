@@ -1,6 +1,8 @@
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { PencilSquareIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 import { useState } from 'react';
-import SiteCardLink from '~/lib/components/SiteCard';
+import SiteCard from '~/lib/components/SiteCard';
 import { useSites, withSites } from '~/lib/sites';
 
 const Sites = () => {
@@ -24,8 +26,18 @@ const Sites = () => {
         </button>
       </div>
       {sites.map((site) => (
-        <SiteCardLink key={site.site_uuid} site={site} isEditMode={editMode} />
+        <SiteCard key={site.site_uuid} site={site} isEditMode={editMode} />
       ))}
+      {editMode && (
+        <Link href="/site-details">
+          <div className="mt-4 flex flex-row justify-center gap-2">
+            <PlusCircleIcon width={28} height={28} color="#FFD053" />
+            <h2 className="text-bold text-xl text-ocf-yellow-500">
+              Add a site
+            </h2>
+          </div>
+        </Link>
+      )}
     </div>
   );
 };

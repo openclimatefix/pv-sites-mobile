@@ -1,31 +1,19 @@
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { getAuthenticatedRequestOptions } from '~/lib/swr';
+import { getEnodeLinkURL, sendMutation } from '~/lib/api';
 import { Inverters } from '~/lib/types';
 import Button from '../Button';
 import { InverterCard } from '../InverterCard';
-import Spinner from '../Spinner';
+import { Spinner } from '../icons';
 import { NavbarLink } from '../navigation/NavBar';
 import { CheckIcon } from '@heroicons/react/24/solid';
-
-async function sendRequest(url: string, { arg }: { arg: string[] }) {
-  const options = await getAuthenticatedRequestOptions(url);
-  return fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(arg),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
-}
+import { sleep } from '~/lib/utils';
 
 interface ViewInvertersProps {
-  siteUUID?: string;
+  siteUUID: string;
   isSelectMode?: boolean;
   isEditMode?: boolean;
   backButton?: boolean;
@@ -54,7 +42,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
 
   const { trigger } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites/${siteUUID}/inverters`,
-    sendRequest
+    sendMutation('PUT')
   );
 
   const [selectedInverters, setSelectedInverters] = useState<string[]>(
@@ -62,6 +50,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   );
   const [didSubmit, setDidSubmit] = useState(false);
   const [showSuccessIcon, setShowSuccessIcon] = useState(false);
+  const router = useRouter();
   const isLoading = isAllInvertersLoading || isSiteInvertersLoading;
 
   const nextPageOrSubmit = async () => {
@@ -74,8 +63,10 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   const submit = async () => {
     if (!didSubmit) setDidSubmit(true);
     await trigger(selectedInverters);
-    setToTrueForSeconds(setShowSuccessIcon, 2);
+    setShowSuccessIcon(true);
     setDidSubmit(false);
+    await sleep(2000);
+    setShowSuccessIcon(false);
   };
 
   const toggleSelected = (inverter: string) => {
@@ -86,21 +77,14 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     }
   };
 
-  const setToTrueForSeconds = (
-    setter: (arg0: boolean) => void,
-    seconds: number
-  ) => {
-    setter(true);
-    setTimeout(() => {
-      setter(false);
-    }, seconds * 1000);
+  const redirectToEnode = async () => {
+    const url = await getEnodeLinkURL(siteUUID);
+    router.push(url);
   };
 
   const defaultTitleText = isSelectMode
     ? 'Select Inverters'
     : 'Connected Inverters';
-  const editModeTitleText = 'Connected Inverters';
-  const defaultSubtitleText = 'Click to select or deselect an inverter';
   const defaultButtonText = isSelectMode ? 'Submit' : 'Next';
   const editModeButtonText = 'Save Changes';
 
@@ -122,11 +106,13 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           </div>
         )}
         <div className="flex w-full flex-grow flex-col pt-0">
-          <h1 className="mt-4 text-xl font-semibold text-white md:text-2xl">
-            {isEditMode ? editModeTitleText : defaultTitleText}
+          <h1 className="mt-4 text-xl font-semibold text-white">
+            {isEditMode ? 'Connected Inverters' : defaultTitleText}
           </h1>
           {isSelectMode && (
-            <h1 className="text-md text-white">{defaultSubtitleText}</h1>
+            <h1 className="text-md text-white">
+              Click to select or deselect an inverter
+            </h1>
           )}
           <div className="mb-8 mt-4 grid w-full grid-cols-1 items-center justify-center gap-4 md:mt-2 md:grid-cols-2">
             {allInverters?.inverters.map((inverter) => (
@@ -141,16 +127,16 @@ const ViewInverters: FC<ViewInvertersProps> = ({
               />
             ))}
           </div>
-          <Link href="https://www.omfgdogs.com">
-            <a>
+          {!isSelectMode && (
+            <button onClick={redirectToEnode}>
               <div className="flex flex-row justify-center gap-2">
                 <PlusCircleIcon width={24} height={24} color="#FFD053" />
                 <h2 className="text-l text-ocf-yellow-500">
                   Link more inverters
                 </h2>
               </div>
-            </a>
-          </Link>
+            </button>
+          )}
           <Button
             variant="solid"
             disabled={

@@ -1,10 +1,8 @@
-import Link from 'next/link';
-import { FC, useState } from 'react';
-import Button from '../Button';
-import InverterGraphicIcon from '../icons/InverterGraphicIcon';
 import { ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { fetcher } from '~/lib/swr';
+import { FC, useState } from 'react';
+import { getEnodeLinkURL } from '~/lib/api';
 import { useIsMobile } from '~/lib/utils';
 import ema from '~/public/inverters/ema.png';
 import enphase from '~/public/inverters/enphase.png';
@@ -13,6 +11,8 @@ import goodwe from '~/public/inverters/goodwe.png';
 import growatt from '~/public/inverters/growatt.png';
 import solaredge from '~/public/inverters/solaredge.png';
 import solis from '~/public/inverters/solis.png';
+import Button from '../Button';
+import { InverterGraphicIcon } from '../icons';
 
 const brands = {
   EMA: ema,
@@ -24,7 +24,7 @@ const brands = {
   Solis: solis,
 } as const;
 
-const SupportedInverters = () => {
+const SupportedInverters: FC = () => {
   return (
     <div>
       {Object.keys(brands).map((brand) => {
@@ -33,7 +33,7 @@ const SupportedInverters = () => {
             <img
               src={brands[brand as keyof typeof brands].src}
               alt={`${brand} logo`}
-            ></img>
+            />
             <div className="my-2 self-center text-ocf-gray-300">{brand}</div>
           </div>
         );
@@ -48,22 +48,16 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
   const isMobile = useIsMobile();
   const router = useRouter();
 
-  const getLinkAndRedirect = async () => {
-    const res = await fetcher(
-      `${
-        process.env.NEXT_PUBLIC_API_BASE_URL_GET
-      }/enode/link?${new URLSearchParams({
-        redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`,
-      }).toString()}`
-    );
-    router.push(res);
+  const mobileSkipButtonClass =
+    'flex items-center text-ocf-yellow text-[14px] mt-[5px] md:font-normal font-bold';
+
+  const redirectToEnode = async () => {
+    const url = await getEnodeLinkURL(siteUUID);
+    router.push(url);
   };
 
-  const mobileSkipButtonClass =
-    'flex items-center text-ocf-yellow text-[14px] mt-[5px]';
-
   return (
-    <div className="flex h-[90vh] w-full flex-col px-5 md:overflow-hidden md:pb-6 md:pt-[75px]">
+    <div className="flex w-full flex-col px-5 md:h-[90vh] md:overflow-hidden md:pb-6 md:pt-[75px]">
       <div className="mt-[40px] self-center md:mt-[0px]">
         <InverterGraphicIcon />
       </div>
@@ -121,14 +115,14 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
           Supported Inverters
         </div>
         <div className="mt-3 max-h-44 self-center overflow-y-scroll px-6">
-          {SupportedInverters()}
+          <SupportedInverters />
         </div>
       </div>
 
       <a className="mt-10 self-center md:mt-5">
         <Button
           variant="outlined"
-          onClick={getLinkAndRedirect}
+          onClick={redirectToEnode}
           className="w-[250px]"
         >
           Yes, link my inverter
@@ -167,7 +161,7 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
                 Supported Inverters
               </div>
               <div className="mt-3 self-center px-6">
-                {SupportedInverters()}
+                <SupportedInverters />
               </div>
             </div>
           </div>
@@ -175,15 +169,16 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
       )}
 
       <div className="mx-auto my-3 flex justify-end md:mt-auto md:w-10/12">
-        <Link href={isMobile ? '/sites' : `/dashboard/${siteUUID}`} passHref>
-          <a className={mobileSkipButtonClass}>
-            Skip this step{' '}
-            <ChevronRightIcon
-              width="24"
-              height="24"
-              className="hidden md:block"
-            />
-          </a>
+        <Link
+          href={isMobile ? '/sites' : `/dashboard/${siteUUID}`}
+          className={mobileSkipButtonClass}
+        >
+          Skip this step{' '}
+          <ChevronRightIcon
+            width="24"
+            height="24"
+            className="hidden md:block"
+          />
         </Link>
       </div>
     </div>

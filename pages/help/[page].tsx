@@ -5,48 +5,33 @@ import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { LinkProps } from 'next/link';
+import { hyphensToTitleCase } from '~/lib/utils';
 
 export const pages = {
-  'add-site-location': addSiteLocation,
-  'enter-site-details': enterSiteDetails,
-  'handle-split-sites': handleSplitSites,
+  'adding-site-locations': addSiteLocation,
+  'entering-site-details': enterSiteDetails,
+  'handling-split-sites': handleSplitSites,
 } as const;
 
 type MenuLinkProps = {
-  linkProps: LinkProps;
+  href: string;
   label: string;
   currentPath: string;
 };
 
-const urlToDisplay = (page: string) => {
-  return page
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-};
-
-const MenuLink: React.FC<MenuLinkProps> = ({
-  linkProps,
-  label,
-  currentPath,
-}) => {
-  const textColor =
-    linkProps.href === currentPath ? 'text-amber' : 'text-white';
+const MenuLink: React.FC<MenuLinkProps> = ({ href, label, currentPath }) => {
+  const textColor = href === currentPath ? 'text-amber' : 'text-white';
   return (
-    <Link {...linkProps} passHref>
-      <a>
-        <div
-          className={`flex transform items-center rounded-md px-4 py-2 text-gray-600 transition-colors hover:text-gray-700`}
-        >
-          <span className={`align-center mx-4 flex-1 font-medium ${textColor}`}>
-            <ul
-              className={`${linkProps.href === currentPath ? 'list-disc' : ''}`}
-            >
-              <li>{label}</li>
-            </ul>
-          </span>
-        </div>
-      </a>
+    <Link href={href}>
+      <div
+        className={`flex transform items-center rounded-md px-4 py-2 text-gray-600 transition-colors hover:text-gray-700`}
+      >
+        <span className={`align-center mx-4 flex-1 font-medium ${textColor}`}>
+          <ul className={`${href === currentPath ? 'list-disc' : ''}`}>
+            <li>{label}</li>
+          </ul>
+        </span>
+      </div>
     </Link>
   );
 };
@@ -58,13 +43,13 @@ const Help = () => {
     <div className="flex w-full">
       <div className="flex flex-1">
         <div className="hidden flex-1 md:block" />
-        <div className="mt-6 flex hidden flex-col md:block">
+        <div className="mt-6 hidden flex-col md:block">
           {Object.keys(pages).map((page) => {
             return (
               <MenuLink
                 key={page}
-                linkProps={{ href: `/help/${page}` }}
-                label={urlToDisplay(page)}
+                href={`/help/${page}`}
+                label={hyphensToTitleCase(page)}
                 currentPath={router.asPath}
               />
             );

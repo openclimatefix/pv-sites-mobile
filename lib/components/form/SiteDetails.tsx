@@ -1,15 +1,14 @@
 import { useRouter } from 'next/router';
-import { FC, useState, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
+import useSWRMutation from 'swr/mutation';
+import { sendMutation } from '~/lib/api';
 import Location from '~/lib/components/form/Location';
 import { useSites } from '../../sites';
-import { FormPostData, PanelDetails, Site } from '../../types';
-import { originalLng, useIsMobile } from '../../utils';
-import { originalLat } from '../../utils';
-import useSWRMutation from 'swr/mutation';
-import { getAuthenticatedRequestOptions } from '~/lib/swr';
-import Details from './Details';
+import { FormPostData, Site } from '../../types';
+import { originalLat, originalLng, useIsMobile } from '../../utils';
 import BackNav from '../navigation/BackNav';
 import { NavbarLink } from '../navigation/NavBar';
+import Details from './Details';
 
 enum Page {
   Details = 'Details',
@@ -63,29 +62,14 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     }
   }, [formData, site]);
 
-  const sendFormData =
-    (method: string) =>
-    async (url: string, { arg }: { arg: FormPostData }) => {
-      const options = await getAuthenticatedRequestOptions(url);
-      return fetch(url, {
-        method,
-        body: JSON.stringify(arg),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
-      });
-    };
-
   const { trigger: createSite } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites`,
-    sendFormData('POST')
+    sendMutation('POST')
   );
 
   const { trigger: updateSite } = useSWRMutation(
     `${process.env.NEXT_PUBLIC_API_BASE_URL_POST}/sites/${site?.site_uuid}`,
-    sendFormData('PUT')
+    sendMutation('PUT')
   );
 
   const submitForm = async (formData: SiteFormData) => {
@@ -97,7 +81,6 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
     const sentinel = 1;
     const data: FormPostData = {
-      site_uuid: 1,
       client_name: 'name',
       client_site_id: 1,
       client_site_name: formData.siteName!,
@@ -132,7 +115,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(isMobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
+      router.push(`/link/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }

@@ -39,10 +39,11 @@ const Logout = () => {
         </h1>
       </div>
       <div className="flex h-1/2 w-full flex-col items-center justify-end pb-28">
-        <Link href="/">
-          <button className="h-14 w-72 rounded-md bg-ocf-yellow text-center text-xl font-bold shadow dark:bg-ocf-yellow">
-            Back to login
-          </button>
+        <Link
+          href="/"
+          className="flex h-14 w-72 items-center justify-center rounded-md bg-ocf-yellow text-center text-xl font-bold shadow dark:bg-ocf-yellow"
+        >
+          Back to login
         </Link>
       </div>
     </div>
@@ -50,5 +51,3 @@ const Logout = () => {
 };
 
 export default Logout;
-
-export const getServerSideProps = withSites();

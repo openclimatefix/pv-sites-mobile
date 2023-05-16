@@ -45,7 +45,7 @@ const Inverters = () => {
 export const getServerSideProps = withSites({
   async getServerSideProps(ctx) {
     const { sites, query } = ctx;
-    if (!sites.map((site) => site.site_uuid).includes(query.uuid as string)) {
+    if (!sites.find((site) => site.site_uuid === (query.uuid as string))) {
       return {
         notFound: true,
       };
