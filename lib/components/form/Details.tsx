@@ -5,7 +5,7 @@ import Modal from '~/lib/components/form/Modal';
 import { Spinner } from '~/lib/components/icons';
 
 import Button from '~/lib/components/Button';
-import { zoomLevelThreshold } from '../../utils';
+import { sleep, zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
 import { SiteFormData } from './SiteDetails';
 import { Site } from '~/lib/types';
@@ -57,22 +57,14 @@ const Details: FC<Props> = ({
         const site = (await res.json()) as Site;
         setDidSubmit(false);
         if (isEditing) {
-          setToTrueForSeconds(setShowSuccessIcon, 2);
+          setShowSuccessIcon(true);
+          await sleep(2000);
+          setShowSuccessIcon(false);
         } else {
           nextPageCallback(site);
         }
       }
     }
-  };
-
-  const setToTrueForSeconds = (
-    setter: (arg0: boolean) => void,
-    seconds: number
-  ) => {
-    setter(true);
-    setTimeout(() => {
-      setter(false);
-    }, seconds * 1000);
   };
 
   return (
