@@ -65,6 +65,7 @@ const Location: FC<Props> = ({
                 form="panel-form"
                 onClick={lastPageCallback}
                 variant="outlined"
+                className="w-[250px]"
               >
                 Back
               </Button>

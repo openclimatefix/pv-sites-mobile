@@ -5,10 +5,11 @@ import Modal from '~/lib/components/form/Modal';
 import { Spinner } from '~/lib/components/icons';
 
 import Button from '~/lib/components/Button';
-import { zoomLevelThreshold } from '../../utils';
+import { sleep, zoomLevelThreshold } from '../../utils';
 import LocationInput from './LocationInput';
 import { SiteFormData } from './SiteDetails';
 import { Site } from '~/lib/types';
+import { CheckIcon } from '@heroicons/react/24/solid';
 
 /**
  * Prevent users from entering negative numbers into input fields
@@ -44,6 +45,7 @@ const Details: FC<Props> = ({
 }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [didSubmit, setDidSubmit] = useState<boolean>(false);
+  const [showSuccessIcon, setShowSuccessIcon] = useState<boolean>(false);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,16 +55,23 @@ const Details: FC<Props> = ({
       const res = await submitForm();
       if (res) {
         const site = (await res.json()) as Site;
-        nextPageCallback(site);
+        setDidSubmit(false);
+        if (isEditing) {
+          setShowSuccessIcon(true);
+          await sleep(2000);
+          setShowSuccessIcon(false);
+        } else {
+          nextPageCallback(site);
+        }
       }
     }
   };
 
   return (
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
-      <div className="flex w-4/5 flex-row self-center md:w-9/12">
-        <div className="hidden flex-1 flex-col px-8 md:flex">
-          <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-3xl">
+      <div className="flex w-4/5 flex-row self-center md:w-8/12">
+        <div className="hidden flex-1 flex-col pr-8 md:flex">
+          <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-2xl">
             Your site&apos;s details
           </h1>
           <div className="w-full flex-1" onClick={mapButtonCallback}>
@@ -225,9 +234,16 @@ const Details: FC<Props> = ({
             disabled={didSubmit || (isEditing && !edited)}
             className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
           >
-            {didSubmit && <Spinner width={5} height={5} margin={4} />}
-            {isEditing ? 'Save changes' : 'Finish'}
-            {didSubmit && <div className="mx-4 w-5" />}
+            {(didSubmit || showSuccessIcon) && (
+              <div className="mx-2 h-5 w-5 overflow-hidden">
+                {didSubmit && <Spinner width={5} height={5} margin={0} />}
+                {!didSubmit && showSuccessIcon && (
+                  <CheckIcon className="h-5 w-5 fill-ocf-black text-gray-200 dark:text-ocf-gray-300" />
+                )}
+              </div>
+            )}
+            {isEditing ? 'Save Changes' : 'Finish'}
+            {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
           </button>
         </form>
       </div>
@@ -241,11 +257,18 @@ const Details: FC<Props> = ({
           form="panel-form"
           disabled={didSubmit || (isEditing && !edited)}
           variant="solid"
-          width={isEditing ? '250px' : '200px'}
+          className={isEditing ? 'w-[250px]' : 'w-[200px]'}
         >
-          {didSubmit && <Spinner width={5} height={5} margin={2} />}
-          {isEditing ? 'Save changes' : 'Finish'}
-          {didSubmit && <div className="mx-2 w-5" />}
+          {(didSubmit || showSuccessIcon) && (
+            <div className="mx-2 h-5 w-5 overflow-hidden">
+              {didSubmit && <Spinner width={5} height={5} margin={0} />}
+              {!didSubmit && showSuccessIcon && (
+                <CheckIcon className="h-5 w-5 fill-ocf-black text-gray-200 dark:text-ocf-gray-300" />
+              )}
+            </div>
+          )}
+          {isEditing ? 'Save Changes' : 'Finish'}
+          {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
         </Button>
       </div>
     </div>
