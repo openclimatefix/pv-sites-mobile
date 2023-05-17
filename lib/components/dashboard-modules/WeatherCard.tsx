@@ -128,7 +128,7 @@ const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
   );
 
   return (
-    <div className="flex flex-row justify-around rounded-2xl bg-ocf-black-500">
+    <div className="flex flex-row justify-around rounded-lg bg-ocf-black-500">
       {days.map((day, i) => (day ? renderDay(day, i) : renderSkeletonDay(i)))}
     </div>
   );

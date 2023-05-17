@@ -8,7 +8,6 @@ interface LocationInputProps {
   originalLng: number;
   originalLat: number;
   shouldZoomIntoOriginal: boolean;
-  setIsSubmissionEnabled: (isSubmissionEnabled: boolean) => void;
   setMapCoordinates: ({ longitude, latitude }: LatitudeLongitude) => void;
   zoomLevelThreshold: number;
   initialZoom: number;
@@ -20,7 +19,6 @@ const LocationInput: FC<LocationInputProps> = ({
   originalLng,
   shouldZoomIntoOriginal,
   setMapCoordinates,
-  setIsSubmissionEnabled,
   zoomLevelThreshold,
   initialZoom,
   canEdit,
@@ -28,6 +26,7 @@ const LocationInput: FC<LocationInputProps> = ({
   mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<mapboxgl.Map>();
+  const geocoder = useRef<MapboxGeocoder>();
   const geocoderContainer = useRef<HTMLDivElement | null>(null);
   const [isPastZoomThreshold, setIsPastZoomThreshold] = useState(false);
   const [isInUK, setIsInUK] = useState(false);
@@ -35,7 +34,6 @@ const LocationInput: FC<LocationInputProps> = ({
   const [zoom, setZoom] = useState(initialZoom);
 
   useEffect(() => {
-    if (map.current) return; // initialize map only once
     if (!mapContainer.current) return;
 
     map.current = new mapboxgl.Map({
@@ -48,59 +46,27 @@ const LocationInput: FC<LocationInputProps> = ({
       interactive: canEdit,
     });
 
-    const nav = new mapboxgl.NavigationControl({ showCompass: false });
-    map.current.addControl(nav, 'bottom-right');
-
-    // Adds a current location button
-    if (canEdit) {
-      map.current.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-            enableHighAccuracy: true,
-          },
-        })
-      );
-    }
-
-    let popup: mapboxgl.Popup | null = null;
-
-    const renderFunction = (item: MapboxGeocoder.Result) => {
-      var placeName = item.place_name.split(',');
-      return canEdit
-        ? '<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">' +
-            placeName[0] +
-            '</div><div class="mapboxgl-ctrl-geocoder--suggestion-address">' +
-            placeName.splice(1, placeName.length).join(',') +
-            '</div></div>'
-        : '';
-    };
-
-    const geocoder = new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl,
-      countries: 'GB',
-      placeholder: 'Search a location',
-      marker: false,
-      render: renderFunction,
-      reverseGeocode: true,
-      limit: 3,
+    const navControl = new mapboxgl.NavigationControl({ showCompass: false });
+    const geolocateControl = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
     });
-
-    geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
-
-    if (!canEdit) {
-      // Prevent user from changing the geocoder input when the map isn't editable
-      geocoder.setBbox([0, 0, 0, 0]);
-    }
-
     const marker = new mapboxgl.Marker({
       draggable: false,
       color: '#FFD053',
     }).setLngLat([originalLat, originalLng]);
 
+    map.current.addControl(navControl, 'bottom-right');
+    if (canEdit) {
+      map.current.addControl(geolocateControl);
+    }
+
     map.current.on('load', () => {
       if (shouldZoomIntoOriginal) {
-        geocoder.query(`${originalLat}, ${originalLng}`).setFlyTo(canEdit);
+        geocoder.current
+          .query(`${originalLat}, ${originalLng}`)
+          .setFlyTo(canEdit);
         updateMarker(
           marker,
           map.current!,
@@ -114,8 +80,8 @@ const LocationInput: FC<LocationInputProps> = ({
 
     map.current.on('idle', () => {
       // Enables fly to animation on search
-      geocoder.setFlyTo({ curve: 1.2, speed: 5 });
-      geocoder.setRenderFunction(renderFunction);
+      geocoder.current?.setFlyTo({ curve: 1.2, speed: 5 });
+      geocoder.current?.setRenderFunction(renderFunction);
     });
 
     let savedLat = originalLat;
@@ -221,6 +187,71 @@ const LocationInput: FC<LocationInputProps> = ({
       setIsPastZoomThreshold(isPastZoomThreshold);
     });
 
+    return () => {
+      map.current?.removeControl(navControl);
+      map.current?.removeControl(geolocateControl);
+    };
+  });
+
+  useEffect(() => {
+    if (map.current) return; // initialize map only once
+    if (!mapContainer.current) return;
+
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/alester3/clf1lj7jg000b01n4ya2880gi',
+      center: [originalLng, originalLat],
+      zoom,
+      keyboard: false,
+      attributionControl: false,
+      interactive: canEdit,
+    });
+
+    const nav = new mapboxgl.NavigationControl({ showCompass: false });
+    map.current.addControl(nav, 'bottom-right');
+
+    // Adds a current location button
+    if (canEdit) {
+      map.current.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true,
+          },
+        })
+      );
+    }
+
+    let popup: mapboxgl.Popup | null = null;
+
+    const renderFunction = (item: MapboxGeocoder.Result) => {
+      const placeName = item.place_name.split(',');
+      return canEdit
+        ? `<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">
+            ${placeName[0]}
+            </div><div class="mapboxgl-ctrl-geocoder--suggestion-address">
+            ${placeName.splice(1, placeName.length).join(',')}
+            </div></div>`
+        : '';
+    };
+
+    const geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl,
+      countries: 'GB',
+      placeholder: 'Search a location',
+      marker: false,
+      render: renderFunction,
+      reverseGeocode: true,
+      limit: 3,
+    });
+
+    geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
+
+    if (!canEdit) {
+      // Prevent user from changing the geocoder input when the map isn't editable
+      geocoder.setBbox([0, 0, 0, 0]);
+    }
+
     geocoder.on('result', (result) => {
       const isUK =
         result.result.context.find((e: Record<string, string>) =>
@@ -253,10 +284,6 @@ const LocationInput: FC<LocationInputProps> = ({
     zoom,
     zoomLevelThreshold,
   ]);
-
-  useEffect(() => {
-    setIsSubmissionEnabled(isInUK && isPastZoomThreshold && !isMoving);
-  }, [isInUK, isPastZoomThreshold, setIsSubmissionEnabled, isMoving]);
 
   return (
     <div className={`flex h-full flex-col`}>

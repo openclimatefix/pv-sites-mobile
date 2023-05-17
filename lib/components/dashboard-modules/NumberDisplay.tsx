@@ -10,7 +10,7 @@ interface Props {
 
 const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
   const renderDisplay = () => (
-    <div className="flex h-full w-full flex-1 flex-col justify-center rounded-2xl bg-ocf-black-500 p-4 text-center md:text-left">
+    <div className="flex h-full w-full flex-1 flex-col justify-center rounded-lg bg-ocf-black-500 p-4 text-center md:text-left">
       <div
         className={`mb-2 text-xs font-semibold text-ocf-gray transition-all md:text-lg md:font-medium md:leading-none ${
           isLoading ? skeleton : ``

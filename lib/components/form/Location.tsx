@@ -20,8 +20,6 @@ const Location: FC<Props> = ({
   setFormData,
   isEditing = false,
 }) => {
-  const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
-
   // The map should zopm into the initial coordinates if they were entered by the user
   const shouldZoomIntoOriginal =
     originalLat !== formData.latitude || originalLng !== formData.longitude;
@@ -44,7 +42,6 @@ const Location: FC<Props> = ({
               shouldZoomIntoOriginal={shouldZoomIntoOriginal}
               originalLat={formData.latitude}
               originalLng={formData.longitude}
-              setIsSubmissionEnabled={setIsSubmissionEnabled}
               setMapCoordinates={({ longitude, latitude }) =>
                 setFormData({
                   ...formData,
@@ -72,7 +69,7 @@ const Location: FC<Props> = ({
             )}
           </div>
           <Button
-            disabled={!isSubmissionEnabled}
+            disabled={!formData.latitude || !formData.longitude}
             onClick={nextPageCallback}
             variant="solid"
             className="w-full md:w-[250px]"

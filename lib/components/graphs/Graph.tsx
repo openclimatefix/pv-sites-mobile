@@ -161,7 +161,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   };
 
   return (
-    <div className="h-[260px] w-full rounded-2xl bg-ocf-black-500 p-3">
+    <div className="h-[260px] w-full rounded-lg bg-ocf-black-500 p-3">
       <div className="ml-1 flex gap-2">
         <TimeRangeInput
           label="6H"

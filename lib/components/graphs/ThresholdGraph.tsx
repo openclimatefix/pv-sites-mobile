@@ -272,7 +272,7 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const graphableData = graphData ? makeGraphable(graphData) : undefined;
 
   return (
-    <div className="relative h-[240px] w-full content-center rounded-2xl bg-ocf-black-500">
+    <div className="relative h-[240px] w-full content-center rounded-lg bg-ocf-black-500">
       <div className="flex w-full flex-col justify-start">
         <div className="mr-10 mt-[20px] flex justify-end text-sm">
           <div className="flex flex-col justify-start gap-1">
