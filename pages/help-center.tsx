@@ -43,6 +43,7 @@ const MoreInfo: FC = () => {
         <Carousel
           showStatus={false}
           showThumbs={false}
+          infiniteLoop
           renderArrowPrev={(...args) =>
             renderCarouselArrow('/left-arrow.svg', 'left', ...args)
           }
