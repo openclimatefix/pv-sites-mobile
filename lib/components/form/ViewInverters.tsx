@@ -86,7 +86,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     ? 'Select Inverters'
     : 'Connected Inverters';
   const defaultButtonText = isSelectMode ? 'Submit' : 'Next';
-  const editModeButtonText = 'Save Changes';
+  const editModeButtonText = 'Save';
 
   // @TODO skeletons!!
   return isLoading ? (
@@ -164,7 +164,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           <Button
             onClick={lastPageCallback}
             variant="outlined"
-            className="w-[250px]"
+            className="w-[100px]"
           >
             {isEditMode ? 'Exit' : 'Back'}
           </Button>
@@ -175,7 +175,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           variant="solid"
           disabled={(isSelectMode && selectedInverters.length < 1) || didSubmit}
           onClick={isEditMode ? submit : nextPageOrSubmit}
-          className="w-[250px]"
+          className="w-[100px]"
         >
           {(didSubmit || showSuccessIcon) && (
             <div className="mx-2 h-5 w-5 overflow-hidden">

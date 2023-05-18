@@ -249,7 +249,12 @@ const Details: FC<Props> = ({
       </div>
       <Modal open={modalOpen} onOpen={setModalOpen} />
       <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
-        <Button form="panel-form" onClick={lastPageCallback} variant="outlined">
+        <Button
+          form="panel-form"
+          onClick={lastPageCallback}
+          variant="outlined"
+          className="w-[100px]"
+        >
           {isEditing ? 'Exit' : 'Back'}
         </Button>
 
@@ -257,7 +262,7 @@ const Details: FC<Props> = ({
           form="panel-form"
           disabled={didSubmit || (isEditing && !edited)}
           variant="solid"
-          className={isEditing ? 'w-[250px]' : 'w-[200px]'}
+          className="w-[100px]"
         >
           {(didSubmit || showSuccessIcon) && (
             <div className="mx-2 h-5 w-5 overflow-hidden">
@@ -267,7 +272,7 @@ const Details: FC<Props> = ({
               )}
             </div>
           )}
-          {isEditing ? 'Save Changes' : 'Finish'}
+          {isEditing ? 'Save' : 'Finish'}
           {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
         </Button>
       </div>

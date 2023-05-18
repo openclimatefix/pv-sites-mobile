@@ -29,7 +29,8 @@
     "react-responsive-carousel": "^3.2.23",
     "recharts": "^2.4.3",
     "suncalc": "^1.9.0",
-    "swr": "^2.0.3"
+    "swr": "^2.0.3",
+    "tailwind-override": "^0.6.1"
   },
   "devDependencies": {
     "@savvywombat/tailwindcss-grid-areas": "^3.0.1",
