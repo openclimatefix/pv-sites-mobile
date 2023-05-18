@@ -8,6 +8,7 @@ import { reverseGeocodeWithoutFocus } from '~/lib/utils';
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
 
 interface LocationInputProps {
+  onValidate?: (valid: boolean) => void;
   latitude: number;
   longitude: number;
   setMapCoordinates: ({ longitude, latitude }: LatitudeLongitude) => void;
@@ -17,6 +18,7 @@ interface LocationInputProps {
 }
 
 const LocationInput: FC<LocationInputProps> = ({
+  onValidate,
   latitude,
   longitude,
   setMapCoordinates,
@@ -121,7 +123,10 @@ const LocationInput: FC<LocationInputProps> = ({
 
     const onMoveEnd = async () => {
       const isPastZoomThreshold = map.current!.getZoom() >= zoomLevelThreshold;
-      if (!isPastZoomThreshold) return;
+      if (!isPastZoomThreshold) {
+        onValidate?.(false);
+        return;
+      }
 
       // update the search box location based on the final latitude/longitude
       geocoder.current?.setFlyTo(false);
@@ -145,7 +150,12 @@ const LocationInput: FC<LocationInputProps> = ({
             '<p>Only locations within the UK are currently supported</p>'
           )
           .addTo(map.current!);
+
+        onValidate?.(false);
+        return;
       }
+
+      onValidate?.(true);
 
       if (!seenDragMessage && !popup.current?.isOpen() && canEdit) {
         popup.current
@@ -176,6 +186,7 @@ const LocationInput: FC<LocationInputProps> = ({
     seenDragMessage,
     setSeenDragMessage,
     setMapCoordinates,
+    onValidate,
   ]);
 
   // Set up the geocoder instance

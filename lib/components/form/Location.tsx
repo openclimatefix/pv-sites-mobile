@@ -24,6 +24,7 @@ const Location: FC<Props> = ({
   setFormData,
   isEditing = false,
 }) => {
+  const [valid, setValid] = useState(false);
   // The map should zopm into the initial coordinates if they were entered by the user
   const shouldZoomOnLoad =
     defaultLatitude !== formData.latitude ||
@@ -44,6 +45,7 @@ const Location: FC<Props> = ({
           </h1>
           <div className="flex-1">
             <LocationInput
+              onValidate={setValid}
               latitude={formData.latitude}
               longitude={formData.longitude}
               setMapCoordinates={({ longitude, latitude }) =>
@@ -73,7 +75,7 @@ const Location: FC<Props> = ({
             )}
           </div>
           <Button
-            disabled={!formData.latitude || !formData.longitude}
+            disabled={!valid || !formData.latitude || !formData.longitude}
             onClick={nextPageCallback}
             variant="solid"
             className="w-full md:w-[250px]"
