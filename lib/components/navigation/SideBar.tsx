@@ -90,7 +90,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
     <div
       className={`fixed top-0 z-50 h-full transition-all duration-500 ${
         open
-          ? 'translate-x-0 shadow-side-bar shadow-ocf-black'
+          ? 'translate-x-0 border-r-[0.5px] border-white'
           : '-translate-x-[100%]'
       }`}
       // @ts-ignore
