@@ -173,7 +173,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
         )}
         <Button
           variant="solid"
-          disabled={(isSelectMode && selectedInverters.length < 1) || didSubmit}
+          disabled={didSubmit}
           onClick={isEditMode ? submit : nextPageOrSubmit}
           className="w-[250px]"
         >

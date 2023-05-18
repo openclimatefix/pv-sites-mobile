@@ -56,15 +56,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == 'POST') {
     if (mockApiRoute === 'sites') {
       const PVSiteMetadataProps = [
-        'site_uuid',
         'client_name',
         'client_site_id',
         'client_site_name',
         'latitude',
         'longitude',
         'inverter_capacity_kw',
-        'created_utc',
-        'updated_utc',
+        'tilt',
+        'orientation',
       ];
       const doesPropertyExist = (propname: string) => !!req.body[propname];
 

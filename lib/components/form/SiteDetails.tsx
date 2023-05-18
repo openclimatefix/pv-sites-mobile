@@ -4,11 +4,12 @@ import useSWRMutation from 'swr/mutation';
 import { sendMutation } from '~/lib/api';
 import Location from '~/lib/components/form/Location';
 import { useSites } from '../../sites';
-import { FormPostData, Site } from '../../types';
+import { FormPostData, Inverters, Site } from '../../types';
 import { originalLat, originalLng, useIsMobile } from '../../utils';
 import BackNav from '../navigation/BackNav';
 import { NavbarLink } from '../navigation/NavBar';
 import Details from './Details';
+import useSWR from 'swr';
 
 enum Page {
   Details = 'Details',
@@ -35,6 +36,9 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
   const backUrl = isMobile ? '/sites' : '/dashboard';
   const router = useRouter();
   const { sites } = useSites();
+  const { data: allInverters } = useSWR<Inverters>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
+  );
   const [formData, setFormData] = useState<SiteFormData>({
     siteName: site?.client_site_name,
     direction: site?.orientation,
@@ -115,7 +119,11 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(`/link/${site?.site_uuid}`);
+      router.push(
+        (allInverters?.inverters?.length ?? 0) === 0
+          ? `/link/${site?.site_uuid}`
+          : `/inverters/${site?.site_uuid}`
+      );
     } else {
       setPage(Page.Details);
     }
