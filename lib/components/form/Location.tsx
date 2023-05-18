@@ -36,7 +36,7 @@ const Location: FC<Props> = ({
           className="mb-3 flex w-[95%] max-w-md flex-1 flex-col self-center lg:h-full lg:w-1/2 lg:min-w-[750px] lg:max-w-full"
           id="mapboxInputWrapper"
         >
-          <h1 className="text-xl font-semibold text-ocf-gray lg:mb-5 lg:mt-7 lg:text-xl">
+          <h1 className="mb-3 text-xl font-semibold text-ocf-gray lg:mb-5 lg:mt-7 lg:text-xl">
             Where is your solar panel located?
           </h1>
           <div className="flex-1">
