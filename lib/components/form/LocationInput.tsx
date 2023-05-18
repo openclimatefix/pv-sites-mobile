@@ -1,49 +1,61 @@
-import 'mapbox-gl/dist/mapbox-gl.css';
-import React, { useRef, useState, useEffect, FC } from 'react';
-import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { FC, useEffect, useRef, useState } from 'react';
 import { LatitudeLongitude } from '~/lib/types';
+import { reverseGeocodeWithoutFocus } from '~/lib/utils';
+
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
 
 interface LocationInputProps {
-  originalLng: number;
-  originalLat: number;
-  shouldZoomIntoOriginal: boolean;
+  latitude: number;
+  longitude: number;
   setMapCoordinates: ({ longitude, latitude }: LatitudeLongitude) => void;
   zoomLevelThreshold: number;
-  initialZoom: number;
+  initialZoom?: number;
   canEdit: boolean;
 }
 
 const LocationInput: FC<LocationInputProps> = ({
-  originalLat,
-  originalLng,
-  shouldZoomIntoOriginal,
+  latitude,
+  longitude,
   setMapCoordinates,
   zoomLevelThreshold,
   initialZoom,
   canEdit,
 }) => {
-  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_PUBLIC!;
-  const mapContainer = useRef<HTMLDivElement | null>(null);
+  const [seenDragMessage, setSeenDragMessage] = useState(false);
+
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const geocoderContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map>();
   const geocoder = useRef<MapboxGeocoder>();
-  const geocoderContainer = useRef<HTMLDivElement | null>(null);
-  const [isPastZoomThreshold, setIsPastZoomThreshold] = useState(false);
-  const [isInUK, setIsInUK] = useState(false);
-  const [isMoving, setIsMoving] = useState(false);
-  const [zoom, setZoom] = useState(initialZoom);
+  const popup = useRef<mapboxgl.Popup>();
+  const marker = useRef<mapboxgl.Marker>();
 
+  // Set up the map instance
   useEffect(() => {
-    if (!mapContainer.current) return;
-
     map.current = new mapboxgl.Map({
-      container: mapContainer.current,
+      container: mapContainer.current!,
       style: 'mapbox://styles/alester3/clf1lj7jg000b01n4ya2880gi',
-      center: [originalLng, originalLat],
-      zoom,
+      center: [longitude, latitude],
+      zoom: initialZoom ?? 4,
       keyboard: false,
       attributionControl: false,
       interactive: canEdit,
+    });
+
+    marker.current = new mapboxgl.Marker({
+      draggable: false,
+      color: '#FFD053',
+    }).setLngLat([longitude, latitude]);
+
+    popup.current = new mapboxgl.Popup({
+      offset: [0, 10],
+      anchor: 'top',
+      closeOnClick: false,
+      closeButton: false,
+      className: 'mapbox-popup',
     });
 
     const navControl = new mapboxgl.NavigationControl({ showCompass: false });
@@ -52,238 +64,152 @@ const LocationInput: FC<LocationInputProps> = ({
         enableHighAccuracy: true,
       },
     });
-    const marker = new mapboxgl.Marker({
-      draggable: false,
-      color: '#FFD053',
-    }).setLngLat([originalLat, originalLng]);
 
     map.current.addControl(navControl, 'bottom-right');
     if (canEdit) {
       map.current.addControl(geolocateControl);
     }
 
-    map.current.on('load', () => {
-      if (shouldZoomIntoOriginal) {
-        geocoder.current
-          .query(`${originalLat}, ${originalLng}`)
-          .setFlyTo(canEdit);
+    return () => {
+      map.current?.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Set up map listeners
+  useEffect(() => {
+    if (!map.current) return;
+
+    const onLoad = () => {
+      if (initialZoom) {
+        geocoder.current?.query(`${latitude}, ${longitude}`).setFlyTo(canEdit);
         updateMarker(
-          marker,
+          marker.current!,
           map.current!,
           zoomLevelThreshold,
-          originalLng,
-          originalLat,
+          longitude,
+          latitude,
           canEdit
         );
       }
-    });
-
-    map.current.on('idle', () => {
-      // Enables fly to animation on search
-      geocoder.current?.setFlyTo({ curve: 1.2, speed: 5 });
-      geocoder.current?.setRenderFunction(renderFunction);
-    });
-
-    let savedLat = originalLat;
-    let savedLng = originalLng;
-
-    // Saves the map center latitude/longitude to the form context
-    const saveSiteLocation = () => {
-      const newLng = map.current!.getCenter().lng;
-      const newLat = map.current!.getCenter().lat;
-
-      setMapCoordinates({ longitude: newLng, latitude: newLat });
-
-      savedLat = newLat;
-      savedLng = newLng;
     };
 
-    map.current.on('move', () => {
-      if (popup) {
-        popup.remove();
-      }
+    const onIdle = () => {
+      geocoder.current?.setFlyTo({ curve: 1.2, speed: 5 });
+      geocoder.current?.setRenderFunction(canEdit ? renderFunction : () => '');
+    };
 
-      const newLng = map.current!.getCenter().lng;
-      const newLat = map.current!.getCenter().lat;
+    const onMove = () => {
+      popup.current?.remove();
+
+      const { lng: longitude, lat: latitude } = map.current!.getCenter();
 
       updateMarker(
-        marker,
+        marker.current!,
         map.current!,
         zoomLevelThreshold,
-        newLng,
-        newLat,
+        longitude,
+        latitude,
         canEdit
       );
 
-      setZoom(map.current!.getZoom());
-
-      const isPastZoomThreshold = map.current!.getZoom() >= zoomLevelThreshold;
-
-      if (isPastZoomThreshold) {
-        // save the map coordinates
-        saveSiteLocation();
-      }
-      setIsMoving(true);
-    });
-
-    map.current.on('moveend', () => {
       const isPastZoomThreshold = map.current!.getZoom() >= zoomLevelThreshold;
       if (isPastZoomThreshold) {
-        // update the search box location based on the final latitude/longitude
-        geocoder.setFlyTo(false);
-
-        // don't display anything in suggestions
-        geocoder.setRenderFunction(() => '<div class="hidden-suggestion"/>');
-
-        // The below `_geocode` call performs the same action that the MapBox geocoder does, except it
-        // does not re-focus the input element after a successful geocode response
-        const geocoderPrivate = geocoder as any;
-        geocoderPrivate
-          ._geocode(`${savedLat}, ${savedLng}`)
-          .then((response: any) => {
-            const results = response.body;
-            if (!results.features.length) return;
-            const result = results.features[0];
-            geocoderPrivate._typeahead.selected = result;
-            geocoderPrivate._inputEl.value = result.place_name;
-            const selected = geocoderPrivate._typeahead.selected;
-            if (
-              selected &&
-              JSON.stringify(selected) !== geocoderPrivate.lastSelected
-            ) {
-              geocoderPrivate._hideClearButton();
-              if (geocoderPrivate.options.flyTo) {
-                geocoderPrivate._fly(selected);
-              }
-              if (geocoderPrivate.options.marker && geocoderPrivate._mapboxgl) {
-                geocoderPrivate._handleMarker(selected);
-              }
-
-              // After selecting a feature, re-focus the textarea and set
-              // cursor at start.
-              geocoderPrivate._inputEl.scrollLeft = 0;
-              geocoderPrivate.lastSelected = JSON.stringify(selected);
-              geocoderPrivate._eventEmitter.emit('result', {
-                result: selected,
-              });
-              geocoderPrivate.eventManager.select(selected, geocoder as any);
-            }
-          });
-
-        if (popup === null && map.current && canEdit) {
-          popup = new mapboxgl.Popup({
-            offset: [0, 10],
-            anchor: 'top',
-            closeOnClick: false,
-            closeButton: false,
-            className: 'site-map',
-          })
-            .setLngLat([savedLng, savedLat])
-            .setHTML('<p>Drag map to pinpoint exact location.</p>')
-            .addTo(map.current);
-        }
+        setMapCoordinates({ longitude, latitude });
       }
-      setIsMoving(false);
-      setIsPastZoomThreshold(isPastZoomThreshold);
-    });
+    };
+
+    const onMoveEnd = async () => {
+      const isPastZoomThreshold = map.current!.getZoom() >= zoomLevelThreshold;
+      if (!isPastZoomThreshold) return;
+
+      // update the search box location based on the final latitude/longitude
+      geocoder.current?.setFlyTo(false);
+
+      // don't display anything in suggestions
+      geocoder.current?.setRenderFunction(
+        () => '<div class="hidden-suggestion"/>'
+      );
+
+      const result = await reverseGeocodeWithoutFocus(
+        geocoder.current!,
+        latitude,
+        longitude
+      );
+      if (!result) {
+        popup.current?.remove();
+
+        popup.current
+          ?.setLngLat([longitude, latitude])
+          .setHTML(
+            '<p>Only locations within the UK are currently supported</p>'
+          )
+          .addTo(map.current!);
+      }
+
+      if (!seenDragMessage && !popup.current?.isOpen() && canEdit) {
+        popup.current
+          ?.setLngLat([longitude, latitude])
+          .setHTML('<p>Drag map to pinpoint exact location.</p>')
+          .addTo(map.current!);
+        setSeenDragMessage(true);
+      }
+    };
+
+    map.current.on('load', onLoad);
+    map.current.on('idle', onIdle);
+    map.current.on('move', onMove);
+    map.current.on('moveend', onMoveEnd);
 
     return () => {
-      map.current?.removeControl(navControl);
-      map.current?.removeControl(geolocateControl);
+      map.current?.off('load', onLoad);
+      map.current?.off('idle', onIdle);
+      map.current?.off('move', onMove);
+      map.current?.off('moveend', onMoveEnd);
     };
-  });
+  }, [
+    longitude,
+    latitude,
+    initialZoom,
+    canEdit,
+    zoomLevelThreshold,
+    seenDragMessage,
+    setSeenDragMessage,
+    setMapCoordinates,
+  ]);
 
+  // Set up the geocoder instance
   useEffect(() => {
-    if (map.current) return; // initialize map only once
-    if (!mapContainer.current) return;
+    if (!map.current) return;
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/alester3/clf1lj7jg000b01n4ya2880gi',
-      center: [originalLng, originalLat],
-      zoom,
-      keyboard: false,
-      attributionControl: false,
-      interactive: canEdit,
-    });
+    const container = geocoderContainer.current!;
 
-    const nav = new mapboxgl.NavigationControl({ showCompass: false });
-    map.current.addControl(nav, 'bottom-right');
-
-    // Adds a current location button
-    if (canEdit) {
-      map.current.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-            enableHighAccuracy: true,
-          },
-        })
-      );
-    }
-
-    let popup: mapboxgl.Popup | null = null;
-
-    const renderFunction = (item: MapboxGeocoder.Result) => {
-      const placeName = item.place_name.split(',');
-      return canEdit
-        ? `<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">
-            ${placeName[0]}
-            </div><div class="mapboxgl-ctrl-geocoder--suggestion-address">
-            ${placeName.splice(1, placeName.length).join(',')}
-            </div></div>`
-        : '';
-    };
-
-    const geocoder = new MapboxGeocoder({
+    geocoder.current = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       mapboxgl: mapboxgl,
       countries: 'GB',
       placeholder: 'Search a location',
       marker: false,
-      render: renderFunction,
+      render: canEdit ? renderFunction : () => '',
       reverseGeocode: true,
       limit: 3,
     });
 
-    geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
+    // geocoder.current.addTo(container);
+    geocoderContainer.current?.appendChild(
+      geocoder.current.onAdd(map.current!)
+    );
 
     if (!canEdit) {
       // Prevent user from changing the geocoder input when the map isn't editable
-      geocoder.setBbox([0, 0, 0, 0]);
+      geocoder.current.setBbox([0, 0, 0, 0]);
     }
 
-    geocoder.on('result', (result) => {
-      const isUK =
-        result.result.context.find((e: Record<string, string>) =>
-          e.id.includes('country')
-        ).short_code === 'gb';
-
-      if (!isUK && map.current) {
-        popup = new mapboxgl.Popup({
-          offset: [0, 10],
-          anchor: 'top',
-          closeOnClick: false,
-          closeButton: false,
-          className: 'site-map',
-        })
-          .setLngLat([savedLng, savedLat])
-          .setHTML(
-            '<p>Only locations within the UK are currently supported</p>'
-          )
-          .addTo(map.current);
-      }
-      setIsInUK(isUK);
-    });
-  }, [
-    canEdit,
-    shouldZoomIntoOriginal,
-    originalLat,
-    originalLng,
-    setIsSubmissionEnabled,
-    setMapCoordinates,
-    zoom,
-    zoomLevelThreshold,
-  ]);
+    return () => {
+      container.innerHTML = '';
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map]);
 
   return (
     <div className={`flex h-full flex-col`}>
@@ -320,6 +246,15 @@ function updateMarker(
   } else {
     marker.remove();
   }
+}
+
+function renderFunction(item: MapboxGeocoder.Result) {
+  const placeName = item.place_name.split(',');
+  return `<div class="mapboxgl-ctrl-geocoder--suggestion"><div class="mapboxgl-ctrl-geocoder--suggestion-title">
+        ${placeName[0]}
+        </div><div class="mapboxgl-ctrl-geocoder--suggestion-address">
+        ${placeName.splice(1, placeName.length).join(',')}
+        </div></div>`;
 }
 
 export default LocationInput;

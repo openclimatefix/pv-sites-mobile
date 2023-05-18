@@ -90,17 +90,28 @@
 }
 
 /* change popup to be black */
-.site-map .mapboxgl-popup-content {
+.mapbox-popup .mapboxgl-popup-content {
   @apply bg-ocf-black;
   color: white;
   border-radius: 10px;
   padding: 8px 18px 8px 10px;
+  pointer-events: none;
+  animation: fade 250ms ease 1 both;
 }
 
-.site-map .mapboxgl-popup-close-button {
+.mapbox-popup .mapboxgl-popup-close-button {
   margin-right: 6px;
 }
 
-.site-map .mapboxgl-popup-tip {
+.mapbox-popup .mapboxgl-popup-tip {
   display: none;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

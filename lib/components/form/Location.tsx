@@ -2,7 +2,11 @@ import { FC, useState } from 'react';
 import Button from '~/lib/components/Button';
 import LocationInput from '~/lib/components/form/LocationInput';
 
-import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
+import {
+  defaultLatitude,
+  defaultLongitude,
+  zoomLevelThreshold,
+} from '~/lib/utils';
 import { SiteFormData } from './SiteDetails';
 
 interface Props {
@@ -21,8 +25,9 @@ const Location: FC<Props> = ({
   isEditing = false,
 }) => {
   // The map should zopm into the initial coordinates if they were entered by the user
-  const shouldZoomIntoOriginal =
-    originalLat !== formData.latitude || originalLng !== formData.longitude;
+  const shouldZoomOnLoad =
+    defaultLatitude !== formData.latitude ||
+    defaultLongitude !== formData.longitude;
 
   return (
     <>
@@ -39,9 +44,8 @@ const Location: FC<Props> = ({
           </h1>
           <div className="flex-1">
             <LocationInput
-              shouldZoomIntoOriginal={shouldZoomIntoOriginal}
-              originalLat={formData.latitude}
-              originalLng={formData.longitude}
+              latitude={formData.latitude}
+              longitude={formData.longitude}
               setMapCoordinates={({ longitude, latitude }) =>
                 setFormData({
                   ...formData,
@@ -50,7 +54,7 @@ const Location: FC<Props> = ({
                 })
               }
               zoomLevelThreshold={zoomLevelThreshold}
-              initialZoom={shouldZoomIntoOriginal ? 16 : 4}
+              initialZoom={shouldZoomOnLoad ? 16 : undefined}
               canEdit={true}
             />
           </div>
