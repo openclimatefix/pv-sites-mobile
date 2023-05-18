@@ -25,7 +25,8 @@ const Location: FC<Props> = ({
   isEditing = false,
 }) => {
   const [valid, setValid] = useState(false);
-  // The map should zopm into the initial coordinates if they were entered by the user
+
+  // The map should zoom into the initial coordinates if they were entered by the user
   const shouldZoomOnLoad =
     defaultLatitude !== formData.latitude ||
     defaultLongitude !== formData.longitude;
@@ -33,14 +34,14 @@ const Location: FC<Props> = ({
   return (
     <>
       <div
-        className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 md:h-[85vh] md:py-0"
+        className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 lg:h-[85vh] lg:py-0"
         id="rootDiv"
       >
         <div
-          className="mb-3 flex w-[95%] flex-1 flex-col self-center md:h-full md:w-1/2 md:min-w-[750px]"
+          className="mb-3 flex w-[95%] max-w-md flex-1 flex-col self-center lg:h-full lg:w-1/2 lg:min-w-[750px] lg:max-w-full"
           id="mapboxInputWrapper"
         >
-          <h1 className="text-xl font-semibold text-ocf-gray md:mt-7 md:text-2xl">
+          <h1 className="mb-3 text-xl font-semibold text-ocf-gray lg:mb-5 lg:mt-7 lg:text-xl">
             Where is your solar panel located?
           </h1>
           <div className="flex-1">
@@ -61,14 +62,14 @@ const Location: FC<Props> = ({
             />
           </div>
         </div>
-        <div className="mb-3 mt-3 flex items-center justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-between">
-          <div className="hidden md:block">
+        <div className="mb-3 mt-3 flex items-center justify-center lg:mx-auto lg:mb-8 lg:mt-auto lg:w-10/12 lg:justify-between">
+          <div className="hidden lg:block">
             {!isEditing && (
               <Button
                 form="panel-form"
                 onClick={lastPageCallback}
                 variant="outlined"
-                className="w-[250px]"
+                className="w-[100px]"
               >
                 Back
               </Button>
@@ -78,9 +79,9 @@ const Location: FC<Props> = ({
             disabled={!valid || !formData.latitude || !formData.longitude}
             onClick={nextPageCallback}
             variant="solid"
-            className="w-full md:w-[250px]"
+            className="w-11/12 max-w-md lg:w-[100px]"
           >
-            {isEditing ? 'Continue' : 'Next'}
+            Next
           </Button>
         </div>
       </div>

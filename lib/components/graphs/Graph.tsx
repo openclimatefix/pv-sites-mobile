@@ -12,12 +12,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { overrideTailwindClasses } from 'tailwind-override';
 import { generationDataOverDateRange } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
+import { SkeletonBox } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
+import { useIsMobile, useMediaQuery } from '~/lib/utils';
 import TimeRangeInput from './TimeRangeInput';
-import { SkeletonBox, skeleton } from '~/lib/skeleton';
 
 const graphPriorPercentage = 1 / 8;
 function getGraphStartDate(currentDate: Date, totalHours: number) {
@@ -74,6 +76,9 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   const { currentTime, weekdayFormat } = useSiteTime(representativeSite, {
     updateEnabled: timeEnabled,
   });
+
+  const isMobile = useIsMobile();
+  const isExtraSmallMobile = useMediaQuery('(max-width: 390px)');
 
   const [timeRange, setTimeRange] = useState(48);
 
@@ -162,43 +167,55 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   };
 
   return (
-    <div className="h-[260px] w-full rounded-lg bg-ocf-black-500 p-3">
+    <div className="h-[220px] w-full rounded-lg bg-ocf-black-500 p-3">
       {isLoading ? (
         <SkeletonBox />
       ) : (
-        <div className="fade-in h-full">
-          <div className="ml-1 flex gap-2">
-            <TimeRangeInput
-              label="6H"
-              value={6}
-              checked={timeRange === 6}
-              onChange={handleChange}
-            />
-            <TimeRangeInput
-              label="1D"
-              value={24}
-              checked={timeRange === 24}
-              onChange={handleChange}
-            />
-            <TimeRangeInput
-              label="2D"
-              value={48}
-              checked={timeRange === 48}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="ml-[9%] mt-[20px] flex  gap-3 text-sm">
-            <div className="flex">
-              <LegendLineGraphIcon className="text-ocf-yellow-500" />
-              <p className="ml-[5px] mt-[2px] text-white">OCF Final Forecast</p>
+        <>
+          <div className="fade-in mt-2 flex w-full flex-row justify-between px-2 sm:px-6">
+            <div className="flex gap-2">
+              <TimeRangeInput
+                label="6H"
+                value={6}
+                checked={timeRange === 6}
+                onChange={handleChange}
+              />
+              <TimeRangeInput
+                label="1D"
+                value={24}
+                checked={timeRange === 24}
+                onChange={handleChange}
+              />
+              <TimeRangeInput
+                label="2D"
+                value={48}
+                checked={timeRange === 48}
+                onChange={handleChange}
+              />
             </div>
-            <div className="flex">
-              <LegendLineGraphIcon className="text-ocf-blue" />
-              <p className="ml-[5px] mt-[2px] text-white">Clear Sky</p>
-            </div>
-            <div className="flex">
-              <LegendLineGraphIcon className="text-white" />
-              <p className="ml-[5px] mt-[2px] text-white">Actual Output</p>
+            <div
+              className={overrideTailwindClasses(
+                `flex flex-wrap justify-end gap-1 text-xs sm:gap-3 ${
+                  isExtraSmallMobile && 'text-[9px]'
+                } md:text-sm`
+              )}
+            >
+              <div className="flex">
+                <LegendLineGraphIcon className="text-ocf-yellow-500" />
+                <p className="ml-[5px] mt-[2px] text-white">Forecast</p>
+              </div>
+              <div className="flex">
+                <LegendLineGraphIcon className="text-ocf-blue" />
+                <p className="ml-[5px] mt-[2px] text-white">
+                  {isExtraSmallMobile ? 'Clear' : 'Clear Sky'}
+                </p>
+              </div>
+              <div className="flex">
+                <LegendLineGraphIcon className="text-white" />
+                <p className="ml-[5px] mt-[2px] text-white">
+                  {isMobile ? 'Actual' : 'Actual Output'}
+                </p>
+              </div>
             </div>
           </div>
           <ResponsiveContainer
@@ -290,7 +307,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
               />
             </LineChart>
           </ResponsiveContainer>
-        </div>
+        </>
       )}
     </div>
   );

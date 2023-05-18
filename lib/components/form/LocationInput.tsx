@@ -69,7 +69,7 @@ const LocationInput: FC<LocationInputProps> = ({
 
     map.current.addControl(navControl, 'bottom-right');
     if (canEdit) {
-      map.current.addControl(geolocateControl);
+      map.current.addControl(geolocateControl, 'bottom-right');
     }
 
     return () => {
@@ -206,10 +206,7 @@ const LocationInput: FC<LocationInputProps> = ({
       limit: 3,
     });
 
-    // geocoder.current.addTo(container);
-    geocoderContainer.current?.appendChild(
-      geocoder.current.onAdd(map.current!)
-    );
+    map.current.addControl(geocoder.current, 'top-left');
 
     if (!canEdit) {
       // Prevent user from changing the geocoder input when the map isn't editable
@@ -232,7 +229,7 @@ const LocationInput: FC<LocationInputProps> = ({
       <div className="relative top-0 flex flex-1 flex-col">
         <div
           ref={mapContainer}
-          className="h-full rounded-3xl"
+          className="h-full rounded-xl"
           id="mapContainer"
         />
       </div>
