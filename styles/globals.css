@@ -96,7 +96,7 @@
   border-radius: 10px;
   padding: 8px 18px 8px 10px;
   pointer-events: none;
-  animation: fade 250ms ease 1 both;
+  animation: fade-in 250ms ease 1 both;
 }
 
 .mapbox-popup .mapboxgl-popup-close-button {
@@ -107,7 +107,11 @@
   display: none;
 }
 
-@keyframes fade {
+.fade-in {
+  animation: fade-in 250ms ease 1 both;
+}
+
+@keyframes fade-in {
   from {
     opacity: 0;
   }

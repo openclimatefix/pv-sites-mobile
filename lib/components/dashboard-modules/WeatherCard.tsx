@@ -94,7 +94,7 @@ const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
     }
 
     return (
-      <div className="flex-1 flex-col" key={index}>
+      <div className="fade-in flex-1 flex-col" key={index}>
         <div className="align-center flex w-full flex-col justify-center gap-1 py-2 text-center">
           <p className="flex-1 text-xs text-amber-50">
             {index === 0 ? 'Today' : day.date.format('ddd')}
