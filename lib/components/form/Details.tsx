@@ -69,9 +69,9 @@ const Details: FC<Props> = ({
 
   return (
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
-      <div className="flex w-4/5 flex-row self-center md:w-8/12">
-        <div className="hidden flex-1 flex-col pr-8 md:flex">
-          <h1 className="mt-2 text-2xl font-semibold dark:text-ocf-gray md:text-2xl">
+      <div className="flex w-5/6 max-w-sm flex-row self-center lg:w-8/12 lg:max-w-full">
+        <div className="hidden flex-1 flex-col pr-8 lg:flex">
+          <h1 className="mb-6 mt-2 text-xl text-xl font-semibold dark:text-ocf-gray">
             Your site&apos;s details
           </h1>
           <div className="w-full flex-1" onClick={mapButtonCallback}>
@@ -88,7 +88,7 @@ const Details: FC<Props> = ({
           </div>
           <button
             onClick={lastPageCallback}
-            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 lg:hidden"
           >
             {isEditing ? 'Exit' : 'Back'}
           </button>
@@ -96,7 +96,7 @@ const Details: FC<Props> = ({
         <form id="panel-form" className="flex-1" onSubmit={onSubmit}>
           {isEditing && (
             <div
-              className="flex flex-col md:hidden"
+              className="flex flex-col lg:hidden"
               onClick={mapButtonCallback}
             >
               <label className="mt-8 block pb-1 text-lg font-[600] text-ocf-gray short:mt-4">
@@ -114,7 +114,7 @@ const Details: FC<Props> = ({
               />
             </div>
           )}
-          <div className="hidden md:block md:h-7" />
+          <div className="hidden lg:block lg:h-7" />
           <Input
             id="site-name"
             label="Site name"
@@ -232,7 +232,7 @@ const Details: FC<Props> = ({
           />
           <button
             disabled={didSubmit || (isEditing && !edited)}
-            className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 md:hidden"
+            className="mb-2 mr-2 mt-8 inline-flex h-14 w-full items-center justify-center rounded-md border-gray-200 bg-ocf-yellow px-5 py-2.5 text-center text-xl font-bold shadow transition duration-150 focus:outline-none focus:ring-4 focus:ring-gray-100 peer-invalid:bg-ocf-gray-300 dark:bg-ocf-yellow dark:disabled:bg-ocf-gray-300 lg:hidden"
           >
             {(didSubmit || showSuccessIcon) && (
               <div className="mx-2 h-5 w-5 overflow-hidden">
@@ -242,13 +242,13 @@ const Details: FC<Props> = ({
                 )}
               </div>
             )}
-            {isEditing ? 'Save Changes' : 'Finish'}
+            {isEditing ? 'Save Changes' : 'Next'}
             {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
           </button>
         </form>
       </div>
       <Modal open={modalOpen} onOpen={setModalOpen} />
-      <div className="mx-auto mt-auto hidden w-10/12 md:flex md:flex-row md:justify-between">
+      <div className="mx-auto mt-auto hidden w-10/12 lg:flex lg:flex-row lg:justify-between">
         <Button
           form="panel-form"
           onClick={lastPageCallback}
@@ -272,7 +272,7 @@ const Details: FC<Props> = ({
               )}
             </div>
           )}
-          {isEditing ? 'Save' : 'Finish'}
+          {isEditing ? 'Save' : 'Next'}
           {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
         </Button>
       </div>

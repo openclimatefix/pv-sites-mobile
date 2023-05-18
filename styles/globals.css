@@ -29,6 +29,15 @@
   @apply my-3 h-14 min-w-full bg-ocf-black md:my-5;
 }
 
+/* Apply styles to geocoder position in map */
+.mapboxgl-ctrl-top-left {
+  @apply w-full px-2 pt-2 md:px-5 md:pt-5;
+}
+
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl {
+  @apply m-0 !important;
+}
+
 /* Apply styles to #map */
 #map {
   @apply mt-8;

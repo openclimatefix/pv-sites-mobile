@@ -19,9 +19,9 @@ const Button: FC<PropsWithChildren<Props>> = ({
   variant = 'solid',
   onClick,
 }) => {
-  const buttonClass = `h-[50px] h-[50px] w-[200px] md:text-base text-xl transition-all duration-300 rounded-md md:font-semibold font-bold `;
+  const buttonClass = `inline-flex gap-[10px] items-center justify-center text-center h-[50px] h-[50px] w-[200px] md:text-base text-xl transition-all duration-300 rounded-md md:font-semibold font-bold `;
   const outlinedButton = `text-ocf-yellow border-ocf-yellow border-[2px] hover:bg-ocf-yellow hover:text-black`;
-  const solidButton = `bg-ocf-yellow text-black disabled:bg-ocf-gray disabled:text-ocf-black-600 max-w-sm`;
+  const solidButton = `bg-ocf-yellow text-black disabled:bg-ocf-gray disabled:text-ocf-black-600`;
 
   return (
     <button
