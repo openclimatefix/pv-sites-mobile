@@ -65,7 +65,7 @@ const Location: FC<Props> = ({
                 form="panel-form"
                 onClick={lastPageCallback}
                 variant="outlined"
-                className="w-[250px]"
+                className="w-[100px]"
               >
                 Back
               </Button>
@@ -75,9 +75,9 @@ const Location: FC<Props> = ({
             disabled={!isSubmissionEnabled}
             onClick={nextPageCallback}
             variant="solid"
-            className="w-full md:w-[250px]"
+            className="w-full md:w-[100px]"
           >
-            {isEditing ? 'Continue' : 'Next'}
+            Next
           </Button>
         </div>
       </div>

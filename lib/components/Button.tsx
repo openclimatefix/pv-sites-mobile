@@ -19,20 +19,21 @@ const Button: FC<PropsWithChildren<Props>> = ({
   variant = 'solid',
   onClick,
 }) => {
-  const buttonClass = `h-[54px] h-[54px] w-[200px] md:text-lg text-xl transition-all duration-300`;
-  const outlinedButton = `  text-ocf-yellow border-ocf-yellow border-[2px] rounded-md md:font-semibold font-bold hover:bg-ocf-yellow hover:text-black`;
-  const solidButton = ` bg-ocf-yellow text-black disabled:bg-ocf-gray disabled:text-ocf-black-600 shadow h-14 max-w-sm text-center rounded-md md:rounded-lg md:font-semibold font-bold`;
+  const buttonClass = `h-[50px] h-[50px] w-[200px] md:text-base text-xl transition-all duration-300 rounded-md md:font-semibold font-bold `;
+  const outlinedButton = `text-ocf-yellow border-ocf-yellow border-[2px] hover:bg-ocf-yellow hover:text-black`;
+  const solidButton = `bg-ocf-yellow text-black disabled:bg-ocf-gray disabled:text-ocf-black-600 max-w-sm`;
 
-  
   return (
     <button
       suppressHydrationWarning
       form={form}
       onClick={onClick}
       disabled={disabled}
-      className={overrideTailwindClasses(`${buttonClass} ${
-        variant === 'solid' ? solidButton : outlinedButton
-      }  ${className}  ${hidden && `${hidden}:hidden`}`)}
+      className={overrideTailwindClasses(
+        `${buttonClass} ${
+          variant === 'solid' ? solidButton : outlinedButton
+        }  ${className}  ${hidden && `${hidden}:hidden`}`
+      )}
     >
       {children}
     </button>
