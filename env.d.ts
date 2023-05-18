@@ -1,7 +1,5 @@
 namespace NodeJS {
   interface ProcessEnv {
-    MAPBOX_SECRET: string;
-    MAPBOX_PUBLIC: string;
     AUTH0_SECRET: string;
     AUTH0_BASE_URL: string;
     AUTH0_ISSUER_BASE_URL: string;

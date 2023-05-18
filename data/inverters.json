@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "vendor": "EMA",
+    "chargingLocationId": "asjdfslkf",
+    "lastSeen": "2023-04-22T10:30:00.000Z",
+    "isReachable": true,
+    "productionState": {
+      "productionRate": 4,
+      "isProducing": true,
+      "totalLifetimeProduction": 100000,
+      "lastUpdated": "2023-04-22T10:30:00.000Z"
+    },
+    "information": {
+      "id": "1",
+      "brand": "EMA",
+      "model": "SE7K-RW0TEBNN4",
+      "siteName": "APSystems QT2 - House",
+      "installationDate": "2021-04-23"
+    },
+    "location": {
+      "longitude": -122.4194,
+      "latitude": 37.7749
+    }
+  },
+  {
+    "id": "2",
+    "vendor": "EMA",
+    "chargingLocationId": "101",
+    "lastSeen": "2023-04-22T10:00:00.000Z",
+    "isReachable": true,
+    "productionState": {
+      "productionRate": 3,
+      "isProducing": true,
+      "totalLifetimeProduction": 100000,
+      "lastUpdated": "2023-04-22T10:30:00.000Z"
+    },
+    "information": {
+      "id": "2",
+      "brand": "EMA",
+      "model": "SE7K-RW0TEBNN4",
+      "siteName": "APSystems DS3 - Garage",
+      "installationDate": "2021-06-15"
+    },
+    "location": {
+      "longitude": -118.2437,
+      "latitude": 34.0522
+    }
+  }
+]

@@ -1,11 +1,18 @@
 import { GenerationDataPoint } from './types';
 
+/**
+ * Gets the current output given some generation data, or undefined if
+ * the generation data doesn't contain the current time
+ * @param generationData the generation data
+ * @returns the current output or undefined
+ */
 export const getCurrentTimeGeneration = (
   generationData: GenerationDataPoint[]
 ) =>
-  generationData[getCurrentTimeGenerationIndex(generationData)].generation_kw;
+  generationData[getCurrentTimeGenerationIndex(generationData)]?.generation_kw;
 
 /**
+ * @param generationData the generation data
  * @returns the index of the forecasted date that is closest to the current time
  */
 export function getCurrentTimeGenerationIndex(
@@ -15,12 +22,19 @@ export function getCurrentTimeGenerationIndex(
 }
 
 /**
+ * Gets the forecast data object for the target datetime
+ * @param generationData the generation data
+ * @param targetDate the target data
  * @returns the index of the forecasted date that is closest to the target time
  */
 export function getClosestForecastIndex(
   generationData: GenerationDataPoint[],
   targetDate: Date
 ) {
+  if (generationData.length === 0) {
+    return -1;
+  }
+
   let closest = 0;
 
   for (let i = 0; i < generationData.length; i++) {
@@ -38,6 +52,14 @@ export function getClosestForecastIndex(
   return closest;
 }
 
+/**
+ * Restricts the generation data to a specific time range, and assumes the generation data
+ * is currently ordered by time already
+ * @param generationData the generation data
+ * @param startDate the start date
+ * @param endDate the end date
+ * @returns the restricted generation data
+ */
 export const generationDataOverDateRange = (
   generationData: GenerationDataPoint[],
   startDate: Date,
@@ -48,6 +70,11 @@ export const generationDataOverDateRange = (
   return generationData.slice(startIndex, endIndex + 1);
 };
 
+/**
+ * Gets the "total expected output", or energy for a certain set of generation data points
+ * @param points the generation data
+ * @returns the total expected output
+ */
 export const getTotalExpectedOutput = (points: GenerationDataPoint[]) => {
   let approxArea = 0;
   const millisInHour = 3.6e6;

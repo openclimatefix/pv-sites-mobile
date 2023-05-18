@@ -1,7 +1,6 @@
 import { useSites } from './sites';
-
 import { useRouter } from 'next/router';
-import { useEffect, useState, RefObject } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 
 /**
  * Turn a HTML element ID string (an-element-id) into camel case (anElementId)
@@ -25,6 +24,9 @@ export const originalLng = 0.1276;
 */
 export const zoomLevelThreshold = 14;
 
+/**
+ * Prevents scrolling on this page to support page transitions
+ */
 export function useNoScroll() {
   const router = useRouter();
   useEffect(() => {
@@ -64,6 +66,7 @@ export function useMediaQuery(query: string) {
 }
 
 export function useIsMobile() {
+  // Tailwind `md` breakpoint: https://tailwindcss.com/docs/screens
   return useMediaQuery('(max-width: 768px)');
 }
 
@@ -92,4 +95,19 @@ export function useClickedOutside(ref: RefObject<any>, handler: () => void) {
     document.addEventListener('click', handleClickOutside, { capture: true });
     return () => document.removeEventListener('click', handleClickOutside);
   }, [ref, handler]);
+}
+
+/**
+ * Turns URL into capitalized title
+ * @param page page url to convert to title
+ */
+export function hyphensToTitleCase(page: string) {
+  return page
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+export function sleep(millis: number) {
+  return new Promise((resolve) => setTimeout(resolve, millis));
 }

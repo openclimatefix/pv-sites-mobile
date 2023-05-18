@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-export const UpArrowIcon: FC = ({}) => (
+export const UpArrowIcon: FC = () => (
   <svg
     width="16"
     height="19"
@@ -15,7 +15,7 @@ export const UpArrowIcon: FC = ({}) => (
   </svg>
 );
 
-export const DownArrowIcon: FC = ({}) => (
+export const DownArrowIcon: FC = () => (
   <svg
     width="16"
     height="18"

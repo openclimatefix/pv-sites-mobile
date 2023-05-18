@@ -10,7 +10,8 @@ export interface Site {
   tilt?: number;
   latitude: number;
   longitude: number;
-  installed_capacity_kw: number;
+  inverter_capacity_kw?: number;
+  module_capacity_kw?: number;
   created_utc: string;
   updated_utc: string;
 }
@@ -84,7 +85,7 @@ export interface Form {
     moduleCapacityKw,
   }: PanelDetails) => void;
   setSiteCoordinates: ({ latitude, longitude }: LatitudeLongitude) => void;
-  postPanelData: () => Promise<void>;
+  postPanelData: () => Promise<Response | undefined>;
 }
 
 export interface PanelDetails {
@@ -96,7 +97,6 @@ export interface PanelDetails {
 }
 
 export type FormPostData = {
-  site_uuid: number;
   client_name: string;
   client_site_id: number;
   client_site_name: string;
@@ -137,4 +137,9 @@ export type Inverter = {
 
 export type Inverters = {
   inverters: Inverter[];
+};
+
+export type AppContextProps = {
+  prevDashboardUUID: string;
+  setPrevDashboardUUID: (newPrevDasboard: string) => void;
 };

@@ -4,9 +4,9 @@ import {
   getTotalExpectedOutput,
 } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
+import { useSiteTime } from '~/lib/time';
 import { Site } from '~/lib/types';
 import NumberDisplay from './NumberDisplay';
-import { useSiteTime } from '~/lib/time';
 
 interface ExpectedTotalOutputProps {
   sites: Site[];
@@ -14,21 +14,26 @@ interface ExpectedTotalOutputProps {
 
 const ExpectedTotalOutput: FC<ExpectedTotalOutputProps> = ({ sites }) => {
   const representativeSite = sites[0];
-  const { isLoading, totalForecastedGeneration } = useSiteAggregation(sites);
-  const { dawn, dusk } = useSiteTime(representativeSite);
+  const { isLoading, aggregateForecastedGeneration } =
+    useSiteAggregation(sites);
+  const { sunrise, sunset } = useSiteTime(representativeSite);
+
+  const value = aggregateForecastedGeneration
+    ? getTotalExpectedOutput(
+        generationDataOverDateRange(
+          aggregateForecastedGeneration,
+          sunrise,
+          sunset
+        )
+      )
+        .toFixed(2)
+        .toString() + ' kWh'
+    : 'Loading...';
 
   return (
     <NumberDisplay
       title="Today's Expected Output"
-      value={
-        totalForecastedGeneration
-          ? getTotalExpectedOutput(
-              generationDataOverDateRange(totalForecastedGeneration, dawn, dusk)
-            )
-              .toFixed(2)
-              .toString() + ' kWh'
-          : 'Loading'
-      }
+      value={value}
       isLoading={isLoading}
     />
   );

@@ -12,6 +12,13 @@ const defaultUseTimeOptions: UseTimeOptions = {
   updateEnabled: false,
 };
 
+/**
+ * Gets time and sun position related information for a specific site.
+ * Also, optionally creates an interval to update the current time.
+ * @param site The site
+ * @param updateEnabled Whether or not to create an interval to update the current time
+ * @returns Time (in site timezone) and sun position related information
+ */
 export const useSiteTime = (
   site: Site,
   { updateEnabled = false } = defaultUseTimeOptions
@@ -21,7 +28,11 @@ export const useSiteTime = (
     latitude && longitude ? ['/timezone', longitude, latitude] : null,
     () => fetchTimeZone(latitude, longitude)
   );
+
   const [currentTime, setCurrentTime] = useState(dayjs().tz(timezone));
+  const tomorrow = currentTime.add(1, 'day');
+
+  useEffect(() => setCurrentTime(dayjs().tz(timezone)), [timezone]);
 
   useEffect(() => {
     if (updateEnabled) {
@@ -34,15 +45,32 @@ export const useSiteTime = (
     }
   }, [updateEnabled, timezone]);
 
+  // Fix these anys later... need time with hours in timezone...
   const times = useMemo(
-    () => SunCalc.getTimes(currentTime.toDate(), latitude, longitude),
-    [currentTime, latitude, longitude]
+    () =>
+      SunCalc.getTimes(
+        (currentTime.tz(timezone) as any).$d,
+        latitude,
+        longitude
+      ),
+    [currentTime, latitude, longitude, timezone]
+  );
+
+  const tomorrowTimes = useMemo(
+    () =>
+      SunCalc.getTimes((tomorrow.tz(timezone) as any).$d, latitude, longitude),
+    [tomorrow, latitude, longitude, timezone]
   );
 
   const isDayTime = useMemo(
     () =>
-      currentTime.isAfter(dayjs(times.dawn)) &&
-      currentTime.isBefore(dayjs(times.dusk)),
+      currentTime.isAfter(dayjs(times.sunrise)) &&
+      currentTime.isBefore(dayjs(times.sunset)),
+    [currentTime, times]
+  );
+
+  const isAfterDayTime = useMemo(
+    () => currentTime.isAfter(dayjs(times.sunset)),
     [currentTime, times]
   );
 
@@ -61,10 +89,13 @@ export const useSiteTime = (
   return {
     currentTime,
     isDayTime,
+    isAfterDayTime,
     timeFormat,
     dayFormat,
     weekdayFormat,
+    timezone,
     ...times,
+    tomorrowTimes,
   };
 };
 

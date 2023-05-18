@@ -1,76 +1,81 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/solid';
-import { useState, FC } from 'react';
+import { FC, useState } from 'react';
 import Button from '~/lib/components/Button';
 import LocationInput from '~/lib/components/form/LocationInput';
 
-import { useFormContext } from '~/lib/form/context';
 import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
+import { SiteFormData } from './SiteDetails';
 
 interface Props {
   nextPageCallback: () => void;
   lastPageCallback: () => void;
-  longitude?: number;
-  latitude?: number;
+  formData: SiteFormData;
+  setFormData: (data: SiteFormData) => void;
+  isEditing: boolean;
 }
 
 const Location: FC<Props> = ({
   nextPageCallback,
   lastPageCallback,
-  longitude,
-  latitude,
+  formData,
+  setFormData,
+  isEditing = false,
 }) => {
-  const { siteCoordinates, setSiteCoordinates } = useFormContext();
   const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
 
-  // If the site is being edited, show the original coordinates
-  siteCoordinates.longitude = longitude || siteCoordinates.longitude;
-  siteCoordinates.latitude = latitude || siteCoordinates.latitude;
-
-  // The map should zopm into the initial coordinates if they were entered by the user
+  // The map should zoom into the initial coordinates if they were entered by the user
   const shouldZoomIntoOriginal =
-    originalLat !== siteCoordinates.latitude ||
-    originalLng !== siteCoordinates.longitude;
+    originalLat !== formData.latitude || originalLng !== formData.longitude;
 
   return (
     <>
       <div
-        className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 md:h-[85vh] md:py-0"
+        className="bg-mapbox-gray-1000 relative flex h-[calc(100vh-var(--nav-height))] w-screen flex-col justify-between gap-2 py-4 lg:h-[85vh] lg:py-0"
         id="rootDiv"
       >
         <div
-          className="mb-3 flex w-[95%] flex-1 flex-col self-center md:h-full md:w-1/2 md:min-w-[750px]"
+          className="mb-3 flex w-[95%] max-w-md flex-1 flex-col self-center lg:h-full lg:w-1/2 lg:min-w-[750px] lg:max-w-full"
           id="mapboxInputWrapper"
         >
-          <h1 className="text-xl font-semibold text-ocf-gray md:mt-7 md:text-2xl">
+          <h1 className="mb-3 text-xl font-semibold text-ocf-gray lg:mb-5 lg:mt-7 lg:text-xl">
             Where is your solar panel located?
           </h1>
           <div className="flex-1">
             <LocationInput
               shouldZoomIntoOriginal={shouldZoomIntoOriginal}
-              originalLat={siteCoordinates.latitude}
-              originalLng={siteCoordinates.longitude}
+              originalLat={formData.latitude}
+              originalLng={formData.longitude}
               setIsSubmissionEnabled={setIsSubmissionEnabled}
-              setMapCoordinates={setSiteCoordinates}
+              setMapCoordinates={({ longitude, latitude }) =>
+                setFormData({
+                  ...formData,
+                  longitude,
+                  latitude,
+                })
+              }
               zoomLevelThreshold={zoomLevelThreshold}
               initialZoom={shouldZoomIntoOriginal ? 16 : 4}
               canEdit={true}
             />
           </div>
         </div>
-        <div className="mb-3 mt-3 flex items-center justify-center md:mx-auto md:mb-8 md:mt-auto md:w-10/12 md:justify-between">
-          <div className="hidden md:block">
-            <Button
-              form="panel-form"
-              onClick={lastPageCallback}
-              variant="outlined"
-            >
-              Back
-            </Button>
+        <div className="mb-3 mt-3 flex items-center justify-center lg:mx-auto lg:mb-8 lg:mt-auto lg:w-10/12 lg:justify-between">
+          <div className="hidden lg:block">
+            {!isEditing && (
+              <Button
+                form="panel-form"
+                onClick={lastPageCallback}
+                variant="outlined"
+                className="w-[100px]"
+              >
+                Back
+              </Button>
+            )}
           </div>
           <Button
             disabled={!isSubmissionEnabled}
             onClick={nextPageCallback}
             variant="solid"
+            className="w-11/12 max-w-md lg:w-[100px]"
           >
             Next
           </Button>

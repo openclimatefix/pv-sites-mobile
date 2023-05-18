@@ -4,27 +4,27 @@ import { useRouter } from 'next/router';
 import { FC, MouseEventHandler, useState } from 'react';
 import { useSites } from '~/lib/sites';
 import ContactButton from '../ContactButton';
-import { MenuLogo, NowcastingLogo } from '../icons/NavbarIcons';
+import { HamburgerIcon, NowcastingLogo } from '../icons';
 import SideBar from './SideBar';
+import { useAppContext } from '~/lib/provider';
 
 type NavbarLinkProps = {
   title: string;
   href: string;
 };
 
-const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
+export const NavbarLink: FC<NavbarLinkProps> = ({ title, href }) => {
   const { asPath: path } = useRouter();
-  const isActive = href === path;
+  const isActive = path.startsWith(href);
   const textColor = isActive ? 'text-amber' : 'text-white';
   return (
-    <Link href={href} passHref>
-      <a
-        className={`${textColor} mr-6 text-lg font-medium ${
-          isActive && 'underline decoration-2 underline-offset-8'
-        }`}
-      >
-        {title}
-      </a>
+    <Link
+      href={href}
+      className={`${textColor} mr-6 text-lg font-medium ${
+        isActive && 'underline decoration-2 underline-offset-8'
+      }`}
+    >
+      {title}
     </Link>
   );
 };
@@ -33,7 +33,8 @@ const NavBar: FC = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const { sites } = useSites();
   const { user } = useUser();
-  const router = useRouter();
+
+  const { prevDashboardUUID } = useAppContext();
 
   const handleOpenSidebar: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
@@ -57,13 +58,20 @@ const NavBar: FC = () => {
                 : 'opacity-100'
             } invisible flex flex-col justify-center text-gray-600 transition-all md:visible`}
           >
-            <MenuLogo />
+            <HamburgerIcon />
           </button>
         )}
         <NowcastingLogo />
         <div className="invisible hidden flex-row items-center justify-center  md:visible md:flex">
-          <NavbarLink title="Dashboard" href="/dashboard" />
-          <NavbarLink title="More Info" href="/more-info" />
+          <NavbarLink
+            title="Dashboard"
+            href={
+              !prevDashboardUUID
+                ? `/dashboard`
+                : `/dashboard/${prevDashboardUUID}`
+            }
+          />
+          <NavbarLink title="Help Center" href="/help" />
           <div className="hidden md:block">
             <ContactButton />
           </div>

@@ -8,6 +8,8 @@
   --form-header-padding: 32px;
   --bottom-nav-height: 50px;
   --bottom-nav-margin: calc(20px + var(--bottom-nav-height));
+  --screen-height: calc(100vh - var(--nav-height) - var(--bottom-nav-height));
+  --onboarding-height: calc(100vh - var(--nav-height));
 }
 
 @media (min-width: 768px) {
@@ -24,7 +26,16 @@
 
 /* Apply additional styles to .mapboxgl-ctrl-geocoder */
 .mapboxgl-ctrl-geocoder {
-  @apply my-3 h-14 min-w-full bg-ocf-black md:my-5;
+  @apply h-14 min-w-full bg-ocf-black !important;
+}
+
+/* Apply styles to geocoder position in map */
+.mapboxgl-ctrl-top-left {
+  @apply w-full px-2 pt-2 md:px-5 md:pt-5;
+}
+
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl {
+  @apply m-0 !important;
 }
 
 /* Apply styles to #map */

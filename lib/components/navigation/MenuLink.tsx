@@ -14,12 +14,10 @@ const MenuLink: FC<MenuLinkProps> = ({ href, label, svg }) => {
   const textColor = active ? 'text-amber' : 'text-white';
   return (
     <Link href={href}>
-      <a>
-        <div className="flex items-center gap-3 rounded-md px-4 py-2 text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
-          <div className={textColor}>{svg}</div>
-          <span className={`text-lg font-medium ${textColor}`}>{label}</span>
-        </div>
-      </a>
+      <div className="flex items-center gap-3 rounded-md px-4 py-2 text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
+        <div className={textColor}>{svg}</div>
+        <span className={`text-lg font-medium ${textColor}`}>{label}</span>
+      </div>
     </Link>
   );
 };

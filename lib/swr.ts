@@ -1,5 +1,10 @@
 let accessToken: string | undefined;
 
+/**
+ * Our general SWR fetcher function that is authorized for the API
+ * @param url A url to fetch
+ * @returns the JSON response
+ */
 export async function fetcher(url: string) {
   const options = await getAuthenticatedRequestOptions(url);
   const res = await fetch(url, options);

@@ -4,7 +4,7 @@ import {
   ChartBarIcon,
   ChevronLeftIcon,
   ListBulletIcon,
-  MagnifyingGlassIcon,
+  QuestionMarkCircleIcon,
 } from '@heroicons/react/24/solid';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -23,9 +23,9 @@ const defaultIcons = [
     link: '/sites',
   },
   {
-    title: 'More Info',
-    icon: MagnifyingGlassIcon,
-    link: '/more-info',
+    title: 'Help Center',
+    icon: QuestionMarkCircleIcon,
+    link: '/help-center',
   },
 ];
 
@@ -62,7 +62,7 @@ const BottomNavBar = () => {
               <Link key={val.title} href={val.link} legacyBehavior passHref>
                 <motion.a
                   className={`flex flex-col items-center justify-evenly text-xs ${
-                    asPath == val.link ? 'text-ocf-yellow' : 'text-white'
+                    asPath.includes(val.link) ? 'text-ocf-yellow' : 'text-white'
                   } ${isSitePage ? 'ml-10 mr-auto' : ''}`}
                   initial={{
                     opacity: 0,

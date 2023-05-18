@@ -6,7 +6,6 @@ import {
   manyActualsFetcher,
   manyClearskyDataFetcher,
   manyForecastDataFetcher,
-  sitesFetcher,
 } from './api';
 import {
   ClearSkyData,
@@ -27,12 +26,11 @@ export function useSites() {
     data: sites,
     error,
     isLoading,
-  } = useSWR<Site[]>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
-    sitesFetcher
+  } = useSWR<{ site_list: Site[] }>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
 
-  return { sites: sites ?? [], error, isLoading };
+  return { sites: sites?.site_list ?? [], error, isLoading };
 }
 
 /**
@@ -134,21 +132,21 @@ export function useSiteAggregation(sites: Site[]) {
     isManyForecastLoading || isManyClearskyLoading || isManyActualLoading;
 
   const totalInstalledCapacityKw = sites.reduce(
-    (total, site) => total + site.installed_capacity_kw,
+    (total, site) => total + (site.inverter_capacity_kw ?? 0),
     0
   );
 
-  const totalForecastedGeneration =
+  const aggregateForecastedGeneration =
     manyForecastData &&
     sumGenerationData(
       manyForecastData.map((forecastData) => forecastData.forecast_values)
     );
-  const totalClearskyGeneration =
+  const aggregateClearskyGeneration =
     manyClearskyData &&
     sumGenerationData(
       manyClearskyData.map((clearskyData) => clearskyData.clearsky_estimate)
     );
-  const totalActualGeneration =
+  const aggregateActualGeneration =
     manyActualData &&
     sumGenerationData(
       manyActualData.map((actualsData) => actualsData.pv_actual_values)
@@ -156,9 +154,9 @@ export function useSiteAggregation(sites: Site[]) {
 
   return {
     totalInstalledCapacityKw,
-    totalForecastedGeneration,
-    totalActualGeneration,
-    totalClearskyGeneration,
+    aggregateForecastedGeneration,
+    aggregateActualGeneration,
+    aggregateClearskyGeneration,
     error: aggregateError,
     isLoading,
   };
@@ -208,6 +206,12 @@ type WithSitesOptions = {
     ctx: GetServerSidePropsContext & { sites: Site[] }
   ) => Promise<GetServerSidePropsResult<any> | void>;
 };
+
+/**
+ * This is a getServerSideProps wrapper that ensures that a user's sites are known server side.
+ * We opted for this because knowing sites before hydration lets us prevent UI flashing,
+ * which is prominent since large elements depend on sites being either 1 or more.
+ */
 export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
   return withPageAuthRequired({
     async getServerSideProps(ctx) {

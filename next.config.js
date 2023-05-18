@@ -5,8 +5,13 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== 'development',
   },
-  experimental: {
-    newNextLinkBehavior: false,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    });
+
+    return config;
   },
 };
 

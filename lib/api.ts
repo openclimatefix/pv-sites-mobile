@@ -1,14 +1,14 @@
+import dayjs from 'dayjs';
 import { Fetcher } from 'swr';
+import { fetcher, getAuthenticatedRequestOptions } from './swr';
 import {
   ActualData,
   ClearSkyData,
   ForecastData,
-  Site,
   UnparsedActualData,
   UnparsedClearSkyData,
   UnparsedForecastData,
 } from './types';
-import { fetcher } from './swr';
 
 /**
  * Parses a datetime string from the Nowcasting API, assumed to be in UTC.
@@ -23,6 +23,12 @@ export function parseNowcastingDatetime(datetime: string) {
   return new Date(datetime);
 }
 
+/**
+ * Transforms unparsed forecast data into a parsed form, with timestamps as dates
+ * and consistent property names
+ * @param unparsedForecastData the unparsed forecast data from the API
+ * @returns the parsed forecast data
+ */
 function parseForecastData(
   unparsedForecastData: UnparsedForecastData
 ): ForecastData {
@@ -63,6 +69,12 @@ export const manyForecastDataFetcher: Fetcher<Array<ForecastData>> = async (
   );
 };
 
+/**
+ * Transforms unparsed actual data into a parsed form, with timestamps as dates
+ * and consistent property names
+ * @param unparsedActualData the unparsed actual data from the API
+ * @returns the parsed actual data
+ */
 function parseActualData(unparsedActualData: UnparsedActualData): ActualData {
   const pv_actual_values: ActualData['pv_actual_values'] =
     unparsedActualData.pv_actual_values.map((actual_datapoint) => {
@@ -93,6 +105,12 @@ export const actualsFetcher: Fetcher<ActualData> = async (url: string) => {
   return parseActualData(unparsedData);
 };
 
+/**
+ * Transforms unparsed clear sky data into a parsed form, with timestamps as dates
+ * and consistent property names
+ * @param unparsedClearSkyData the unparsed clear sky data from the API
+ * @returns the parsed clear sky data
+ */
 function parseClearSkyData(
   unparsedClearSkyData: UnparsedClearSkyData
 ): ClearSkyData {
@@ -128,7 +146,40 @@ export const clearSkyFetcher: Fetcher<ClearSkyData> = async (url: string) => {
   return parseClearSkyData(unparsedData);
 };
 
-export const sitesFetcher: Fetcher<Site[]> = async (url: string) => {
-  const { site_list } = await fetch(url).then((res) => res.json());
-  return site_list;
+/**
+ * Acquire a function that sends a mutation request to the API, following SWR's mutation scheme
+ * @param method the request method
+ * @returns the SWR mutation function
+ */
+export const sendMutation =
+  (method: string) =>
+  async (url: string, { arg }: { arg: any }) => {
+    const options = await getAuthenticatedRequestOptions(url);
+    return fetch(url, {
+      method: method,
+      body: JSON.stringify(arg),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+  };
+
+/**
+ * Acquires an Enode Link URL from the API
+ * @param siteUUID the site identifier for the current site in the form
+ * @returns the Enode link URL
+ */
+export const getEnodeLinkURL = async (siteUUID: string) => {
+  const res = await fetcher(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL_GET
+    }/enode/link?${new URLSearchParams({
+      redirect_uri: encodeURIComponent(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`
+      ),
+    })}`
+  );
+  return res as string;
 };

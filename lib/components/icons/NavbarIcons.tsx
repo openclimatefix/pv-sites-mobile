@@ -101,7 +101,7 @@ export const NowcastingLogo: FC = () => (
   </svg>
 );
 
-export const MenuLogo: React.FC = ({}) => (
+export const HamburgerIcon: FC = () => (
   <svg
     width="88"
     height="24"
