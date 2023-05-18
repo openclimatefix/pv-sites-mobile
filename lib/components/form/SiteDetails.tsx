@@ -92,8 +92,6 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
       longitude: formData.longitude,
       inverter_capacity_kw: !!inverterCapacity ? inverterCapacity : sentinel,
       module_capacity_kw: !!moduleCapacity ? moduleCapacity : sentinel,
-      created_utc: site?.created_utc || date,
-      updated_utc: date,
       orientation: orientation!,
       tilt: tilt!,
     };
