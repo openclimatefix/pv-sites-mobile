@@ -1,8 +1,7 @@
-import { withSites } from '~/lib/sites';
 import { pages } from '../help/[page]';
 
 const Help = () => {
-  return <div />;
+  return null;
 };
 
 export default Help;
