@@ -95,7 +95,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     </div>
   ) : (
     <div className="flex h-[var(--onboarding-height)] w-full flex-col items-center">
-      <div className="flex h-full w-4/5 flex-col justify-between md:w-8/12">
+      <div className="flex h-full w-4/5 flex-1 flex-col justify-between md:w-8/12">
         {isEditMode && (
           <div className="flex w-full">
             <NavbarLink title="Details" href={`/site-details/${siteUUID}`} />
@@ -159,7 +159,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           </Button>
         </div>
       </div>
-      <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-8/12 md:flex-row">
+      <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-10/12 md:flex-row">
         {backButton ? (
           <Button
             onClick={lastPageCallback}

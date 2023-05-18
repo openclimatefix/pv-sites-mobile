@@ -17,6 +17,8 @@ import { useSiteAggregation } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
 import TimeRangeInput from './TimeRangeInput';
+import { useIsMobile, useMediaQuery } from '~/lib/utils';
+import { overrideTailwindClasses } from 'tailwind-override';
 
 const graphPriorPercentage = 1 / 8;
 function getGraphStartDate(currentDate: Date, totalHours: number) {
@@ -73,6 +75,9 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   const { currentTime, weekdayFormat } = useSiteTime(representativeSite, {
     updateEnabled: timeEnabled,
   });
+
+  const isMobile = useIsMobile();
+  const isExtraSmallMobile = useMediaQuery('(max-width: 390px)');
 
   const [timeRange, setTimeRange] = useState(48);
 
@@ -161,39 +166,51 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   };
 
   return (
-    <div className="h-[260px] w-full rounded-2xl bg-ocf-black-500 p-3">
-      <div className="ml-1 flex gap-2">
-        <TimeRangeInput
-          label="6H"
-          value={6}
-          checked={timeRange === 6}
-          onChange={handleChange}
-        />
-        <TimeRangeInput
-          label="1D"
-          value={24}
-          checked={timeRange === 24}
-          onChange={handleChange}
-        />
-        <TimeRangeInput
-          label="2D"
-          value={48}
-          checked={timeRange === 48}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="ml-[9%] mt-[20px] flex  gap-3 text-sm">
-        <div className="flex">
-          <LegendLineGraphIcon className="text-ocf-yellow-500" />
-          <p className="ml-[5px] mt-[2px] text-white">OCF Final Forecast</p>
+    <div className="h-[220px] w-full rounded-2xl bg-ocf-black-500 p-3">
+      <div className="mt-2 flex w-full flex-row justify-between px-2 sm:px-6">
+        <div className="flex gap-2">
+          <TimeRangeInput
+            label="6H"
+            value={6}
+            checked={timeRange === 6}
+            onChange={handleChange}
+          />
+          <TimeRangeInput
+            label="1D"
+            value={24}
+            checked={timeRange === 24}
+            onChange={handleChange}
+          />
+          <TimeRangeInput
+            label="2D"
+            value={48}
+            checked={timeRange === 48}
+            onChange={handleChange}
+          />
         </div>
-        <div className="flex">
-          <LegendLineGraphIcon className="text-ocf-blue" />
-          <p className="ml-[5px] mt-[2px] text-white">Clear Sky</p>
-        </div>
-        <div className="flex">
-          <LegendLineGraphIcon className="text-white" />
-          <p className="ml-[5px] mt-[2px] text-white">Actual Output</p>
+        <div
+          className={overrideTailwindClasses(
+            `flex flex-wrap justify-end gap-1 text-xs sm:gap-3 ${
+              isExtraSmallMobile && 'text-[9px]'
+            } md:text-sm`
+          )}
+        >
+          <div className="flex">
+            <LegendLineGraphIcon className="text-ocf-yellow-500" />
+            <p className="ml-[5px] mt-[2px] text-white">Forecast</p>
+          </div>
+          <div className="flex">
+            <LegendLineGraphIcon className="text-ocf-blue" />
+            <p className="ml-[5px] mt-[2px] text-white">
+              {isExtraSmallMobile ? 'Clear' : 'Clear Sky'}
+            </p>
+          </div>
+          <div className="flex">
+            <LegendLineGraphIcon className="text-white" />
+            <p className="ml-[5px] mt-[2px] text-white">
+              {isMobile ? 'Actual' : 'Actual Output'}
+            </p>
+          </div>
         </div>
       </div>
       {!isLoading && (
