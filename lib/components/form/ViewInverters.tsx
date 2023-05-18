@@ -86,7 +86,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     ? 'Select Inverters'
     : 'Connected Inverters';
   const defaultButtonText = isSelectMode ? 'Submit' : 'Next';
-  const editModeButtonText = 'Save Changes';
+  const editModeButtonText = 'Save';
 
   // @TODO skeletons!!
   return isLoading ? (
@@ -95,7 +95,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
     </div>
   ) : (
     <div className="flex h-[var(--onboarding-height)] w-full flex-col items-center">
-      <div className="flex h-full w-4/5 flex-col justify-between md:w-8/12">
+      <div className="flex h-full w-4/5 flex-1 flex-col justify-between md:w-8/12">
         {isEditMode && (
           <div className="flex w-full">
             <NavbarLink title="Details" href={`/site-details/${siteUUID}`} />
@@ -159,12 +159,12 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           </Button>
         </div>
       </div>
-      <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-8/12 md:flex-row">
+      <div className="mt-auto hidden w-full justify-between pb-24 md:flex md:w-10/12 md:flex-row">
         {backButton ? (
           <Button
             onClick={lastPageCallback}
             variant="outlined"
-            className="w-[250px]"
+            className="w-[100px]"
           >
             {isEditMode ? 'Exit' : 'Back'}
           </Button>
@@ -175,7 +175,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
           variant="solid"
           disabled={didSubmit}
           onClick={isEditMode ? submit : nextPageOrSubmit}
-          className="w-[250px]"
+          className="w-[100px]"
         >
           {(didSubmit || showSuccessIcon) && (
             <div className="mx-2 h-5 w-5 overflow-hidden">
