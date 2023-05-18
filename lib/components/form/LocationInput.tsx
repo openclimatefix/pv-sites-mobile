@@ -58,7 +58,8 @@ const LocationInput: FC<LocationInputProps> = ({
           positionOptions: {
             enableHighAccuracy: true,
           },
-        })
+        }),
+        'bottom-right'
       );
     }
 
@@ -86,7 +87,8 @@ const LocationInput: FC<LocationInputProps> = ({
       limit: 3,
     });
 
-    geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
+    // geocoderContainer.current?.appendChild(geocoder.onAdd(map.current!));
+    map.current.addControl(geocoder, 'top-left');
 
     if (!canEdit) {
       // Prevent user from changing the geocoder input when the map isn't editable
@@ -268,7 +270,7 @@ const LocationInput: FC<LocationInputProps> = ({
       <div className="relative top-0 flex flex-1 flex-col">
         <div
           ref={mapContainer}
-          className="h-full rounded-3xl"
+          className="h-full rounded-xl"
           id="mapContainer"
         />
       </div>

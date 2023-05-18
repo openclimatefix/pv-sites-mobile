@@ -18,7 +18,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
   return (
     <div className="mb-[var(--bottom-nav-margin)] w-screen max-w-screen-lg bg-ocf-black px-4">
       <div className="flex flex-row items-center justify-between">
-        <h1 className="mb-4 mt-4 text-3xl font-bold text-ocf-gray">
+        <h1 className="mb-4 mt-4 text-xl font-semibold text-ocf-gray md:text-2xl">
           {isAggregate ? 'Dashboard' : sites[0].client_site_name}
         </h1>
         <div className="block md:hidden">
