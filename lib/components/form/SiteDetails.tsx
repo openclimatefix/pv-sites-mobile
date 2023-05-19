@@ -4,12 +4,11 @@ import useSWRMutation from 'swr/mutation';
 import { sendMutation } from '~/lib/api';
 import Location from '~/lib/components/form/Location';
 import { useSites } from '../../sites';
-import { FormPostData, Inverters, Site } from '../../types';
+import { FormPostData, Site } from '../../types';
 import { defaultLatitude, defaultLongitude, useIsMobile } from '../../utils';
 import BackNav from '../navigation/BackNav';
 import { NavbarLink } from '../navigation/NavBar';
 import Details from './Details';
-import useSWR from 'swr';
 
 enum Page {
   Details = 'Details',

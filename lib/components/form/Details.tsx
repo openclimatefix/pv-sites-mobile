@@ -71,7 +71,7 @@ const Details: FC<Props> = ({
     <div className="mb-[max(var(--bottom-nav-margin),20px)] flex flex-col gap-10">
       <div className="flex w-5/6 max-w-sm flex-row self-center lg:w-8/12 lg:max-w-full">
         <div className="hidden flex-1 flex-col pr-8 lg:flex">
-          <h1 className="mb-6 mt-2 text-xl text-xl font-semibold dark:text-ocf-gray">
+          <h1 className="mb-6 mt-2 text-xl font-semibold dark:text-ocf-gray">
             Your site&apos;s details
           </h1>
           <div className="w-full flex-1" onClick={mapButtonCallback}>
