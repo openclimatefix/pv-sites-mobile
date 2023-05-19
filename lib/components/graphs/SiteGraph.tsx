@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import { generationDataOverDateRange } from '~/lib/generation';
-import { makeGraphable } from '~/lib/graphs';
+import { calculateCenteredMovingAverage, makeGraphable } from '~/lib/graphs';
 import { useSiteAggregation } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { Site } from '~/lib/types';
@@ -11,13 +11,24 @@ interface SiteGraphProps {
   sites: Site[];
   hidden?: boolean;
   height?: number;
+  period?: number;
   color?: string;
 }
 
+/**
+ *
+ * @param sites an array of sites, which the site graph will aggregate and show
+ * @param hidden optional, hides the graph if true
+ * @param height optional, height of container, default 100
+ * @param period optional, period of centered moving average applied to data for smoothing, default 1, must be odd
+ * @color optional
+ * @returns corresponding mini graph
+ */
 const SiteGraph: FC<SiteGraphProps> = ({
   sites,
   hidden = false,
   height = 100,
+  period = 1,
   color = '#FFD053',
 }) => {
   const representativeSite = sites[0];
@@ -25,6 +36,10 @@ const SiteGraph: FC<SiteGraphProps> = ({
   const [timeEnabled, setTimeEnabled] = useState(
     aggregateForecastedGeneration !== undefined
   );
+
+  if (period % 2 == 0) {
+    throw new Error('Period must be an odd number');
+  }
 
   const { isAfterDayTime, sunrise, sunset, tomorrowTimes } = useSiteTime(
     representativeSite,
@@ -36,7 +51,7 @@ const SiteGraph: FC<SiteGraphProps> = ({
   const graphData = useMemo(() => {
     if (aggregateForecastedGeneration) {
       return generationDataOverDateRange(
-        aggregateForecastedGeneration,
+        calculateCenteredMovingAverage(aggregateForecastedGeneration, period),
         isAfterDayTime ? tomorrowTimes.sunrise : sunrise,
         isAfterDayTime ? tomorrowTimes.sunset : sunset
       );
@@ -48,6 +63,7 @@ const SiteGraph: FC<SiteGraphProps> = ({
     tomorrowTimes,
     sunrise,
     sunset,
+    period,
   ]);
 
   if (!graphData) return null;

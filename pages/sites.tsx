@@ -15,8 +15,8 @@ const Sites = () => {
 
   return (
     <div className="mb-[var(--bottom-nav-margin)] flex h-full w-full max-w-lg flex-col items-center gap-3 px-5">
-      <div className="mb-4 flex h-12 w-full flex-row items-end">
-        <h1 className="flex-1 text-3xl font-bold text-ocf-gray">My Sites</h1>
+      <div className="flex h-6 w-full flex-row items-center">
+        <h1 className="flex-1 text-xl font-semibold text-ocf-gray">My Sites</h1>
         <button onClick={() => setEditMode(!editMode)}>
           {editMode ? (
             <p className="text-base font-semibold text-amber">Done</p>
@@ -25,6 +25,7 @@ const Sites = () => {
           )}
         </button>
       </div>
+      <hr className="mx-[-100px] h-[1px] w-[500%] mb-4 border-0 bg-ocf-black-500 md:hidden" />
       {sites.map((site) => (
         <SiteCard key={site.site_uuid} site={site} isEditMode={editMode} />
       ))}

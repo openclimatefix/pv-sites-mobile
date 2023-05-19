@@ -196,10 +196,12 @@ const Graph: FC<GraphProps> = ({ sites }) => {
             </div>
             <div
               className={overrideTailwindClasses(
-                `flex flex-wrap justify-end gap-1 ${!isSmallMobile && 'text-xs'} sm:gap-3 ${
-                  isSmallMobile && 'text-[10px]'
-                } ${isExtraSmallMobile && 'text-[8px]'} md:text-sm`
-              ,)}
+                `flex flex-wrap justify-end gap-1 ${
+                  !isSmallMobile && 'text-xs'
+                } sm:gap-3 ${isSmallMobile && 'text-[10px]'} ${
+                  isExtraSmallMobile && 'text-[8px]'
+                } md:text-sm`
+              )}
             >
               <div className="flex">
                 <LegendLineGraphIcon className="text-ocf-yellow-500" />
