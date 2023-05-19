@@ -102,8 +102,6 @@ export type FormPostData = {
   client_site_name: string;
   latitude: number;
   longitude: number;
-  created_utc: string;
-  updated_utc: string;
   orientation: number;
   tilt: number;
   inverter_capacity_kw: number;

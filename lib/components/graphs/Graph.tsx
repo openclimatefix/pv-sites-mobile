@@ -12,13 +12,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { overrideTailwindClasses } from 'tailwind-override';
 import { generationDataOverDateRange } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
+import { SkeletonBox } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
-import TimeRangeInput from './TimeRangeInput';
 import { useIsMobile, useMediaQuery } from '~/lib/utils';
-import { overrideTailwindClasses } from 'tailwind-override';
+import TimeRangeInput from './TimeRangeInput';
 
 const graphPriorPercentage = 1 / 8;
 function getGraphStartDate(currentDate: Date, totalHours: number) {
@@ -166,147 +167,147 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   };
 
   return (
-    <div className="h-[220px] w-full rounded-2xl bg-ocf-black-500 p-3">
-      <div className="mt-2 flex w-full flex-row justify-between px-2 sm:px-6">
-        <div className="flex gap-2">
-          <TimeRangeInput
-            label="6H"
-            value={6}
-            checked={timeRange === 6}
-            onChange={handleChange}
-          />
-          <TimeRangeInput
-            label="1D"
-            value={24}
-            checked={timeRange === 24}
-            onChange={handleChange}
-          />
-          <TimeRangeInput
-            label="2D"
-            value={48}
-            checked={timeRange === 48}
-            onChange={handleChange}
-          />
-        </div>
-        <div
-          className={overrideTailwindClasses(
-            `flex flex-wrap justify-end gap-1 text-xs sm:gap-3 ${
-              isExtraSmallMobile && 'text-[9px]'
-            } md:text-sm`
-          )}
-        >
-          <div className="flex">
-            <LegendLineGraphIcon className="text-ocf-yellow-500" />
-            <p className="ml-[5px] mt-[2px] text-white">Forecast</p>
+    <div className="h-[220px] w-full rounded-lg bg-ocf-black-500 p-3">
+      {isLoading ? (
+        <SkeletonBox />
+      ) : (
+        <>
+          <div className="fade-in mt-2 flex w-full flex-row justify-between px-2 sm:px-6">
+            <div className="flex gap-2">
+              <TimeRangeInput
+                label="6H"
+                value={6}
+                checked={timeRange === 6}
+                onChange={handleChange}
+              />
+              <TimeRangeInput
+                label="1D"
+                value={24}
+                checked={timeRange === 24}
+                onChange={handleChange}
+              />
+              <TimeRangeInput
+                label="2D"
+                value={48}
+                checked={timeRange === 48}
+                onChange={handleChange}
+              />
+            </div>
+            <div
+              className={overrideTailwindClasses(
+                `flex flex-wrap justify-end gap-1 text-xs sm:gap-3 ${
+                  isExtraSmallMobile && 'text-[9px]'
+                } md:text-sm`
+              )}
+            >
+              <div className="flex">
+                <LegendLineGraphIcon className="text-ocf-yellow-500" />
+                <p className="ml-[5px] mt-[2px] text-white">Forecast</p>
+              </div>
+              <div className="flex">
+                <LegendLineGraphIcon className="text-ocf-blue" />
+                <p className="ml-[5px] mt-[2px] text-white">
+                  {isExtraSmallMobile ? 'Clear' : 'Clear Sky'}
+                </p>
+              </div>
+              <div className="flex">
+                <LegendLineGraphIcon className="text-white" />
+                <p className="ml-[5px] mt-[2px] text-white">
+                  {isMobile ? 'Actual' : 'Actual Output'}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="flex">
-            <LegendLineGraphIcon className="text-ocf-blue" />
-            <p className="ml-[5px] mt-[2px] text-white">
-              {isExtraSmallMobile ? 'Clear' : 'Clear Sky'}
-            </p>
-          </div>
-          <div className="flex">
-            <LegendLineGraphIcon className="text-white" />
-            <p className="ml-[5px] mt-[2px] text-white">
-              {isMobile ? 'Actual' : 'Actual Output'}
-            </p>
-          </div>
-        </div>
-      </div>
-      {!isLoading && (
-        <ResponsiveContainer
-          className="mt-[20px] touch-pan-y touch-pinch-zoom"
-          width="100%"
-          height={150}
-        >
-          <LineChart
-            margin={{
-              top: 0,
-              right: 10,
-              left: -25,
-              bottom: 20,
-            }}
+          <ResponsiveContainer
+            className="mt-[20px] touch-pan-y touch-pinch-zoom"
+            width="100%"
+            height={150}
           >
-            <CartesianGrid
-              strokeDasharray="3 3"
-              color="white"
-              // vertical={false}
-            />
-            <XAxis
-              scale="time"
-              domain={['auto', 'auto']}
-              tickCount={5}
-              ticks={xTickArray}
-              fontSize="9px"
-              dataKey="datetime_utc"
-              allowDuplicatedCategory={false}
-              stroke="white"
-              axisLine={false}
-              tickFormatter={(point: GenerationDataPoint['datetime_utc']) =>
-                weekdayFormat(point)
-              }
-              type="number"
-            />
-            <YAxis
-              tickCount={7}
-              ticks={yTickArray}
-              domain={[0, maxGeneration * 1.25]}
-              interval={0}
-              fontSize="10px"
-              axisLine={false}
-              stroke="white"
-              tickFormatter={(val: GenerationDataPoint['generation_kw']) =>
-                val.toFixed(2)
-              }
-            />
-            <Tooltip
-              wrapperStyle={{ outline: 'none' }}
-              contentStyle={{
-                backgroundColor: '#2B2B2B90',
-                opacity: 1,
+            <LineChart
+              margin={{
+                top: 0,
+                right: 10,
+                left: -25,
+                bottom: 20,
               }}
-              labelStyle={{ color: 'white' }}
-              formatter={(value: GenerationDataPoint['generation_kw']) => [
-                parseFloat(value.toFixed(5)),
-                'kW',
-              ]}
-              labelFormatter={(point: GenerationDataPoint['datetime_utc']) =>
-                weekdayFormat(point)
-              }
-            />
-            <Line
-              data={clearSkyEstimateTrimmed}
-              type="monotone"
-              dataKey="generation_kw"
-              stroke="#48B0DF"
-              dot={false}
-              activeDot={{ r: 8 }}
-              onAnimationEnd={() => setTimeEnabled(true)}
-            />
-            <Line
-              data={actualDataTrimmed}
-              type="monotone"
-              dataKey="generation_kw"
-              stroke="#FFFFFF"
-              dot={false}
-              activeDot={{ r: 8 }}
-            />
-            <Line
-              data={forecastDataTrimmed}
-              type="monotone"
-              dataKey="generation_kw"
-              stroke="#FFD053"
-              dot={false}
-              activeDot={{ r: 8 }}
-            />
-            <ReferenceLine
-              x={currentTime.millisecond(0).second(0).valueOf()}
-              strokeWidth={1}
-              stroke="white"
-              label={(props) => renderLabel({ ...props, height: 150 })}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+            >
+              <CartesianGrid strokeDasharray="3 3" color="white" />
+              <XAxis
+                scale="time"
+                domain={['auto', 'auto']}
+                tickCount={5}
+                ticks={xTickArray}
+                fontSize="9px"
+                dataKey="datetime_utc"
+                allowDuplicatedCategory={false}
+                stroke="white"
+                axisLine={false}
+                tickFormatter={(point: GenerationDataPoint['datetime_utc']) =>
+                  weekdayFormat(point)
+                }
+                type="number"
+              />
+              <YAxis
+                tickCount={7}
+                ticks={yTickArray}
+                domain={[0, maxGeneration * 1.25]}
+                interval={0}
+                fontSize="10px"
+                axisLine={false}
+                stroke="white"
+                tickFormatter={(val: GenerationDataPoint['generation_kw']) =>
+                  val.toFixed(2)
+                }
+              />
+              <Tooltip
+                wrapperStyle={{ outline: 'none' }}
+                contentStyle={{
+                  backgroundColor: '#2B2B2B90',
+                  opacity: 1,
+                }}
+                labelStyle={{ color: 'white' }}
+                formatter={(value: GenerationDataPoint['generation_kw']) => [
+                  parseFloat(value.toFixed(5)),
+                  'kW',
+                ]}
+                labelFormatter={(point: GenerationDataPoint['datetime_utc']) =>
+                  weekdayFormat(point)
+                }
+              />
+              <Line
+                data={clearSkyEstimateTrimmed}
+                type="monotone"
+                dataKey="generation_kw"
+                stroke="#48B0DF"
+                dot={false}
+                activeDot={{ r: 8 }}
+                onAnimationEnd={() => setTimeEnabled(true)}
+              />
+              <Line
+                data={actualDataTrimmed}
+                type="monotone"
+                dataKey="generation_kw"
+                stroke="#FFFFFF"
+                dot={false}
+                activeDot={{ r: 8 }}
+              />
+              <Line
+                data={forecastDataTrimmed}
+                type="monotone"
+                dataKey="generation_kw"
+                stroke="#FFD053"
+                dot={false}
+                activeDot={{ r: 8 }}
+              />
+              <ReferenceLine
+                x={currentTime.millisecond(0).second(0).valueOf()}
+                strokeWidth={1}
+                stroke="white"
+                label={(props) => renderLabel({ ...props, height: 150 })}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </>
       )}
     </div>
   );

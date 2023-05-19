@@ -60,7 +60,7 @@ const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
         h-[100%]
         flex-1
         justify-center
-        rounded-2xl
+        rounded-lg
         bg-ocf-black-500
         p-4
         text-center"

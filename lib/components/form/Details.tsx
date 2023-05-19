@@ -76,11 +76,9 @@ const Details: FC<Props> = ({
           </h1>
           <div className="w-full flex-1" onClick={mapButtonCallback}>
             <LocationInput
-              shouldZoomIntoOriginal={true}
               initialZoom={16}
-              originalLat={formData.latitude}
-              originalLng={formData.longitude}
-              setIsSubmissionEnabled={() => {}}
+              latitude={formData.latitude}
+              longitude={formData.longitude}
               setMapCoordinates={() => {}}
               zoomLevelThreshold={zoomLevelThreshold}
               canEdit={false}
@@ -103,11 +101,9 @@ const Details: FC<Props> = ({
                 Location
               </label>
               <LocationInput
-                shouldZoomIntoOriginal={true}
                 initialZoom={16}
-                originalLat={formData.latitude}
-                originalLng={formData.longitude}
-                setIsSubmissionEnabled={() => {}}
+                latitude={formData.latitude}
+                longitude={formData.longitude}
                 setMapCoordinates={() => {}}
                 zoomLevelThreshold={zoomLevelThreshold}
                 canEdit={false}
@@ -144,7 +140,7 @@ const Details: FC<Props> = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...formData,
-                direction: parseFloat(e.currentTarget.value),
+                direction: parseFloat(e.currentTarget.value) || undefined,
               })
             }
             inputProps={{
@@ -165,11 +161,11 @@ const Details: FC<Props> = ({
             id="solar-array-tilt"
             label="Solar array tilt"
             description="(Degrees above the horizontal)"
-            value={String(formData.tilt)}
+            value={formData.tilt?.toString()}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...formData,
-                tilt: parseFloat(e.currentTarget.value),
+                tilt: parseFloat(e.currentTarget.value) || undefined,
               })
             }
             inputProps={{
@@ -189,11 +185,12 @@ const Details: FC<Props> = ({
           <Input
             id="inverter-capacity"
             label="Inverter capacity"
-            value={String(formData.inverterCapacity)}
+            value={formData.inverterCapacity?.toString()}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...formData,
-                inverterCapacity: parseFloat(e.currentTarget.value),
+                inverterCapacity:
+                  parseFloat(e.currentTarget.value) || undefined,
               })
             }
             inputProps={{
@@ -212,11 +209,11 @@ const Details: FC<Props> = ({
           <Input
             label="Solar panel nameplate capacity"
             id="module-capacity"
-            value={String(formData.moduleCapacity)}
+            value={formData.moduleCapacity?.toString()}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData({
                 ...formData,
-                moduleCapacity: parseFloat(e.currentTarget.value),
+                moduleCapacity: parseFloat(e.currentTarget.value) || undefined,
               })
             }
             inputProps={{

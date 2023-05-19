@@ -52,7 +52,9 @@ const LinkInverters: FC<{ siteUUID: string }> = ({ siteUUID }) => {
     'flex items-center text-ocf-yellow text-[14px] mt-[5px] md:font-normal font-bold';
 
   const redirectToEnode = async () => {
-    const url = await getEnodeLinkURL(siteUUID);
+    const url = await getEnodeLinkURL(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}?success=true`
+    );
     router.push(url);
   };
 

@@ -1,3 +1,4 @@
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { useSites } from './sites';
 import { useRouter } from 'next/router';
 import { RefObject, useEffect, useState } from 'react';
@@ -15,8 +16,8 @@ export function camelCaseID(id: string) {
 }
 
 /* Latitude/longitude for London, England */
-export const originalLat = 51.5072;
-export const originalLng = 0.1276;
+export const defaultLatitude = 51.5072;
+export const defaultLongitude = 0.1276;
 
 /*
   Represents the zoom threshold for the Site map. 
@@ -110,4 +111,52 @@ export function hyphensToTitleCase(page: string) {
 
 export function sleep(millis: number) {
   return new Promise((resolve) => setTimeout(resolve, millis));
+}
+
+/**
+ * Uses a MapboxGeocoder instance to reverse geocode a latitude and longitude and replace the value
+ * with the reverse geocoded output.
+ * @param geocoder the MapboxGeocoder instance
+ * @param latitude the latitude to reverse geocode
+ * @param longitude the longitude to reverse geocode
+ */
+export async function reverseGeocodeWithoutFocus(
+  geocoder: MapboxGeocoder,
+  latitude: number,
+  longitude: number
+) {
+  // The below `_geocode` call performs the same action that the MapBox geocoder does, except it
+  // does not re-focus the input element after a successful geocode response
+  const geocoderPrivate = geocoder as any;
+  const response = await geocoderPrivate._geocode(`${latitude}, ${longitude}`);
+
+  const results = response.body;
+  if (!results.features.length) return;
+
+  const result = results.features[0];
+  geocoderPrivate._typeahead.selected = result;
+  geocoderPrivate._inputEl.value = result.place_name;
+  const selected = geocoderPrivate._typeahead.selected;
+
+  if (selected && JSON.stringify(selected) !== geocoderPrivate.lastSelected) {
+    geocoderPrivate._hideClearButton();
+    if (geocoderPrivate.options.flyTo) {
+      geocoderPrivate._fly(selected);
+    }
+    if (geocoderPrivate.options.marker && geocoderPrivate._mapboxgl) {
+      geocoderPrivate._handleMarker(selected);
+    }
+
+    // After selecting a feature, re-focus the textarea and set
+    // cursor at start.
+    geocoderPrivate._inputEl.scrollLeft = 0;
+    geocoderPrivate.lastSelected = JSON.stringify(selected);
+
+    geocoderPrivate._eventEmitter.emit('result', {
+      result: selected,
+    });
+    geocoderPrivate.eventManager.select(selected, geocoder as any);
+  }
+
+  return result;
 }

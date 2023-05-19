@@ -1,11 +1,10 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import ReactMarkdown from 'react-markdown';
+import { hyphensToTitleCase } from '~/lib/utils';
 import addSiteLocation from '../../content/help/add-site-location.md';
 import enterSiteDetails from '../../content/help/enter-site-details.md';
 import handleSplitSites from '../../content/help/handle-split-sites.md';
-import ReactMarkdown from 'react-markdown';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { LinkProps } from 'next/link';
-import { hyphensToTitleCase } from '~/lib/utils';
 
 export const pages = {
   'adding-site-locations': addSiteLocation,
@@ -40,7 +39,7 @@ const Help = () => {
   const router = useRouter();
   const { page } = router.query;
   return (
-    <div className="flex w-full">
+    <div className="mb-[var(--bottom-nav-margin)] flex w-full">
       <div className="flex flex-1">
         <div className="hidden flex-1 md:block" />
         <div className="mt-6 hidden flex-col md:block">

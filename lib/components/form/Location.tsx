@@ -2,7 +2,11 @@ import { FC, useState } from 'react';
 import Button from '~/lib/components/Button';
 import LocationInput from '~/lib/components/form/LocationInput';
 
-import { originalLat, originalLng, zoomLevelThreshold } from '~/lib/utils';
+import {
+  defaultLatitude,
+  defaultLongitude,
+  zoomLevelThreshold,
+} from '~/lib/utils';
 import { SiteFormData } from './SiteDetails';
 
 interface Props {
@@ -20,11 +24,12 @@ const Location: FC<Props> = ({
   setFormData,
   isEditing = false,
 }) => {
-  const [isSubmissionEnabled, setIsSubmissionEnabled] = useState(false);
+  const [valid, setValid] = useState(false);
 
   // The map should zoom into the initial coordinates if they were entered by the user
-  const shouldZoomIntoOriginal =
-    originalLat !== formData.latitude || originalLng !== formData.longitude;
+  const shouldZoomOnLoad =
+    defaultLatitude !== formData.latitude ||
+    defaultLongitude !== formData.longitude;
 
   return (
     <>
@@ -37,14 +42,13 @@ const Location: FC<Props> = ({
           id="mapboxInputWrapper"
         >
           <h1 className="mb-3 text-xl font-semibold text-ocf-gray lg:mb-5 lg:mt-7 lg:text-xl">
-            Where is your solar panel located?
+            Where is your site located?
           </h1>
           <div className="flex-1">
             <LocationInput
-              shouldZoomIntoOriginal={shouldZoomIntoOriginal}
-              originalLat={formData.latitude}
-              originalLng={formData.longitude}
-              setIsSubmissionEnabled={setIsSubmissionEnabled}
+              onValidate={setValid}
+              latitude={formData.latitude}
+              longitude={formData.longitude}
               setMapCoordinates={({ longitude, latitude }) =>
                 setFormData({
                   ...formData,
@@ -53,7 +57,7 @@ const Location: FC<Props> = ({
                 })
               }
               zoomLevelThreshold={zoomLevelThreshold}
-              initialZoom={shouldZoomIntoOriginal ? 16 : 4}
+              initialZoom={shouldZoomOnLoad ? 16 : undefined}
               canEdit={true}
             />
           </div>
@@ -72,7 +76,7 @@ const Location: FC<Props> = ({
             )}
           </div>
           <Button
-            disabled={!isSubmissionEnabled}
+            disabled={!valid || !formData.latitude || !formData.longitude}
             onClick={nextPageCallback}
             variant="solid"
             className="w-11/12 max-w-md lg:w-[100px]"
