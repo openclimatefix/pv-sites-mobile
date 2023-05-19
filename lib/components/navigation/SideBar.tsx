@@ -8,6 +8,9 @@ import { useClickedOutside } from '~/lib/utils';
 import { useSites } from '~/lib/sites';
 import DashboardLink from './DashboardLink';
 import MenuLink from './MenuLink';
+import Button from '../Button';
+
+const sitesDisplayedIncrement = 5;
 
 interface SideBarProps {
   open: boolean;
@@ -24,6 +27,9 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
   const { sites } = useSites();
   const [isEditMode, setEditMode] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
+  const [maxSitesDisplayed, setMaxSitesDisplayed] = useState(
+    sitesDisplayedIncrement
+  );
 
   const wrapperRef = useRef(null);
 
@@ -49,8 +55,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
       return null;
     }
 
-    // TODO: remove hard-coded limit of 5 solar panel sites, use pagination
-    return sites.slice(0, 5).map((site, idx) => (
+    return sites.slice(0, maxSitesDisplayed).map((site) => (
       <div
         key={site.site_uuid}
         className="flex flex-row"
@@ -126,7 +131,23 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
             Site Dashboards
           </h2>
 
-          <div className="flex flex-col gap-3">{generateSiteLinks()}</div>
+          <div className="flex flex-col gap-3">
+            {generateSiteLinks()}
+
+            {sites.length > maxSitesDisplayed && (
+              <Button
+                className="self-center"
+                variant="outlined"
+                onClick={() =>
+                  setMaxSitesDisplayed(
+                    (current) => current + sitesDisplayedIncrement
+                  )
+                }
+              >
+                Load more sites
+              </Button>
+            )}
+          </div>
         </div>
         {selected && (
           <button
