@@ -42,7 +42,7 @@ const Location: FC<Props> = ({
           id="mapboxInputWrapper"
         >
           <h1 className="mb-3 text-xl font-semibold text-ocf-gray lg:mb-5 lg:mt-7 lg:text-xl">
-            Where is your solar panel located?
+            Where is your site located?
           </h1>
           <div className="flex-1">
             <LocationInput
