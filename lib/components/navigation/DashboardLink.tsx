@@ -62,6 +62,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
           color={
             isActive ? '#FFD053' /* ocf-yellow */ : '#909090' /*ocf-gray-800*/
           }
+          period={3}
         />
       </div>
     </Link>
