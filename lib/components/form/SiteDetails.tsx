@@ -36,9 +36,6 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
   const backUrl = isMobile ? '/sites' : '/dashboard';
   const router = useRouter();
   const { sites } = useSites();
-  const { data: allInverters } = useSWR<Inverters>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/enode/inverters`
-  );
   const [formData, setFormData] = useState<SiteFormData>({
     siteName: site?.client_site_name,
     direction: site?.orientation,
@@ -117,11 +114,7 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
 
   const nextPageCallback = (site?: Site) => {
     if (page === Page.Details) {
-      router.push(
-        (allInverters?.inverters?.length ?? 0) === 0
-          ? `/link/${site?.site_uuid}`
-          : `/inverters/${site?.site_uuid}`
-      );
+      router.push(isMobile ? '/sites' : `/dashboard/${site?.site_uuid}`);
     } else {
       setPage(Page.Details);
     }
@@ -178,10 +171,11 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
               title="Details"
               href={`/site-details/${site?.site_uuid}`}
             />
-            <NavbarLink
+            {/* Hide all Enode related pages for now */}
+            {/* <NavbarLink
               title="Inverters"
               href={`/inverters/edit/${site?.site_uuid}`}
-            />
+            /> */}
           </div>
         </div>
       )}

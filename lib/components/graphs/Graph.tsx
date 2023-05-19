@@ -210,12 +210,14 @@ const Graph: FC<GraphProps> = ({ sites }) => {
                   {isExtraSmallMobile ? 'Clear' : 'Clear Sky'}
                 </p>
               </div>
-              <div className="flex">
-                <LegendLineGraphIcon className="text-white" />
-                <p className="ml-[5px] mt-[2px] text-white">
-                  {isMobile ? 'Actual' : 'Actual Output'}
-                </p>
-              </div>
+              {actualDataTrimmed?.length && (
+                <div className="flex">
+                  <LegendLineGraphIcon className="text-white" />
+                  <p className="ml-[5px] mt-[2px] text-white">
+                    {isMobile ? 'Actual' : 'Actual Output'}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
           <ResponsiveContainer
