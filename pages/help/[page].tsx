@@ -56,7 +56,7 @@ const Help = () => {
           })}
         </div>
       </div>
-      <div className="min-h-screen w-screen max-w-screen-sm bg-ocf-black px-4">
+      <div className="min-h-screen w-screen max-w-screen-sm bg-ocf-black px-6 md:px-4">
         <ReactMarkdown
           components={{
             h1: ({ node, ...props }) => (
@@ -72,7 +72,7 @@ const Help = () => {
               />
             ),
             p: ({ node, ...props }) => (
-              <p className="text-l pb-1.5 text-white" {...props} />
+              <p className="text-sm md:text-base pb-1.5 text-white" {...props} />
             ),
             ul: ({ node, ...props }) => (
               <ul

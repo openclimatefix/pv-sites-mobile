@@ -1,6 +1,6 @@
 # Adding a Site for Solar Energy Forecasting
 
-Adding a site for solar energy forecasting is a crucial step in using our web app to generate accurate and relevant forecast data. However, we understand that this can sometimes be a challenging process. Here are some common issues users may encounter when adding a site, and tips for how to overcome them:
+Adding a site for solar energy forecasting is a crucial step in using our web app to generate accurate and relevant forecast data. Here are some common issues you may encounter when adding a site, and tips for how to overcome them:
 
 ## Using the Interactive Map
 
@@ -14,7 +14,7 @@ Our interactive map is the primary tool for adding a site and specifying its exa
 
 ## Troubleshooting
 
-Here are some common issues users may encounter when trying to add a site, and tips for how to overcome them:
+Here are some common issues you may encounter when trying to add a site, and tips for how to overcome them:
 
 - The location pin won't move: If you're having trouble moving the location pin, make sure you're zoomed in enough on the map. The pin won't move if you're zoomed out too far.
 
