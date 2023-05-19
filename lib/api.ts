@@ -168,17 +168,15 @@ export const sendMutation =
 
 /**
  * Acquires an Enode Link URL from the API
- * @param siteUUID the site identifier for the current site in the form
+ * @param redirectURL the URL to redirect to after linking
  * @returns the Enode link URL
  */
-export const getEnodeLinkURL = async (siteUUID: string) => {
+export const getEnodeLinkURL = async (redirectURL: string) => {
   const res = await fetcher(
     `${
       process.env.NEXT_PUBLIC_API_BASE_URL_GET
     }/enode/link?${new URLSearchParams({
-      redirect_uri: encodeURIComponent(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}`
-      ),
+      redirect_uri: encodeURIComponent(redirectURL),
     })}`
   );
   return res as string;

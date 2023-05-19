@@ -11,6 +11,7 @@ import { Spinner } from '../icons';
 import { NavbarLink } from '../navigation/NavBar';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import { sleep } from '~/lib/utils';
+import Toast from './Toast';
 
 interface ViewInvertersProps {
   siteUUID: string;
@@ -19,6 +20,7 @@ interface ViewInvertersProps {
   backButton?: boolean;
   nextPageCallback: () => void;
   lastPageCallback?: () => void;
+  linkSuccess?: string;
 }
 
 // controls both viewing inverters (and linking more) and selecting the inverters that correspond to a site
@@ -30,6 +32,7 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   isSelectMode = false,
   backButton = false,
   isEditMode = false,
+  linkSuccess,
 }) => {
   const { data: allInverters, isLoading: isAllInvertersLoading } =
     useSWR<Inverters>(
@@ -78,7 +81,9 @@ const ViewInverters: FC<ViewInvertersProps> = ({
   };
 
   const redirectToEnode = async () => {
-    const url = await getEnodeLinkURL(siteUUID);
+    const url = await getEnodeLinkURL(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/inverters/${siteUUID}?success=true`
+    );
     router.push(url);
   };
 
@@ -136,6 +141,14 @@ const ViewInverters: FC<ViewInvertersProps> = ({
                 </h2>
               </div>
             </button>
+          )}
+          {linkSuccess === 'true' && (
+            <div className="mb-5 ml-auto mt-auto text-ocf-yellow">
+              <Toast>
+                <CheckIcon height="24" width="24" />
+                Inverters linked successfully
+              </Toast>
+            </div>
           )}
           <Button
             variant="solid"
