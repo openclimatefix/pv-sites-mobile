@@ -8,12 +8,15 @@ import Graph from './graphs/Graph';
 import CurrentOutput from './dashboard-modules/CurrentOutput';
 import { Site } from '~/lib/types';
 import ContactButton from './ContactButton';
+import { useMediaQuery } from '../utils';
 
 interface DashboardProps {
   sites: Site[];
 }
 const Dashboard: FC<DashboardProps> = ({ sites }) => {
   const isAggregate = sites.length > 1;
+
+  const isExtraSmall = useMediaQuery('(max-width: 400px)');
 
   return (
     <div className="mb-[var(--bottom-nav-margin)] w-screen max-w-screen-lg bg-ocf-black px-4">
@@ -26,7 +29,13 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
         </div>
       </div>
       <hr className="mx-[-100px] h-[1px] w-[500%] border-0 bg-ocf-black-500 md:hidden" />
-      <div className="grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 grid-areas-dashboard-mobile md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop">
+      <div
+        className={`grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 ${
+          isExtraSmall
+            ? 'grid-areas-dashboard-mobile-xs'
+            : 'grid-areas-dashboard-mobile'
+        } md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop`}
+      >
         <div className="block grid-in-Heading1 md:hidden">
           <h2 className="mt-2 text-base font-semibold leading-none text-ocf-gray">
             Solar Activity
@@ -46,7 +55,11 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
             Metrics
           </h2>
         </div>
-        <div className="grid-in-Expected-Total-Output">
+        <div
+          className={`${
+            isExtraSmall ? 'hidden' : 'grid-in-Expected-Total-Output'
+          }`}
+        >
           <ExpectedTotalOutput sites={sites} />
         </div>
         <div className="grid-in-Current-Output md:hidden">

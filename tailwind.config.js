@@ -64,6 +64,15 @@ module.exports = {
           'Weather-Icons Weather-Icons',
           'Graph Graph',
         ],
+        'dashboard-mobile-xs': [
+          'Heading1 Heading1',
+          'Sunny Recommendation',
+          'Site-Graph   Site-Graph',
+          'Heading2 Heading2',
+          'Current-Output Current-Output',
+          'Weather-Icons Weather-Icons',
+          'Graph Graph',
+        ],
       },
       gridTemplateColumns: {
         'desktop-columns': '1fr 1fr 1fr',

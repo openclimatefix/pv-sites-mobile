@@ -39,7 +39,7 @@ const SiteCard: FC<SiteCardProps> = ({ site, isEditMode }) => {
               !forecastData ? skeleton : ``
             }`}
           >
-            {forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
+            {!forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
           </h2>
           <div className="mt-2 flex flex-col gap-1">
             <p
@@ -76,7 +76,7 @@ const SiteCard: FC<SiteCardProps> = ({ site, isEditMode }) => {
 
         <div className={`pointer-events-none mr-5 w-[40%]`}>
           {/* TODO: find out why this left is necessary */}
-          {forecastData || !noError == undefined ? (
+          {!forecastData || !noError ? (
             <div className="h-[100px]"></div>
           ) : (
             <div className="relative -left-7">

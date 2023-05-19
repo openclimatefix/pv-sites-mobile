@@ -143,7 +143,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
             </div>
           </button>
         )}
-        <div className="mt-10 flex flex-col gap-3">
+        <div className="mt-10 flex flex-col">
           <button onClick={handleEditClick}>
             <div className="flex items-center gap-3 rounded-md px-4 py-2 text-gray-600 transition-all hover:bg-ocf-gray-1000 hover:text-gray-700">
               <div className={isEditMode ? 'text-amber' : 'text-white'}>

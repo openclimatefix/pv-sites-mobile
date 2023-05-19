@@ -78,7 +78,8 @@ const Graph: FC<GraphProps> = ({ sites }) => {
   });
 
   const isMobile = useIsMobile();
-  const isExtraSmallMobile = useMediaQuery('(max-width: 390px)');
+  const isSmallMobile = useMediaQuery('(max-width: 390px)');
+  const isExtraSmallMobile = useMediaQuery('(max-width: 340px)');
 
   const [timeRange, setTimeRange] = useState(48);
 
@@ -195,10 +196,10 @@ const Graph: FC<GraphProps> = ({ sites }) => {
             </div>
             <div
               className={overrideTailwindClasses(
-                `flex flex-wrap justify-end gap-1 text-xs sm:gap-3 ${
-                  isExtraSmallMobile && 'text-[9px]'
-                } md:text-sm`
-              )}
+                `flex flex-wrap justify-end gap-1 ${!isSmallMobile && 'text-xs'} sm:gap-3 ${
+                  isSmallMobile && 'text-[10px]'
+                } ${isExtraSmallMobile && 'text-[8px]'} md:text-sm`
+              ,)}
             >
               <div className="flex">
                 <LegendLineGraphIcon className="text-ocf-yellow-500" />
@@ -207,7 +208,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
               <div className="flex">
                 <LegendLineGraphIcon className="text-ocf-blue" />
                 <p className="ml-[5px] mt-[2px] text-white">
-                  {isExtraSmallMobile ? 'Clear' : 'Clear Sky'}
+                  {isSmallMobile ? 'Clear' : 'Clear Sky'}
                 </p>
               </div>
               <div className="flex">
