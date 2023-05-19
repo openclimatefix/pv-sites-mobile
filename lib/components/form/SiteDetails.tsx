@@ -5,7 +5,7 @@ import { sendMutation } from '~/lib/api';
 import Location from '~/lib/components/form/Location';
 import { useSites } from '../../sites';
 import { FormPostData, Inverters, Site } from '../../types';
-import { originalLat, originalLng, useIsMobile } from '../../utils';
+import { defaultLatitude, defaultLongitude, useIsMobile } from '../../utils';
 import BackNav from '../navigation/BackNav';
 import { NavbarLink } from '../navigation/NavBar';
 import Details from './Details';
@@ -45,8 +45,8 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     tilt: site?.tilt,
     inverterCapacity: site?.inverter_capacity_kw,
     moduleCapacity: site?.module_capacity_kw,
-    latitude: site?.latitude || originalLat,
-    longitude: site?.longitude || originalLng,
+    latitude: site?.latitude || defaultLatitude,
+    longitude: site?.longitude || defaultLongitude,
   });
   const [edited, setEdited] = useState(false);
 

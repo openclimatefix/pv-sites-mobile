@@ -38,7 +38,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
     <Link
       href={href}
       onClick={onClick}
-      className={`${borderColor} flex h-fit flex-1 flex-row justify-center rounded-2xl border bg-ocf-black-500 p-5 text-center md:text-left`}
+      className={`${borderColor} flex h-fit flex-1 flex-row justify-center rounded-lg border bg-ocf-black-500 p-5 text-center md:text-left`}
     >
       <div className="flex w-8/12 flex-col justify-center">
         <div
