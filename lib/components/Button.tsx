@@ -25,7 +25,6 @@ const Button: FC<PropsWithChildren<Props>> = ({
 
   return (
     <button
-      suppressHydrationWarning
       form={form}
       onClick={onClick}
       disabled={disabled}

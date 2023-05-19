@@ -12,7 +12,7 @@ enum Page {
 const Inverters = () => {
   const [page, setPage] = useState<Page>(Page.View);
   const router = useRouter();
-  const { uuid } = router.query;
+  const { uuid, success } = router.query;
 
   const nextPageCallback = () => {
     switch (page) {
@@ -37,6 +37,7 @@ const Inverters = () => {
         isSelectMode={page === Page.Select}
         nextPageCallback={nextPageCallback}
         lastPageCallback={() => setPage(Page.View)}
+        linkSuccess={success as string | undefined}
       />
     </div>
   );
