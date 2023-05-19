@@ -29,6 +29,7 @@ import {
   getCurrentTimeGenerationIndex,
 } from '~/lib/generation';
 import { useSiteAggregation } from '~/lib/sites';
+import { SkeletonBox } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
 
@@ -272,102 +273,106 @@ const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const graphableData = graphData ? makeGraphable(graphData) : undefined;
 
   return (
-    <div className="relative h-[240px] w-full content-center rounded-2xl bg-ocf-black-500">
-      <div className="flex w-full flex-col justify-start">
-        <div className="mr-10 mt-[20px] flex justify-end text-sm">
-          <div className="flex flex-col justify-start gap-1">
-            <div className="flex items-center justify-end gap-2">
-              <p className="text-right text-[10px] leading-none text-white">
-                Forecast
-              </p>
-              <div className="not-sr-only h-[2px] w-[27px] border-b-2 border-dotted border-white"></div>
+    <div className="relative h-[240px] w-full content-center rounded-lg bg-ocf-black-500">
+      {isLoading ? (
+        <SkeletonBox />
+      ) : (
+        <>
+          <div className="flex w-full flex-col justify-start">
+            <div className="mr-10 mt-[20px] flex justify-end text-sm">
+              <div className="flex flex-col justify-start gap-1">
+                <div className="flex items-center justify-end gap-2">
+                  <p className="text-right text-[10px] leading-none text-white">
+                    Forecast
+                  </p>
+                  <div className="not-sr-only h-[2px] w-[27px] border-b-2 border-dotted border-white"></div>
+                </div>
+                <div className="flex items-center justify-end gap-2">
+                  <p className="text-right text-[10px] leading-none text-ocf-yellow">
+                    Threshold
+                  </p>
+                  <div className="not-sr-only h-[2px] w-[27px] border-b-2 border-dotted border-ocf-yellow"></div>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center justify-end gap-2">
-              <p className="text-right text-[10px] leading-none text-ocf-yellow">
-                Threshold
-              </p>
-              <div className="not-sr-only h-[2px] w-[27px] border-b-2 border-dotted border-ocf-yellow"></div>
-            </div>
-          </div>
-        </div>
 
-        {!isLoading && graphableData && (
-          <ResponsiveContainer
-            className="mt-[15px] touch-pan-y touch-pinch-zoom"
-            width="100%"
-            height={100}
-          >
-            <AreaChart
-              data={graphableData}
-              margin={{
-                top: 0,
-                right: 40,
-                left: 0,
-                bottom: 10,
-              }}
+            <ResponsiveContainer
+              className="mt-[15px] touch-pan-y touch-pinch-zoom"
+              width="100%"
+              height={100}
             >
-              <defs>{generateGraphGradient()}</defs>
-              <XAxis
-                hide
-                scale="time"
-                domain={['auto', 'auto']}
-                dataKey="datetime_utc"
-                type="number"
-              />
-              <YAxis
-                type="number"
-                domain={[0, maxGeneration + 0.25]}
-                axisLine={false}
-                tick={false}
-              />
-              <Tooltip
-                wrapperStyle={{ outline: 'none' }}
-                contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
-                labelStyle={{ color: 'white' }}
-                formatter={(value: GenerationDataPoint['generation_kw']) => [
-                  parseFloat(value.toFixed(5)),
-                  'kW',
-                ]}
-                labelFormatter={(point: GenerationDataPoint['datetime_utc']) =>
-                  weekdayFormat(point)
-                }
-              />
-              <Area
-                type="monotone"
-                dataKey="generation_kw"
-                strokeWidth={2}
-                fillOpacity={1}
-                stroke="white"
-                strokeDasharray="2"
-                fill="url(#thresholdGraphArea)"
-                onAnimationEnd={() => setTimeEnabled(true)}
-                isAnimationActive={!timeEnabled}
+              <AreaChart
+                data={graphableData}
+                margin={{
+                  top: 0,
+                  right: 40,
+                  left: 0,
+                  bottom: 10,
+                }}
               >
-                <LabelList
+                <defs>{generateGraphGradient()}</defs>
+                <XAxis
+                  hide
+                  scale="time"
+                  domain={['auto', 'auto']}
+                  dataKey="datetime_utc"
+                  type="number"
+                />
+                <YAxis
+                  type="number"
+                  domain={[0, maxGeneration + 0.25]}
+                  axisLine={false}
+                  tick={false}
+                />
+                <Tooltip
+                  wrapperStyle={{ outline: 'none' }}
+                  contentStyle={{ backgroundColor: '#2B2B2B90', opacity: 1 }}
+                  labelStyle={{ color: 'white' }}
+                  formatter={(value: GenerationDataPoint['generation_kw']) => [
+                    parseFloat(value.toFixed(5)),
+                    'kW',
+                  ]}
+                  labelFormatter={(
+                    point: GenerationDataPoint['datetime_utc']
+                  ) => weekdayFormat(point)}
+                />
+                <Area
+                  type="monotone"
                   dataKey="generation_kw"
-                  content={renderCurrentTimeMarker}
-                />
-              </Area>
-              <ReferenceLine
-                y={thresholdCapacityKW}
-                ifOverflow="extendDomain"
-                strokeWidth={2}
-                stroke="#FFD053"
-                strokeDasharray="2"
-              >
-                <Label
-                  value={thresholdCapacityKW.toFixed(1) + ' kW'}
-                  position="left"
-                  className="fill-ocf-yellow text-xs"
-                />
-              </ReferenceLine>
-            </AreaChart>
-          </ResponsiveContainer>
-        )}
-      </div>
-      <div className="inset-x-0 flex flex-col content-center justify-center text-center">
-        {renderTime()}
-      </div>
+                  strokeWidth={2}
+                  fillOpacity={1}
+                  stroke="white"
+                  strokeDasharray="2"
+                  fill="url(#thresholdGraphArea)"
+                  onAnimationEnd={() => setTimeEnabled(true)}
+                  isAnimationActive={!timeEnabled}
+                >
+                  <LabelList
+                    dataKey="generation_kw"
+                    content={renderCurrentTimeMarker}
+                  />
+                </Area>
+                <ReferenceLine
+                  y={thresholdCapacityKW}
+                  ifOverflow="extendDomain"
+                  strokeWidth={2}
+                  stroke="#FFD053"
+                  strokeDasharray="2"
+                >
+                  <Label
+                    value={thresholdCapacityKW.toFixed(1) + ' kW'}
+                    position="left"
+                    className="fill-ocf-yellow text-xs"
+                  />
+                </ReferenceLine>
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="inset-x-0 flex flex-col content-center justify-center text-center">
+            {renderTime()}
+          </div>
+        </>
+      )}
     </div>
   );
 };
