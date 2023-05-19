@@ -43,7 +43,7 @@ const Toast: FC<PropsWithChildren> = ({ children }) => {
               duration: 0.75,
               ease: 'easeOut',
             }}
-          ></motion.div>
+          />
         </div>
       )}
     </AnimatePresence>
