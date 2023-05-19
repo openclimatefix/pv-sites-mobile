@@ -36,6 +36,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# SW files
+public/*.js
+public/*.map
+
 .vscode
 
 pv-site-api.env

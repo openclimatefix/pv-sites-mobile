@@ -41,7 +41,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           <Head>
             <title>Sites | Nowcasting</title>
             <link rel="icon" href="/favicon.ico" />
-            <meta name="description" content="pv-sites-mobile" />
+            <meta name="description" content="Nowcasting for solar sites" />
             <meta
               name="viewport"
               content="width=device-width, initial-scale=1"
