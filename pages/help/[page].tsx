@@ -72,7 +72,10 @@ const Help = () => {
               />
             ),
             p: ({ node, ...props }) => (
-              <p className="text-sm md:text-base pb-1.5 text-white" {...props} />
+              <p
+                className="pb-1.5 text-sm text-white md:text-base"
+                {...props}
+              />
             ),
             ul: ({ node, ...props }) => (
               <ul
