@@ -13,7 +13,8 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
     !!user &&
     !path.startsWith('/site-details') &&
     !path.startsWith('/inverters') &&
-    !path.startsWith('/link');
+    !path.startsWith('/link') &&
+    !path.startsWith('/404');
 
   return (
     <>

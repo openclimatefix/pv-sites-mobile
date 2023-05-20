@@ -3,7 +3,7 @@ import SpaceIcon from '~/lib/components/icons/SpaceIcon';
 
 const Page404 = () => {
   return (
-    <div className="flex flex-col items-center align-top  md:flex-row">
+    <div className="mt-10 flex flex-col items-center md:flex-row">
       <div className="mt-16 h-[175px] w-[225px] md:mt-32 md:h-[500px] md:w-[600px] md:flex-1">
         <SpaceIcon />
       </div>
