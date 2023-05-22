@@ -12,7 +12,6 @@ import duration from 'dayjs/plugin/duration';
 import dayjs from 'dayjs';
 import { Site } from '~/lib/types';
 import { AppProvider } from '~/lib/provider';
-import { NextComponentType, NextPageContext } from 'next';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
