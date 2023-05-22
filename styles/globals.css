@@ -26,7 +26,7 @@
 
 /* Apply additional styles to .mapboxgl-ctrl-geocoder */
 .mapboxgl-ctrl-geocoder {
-  @apply h-14 min-w-full rounded-lg bg-ocf-black !important;
+  @apply h-14 min-w-full bg-transparent !important;
 }
 
 /* Apply styles to geocoder position in map */
