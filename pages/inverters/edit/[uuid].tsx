@@ -59,3 +59,5 @@ export const getServerSideProps = withSites({
 });
 
 export default Inverters;
+
+(Inverters as any).hideNav = true;

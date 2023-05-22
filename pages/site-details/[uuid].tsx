@@ -26,3 +26,5 @@ export const getServerSideProps = withSites({
 });
 
 export default NewSiteDetails;
+
+(NewSiteDetails as any).hideNav = true;

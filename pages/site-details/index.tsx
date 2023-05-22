@@ -8,3 +8,5 @@ const NewSiteDetails: FC = () => {
 
 export default NewSiteDetails;
 export const getServerSideProps = withSites();
+
+(NewSiteDetails as any).hideNav = true;
