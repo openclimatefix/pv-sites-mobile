@@ -8,7 +8,7 @@ interface NewSiteDetailsProps {
   sites: Site[];
 }
 
-const NewSiteDetails: FC<NewSiteDetailsProps> = ({ sites }) => {
+const NewSiteDetails = ({ sites }: NewSiteDetailsProps) => {
   const router = useRouter();
   const { uuid } = router.query;
   return <SiteDetails site={sites.find((site) => site.site_uuid === uuid)!} />;
@@ -27,4 +27,4 @@ export const getServerSideProps = withSites({
 
 export default NewSiteDetails;
 
-(NewSiteDetails as any).hideNav = true;
+NewSiteDetails.hideNav = true;
