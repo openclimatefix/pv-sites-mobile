@@ -21,4 +21,4 @@ export const getServerSideProps = withSites({
 
 export default InverterLink;
 
-(InverterLink as any).hideNav = true;
+InverterLink.hideNav = true;

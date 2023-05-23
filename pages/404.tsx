@@ -28,4 +28,4 @@ const Page404 = () => {
 
 export default Page404;
 
-(Page404 as any).hideNav = true;
+Page404.hideNav = true;
