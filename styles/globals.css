@@ -19,6 +19,11 @@
   }
 }
 
+.next-error-h1,
+.next-error-h1 + div {
+  @apply text-white;
+}
+
 /* Define the .geocoder class */
 .mapboxgl-ctrl-geocoder--input {
   @apply h-full w-full rounded-lg bg-ocf-black-500 text-white outline-ocf-yellow focus:outline focus:outline-1 !important;
