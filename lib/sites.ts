@@ -56,10 +56,6 @@ export function useSiteData(siteUUID: string) {
     actualsFetcher
   );
 
-  const { data: inverterData, error: inverterError } = useSWR<Inverters>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/inverters`
-  );
-
   const error = AggregateError([
     forecastError,
     siteListError,
