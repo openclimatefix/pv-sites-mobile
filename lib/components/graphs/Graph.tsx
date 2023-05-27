@@ -210,7 +210,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
                   {isExtraSmallMobile ? 'Clear' : 'Clear Sky'}
                 </p>
               </div>
-              {actualDataTrimmed?.length && (
+              {actualDataTrimmed?.length !== undefined && (
                 <div className="flex">
                   <LegendLineGraphIcon className="text-white" />
                   <p className="ml-[5px] mt-[2px] text-white">
