@@ -30,7 +30,8 @@ export function useSites() {
     `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`
   );
 
-  return { sites: sites?.site_list ?? [], error, isLoading };
+  // TODO: Paginate this globally somehow. Right now there is too much site data being fetched on the aggregate dashboard
+  return { sites: sites?.site_list?.slice(0, 5) ?? [], error, isLoading };
 }
 
 /**
@@ -222,7 +223,7 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
         };
       }
 
-      const { site_list: sites } = (await fetch(
+      const { site_list: allSites } = (await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
         {
           headers: {
@@ -231,6 +232,9 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
           credentials: 'include',
         }
       ).then((res) => res.json())) as { site_list: Site[] };
+
+      // TODO: Paginate this globally somehow. Right now there is too much site data being fetched on the aggregate dashboard
+      const sites = allSites.slice(0, 5);
 
       const otherProps: any = await getServerSideProps?.({
         ...ctx,

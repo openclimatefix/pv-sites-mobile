@@ -7,6 +7,7 @@ let accessToken: string | undefined;
  */
 export async function fetcher(url: string) {
   const options = await getAuthenticatedRequestOptions(url);
+  console.log('Fetching:', url);
   const res = await fetch(url, options);
   return await res.json();
 }
