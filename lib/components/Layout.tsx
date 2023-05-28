@@ -5,16 +5,14 @@ import BottomNavBar from './navigation/BottomNavBar';
 import NavBar from './navigation/NavBar';
 import Transition from './navigation/Transition';
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
+interface LayoutProps {
+  hideNav?: boolean;
+}
+
+const Layout: FC<PropsWithChildren<LayoutProps>> = ({ hideNav, children }) => {
   const { user } = useUser();
   const { asPath: path } = useRouter();
-  // TODO: Improve this
-  const showNav =
-    !!user &&
-    !path.startsWith('/site-details') &&
-    !path.startsWith('/inverters') &&
-    !path.startsWith('/link') &&
-    !path.startsWith('/404');
+  const showNav = !!user && !hideNav;
 
   return (
     <>

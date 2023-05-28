@@ -27,3 +27,5 @@ const Page404 = () => {
 };
 
 export default Page404;
+
+Page404.hideNav = true;
