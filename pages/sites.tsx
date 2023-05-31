@@ -7,11 +7,7 @@ import { useSites, withSites } from '~/lib/sites';
 
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
-
-  const { sites: allSites } = useSites();
-
-  // TODO: Paginate this or something... when pulling from actual API it's just too many
-  const sites = allSites.slice(0, 5);
+  const { sites } = useSites();
 
   return (
     <div className="mb-[var(--bottom-nav-margin)] flex h-full w-full max-w-lg flex-col items-center gap-3 px-5">
