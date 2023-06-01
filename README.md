@@ -1,18 +1,18 @@
 # pv-sites-mobile
 
-## About
-
-[Solar electricity nowcasting](https://github.com/openclimatefix/nowcasting), a project by [Open Climate Fix](https://openclimatefix.org/) to build the world's best near-term forecasting system for solar electricity generation, has been a helpful asset for the UK National Grid.
-
-With site-level forecasts—nowcasting for individual solar locations—we are in the process of bringing the nowcasting experience to the broader public, to give people more power over their own solar setup. Individual home owners, solar PV asset operators, offtakers, and smart home operators can all make use of better forecasting, and in turn, our impact reaches more people and helps further optimize the contribution of solar power to the electricity grid.
-
-To allow easy, intuitive access to our site-level predictions, [Hack4Impact](https://uiuc.hack4impact.org/) has been working with us to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
-
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+## About
+
+[Solar electricity nowcasting](https://github.com/openclimatefix/nowcasting), a project by [Open Climate Fix (OCF)](https://openclimatefix.org/) to build the world's best near-term forecasting system for solar electricity generation, is already making a marketed impact on the UK National Grid.
+
+With site-level forecasts—nowcasting for individual solar locations—OCF is in the process of bringing the nowcasting experience to the broader public, giving people more power over their own solar setup. Individual home owners, solar PV asset operators, offtakers, and smart home operators can all make use of better forecasting. In turn, OCF's impact reaches more people and helps further optimize the contribution of solar power to the electricity grid.
+
+To allow easy, intuitive access to site-level predictions, [Hack4Impact](https://uiuc.hack4impact.org/) has been working to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
 
 ### Usage
 
