@@ -14,3 +14,5 @@ namespace NodeJS {
     ENODE_BASE_URL: string;
   }
 }
+
+declare module '*.md';
