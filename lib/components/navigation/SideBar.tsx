@@ -132,7 +132,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
           </h2>
 
           <div className="flex flex-col gap-3">
-            {generateSiteLinks()}
+            {open && generateSiteLinks()}
 
             {sites.length > maxSitesDisplayed && (
               <Button
