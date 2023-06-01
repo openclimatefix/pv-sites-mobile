@@ -1,14 +1,14 @@
 # pv-sites-mobile
 
+<img width="600" alt="image" src="https://github.com/openclimatefix/pv-sites-mobile/assets/23221268/f2d56861-c906-4670-9e10-d380ad56eaeb">
+
+## About
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-<img width="600" alt="image" src="https://github.com/openclimatefix/pv-sites-mobile/assets/23221268/f2d56861-c906-4670-9e10-d380ad56eaeb">
-
-## About
 
 [Solar electricity nowcasting](https://github.com/openclimatefix/nowcasting), a project by [Open Climate Fix (OCF)](https://openclimatefix.org/) to build the world's best near-term forecasting system for solar electricity generation, is already making a marketed impact on the UK National Grid.
 
