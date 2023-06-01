@@ -6,7 +6,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-<img width="1018" alt="image" src="https://github.com/openclimatefix/pv-sites-mobile/assets/23221268/f2d56861-c906-4670-9e10-d380ad56eaeb">
+<img width="600" alt="image" src="https://github.com/openclimatefix/pv-sites-mobile/assets/23221268/f2d56861-c906-4670-9e10-d380ad56eaeb">
 
 ## About
 
