@@ -20,3 +20,5 @@ export const getServerSideProps = withSites({
 });
 
 export default InverterLink;
+
+InverterLink.hideNav = true;

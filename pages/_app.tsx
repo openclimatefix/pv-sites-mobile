@@ -25,6 +25,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
       site_list: pageProps.sites ?? [],
     },
   };
+  const hideNav = (Component as any).hideNav || false;
 
   return (
     <UserProvider user={pageProps.user}>
@@ -48,7 +49,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
             />
             <meta name="theme-color" content="#14120E" />
           </Head>
-          <Layout>
+          <Layout hideNav={hideNav}>
             <Component {...pageProps} />
           </Layout>
         </AppProvider>
