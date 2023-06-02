@@ -27,7 +27,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
         </div>
       </div>
       <hr className="mx-[-100px] h-[1px] w-[500%] border-0 bg-ocf-black-500 md:hidden" />
-      <div className="grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 grid-areas-dashboard-mobile md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop xm:grid-areas-dashboard-mobile-xs">
+      <div className="grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 grid-areas-dashboard-mobile md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop xs:grid-areas-dashboard-mobile-xs">
         <div className="block grid-in-Heading1 md:hidden">
           <h2 className="mt-2 text-base font-semibold leading-none text-ocf-gray">
             Solar Activity
@@ -47,11 +47,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
             Metrics
           </h2>
         </div>
-        <div
-          className={`${
-            isExtraSmall ? 'hidden' : 'grid-in-Expected-Total-Output'
-          }`}
-        >
+        <div className="grid-in-Expected-Total-Output xs:hidden">
           <ExpectedTotalOutput sites={sites} />
         </div>
         <div className="grid-in-Current-Output md:hidden">
