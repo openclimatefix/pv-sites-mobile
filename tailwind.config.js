@@ -21,6 +21,7 @@ module.exports = {
     screens: {
       ...defaultTheme.screens,
       short: { raw: '(max-height: 800px)' },
+      xm: { max: '400px' },
     },
     container: {
       center: true,

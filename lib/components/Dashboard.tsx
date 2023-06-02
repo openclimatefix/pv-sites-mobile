@@ -16,8 +16,6 @@ interface DashboardProps {
 const Dashboard: FC<DashboardProps> = ({ sites }) => {
   const isAggregate = sites.length > 1;
 
-  const isExtraSmall = useMediaQuery('(max-width: 400px)');
-
   return (
     <div className="mb-[var(--bottom-nav-margin)] w-screen max-w-screen-lg bg-ocf-black px-4">
       <div className="flex flex-row items-center justify-between">
@@ -29,13 +27,7 @@ const Dashboard: FC<DashboardProps> = ({ sites }) => {
         </div>
       </div>
       <hr className="mx-[-100px] h-[1px] w-[500%] border-0 bg-ocf-black-500 md:hidden" />
-      <div
-        className={`grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 ${
-          isExtraSmall
-            ? 'grid-areas-dashboard-mobile-xs'
-            : 'grid-areas-dashboard-mobile'
-        } md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop`}
-      >
+      <div className="grid w-full grid-cols-mobile-columns grid-rows-mobile-rows gap-4 grid-areas-dashboard-mobile md:grid-cols-desktop-columns md:grid-rows-desktop-rows md:grid-areas-dashboard-desktop xm:grid-areas-dashboard-mobile-xs">
         <div className="block grid-in-Heading1 md:hidden">
           <h2 className="mt-2 text-base font-semibold leading-none text-ocf-gray">
             Solar Activity

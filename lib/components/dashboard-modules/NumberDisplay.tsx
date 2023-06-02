@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { skeleton } from '~/lib/skeleton';
-import { useIsMobile } from '~/lib/utils';
 
 interface Props {
   title: string;
@@ -10,8 +9,6 @@ interface Props {
 }
 
 const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
-  const isMobile = useIsMobile();
-
   const renderDisplay = () => (
     <div className="flex h-full w-full flex-1 flex-col justify-center rounded-lg bg-ocf-black-500 p-4 text-center md:text-left">
       <div
@@ -22,9 +19,7 @@ const NumberDisplay: FC<Props> = ({ title, value, onClick, isLoading }) => {
         {title}
       </div>
       <div
-        className={`${
-          isMobile ? 'text-xl' : 'text-2xl'
-        } font-semibold leading-none text-ocf-yellow transition-all md:leading-none ${
+        className={`text-xl font-semibold leading-none text-ocf-yellow transition-all md:text-2xl md:leading-none ${
           isLoading ? skeleton : ``
         }`}
       >

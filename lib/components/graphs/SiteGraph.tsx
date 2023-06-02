@@ -15,15 +15,6 @@ interface SiteGraphProps {
   color?: string;
 }
 
-/**
- *
- * @param sites an array of sites, which the site graph will aggregate and show
- * @param hidden optional, hides the graph if true
- * @param height optional, height of container, default 100
- * @param period optional, period of centered moving average applied to data for smoothing, default 1, must be odd
- * @color optional
- * @returns corresponding mini graph
- */
 const SiteGraph: FC<SiteGraphProps> = ({
   sites,
   hidden = false,
