@@ -21,6 +21,7 @@ module.exports = {
     screens: {
       ...defaultTheme.screens,
       short: { raw: '(max-height: 800px)' },
+      xs: { max: '400px' },
     },
     container: {
       center: true,
@@ -61,6 +62,15 @@ module.exports = {
           'Site-Graph   Site-Graph',
           'Heading2 Heading2',
           'Expected-Total-Output Current-Output',
+          'Weather-Icons Weather-Icons',
+          'Graph Graph',
+        ],
+        'dashboard-mobile-xs': [
+          'Heading1 Heading1',
+          'Sunny Recommendation',
+          'Site-Graph   Site-Graph',
+          'Heading2 Heading2',
+          'Current-Output Current-Output',
           'Weather-Icons Weather-Icons',
           'Graph Graph',
         ],

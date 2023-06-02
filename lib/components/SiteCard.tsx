@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import SiteGraph from './graphs/SiteGraph';
 import { DeleteIcon } from './icons';
 import { getCurrentTimeGeneration } from '../generation';
@@ -33,42 +33,42 @@ const SiteCard: FC<SiteCardProps> = ({ site, isEditMode }) => {
           isEditMode && 'pointer-events-none'
         }`}
       >
-        <div className="flex w-[60%] flex-1 flex-col p-4 pl-5">
+        <div className="flex w-[60%] flex-1 flex-col p-3 pl-5">
           <h2
-            className={`text-xl font-semibold text-amber transition-all ${
+            className={`text-lg font-semibold text-amber transition-all ${
               !forecastData ? skeleton : ``
             }`}
           >
-            {forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
+            {!forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
           </h2>
-          <div className="mt-2 flex flex-col gap-1">
+          <div className="mt-1 flex flex-col gap-1">
             <p
-              className={`text-xs font-medium text-ocf-gray-500 transition-all ${
+              className={`text-[10px] font-medium text-ocf-gray-500 transition-all ${
                 !forecastData ? skeleton : ``
               }`}
             >
               Current output:{' '}
               {currentOutput != undefined
-                ? currentOutput.toFixed(2) + ' kW'
+                ? currentOutput.toFixed(1) + ' kW'
                 : 'loading...'}
             </p>
             {site.inverter_capacity_kw !== null && (
               <p
-                className={`text-xs font-medium text-ocf-gray-500 transition-all ${
+                className={`text-[10px] font-medium text-ocf-gray-500 transition-all ${
                   !forecastData ? skeleton : ''
                 }`}
               >
-                Max. capacity: {site.inverter_capacity_kw?.toFixed(2)} kW
+                Max. capacity: {site.inverter_capacity_kw?.toFixed(1)} kW
               </p>
             )}
             <p
-              className={`text-xs font-medium text-ocf-gray-500 transition-all ${
+              className={`text-[10px] font-medium text-ocf-gray-500 transition-all ${
                 !forecastData ? skeleton : ``
               }`}
             >
               Current yield:{' '}
               {site.inverter_capacity_kw && currentOutput != undefined
-                ? (currentOutput / site.inverter_capacity_kw).toFixed(2) + '%'
+                ? (currentOutput / site.inverter_capacity_kw).toFixed(1) + '%'
                 : 'loading...'}
             </p>
           </div>
@@ -76,11 +76,16 @@ const SiteCard: FC<SiteCardProps> = ({ site, isEditMode }) => {
 
         <div className={`pointer-events-none mr-5 w-[40%]`}>
           {/* TODO: find out why this left is necessary */}
-          {forecastData || !noError == undefined ? (
+          {!forecastData || !noError ? (
             <div className="h-[100px]"></div>
           ) : (
-            <div className="relative -left-7">
-              <SiteGraph sites={[site]} hidden={isEditMode} />
+            <div className="relative -left-7 top-2">
+              <SiteGraph
+                height={80}
+                sites={[site]}
+                hidden={isEditMode}
+                period={5}
+              />
             </div>
           )}
         </div>
