@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
 import { getCurrentTimeGeneration } from '~/lib/generation';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSitesGeneration } from '~/lib/sites';
 import { Site } from '~/lib/types';
 
 interface CurrentOutputProps {
@@ -10,7 +10,7 @@ interface CurrentOutputProps {
 
 const CurrentOutput: FC<CurrentOutputProps> = ({ sites }) => {
   const { totalInstalledCapacityKw, aggregateForecastedGeneration, isLoading } =
-    useSiteAggregation(sites);
+    useSitesGeneration(sites);
 
   const currentOutput = aggregateForecastedGeneration?.length
     ? getCurrentTimeGeneration(aggregateForecastedGeneration)

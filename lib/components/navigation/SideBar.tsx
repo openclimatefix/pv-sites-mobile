@@ -5,7 +5,7 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '~/lib/utils';
 
-import { useSites } from '~/lib/sites';
+import { useSitesGeneration, useSites } from '~/lib/sites';
 import DashboardLink from './DashboardLink';
 import MenuLink from './MenuLink';
 import Button from '../Button';
@@ -30,7 +30,8 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
   const [maxSitesDisplayed, setMaxSitesDisplayed] = useState(
     sitesDisplayedIncrement
   );
-
+  const { manyForecastData, aggregateForecastedGeneration } =
+    useSitesGeneration(sites);
   const wrapperRef = useRef(null);
 
   useClickedOutside(wrapperRef, () => {
@@ -51,11 +52,11 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
   };
 
   const generateSiteLinks = () => {
-    if (!sites) {
+    if (!sites || !manyForecastData) {
       return null;
     }
 
-    return sites.slice(0, maxSitesDisplayed).map((site) => (
+    return sites.slice(0, maxSitesDisplayed).map((site, i) => (
       <div
         key={site.site_uuid}
         className="flex flex-row"
@@ -81,6 +82,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
           href={`/dashboard/${site.site_uuid}`}
           sites={[site]}
           active={isEditMode ? site.site_uuid === selected : undefined}
+          generationData={manyForecastData[i].forecast_values}
           onClick={(e) => {
             if (isEditMode) {
               e.preventDefault();
@@ -117,6 +119,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
                 siteName="Aggregate"
                 href="/dashboard"
                 sites={sites}
+                generationData={aggregateForecastedGeneration}
                 active={isEditMode ? false : undefined}
                 onClick={(e) => {
                   if (isEditMode) {
@@ -138,11 +141,11 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
               <Button
                 className="self-center"
                 variant="outlined"
-                onClick={() =>
+                onClick={() => {
                   setMaxSitesDisplayed(
                     (current) => current + sitesDisplayedIncrement
-                  )
-                }
+                  );
+                }}
               >
                 Load more sites
               </Button>

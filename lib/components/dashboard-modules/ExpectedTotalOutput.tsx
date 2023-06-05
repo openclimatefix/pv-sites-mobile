@@ -3,7 +3,7 @@ import {
   generationDataOverDateRange,
   getTotalExpectedOutput,
 } from '~/lib/generation';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSitesGeneration } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { Site } from '~/lib/types';
 import NumberDisplay from './NumberDisplay';
@@ -15,7 +15,7 @@ interface ExpectedTotalOutputProps {
 const ExpectedTotalOutput: FC<ExpectedTotalOutputProps> = ({ sites }) => {
   const representativeSite = sites[0];
   const { isLoading, aggregateForecastedGeneration } =
-    useSiteAggregation(sites);
+    useSitesGeneration(sites);
   const { sunrise, sunset } = useSiteTime(representativeSite);
 
   const value = aggregateForecastedGeneration

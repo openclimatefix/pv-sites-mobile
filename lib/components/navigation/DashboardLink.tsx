@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MouseEventHandler, useMemo } from 'react';
 import { getCurrentTimeGeneration } from '~/lib/generation';
-import { useSiteAggregation } from '~/lib/sites';
-import { Site } from '~/lib/types';
+import { useSitesGeneration } from '~/lib/sites';
+import { GenerationDataPoint, Site } from '~/lib/types';
 import SiteGraph from '../graphs/SiteGraph';
 
 type DashboardLinkProps = {
@@ -11,6 +11,7 @@ type DashboardLinkProps = {
   href: string;
   sites: Site[];
   active?: boolean;
+  generationData: GenerationDataPoint[] | undefined;
   onClick?: MouseEventHandler;
 };
 
@@ -20,19 +21,18 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
   sites,
   onClick,
   active,
+  generationData,
 }) => {
   const { asPath: path } = useRouter();
   const isActive = active ?? href === path;
   const textColor = isActive ? 'text-white' : 'text-ocf-gray-800';
   const borderColor = isActive ? 'border-amber' : 'border-ocf-gray-1000';
 
-  const { aggregateForecastedGeneration } = useSiteAggregation(sites);
-
   const currentOutput = useMemo(() => {
-    return aggregateForecastedGeneration?.length
-      ? getCurrentTimeGeneration(aggregateForecastedGeneration).toFixed(2)
+    return generationData?.length
+      ? getCurrentTimeGeneration(generationData).toFixed(2)
       : undefined;
-  }, [aggregateForecastedGeneration]);
+  }, [generationData]);
 
   return (
     <Link
@@ -57,6 +57,7 @@ const DashboardLink: React.FC<DashboardLinkProps> = ({
       <div className="pointer-events-none w-1/2 pl-4">
         <SiteGraph
           sites={sites}
+          generationData={generationData}
           hidden={false}
           height={50}
           color={

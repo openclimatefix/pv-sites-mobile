@@ -14,7 +14,7 @@ import {
 } from 'recharts';
 import { overrideTailwindClasses } from 'tailwind-override';
 import { generationDataOverDateRange } from '~/lib/generation';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSitesGeneration } from '~/lib/sites';
 import { SkeletonBox } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
@@ -71,7 +71,7 @@ const Graph: FC<GraphProps> = ({ sites }) => {
     isLoading,
     aggregateClearskyGeneration,
     aggregateActualGeneration,
-  } = useSiteAggregation(sites);
+  } = useSitesGeneration(sites);
   const [timeEnabled, setTimeEnabled] = useState(false);
   const { currentTime, weekdayFormat } = useSiteTime(representativeSite, {
     updateEnabled: timeEnabled,

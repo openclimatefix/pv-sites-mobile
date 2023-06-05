@@ -2,7 +2,7 @@ import { FC } from 'react';
 import NumberDisplay from './NumberDisplay';
 import RecommendationDisplay from './RecommendationDisplay';
 import { Site } from '~/lib/types';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSitesGeneration } from '~/lib/sites';
 import { getCurrentTimeGeneration } from '~/lib/generation';
 import { useSiteTime } from '~/lib/time';
 import { skeleton } from '~/lib/skeleton';
@@ -40,7 +40,7 @@ interface EnergyRecommendationProps {
 
 const EnergyRecommendation: FC<EnergyRecommendationProps> = ({ sites }) => {
   const { isLoading, aggregateForecastedGeneration } =
-    useSiteAggregation(sites);
+    useSitesGeneration(sites);
   const representativeSite = sites[0];
 
   const currentOutput =

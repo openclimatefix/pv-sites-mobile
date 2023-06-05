@@ -31,60 +31,26 @@ export function useSites() {
   );
 
   // TODO: Paginate this globally somehow. Right now there is too much site data being fetched on the aggregate dashboard
-  return { sites: sites?.site_list?.slice(0, 5) ?? [], error, isLoading };
+  return { sites: sites?.site_list?.slice(0, 100) ?? [], error, isLoading };
 }
 
 /**
- * Gets forecasted and solar panel data for a single site
+ * Gets metadata for a single site
  * @param siteUUID UUID corresponding to a single site
  * @returns forecasted and site data
  */
 export function useSiteData(siteUUID: string) {
-  const { sites, error: siteListError } = useSites();
-
-  const { data: forecastData, error: forecastError } = useSWR<ForecastData>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/pv_forecast`,
-    forecastFetcher
-  );
-
-  const { data: clearskyData, error: clearskyError } = useSWR<ClearSkyData>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/clearsky_estimate`,
-    clearSkyFetcher
-  );
-
-  const { data: actualData, error: actualError } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites/${siteUUID}/pv_actual`,
-    actualsFetcher
-  );
-
-  const error = AggregateError([
-    forecastError,
-    siteListError,
-    clearskyError,
-    actualError,
-  ]);
-
-  const isLoading = !sites || !forecastData || !clearskyData || !actualData;
-
-  const site = sites.find((siteData) => siteData.site_uuid === siteUUID);
-
-  return {
-    forecastData,
-    clearskyData,
-    actualData,
-    site,
-    error,
-    isLoading,
-  };
+  const { sites } = useSites();
+  return sites.find((site) => site.site_uuid === siteUUID);
 }
 
 /**
  * Sums the capacity and forecasts of multiple solar sites across
- * all dates reported by the pv-sites API.
+ * all dates reported by the pv-sites API. Also provides individual site data.
  * @param sites A list of sites
  * @return Aggregated predictions sorted by datetime
  */
-export function useSiteAggregation(sites: Site[]) {
+export function useSitesGeneration(sites: Site[]) {
   const siteUUIDs = sites.map((site) => site.site_uuid);
 
   const {
@@ -151,6 +117,9 @@ export function useSiteAggregation(sites: Site[]) {
     );
 
   return {
+    manyForecastData,
+    manyClearskyData,
+    manyActualData,
     totalInstalledCapacityKw,
     aggregateForecastedGeneration,
     aggregateActualGeneration,
@@ -235,7 +204,7 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
       ).then((res) => res.json())) as { site_list: Site[] };
 
       // TODO: Paginate this globally somehow. Right now there is too much site data being fetched on the aggregate dashboard
-      const sites = allSites.slice(0, 5);
+      const sites = allSites.slice(0, 100);
 
       const otherProps: any = await getServerSideProps?.({
         ...ctx,

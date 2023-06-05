@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Dashboard from '~/lib/components/Dashboard';
+import { useAppContext } from '~/lib/provider';
 import { useSiteData, withSites } from '~/lib/sites';
 import { useNoScroll } from '~/lib/utils';
-import { useAppContext } from '~/lib/provider';
 
 const SiteDashboard = () => {
   const { query } = useRouter();
@@ -19,7 +19,7 @@ const SiteDashboard = () => {
   }, [query.uuid, setPrevDashboardUUID]);
 
   useNoScroll();
-  const { site } = useSiteData(persistedUUID as string);
+  const site = useSiteData(persistedUUID as string);
   return <Dashboard sites={[site!]} />;
 };
 
