@@ -1,10 +1,8 @@
 # pv-sites-mobile
 
+<img width="600" alt="image" src="https://github.com/openclimatefix/pv-sites-mobile/assets/23221268/f2d56861-c906-4670-9e10-d380ad56eaeb">
+
 ## About
-
-With site-level forecasts—nowcasting for individual solar locations—we are in the process of bringing the nowcasting experience to the broader public, to give people more power over their own solar setup. Individual home owners, solar PV asset operators, offtakers, and smart home operators can all make use of better forecasting, and in turn, our impact reaches more people and helps further optimize the contribution of solar power to the electricity grid.
-
-To allow easy, intuitive access to our site-level predictions, [Hack4Impact](https://uiuc.hack4impact.org/) is working with us to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
@@ -12,9 +10,19 @@ To allow easy, intuitive access to our site-level predictions, [Hack4Impact](htt
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-### Demo
+[Solar electricity nowcasting](https://github.com/openclimatefix/nowcasting), a project by [Open Climate Fix (OCF)](https://openclimatefix.org/) to build the world's best near-term forecasting system for solar electricity generation, is already making a marketed impact on the UK National Grid.
 
-Our in-development [Demo](https://pv-sites-mobile-hack4impact1.vercel.app/)
+With site-level forecasts—nowcasting for individual solar locations—OCF is in the process of bringing the nowcasting experience to the broader public, giving people more power over their own solar setup. Individual home owners, solar PV asset operators, offtakers, and smart home operators can all make use of better forecasting. In turn, OCF's impact reaches more people and helps further optimize the contribution of solar power to the electricity grid.
+
+To allow easy, intuitive access to site-level predictions, [Hack4Impact](https://uiuc.hack4impact.org/) has been working to build out a mobile-first web application where users can view nowcasting forecasts for solar energy production on their solar panel arrays.
+
+### Learn more
+
+See the [nowcasting "meta-repository"](https://github.com/openclimatefix/nowcasting) for more information about OCF's mission and goals for this project.
+
+### Usage
+
+Contact [Open Climate Fix](mailto:info@openclimatefix.org) to request an account with production access to the pv-sites-mobile web application.
 
 ## Development
 
@@ -35,12 +43,6 @@ Create a copy of `.env.local.example` with the name `.env.local` and fill in env
 Run the development server:
 
     yarn dev
-
-### Contributing
-
-#### Hack4Impact
-
-Create a branch with the format `<initials>/<short-description>` in all lowercase with words separated by dashes.
 
 ## Deployment
 
