@@ -1,25 +1,22 @@
+import { PencilSquareIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import React, { FC, PropsWithChildren } from 'react';
+import { FC } from 'react';
+import { getCurrentTimeGeneration } from '../generation';
+import { skeleton } from '../skeleton';
+import { ForecastData, Site } from '../types';
+import { useNoScroll } from '../utils';
 import SiteGraph from './graphs/SiteGraph';
 import { DeleteIcon } from './icons';
-import { getCurrentTimeGeneration } from '../generation';
-import { useSiteData } from '../sites';
-import { Site } from '../types';
-import { skeleton } from '../skeleton';
-import { useNoScroll } from '../utils';
-import { PencilSquareIcon } from '@heroicons/react/24/solid';
+import { getPreferredSiteName } from '../sites';
 
 interface SiteCardProps {
   site: Site;
+  forecastData: ForecastData;
   isEditMode: boolean;
 }
 
-const SiteCard: FC<SiteCardProps> = ({ site, isEditMode }) => {
+const SiteCard: FC<SiteCardProps> = ({ site, forecastData, isEditMode }) => {
   useNoScroll();
-
-  const { forecastData, error } = useSiteData(site.site_uuid);
-
-  const noError = error.errors.every((error) => error === undefined);
 
   const currentOutput = forecastData
     ? getCurrentTimeGeneration(forecastData.forecast_values)
@@ -39,7 +36,7 @@ const SiteCard: FC<SiteCardProps> = ({ site, isEditMode }) => {
               !forecastData ? skeleton : ``
             }`}
           >
-            {!forecastData ? 'Loading...' : site.client_site_name ?? 'My Site'}
+            {!forecastData ? 'Loading...' : getPreferredSiteName(site)}
           </h2>
           <div className="mt-1 flex flex-col gap-1">
             <p
@@ -76,12 +73,13 @@ const SiteCard: FC<SiteCardProps> = ({ site, isEditMode }) => {
 
         <div className={`pointer-events-none mr-5 w-[40%]`}>
           {/* TODO: find out why this left is necessary */}
-          {!forecastData || !noError ? (
+          {!forecastData ? (
             <div className="h-[100px]"></div>
           ) : (
             <div className="relative -left-7 top-2">
               <SiteGraph
                 height={80}
+                generationData={forecastData.forecast_values}
                 sites={[site]}
                 hidden={isEditMode}
                 period={5}

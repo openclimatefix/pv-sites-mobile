@@ -4,7 +4,7 @@ import {
   generationDataOverDateRange,
   getTotalExpectedOutput,
 } from '~/lib/generation';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSitesGeneration } from '~/lib/sites';
 import { skeleton } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
@@ -75,7 +75,7 @@ const WeatherCard: FC<WeatherCardProps> = ({ sites }) => {
   const representativeSite = sites[0];
 
   const { aggregateForecastedGeneration, aggregateClearskyGeneration } =
-    useSiteAggregation(sites);
+    useSitesGeneration(sites);
   const { currentTime } = useSiteTime(representativeSite);
 
   const renderDay = (

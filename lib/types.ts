@@ -10,6 +10,7 @@ export interface Site {
   tilt?: number;
   latitude: number;
   longitude: number;
+  installed_capacity_kw?: number;
   inverter_capacity_kw?: number;
   module_capacity_kw?: number;
   created_utc: string;

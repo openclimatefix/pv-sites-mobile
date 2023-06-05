@@ -28,7 +28,7 @@ import {
   getClosestForecastIndex,
   getCurrentTimeGenerationIndex,
 } from '~/lib/generation';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSitesGeneration } from '~/lib/sites';
 import { SkeletonBox } from '~/lib/skeleton';
 import { useSiteTime } from '~/lib/time';
 import { GenerationDataPoint, Site } from '~/lib/types';
@@ -40,7 +40,7 @@ interface ThresholdGraphProps {
 const ThresholdGraph: FC<ThresholdGraphProps> = ({ sites }) => {
   const representativeSite = sites[0];
   const { aggregateForecastedGeneration, totalInstalledCapacityKw, isLoading } =
-    useSiteAggregation(sites);
+    useSitesGeneration(sites);
   const [timeEnabled, setTimeEnabled] = useState(
     aggregateForecastedGeneration !== undefined
   );

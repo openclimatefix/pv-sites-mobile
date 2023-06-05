@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { getNextThresholdIndex, graphThreshold } from 'lib/graphs';
 import { FC, useState } from 'react';
-import { useSiteAggregation } from '~/lib/sites';
+import { useSitesGeneration } from '~/lib/sites';
 import { useSiteTime } from '~/lib/time';
 import { Site } from '~/lib/types';
 import NumberDisplay from './NumberDisplay';
@@ -13,7 +13,7 @@ interface SunnyTimeframeProps {
 const SunnyTimeframe: FC<SunnyTimeframeProps> = ({ sites }) => {
   const representativeSite = sites[0];
   const { aggregateForecastedGeneration, totalInstalledCapacityKw, isLoading } =
-    useSiteAggregation(sites);
+    useSitesGeneration(sites);
   const [isRelativeTime, setIsRelativeTime] = useState(false);
   const { timeFormat } = useSiteTime(representativeSite);
 

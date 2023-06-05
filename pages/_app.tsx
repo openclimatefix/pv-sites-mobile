@@ -35,6 +35,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
           fallback: swrFallback,
           refreshInterval: 1000 * 60, // Every minute
           errorRetryCount: 3,
+          revalidateOnFocus: false,
           keepPreviousData: true, // Enabled to support page transitions where a key changes
         }}
       >

@@ -2,12 +2,20 @@ import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useState } from 'react';
+import Button from '~/lib/components/Button';
 import SiteCard from '~/lib/components/SiteCard';
-import { useSites, withSites } from '~/lib/sites';
+import { useSites, useSitesGeneration, withSites } from '~/lib/sites';
+
+const sitesDisplayedIncrement = 5;
 
 const Sites = () => {
   const [editMode, setEditMode] = useState(false);
+  const [maxSitesDisplayed, setMaxSitesDisplayed] = useState(
+    sitesDisplayedIncrement
+  );
   const { sites } = useSites();
+  const visibleSites = sites.slice(0, maxSitesDisplayed);
+  const { manyForecastData } = useSitesGeneration(visibleSites);
 
   return (
     <div className="mb-[var(--bottom-nav-margin)] flex h-full w-full max-w-lg flex-col items-center gap-3 px-5">
@@ -22,9 +30,25 @@ const Sites = () => {
         </button>
       </div>
       <hr className="mx-[-100px] mb-4 h-[1px] w-[500%] border-0 bg-ocf-black-500 md:hidden" />
-      {sites.map((site) => (
-        <SiteCard key={site.site_uuid} site={site} isEditMode={editMode} />
-      ))}
+      {manyForecastData &&
+        visibleSites.map((site, i) => (
+          <SiteCard
+            key={site.site_uuid}
+            site={site}
+            forecastData={manyForecastData[i]}
+            isEditMode={editMode}
+          />
+        ))}
+      {maxSitesDisplayed < sites.length && (
+        <Button
+          variant="outlined"
+          onClick={() =>
+            setMaxSitesDisplayed((cur) => cur + sitesDisplayedIncrement)
+          }
+        >
+          Load more sites
+        </Button>
+      )}
       {editMode && (
         <Link href="/site-details">
           <div className="mt-4 flex flex-row justify-center gap-2">
