@@ -1,25 +1,16 @@
-import useSWR from 'swr';
-import {
-  actualsFetcher,
-  clearSkyFetcher,
-  forecastFetcher,
-  manyActualsFetcher,
-  manyClearskyDataFetcher,
-  manyForecastDataFetcher,
-} from './api';
-import {
-  ClearSkyData,
-  ForecastData,
-  GenerationDataPoint,
-  Site,
-  Inverters,
-} from './types';
-import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import {
   GetAccessTokenResult,
   getAccessToken,
   withPageAuthRequired,
 } from '@auth0/nextjs-auth0';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import useSWR from 'swr';
+import {
+  manyActualsFetcher,
+  manyClearskyDataFetcher,
+  manyForecastDataFetcher,
+} from './api';
+import { GenerationDataPoint, Site } from './types';
 
 export function useSites() {
   const {
