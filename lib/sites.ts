@@ -36,6 +36,16 @@ export function useSiteData(siteUUID: string) {
 }
 
 /**
+ * Gets the preferred (by the application) name for a site. The preferred name is the client_site_name
+ * or client_site_id if that doesn't exist. Otherwise, "My Site" is displayed.
+ * @param site The site
+ * @returns the preferred name
+ */
+export function getPreferredSiteName(site: Site) {
+  return site.client_site_name || site.client_site_id || 'My Site';
+}
+
+/**
  * Sums the capacity and forecasts of multiple solar sites across
  * all dates reported by the pv-sites API. Also provides individual site data.
  * @param sites A list of sites

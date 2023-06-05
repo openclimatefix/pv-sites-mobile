@@ -7,6 +7,7 @@ import { ForecastData, Site } from '../types';
 import { useNoScroll } from '../utils';
 import SiteGraph from './graphs/SiteGraph';
 import { DeleteIcon } from './icons';
+import { getPreferredSiteName } from '../sites';
 
 interface SiteCardProps {
   site: Site;
@@ -35,9 +36,7 @@ const SiteCard: FC<SiteCardProps> = ({ site, forecastData, isEditMode }) => {
               !forecastData ? skeleton : ``
             }`}
           >
-            {!forecastData
-              ? 'Loading...'
-              : site.client_site_name || site.client_site_id || 'My Site'}
+            {!forecastData ? 'Loading...' : getPreferredSiteName(site)}
           </h2>
           <div className="mt-1 flex flex-col gap-1">
             <p

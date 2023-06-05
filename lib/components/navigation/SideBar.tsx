@@ -5,7 +5,11 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import { useClickedOutside } from '~/lib/utils';
 
-import { useSitesGeneration, useSites } from '~/lib/sites';
+import {
+  useSitesGeneration,
+  useSites,
+  getPreferredSiteName,
+} from '~/lib/sites';
 import DashboardLink from './DashboardLink';
 import MenuLink from './MenuLink';
 import Button from '../Button';
@@ -78,7 +82,7 @@ const SideBar: FC<SideBarProps> = ({ open, onClose }) => {
         )}
         <DashboardLink
           key={site.site_uuid}
-          siteName={site.client_site_name}
+          siteName={getPreferredSiteName(site)}
           href={`/dashboard/${site.site_uuid}`}
           sites={[site]}
           active={isEditMode ? site.site_uuid === selected : undefined}
