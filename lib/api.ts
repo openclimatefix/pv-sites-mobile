@@ -158,7 +158,6 @@ export const sendMutation =
     return fetch(url, {
       method: method,
       body: JSON.stringify(arg),
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
