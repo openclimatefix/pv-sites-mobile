@@ -80,9 +80,10 @@ const SiteDetails: FC<SiteDetailsProps> = ({ site }) => {
     const orientation = formData.direction;
 
     const sentinel = 1;
+    // TODO: Change client_site_id and client_name to be either optional or computed with Auth0 data
     const data: FormPostData = {
-      client_name: 'name',
-      client_site_id: 1,
+      client_name: 'pv-sites-mobile',
+      client_site_id: Math.trunc(Math.random() * 1e9),
       client_site_name: formData.siteName!,
       latitude: formData.latitude,
       longitude: formData.longitude,
