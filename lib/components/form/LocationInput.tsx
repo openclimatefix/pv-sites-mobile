@@ -15,6 +15,7 @@ interface LocationInputProps {
   zoomLevelThreshold: number;
   initialZoom?: number;
   canEdit: boolean;
+  floatingSearch?: boolean;
 }
 
 const LocationInput: FC<LocationInputProps> = ({
@@ -25,6 +26,7 @@ const LocationInput: FC<LocationInputProps> = ({
   zoomLevelThreshold,
   initialZoom,
   canEdit,
+  floatingSearch = true,
 }) => {
   const [seenDragMessage, setSeenDragMessage] = useState(false);
 
@@ -206,7 +208,13 @@ const LocationInput: FC<LocationInputProps> = ({
       limit: 3,
     });
 
-    map.current.addControl(geocoder.current, 'top-left');
+    if (floatingSearch) {
+      map.current.addControl(geocoder.current, 'top-left');
+    } else {
+      geocoderContainer.current?.appendChild(
+        geocoder.current.onAdd(map.current)
+      );
+    }
 
     if (!canEdit) {
       // Prevent user from changing the geocoder input when the map isn't editable

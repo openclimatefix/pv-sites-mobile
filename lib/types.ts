@@ -107,6 +107,8 @@ export type FormPostData = {
   tilt: number;
   inverter_capacity_kw: number;
   module_capacity_kw: number;
+  // Required for now, but ultimately will be removed
+  installed_capacity_kw: number;
 };
 
 export type Inverter = {

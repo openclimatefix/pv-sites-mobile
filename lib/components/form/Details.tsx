@@ -107,6 +107,7 @@ const Details: FC<Props> = ({
                 setMapCoordinates={() => {}}
                 zoomLevelThreshold={zoomLevelThreshold}
                 canEdit={false}
+                floatingSearch={false}
               />
             </div>
           )}
@@ -269,7 +270,7 @@ const Details: FC<Props> = ({
               )}
             </div>
           )}
-          {isEditing ? 'Save' : 'Next'}
+          {isEditing ? 'Save' : 'Submit'}
           {(didSubmit || showSuccessIcon) && <div className="mx-2 w-5" />}
         </Button>
       </div>
