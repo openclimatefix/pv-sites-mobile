@@ -107,6 +107,7 @@ const Details: FC<Props> = ({
                 setMapCoordinates={() => {}}
                 zoomLevelThreshold={zoomLevelThreshold}
                 canEdit={false}
+                floatingSearch={false}
               />
             </div>
           )}
