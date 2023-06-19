@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en" className="dark">
       <Head>
         <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="apple-touch-icon" href="/icon-180x180.png" />
         <link
           rel="stylesheet"
           href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
