@@ -41,7 +41,7 @@ const App: AppType<AppProps> = ({ Component, pageProps }) => {
       >
         <AppProvider>
           <Head>
-            <title>Sites | Nowcasting</title>
+            <title>Sites | Quartz Solar</title>
             <link rel="icon" href="/favicon.ico" />
             <meta name="description" content="Nowcasting for solar sites" />
             <meta

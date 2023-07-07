@@ -27,8 +27,8 @@ const Logout = () => {
             rel="noreferrer"
           >
             <Image
-              src="/nowcasting-secondary.svg"
-              alt="Nowcasting logo"
+              src="/quartz-logo.svg"
+              alt="Quartz Solar logo"
               width={300}
               height={120}
             />

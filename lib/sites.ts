@@ -22,7 +22,7 @@ export function useSites() {
   );
 
   // TODO: Paginate this globally somehow. Right now there is too much site data being fetched on the aggregate dashboard
-  return { sites: sites?.site_list?.slice(0, 100) ?? [], error, isLoading };
+  return { sites: sites?.site_list?.slice(0, 3) ?? [], error, isLoading };
 }
 
 /**
@@ -52,7 +52,7 @@ export function getPreferredSiteName(site: Site) {
  * @return Aggregated predictions sorted by datetime
  */
 export function useSitesGeneration(sites: Site[]) {
-  const siteUUIDs = sites.map((site) => site.site_uuid);
+  const siteUUIDs = sites.slice(0,3).map((site) => site.site_uuid);
 
   const {
     data: manyForecastData,
@@ -194,7 +194,7 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
         };
       }
 
-      const { site_list: allSites } = (await fetch(
+      const { site_list: allSites }: { site_list: Site[] } = (await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL_GET}/sites`,
         {
           headers: {
@@ -202,10 +202,10 @@ export function withSites({ getServerSideProps }: WithSitesOptions = {}) {
           },
           credentials: 'include',
         }
-      ).then((res) => res.json())) as { site_list: Site[] };
+      ).then((res) => res.json()));
 
       // TODO: Paginate this globally somehow. Right now there is too much site data being fetched on the aggregate dashboard
-      const sites = allSites.slice(0, 100);
+      const sites = allSites.slice(0, 3);
 
       const otherProps: any = await getServerSideProps?.({
         ...ctx,
