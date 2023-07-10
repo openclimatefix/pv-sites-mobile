@@ -45,7 +45,7 @@ const NavBar: FC = () => {
     <>
       <SideBar open={isSideBarOpen} onClose={() => setIsSideBarOpen(false)} />
       <div
-        className={`mx-auto relative flex h-[var(--nav-height)] w-screen bg-ocf-black ${
+        className={`relative mx-auto flex h-[var(--nav-height)] w-screen bg-ocf-black ${
           user ? 'justify-between' : 'justify-center'
         } px-5 md:my-2`}
       >
@@ -56,13 +56,15 @@ const NavBar: FC = () => {
               isSideBarOpen || sites.length === 0
                 ? 'pointer-events-none opacity-0'
                 : 'opacity-100'
-            } invisible flex flex-col justify-center text-gray-600 transition-all z-10 md:visible`}
+            } invisible z-10 flex flex-col justify-center text-gray-600 transition-all md:visible`}
           >
             <HamburgerIcon />
           </button>
         )}
-        <div className="absolute inset-0 flex items-center justify-center"><NowcastingLogo /></div>
-        <div className="invisible hidden flex-row items-center justify-center z-10 md:visible md:flex">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <NowcastingLogo />
+        </div>
+        <div className="invisible z-10 hidden flex-row items-center justify-center md:visible md:flex">
           <NavbarLink
             title="Dashboard"
             href={

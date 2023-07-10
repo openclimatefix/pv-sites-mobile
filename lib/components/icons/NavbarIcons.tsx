@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import Image from "next/image";
+import Image from 'next/image';
 
 export const NowcastingLogo: FC = () => (
-  <Image src={"/quartz-logo.svg"} alt={'Quartz logo'} width={124} height={52} />
+  <Image src={'/quartz-logo.svg'} alt={'Quartz logo'} width={124} height={52} />
 );
 
 export const HamburgerIcon: FC = () => (
