@@ -59,9 +59,11 @@ export function useSitesGeneration(sites: Site[]) {
     error: manyForecastError,
     isLoading: isManyForecastLoading,
   } = useSWR(
-    `${
-      process.env.NEXT_PUBLIC_API_BASE_URL_GET
-    }/sites/pv_forecast?site_uuids=${siteUUIDs.join(',')}`,
+    siteUUIDs.length
+      ? `${
+          process.env.NEXT_PUBLIC_API_BASE_URL_GET
+        }/sites/pv_forecast?site_uuids=${siteUUIDs.join(',')}`
+      : null,
     manyForecastDataFetcher
   );
 
@@ -70,9 +72,11 @@ export function useSitesGeneration(sites: Site[]) {
     error: manyClearskyError,
     isLoading: isManyClearskyLoading,
   } = useSWR(
-    `${
-      process.env.NEXT_PUBLIC_API_BASE_URL_GET
-    }/sites/clearsky_estimate?site_uuids=${siteUUIDs.join(',')}`,
+    siteUUIDs.length
+      ? `${
+          process.env.NEXT_PUBLIC_API_BASE_URL_GET
+        }/sites/clearsky_estimate?site_uuids=${siteUUIDs.join(',')}`
+      : null,
     manyClearskyDataFetcher
   );
 
@@ -81,9 +85,11 @@ export function useSitesGeneration(sites: Site[]) {
     error: manyActualError,
     isLoading: isManyActualLoading,
   } = useSWR(
-    `${
-      process.env.NEXT_PUBLIC_API_BASE_URL_GET
-    }/sites/pv_actual?site_uuids=${siteUUIDs.join(',')}`,
+    siteUUIDs.length
+      ? `${
+          process.env.NEXT_PUBLIC_API_BASE_URL_GET
+        }/sites/pv_actual?site_uuids=${siteUUIDs.join(',')}`
+      : null,
     manyActualsFetcher
   );
 
