@@ -172,6 +172,9 @@ export const calculateCenteredMovingAverage = (
   points: GenerationDataPoint[],
   period: number
 ): GenerationDataPoint[] => {
+  if (points.length === 0) {
+    return [];
+  }
   if (period % 2 == 0) {
     throw new Error('Period must be an odd number');
   } else if (period > points.length) {
