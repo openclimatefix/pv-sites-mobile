@@ -41,7 +41,7 @@ const LocationInput: FC<LocationInputProps> = ({
   useEffect(() => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current!,
-      style: 'mapbox://styles/alester3/clf1lj7jg000b01n4ya2880gi',
+      style: 'mapbox://styles/mapbox/streets-v10',
       center: [longitude, latitude],
       zoom: initialZoom ?? 4,
       keyboard: false,
